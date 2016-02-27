@@ -18,3 +18,17 @@ yaourt -S reflector abs pkgcacheclean namcap pkgbuild-introspection downgrade
 # only download from https mirrors
 sudo reflector --verbose -l 25 -p https --sort rate \
     --save /etc/pacman.d/mirrorlist
+
+PACMAN_TMP=$(mktemp)
+
+# add ILoveCandy configuration option to end of first block of [option]s
+# adapted from: http://stackoverflow.com/a/16102492
+awk '
+  $0 == "[options]" { inOptions = 1 }
+  inOptions && $0 == "" {
+    print "ILoveCandy"
+    inOptions = 0
+  }
+  1' /etc/pacman.conf > $PACMAN_TMP
+
+sudo mv $PACMAN_TMP /etc/pacman.conf
