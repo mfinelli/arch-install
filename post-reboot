@@ -75,3 +75,7 @@ if [[ "yes" == $(prompt_yesno "Install scanning software?") ]]; then
         yaourt -S sane xsane
     fi
 fi
+
+yaourt -S shotwell dia dcraw
+
+yaourt -S pidgin purple-plugin-pack aspell-{en,it,fr} pidgin-otr hexchat
