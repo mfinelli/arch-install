@@ -1,7 +1,15 @@
 #!/bin/bash
 
+source helpers.sh
+
 # pacman -S grub efibootmgr intel-ucode btrfs-progs dosfstools ntfs-3g
 
 # networking
 pacman -S iw dialog wpa_supplicant easy-rsa networkmanager{,-openvpn} \
     network-manager-applet
+
+if [[ "no" == $(prompt_yesno "Enable the multilib repository?") ]]; then
+    EN_LIB_32=false
+else
+    EN_LIB_32=true
+fi
