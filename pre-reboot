@@ -4,7 +4,6 @@ source helpers.sh
 
 # pacman -S grub efibootmgr intel-ucode btrfs-progs dosfstools ntfs-3g
 
-# networking
 pacman -S iw dialog wpa_supplicant easy-rsa networkmanager{,-openvpn} \
     network-manager-applet
 
