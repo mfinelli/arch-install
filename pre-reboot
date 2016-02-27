@@ -13,3 +13,11 @@ if [[ "no" == $(prompt_yesno "Enable the multilib repository?") ]]; then
 else
     EN_LIB_32=true
 fi
+
+if [[ $EN_LIB_32 == true ]]; then
+    sed -i "/\[multilib\]/s/^#//" /etc/pacman.conf
+
+    # http://stackoverflow.com/a/18622953
+    sed -i '/\[multilib\]/!b;n;cInclude = /etc/pacmand.d/mirrorlist' \
+        /etc/pacman.conf
+fi
