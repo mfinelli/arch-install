@@ -37,3 +37,9 @@ pacman -S xfce4{,-goodies} lightdm{,-gtk-greeter} accountsservice \
 # configure lightdm: don't show the user list; make the user type their name
 sed -i "/greeter-hide-users=false/cgreeter-hide-users=true" \
     /etc/lightdm/lightdm.conf
+
+pacman -S wget firefox firefox-i18n-{it,fr} vim yajl git gnome-keyring \
+    seahorse openssh
+
+systemctl enable lightdm
+systemctl enable NetworkManager
