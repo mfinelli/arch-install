@@ -5,7 +5,10 @@ source helpers.sh
 # pacman -S grub efibootmgr intel-ucode btrfs-progs dosfstools ntfs-3g
 
 pacman -S iw dialog wpa_supplicant easy-rsa networkmanager{,-openvpn} \
-    network-manager-applet
+    network-manager-applet crda
+
+read -p "Which wireless country (two-letter-code) should we enable? "
+sed -i "/WIRELESS_REGDOM=\"$REPLY\"/s/^#//" /etc/conf.d/wireless-regdom
 
 if [[ "no" == $(prompt_yesno "Enable the multilib repository?") ]]; then
     EN_LIB_32=false
