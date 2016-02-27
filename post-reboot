@@ -54,6 +54,12 @@ yaourt -S ttf-{dejavu,mathtype,driod,liberation,freefont,symbola} \
 yaourt -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
     shimmer-wallpapers elementary-{xfce-icons,icon-theme} awoken-icons
 
+if [[ "yes" == $(prompt_yesno "Install bluetooth packages?") ]]; then
+    yaourt -S bluez{,-utils} blueman
+    sudo systemctl enable bluetooth
+    gsettings set org.blueman.transfer shared-path /home/`whoami`/Downloads
+fi
+
 yaourt -S keepass xsel spideroak-one dropbox
 
 yaourt -S libreoffice-fresh{,-it,-fr} hunspell-{en,it,fr} hyphen-{en,it,fr} \
