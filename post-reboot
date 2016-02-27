@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source helpers.sh
+
 WORKDIR=$(mktemp -d)
 
 for package in package-query yaourt; do
@@ -56,3 +58,12 @@ yaourt -S keepass xsel spideroak-one dropbox
 
 yaourt -S libreoffice-fresh{,-it,-fr} hunspell-{en,it,fr} hyphen-{en,it,fr} \
     mythes{,-en,-it,-fr}
+
+if [[ "yes" == $(prompt_yesno "Install the GIMP?") ]]; then
+    GIMP_INSTALL=true
+    yaourt -S gimp{,-extras} \
+        gimp-plugin-{resynthesizer-git,saveforweb,exif-browser,fourier} \
+        gimp-script-{descreen,smart-remove}
+else
+    GIMP_INSTALL=false
+fi
