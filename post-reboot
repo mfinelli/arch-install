@@ -51,3 +51,5 @@ yaourt -S ttf-{dejavu,mathtype,driod,liberation,freefont,symbola} \
 
 yaourt -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
     shimmer-wallpapers elementary-{xfce-icons,icon-theme} awoken-icons
+
+yaourt -S keepass xsel spideroak-one dropbox
