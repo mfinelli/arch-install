@@ -102,3 +102,5 @@ if [[ "yes" == $(prompt_yesno "Install tor browser bundle?") ]]; then
     gpg --keyserver pgp.mit.edu --recv-keys D40814E0
     yaourt -S tor-browser-en
 fi
+
+yaourt -S file-roller snapper archey-git grub-customizer dnsutils
