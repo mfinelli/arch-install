@@ -48,3 +48,6 @@ yaourt -S xcursor-openzone
 yaourt -S ttf-{dejavu,mathtype,driod,liberation,freefont,symbola} \
     ttf-{linux-libertine,google-fonts,carlito,caladea} \
     otf-{zxx,fira-sans,fira-mono}
+
+yaourt -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
+    shimmer-wallpapers elementary-{xfce-icons,icon-theme} awoken-icons
