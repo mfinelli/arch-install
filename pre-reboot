@@ -30,3 +30,9 @@ case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
 esac
 
 pacman -S $DRIVER xf86-video-vesa xf86-input-synaptics
+
+if [[ $EN_LIB_32 == true ]]; then
+    pacman -S alsa-{utils,plugins} lib32-alsa-plugins
+else
+    pacman -S alsa-{utils,plugins}
+fi
