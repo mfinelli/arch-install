@@ -112,3 +112,9 @@ yaourt -S --asdeps libdvdcss libaacs
 if [[ "yes" == $(prompt_yesno "Install google chrome?") ]]; then
     yaourt -S google-chrome
 fi
+
+for package in sublime-text-dev gummi phpstorm rubymine; do
+    if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
+        yaourt -S $package
+    fi
+done
