@@ -91,7 +91,7 @@ if [[ "yes" == $(prompt_yesno "Install thunderbird?") ]]; then
 
     if [[ "yes" == $(prompt_yesno "Install enigmail for thunderbird?") ]]
     then
-        gpg --recv-keys 9369CDF3 DD5F693B
+        gpg --keyserver pgp.mit.edu --recv-keys 9369CDF3 DD5F693B
         yaourt -S thunderbird-enigmail
     fi
 fi
