@@ -79,3 +79,13 @@ fi
 yaourt -S shotwell dia dcraw
 
 yaourt -S pidgin purple-plugin-pack aspell-{en,it,fr} pidgin-otr hexchat
+
+if [[ "yes" == $(prompt_yesno "Install thunderbird?") ]]; then
+    yaourt -S thunderbird thunderbird-i18n-{it,fr}
+
+    if [[ "yes" == $(prompt_yesno "Install enigmail for thunderbird?") ]]
+    then
+        gpg --recv-keys 9369CDF3 DD5F693B
+        yaourt -S thunderbird-enigmail
+    fi
+fi
