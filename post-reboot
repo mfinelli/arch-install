@@ -95,3 +95,5 @@ if [[ "yes" == $(prompt_yesno "Install thunderbird?") ]]; then
         yaourt -S thunderbird-enigmail
     fi
 fi
+
+yaourt -S mutt isync msmtp lynx vim-spell-{en,it,fr}
