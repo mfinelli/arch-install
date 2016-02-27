@@ -32,9 +32,13 @@ awk '
   1' /etc/pacman.conf > $PACMAN_TMP
 
 sudo mv $PACMAN_TMP /etc/pacman.conf
+sudo chown root:root /etc/pacman.conf
+sudo chmod 644 /etc/pacman.conf
 
 MAKEPKG_TMP=$(mktemp)
 read -p "How many cores to use when compiling packages from source? "
 CORES=$((REPLY + 1))
 sed "/MAKEFLAGS=\"/s/-j[0-9]/-j$CORES/" /etc/makepkg.conf > $MAKEPKG_TMP
 sudo mv $MAKEPKG_TMP /etc/makepkg.conf
+sudo chown root:root /etc/makepkg.conf
+sudo chmod 644 /etc/makepkg.conf
