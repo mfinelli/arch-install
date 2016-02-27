@@ -104,3 +104,11 @@ if [[ "yes" == $(prompt_yesno "Install tor browser bundle?") ]]; then
 fi
 
 yaourt -S file-roller snapper archey-git grub-customizer dnsutils
+
+yaourt -S chromium
+yaourt -S deluge vlc youtube-dl
+yaourt -S --asdeps libdvdcss libaacs
+
+if [[ "yes" == $(prompt_yesno "Install google chrome?") ]]; then
+    yaourt -S google-chrome
+fi
