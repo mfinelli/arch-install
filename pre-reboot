@@ -34,3 +34,7 @@ pacman -S alsa-{utils,plugins}
 pacman -S xorg-server{,-utils} xorg-apps
 pacman -S xfce4{,-goodies} lightdm{,gtk-greeter} accountsservice \
     xdg-user-dirs gvfs{,-afc,-mtp}
+
+# configure lightdm: don't show the user list; make the user type their name
+sed -i "/greeter-hide-users=false/cgreeter-hide-users=true" \
+    /etc/lightdm/lightdm.conf
