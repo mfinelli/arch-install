@@ -97,3 +97,8 @@ if [[ "yes" == $(prompt_yesno "Install thunderbird?") ]]; then
 fi
 
 yaourt -S mutt isync msmtp lynx vim-spell-{en,it,fr}
+
+if [[ "yes" == $(prompt_yesno "Install tor browser bundle?") ]]; then
+    gpg --keyserver pgp.mit.edu --recv-keys D40814E0
+    yaourt -S tor-browser-en
+fi
