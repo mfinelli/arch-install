@@ -31,7 +31,7 @@ esac
 pacman -S $DRIVER xf86-video-vesa xf86-input-synaptics
 pacman -S alsa-{utils,plugins}
 pacman -S xorg-server{,-utils} xorg-apps
-pacman -S xfce4{,-goodies} lightdm{,gtk-greeter} accountsservice \
+pacman -S xfce4{,-goodies} lightdm{,-gtk-greeter} accountsservice \
     xdg-user-dirs gvfs{,-afc,-mtp}
 
 # configure lightdm: don't show the user list; make the user type their name
