@@ -10,13 +10,7 @@ pacman -S iw dialog wpa_supplicant easy-rsa networkmanager{,-openvpn} \
 read -p "Which wireless country (two-letter-code) should we enable? "
 sed -i "/WIRELESS_REGDOM=\"$REPLY\"/s/^#//" /etc/conf.d/wireless-regdom
 
-if [[ "no" == $(prompt_yesno "Enable the multilib repository?") ]]; then
-    EN_LIB_32=false
-else
-    EN_LIB_32=true
-fi
-
-if [[ $EN_LIB_32 == true ]]; then
+if [[ "yes" == $(prompt_yesno "Enable the multilib repository?") ]]; then
     sed -i "/\[multilib\]/s/^#//" /etc/pacman.conf
 
     # http://stackoverflow.com/a/18622953
