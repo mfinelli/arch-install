@@ -119,3 +119,14 @@ for package in sublime-text-dev gummi phpstorm rubymine; do
         yaourt -S $package
     fi
 done
+
+echo "Wine on 64bit systems requires the multilib repository."
+if [[ "yes" == $(prompt_yesno "Install wine packages?") ]]; then
+    yaourt -S wine wine-mono wine_gecko winetricks
+    yaourt -S --asdeps perl-lwp-protocol-https
+
+    if [[ "yes" == $(prompt_yesno "Install music manipulation programs?") ]]
+    then
+        yaourt -S foobar2000 mp3tag musicbrainz picard
+    fi
+fi
