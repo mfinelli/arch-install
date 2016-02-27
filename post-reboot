@@ -12,3 +12,9 @@ done
 
 cd
 rm -rf $WORKDIR
+
+yaourt -S reflector abs pkgcacheclean namcap pkgbuild-introspection downgrade
+
+# only download from https mirrors
+sudo reflector --verbose -l 25 -p https --sort rate \
+    --save /etc/pacman.d/mirrorlist
