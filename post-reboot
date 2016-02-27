@@ -67,3 +67,11 @@ if [[ "yes" == $(prompt_yesno "Install the GIMP?") ]]; then
 else
     GIMP_INSTALL=false
 fi
+
+if [[ "yes" == $(prompt_yesno "Install scanning software?") ]]; then
+    if [[ $GIMP_INSTALL == true ]]; then
+        yaourt -S sane xsane xsane-gimp
+    else
+        yaourt -S sane xsane
+    fi
+fi
