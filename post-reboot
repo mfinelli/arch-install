@@ -53,3 +53,6 @@ yaourt -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
     shimmer-wallpapers elementary-{xfce-icons,icon-theme} awoken-icons
 
 yaourt -S keepass xsel spideroak-one dropbox
+
+yaourt -S libreoffice-fresh{,-it,-fr} hunspell-{en,it,fr} hyphen-{en,it,fr} \
+    mythes{,-en,-it,-fr}
