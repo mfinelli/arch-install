@@ -131,7 +131,7 @@ if [[ "yes" == $(prompt_yesno "Install wine packages?") ]]; then
     fi
 fi
 
-for package in liferea vinagre handbrake; do
+for package in liferea vinagre handbrake cksfv; do
     if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
         yaourt -S $package
     fi
