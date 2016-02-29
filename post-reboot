@@ -136,3 +136,5 @@ for package in liferea vinagre handbrake; do
         yaourt -S $package
     fi
 done
+
+yaourt -S redshift
