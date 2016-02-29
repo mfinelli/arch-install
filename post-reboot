@@ -191,3 +191,6 @@ fi
 if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
     yaourt -S redis
 fi
+
+yaourt -S s3cmd aws-cli
+yaourt -S --asdeps python{,2}-magic
