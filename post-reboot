@@ -103,7 +103,8 @@ if [[ "yes" == $(prompt_yesno "Install tor browser bundle?") ]]; then
     yaourt -S tor-browser-en
 fi
 
-yaourt -S file-roller snapper archey-git grub-customizer dnsutils colordiff
+yaourt -S file-roller snapper archey-git grub-customizer dnsutils colordiff \
+    vim-puppet
 yaourt -S --asdeps unrar cdrkit
 
 yaourt -S chromium
@@ -133,7 +134,7 @@ if [[ "yes" == $(prompt_yesno "Install wine packages?") ]]; then
     fi
 fi
 
-for package in liferea vinagre handbrake cksfv; do
+for package in liferea vinagre handbrake cksfv calibre; do
     if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
         yaourt -S $package
     fi
@@ -166,3 +167,5 @@ yaourt -S bash-completion
 if [[ "yes" == $(prompt_yesno "Install spotify?") ]]; then
     yaourt -S spotify
 fi
+
+yaourt -S kdegraphics-okular
