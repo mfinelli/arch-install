@@ -138,3 +138,16 @@ for package in liferea vinagre handbrake; do
 done
 
 yaourt -S redshift
+
+if [[ "yes" == $(prompt_yesno "Install printing packages?") ]]; then
+    yaourt -S cups cups-pdf gutenprint foomatic-db{,-engine,-nonfree} \
+        hplip splix
+
+    if [[ "yes" == $(prompt_yesno "Install packages for network printing?") ]]
+    then
+        yaourt -S avahi samba
+        sudo systemctl enable avahi-daemon.service
+    fi
+
+    sudo systemctl enable org.cups.cupsd.service
+fi
