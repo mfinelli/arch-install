@@ -151,3 +151,6 @@ if [[ "yes" == $(prompt_yesno "Install printing packages?") ]]; then
 
     sudo systemctl enable org.cups.cupsd.service
 fi
+
+yaourt -S gnucash
+yaourt -S --asdeps perl-{finance-quote,date-manip}
