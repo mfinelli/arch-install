@@ -187,3 +187,7 @@ if [[ "yes" == $(prompt_yesno "Install MariaDB?") ]]; then
     sudo chown root:root /etc/mysql/my.cnf
     sudo chmod 644 /etc/mysql/my.cnf
 fi
+
+if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
+    yaourt -S redis
+fi
