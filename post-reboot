@@ -178,8 +178,8 @@ if [[ "yes" == $(prompt_yesno "Install MariaDB?") ]]; then
     awk '
       $0 == "[mysqld]" { inMysqld = 1 }
       inMysqld && $0 == "" {
-      print "collation-server = utf8_unicode_ci"
-      print "character-set-server = utf8"
+      print "collation-server = utf8mb4_general_ci"
+      print "character-set-server = utf8mb4"
       inMysqld = 0
     }
     1' /etc/mysql/my.cnf > $MARIADB_TMP
