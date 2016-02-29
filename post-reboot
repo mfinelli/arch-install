@@ -154,3 +154,9 @@ fi
 
 yaourt -S gnucash
 yaourt -S --asdeps perl-{finance-quote,date-manip}
+
+if [[ "yes" == $(prompt_yesno "Install zsh?") ]]; then
+    yaourt -S zsh grml-zsh-config zsh-syntax-highlighting
+fi
+
+yaourt -S bash-completion
