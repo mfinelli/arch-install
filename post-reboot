@@ -162,3 +162,7 @@ if [[ "yes" == $(prompt_yesno "Install zsh?") ]]; then
 fi
 
 yaourt -S bash-completion
+
+if [[ "yes" == $(prompt_yesno "Install spotify?") ]]; then
+    yaourt -S spotify
+fi
