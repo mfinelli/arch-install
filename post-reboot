@@ -169,3 +169,21 @@ if [[ "yes" == $(prompt_yesno "Install spotify?") ]]; then
 fi
 
 yaourt -S kdegraphics-okular
+
+if [[ "yes" == $(prompt_yesno "Install MariaDB?") ]]; then
+    yaourt -S mariadb
+    sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+
+    MARIADB_TMP=$(mktemp)
+    awk '
+      $0 == "[mysqld]" { inMysqld = 1 }
+      inMysqld && $0 == "" {
+      print "collation-server = utf8_unicode_ci"
+      print "character-set-server = utf8"
+      inMysqld = 0
+    }
+    1' /etc/mysql/my.cnf > $MARIADB_TMP
+    sudo mv $MARIADB_TMP /etc/mysql/my.cnf
+    sudo chown root:root /etc/mysql/my.cnf
+    sudo chmod 644 /etc/mysql/my.cnf
+fi
