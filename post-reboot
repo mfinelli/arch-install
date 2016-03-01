@@ -230,7 +230,7 @@ if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
-    yaourt -S nodejs npm bower gulp uglify-js
+    yaourt -S nodejs npm bower gulp uglify-js pm2
     yaourt -S nodejs-{uglifycss,autoprefixer,sequelize-cli,mocha,eslint}
 fi
 
