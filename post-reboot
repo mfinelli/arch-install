@@ -107,6 +107,8 @@ yaourt -S file-roller snapper archey-git grub-customizer dnsutils colordiff \
     vim-puppet
 yaourt -S --asdeps unrar cdrkit
 
+yaourt -S imagemagick
+
 yaourt -S chromium
 yaourt -S deluge vlc youtube-dl
 yaourt -S --asdeps libdvdcss libaacs
