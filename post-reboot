@@ -188,6 +188,34 @@ if [[ "yes" == $(prompt_yesno "Install MariaDB?") ]]; then
     sudo chmod 644 /etc/mysql/my.cnf
 fi
 
+if [[ "yes" == $(prompt_yesno "Install PHP?") ]]; then
+    yaourt -S php php-{gd,apcu,composer,geoip,intl,tidy}
+
+    for extension in curl exif gd iconv intl mysqli pdo_mysql tidy zip; do
+        PHP_TMP=$(mktemp)
+        sed "/extension=$extension.so/s/^;//" /etc/php/php.ini > $PHP_TMP
+
+        sudo mv $PHP_TMP /etc/php/php.ini
+        sudo chown root:root /etc/php/php.ini
+        sudo chmod 644 /etc/php/php.ini
+    done
+
+    PHP_TMP=$(mktemp)
+    sed "/zend_extension=opcache.so/s/^;//" /etc/php/php.ini > $PHP_TMP
+
+    sudo mv $PHP_TMP /etc/php/php.ini
+    sudo chown root:root /etc/php/php.ini
+    sudo chmod 644 /etc/php/php.ini
+
+    PHP_TMP=$(mktemp)
+    awk '{print} $0 == ";date.timezone =" { print "date.timezone = UTC" }' \
+        /etc/php/php.ini > $PHP_TMP
+
+    sudo mv $PHP_TMP /etc/php/php.ini
+    sudo chown root:root /etc/php/php.ini
+    sudo chmod 644 /etc/php/php.ini
+fi
+
 if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
     yaourt -S redis
 fi
