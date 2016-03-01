@@ -229,5 +229,10 @@ if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
     yaourt -S redis
 fi
 
+if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
+    yaourt -S nodejs npm bower gulp uglify-js
+    yaourt -S nodejs-{uglifycss,autoprefixer}
+fi
+
 yaourt -S s3cmd aws-cli
 yaourt -S --asdeps python{,2}-magic
