@@ -214,6 +214,9 @@ if [[ "yes" == $(prompt_yesno "Install PHP?") ]]; then
     sudo mv $PHP_TMP /etc/php/php.ini
     sudo chown root:root /etc/php/php.ini
     sudo chmod 644 /etc/php/php.ini
+
+    yaourt -S php-imagick
+    yaourt -S php-codesniffer{,-symfony2-git} php-cs-fixer phpunit php-box
 fi
 
 if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
