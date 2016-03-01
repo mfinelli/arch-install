@@ -234,8 +234,12 @@ if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
     yaourt -S nodejs-{uglifycss,autoprefixer,sequelize-cli,mocha,eslint}
 fi
 
-if [[ "yes" == $(prompt_yesno "Install ruby css tools?") ]]; then
-    yaourt -S ruby-{compass,sass,scss_lint}
+if [[ "yes" == $(prompt_yesno "Install ruby packages?") ]]; then
+    yaourt -S ruby{,-bundler}
+
+    if [[ "yes" == $(prompt_yesno "Install ruby css tools?") ]]; then
+        yaourt -S ruby-{compass,sass,scss_lint}
+    fi
 fi
 
 yaourt -S postfix
