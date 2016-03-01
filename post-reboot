@@ -219,6 +219,10 @@ if [[ "yes" == $(prompt_yesno "Install PHP?") ]]; then
 
     yaourt -S php-imagick
     yaourt -S php-codesniffer{,-symfony2-git} php-cs-fixer phpunit php-box
+
+    if [[ "yes" == $(prompt_yesno "Install drupal packages?") ]]; then
+        yaourt -S php-codesniffer-drupal drush
+    fi
 fi
 
 if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
