@@ -234,5 +234,9 @@ if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
     yaourt -S nodejs-{uglifycss,autoprefixer,sequelize-cli,mocha,eslint}
 fi
 
+if [[ "yes" == $(prompt_yesno "Install ruby css tools?") ]]; then
+    yaourt -S ruby-compass ruby-sass
+fi
+
 yaourt -S s3cmd aws-cli
 yaourt -S --asdeps python{,2}-magic
