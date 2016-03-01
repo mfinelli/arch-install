@@ -104,7 +104,7 @@ if [[ "yes" == $(prompt_yesno "Install tor browser bundle?") ]]; then
 fi
 
 yaourt -S file-roller snapper archey-git grub-customizer dnsutils colordiff \
-    vim-puppet cfv tmux
+    cfv tmux
 yaourt -S --asdeps unrar cdrkit
 
 yaourt -S imagemagick
@@ -246,4 +246,8 @@ yaourt -S --asdeps python{,2}-magic
 if [[ "yes" == $(prompt_yesno "Install ansible?") ]]; then
     yaourt -S ansible ansible-lint
     yaourt -S --asdeps python2-passlib
+fi
+
+if [[ "yes" == $(prompt_yesno "Install puppet tools?") ]]; then
+    yaourt -S vim-puppet puppet-lint
 fi
