@@ -238,5 +238,7 @@ if [[ "yes" == $(prompt_yesno "Install ruby css tools?") ]]; then
     yaourt -S ruby-{compass,sass,scss_lint}
 fi
 
+yaourt -S beanstalkd
+
 yaourt -S s3cmd aws-cli
 yaourt -S --asdeps python{,2}-magic
