@@ -235,7 +235,7 @@ if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install ruby css tools?") ]]; then
-    yaourt -S ruby-compass ruby-sass
+    yaourt -S ruby-{compass,sass,scss_lint}
 fi
 
 yaourt -S s3cmd aws-cli
