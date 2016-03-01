@@ -252,3 +252,7 @@ fi
 if [[ "yes" == $(prompt_yesno "Install puppet tools?") ]]; then
     yaourt -S vim-puppet puppet-lint
 fi
+
+if [[ "yes" == $(prompt_yesno "Install pebble SDK?") ]]; then
+    yaourt -S pebble-sdk
+fi
