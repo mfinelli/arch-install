@@ -107,7 +107,7 @@ yaourt -S file-roller snapper archey-git grub-customizer dnsutils colordiff \
     cfv tmux p7zip
 yaourt -S --asdeps unrar cdrkit
 
-yaourt -S imagemagick
+yaourt -S imagemagick ghostscript
 
 yaourt -S chromium
 yaourt -S deluge vlc youtube-dl
