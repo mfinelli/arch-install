@@ -47,8 +47,8 @@ sudo chmod 644 /etc/makepkg.conf
 
 yaourt -S xfce4-dockbarx-plugin volumeicon xterm kalu
 yaourt -S xcursor-openzone
-yaourt -S ttf-{dejavu,mathtype,driod,liberation,freefont,symbola} \
-    ttf-{linux-libertine,google-fonts,carlito,caladea} \
+yaourt -S ttf-{dejavu,mathtype,liberation,freefont,symbola} \
+    ttf-{linux-libertine,google-fonts-git,carlito,caladea} \
     otf-{zxx,fira-sans,fira-mono}
 
 yaourt -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
