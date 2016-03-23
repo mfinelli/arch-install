@@ -225,7 +225,10 @@ if [[ "yes" == $(prompt_yesno "Install PHP?") ]]; then
     sudo chmod 644 /etc/php/php.ini
 
     yaourt -S php-imagick
-    yaourt -S php-codesniffer{,-symfony2-git} php-cs-fixer phpunit php-box
+    yaourt -S php-codesniffer{,-symfony2-git} php-cs-fixer phpunit
+
+    gpg --keyserver pgp.mit.edu --recv-keys 41515FE8
+    yaourt -S php-box
 
     if [[ "yes" == $(prompt_yesno "Install drupal packages?") ]]; then
         yaourt -S php-codesniffer-drupal drush
