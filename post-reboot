@@ -259,6 +259,8 @@ yaourt -S beanstalkd
 yaourt -S s3cmd aws-cli
 yaourt -S --asdeps python{,2}-magic
 
+yaourt -S python-yapf
+
 if [[ "yes" == $(prompt_yesno "Install ansible?") ]]; then
     yaourt -S ansible ansible-lint
     yaourt -S --asdeps python2-passlib
