@@ -55,7 +55,8 @@ yaourt -S ttf-{mathtype,liberation,freefont,symbola} \
     otf-{zxx,fira-sans,fira-mono}
 
 yaourt -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
-    shimmer-wallpapers elementary-{xfce-icons,icon-theme} awoken-icons
+    shimmer-wallpapers elementary-{xfce-icons,icon-theme} awoken-icons \
+    paper-{gtk,icon}-theme-git
 
 if [[ "yes" == $(prompt_yesno "Install bluetooth packages?") ]]; then
     yaourt -S bluez{,-utils} blueman
