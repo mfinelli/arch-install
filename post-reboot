@@ -271,7 +271,7 @@ if [[ "yes" == $(prompt_yesno "Install ansible?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install puppet tools?") ]]; then
-    yaourt -S vim-puppet puppet-lint
+    yaourt -S puppet puppet-lint
 fi
 
 if [[ "yes" == $(prompt_yesno "Install pebble SDK?") ]]; then
