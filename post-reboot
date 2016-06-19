@@ -279,4 +279,8 @@ if [[ "yes" == $(prompt_yesno "Install pebble SDK?") ]]; then
     yaourt -S pebble-sdk
 fi
 
+if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
+    yaourt -S go{,-tools}
+fi
+
 yaourt -S backblaze-b2-git
