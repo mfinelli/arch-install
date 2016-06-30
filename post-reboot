@@ -108,7 +108,7 @@ if [[ "yes" == $(prompt_yesno "Install tor browser bundle?") ]]; then
 fi
 
 yaourt -S file-roller snapper archey-git grub-customizer colordiff \
-    cfv tmux p7zip
+    cfv tmux p7zip htop
 yaourt -S --asdeps unrar cdrkit
 
 yaourt -S dnsutils net-tools
