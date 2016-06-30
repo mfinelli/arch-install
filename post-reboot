@@ -113,6 +113,8 @@ yaourt -S --asdeps unrar cdrkit
 
 yaourt -S dnsutils net-tools
 
+yaourt -S turtl
+
 yaourt -S imagemagick ghostscript
 
 yaourt -S chromium
