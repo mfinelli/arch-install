@@ -28,7 +28,7 @@ esac
 pacman -S ntp networkmanager-dispatcher-ntpd
 systemctl enable ntpd
 
-pacman -S $DRIVER xf86-video-vesa xf86-input-synaptics
+pacman -S $DRIVER xf86-video-vesa xf86-input-libinput
 pacman -S alsa-{utils,plugins}
 pacman -S xorg-server{,-utils} xorg-apps
 pacman -S xfce4{,-goodies} lightdm{,-gtk-greeter} accountsservice \
