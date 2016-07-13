@@ -112,7 +112,7 @@ yaourt -S file-roller snapper archey-git grub-customizer colordiff \
 yaourt -S --asdeps unrar cdrkit
 
 yaourt -S moreutils
-yaourt -S dnsutils net-tools
+yaourt -S dnsutils net-tools nmap
 
 yaourt -S turtl
 
