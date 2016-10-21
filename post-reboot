@@ -287,3 +287,4 @@ if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
 fi
 
 yaourt -S backblaze-b2-git
+yaourt -S git-crypt jgit
