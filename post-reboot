@@ -110,6 +110,7 @@ fi
 yaourt -S file-roller snapper archey-git grub-customizer colordiff \
     cfv tmux p7zip htop
 yaourt -S --asdeps unrar cdrkit
+yaourt -S tmuxp
 
 yaourt -S moreutils
 yaourt -S dnsutils net-tools nmap
