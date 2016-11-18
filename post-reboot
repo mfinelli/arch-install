@@ -249,6 +249,7 @@ if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
     yaourt -S nodejs-{uglifycss,autoprefixer,sequelize-cli,mocha,knex} \
         nodejs-{babel,webpack,bunyan,foundation-cli} yarn
     yaourt -S coffeelint
+    yaourt -S phantomjs
 fi
 
 if [[ "yes" == $(prompt_yesno "Install ruby packages?") ]]; then
