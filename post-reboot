@@ -273,7 +273,7 @@ yaourt -S python-pytest
 
 if [[ "yes" == $(prompt_yesno "Install ansible?") ]]; then
     yaourt -S ansible ansible-lint
-    yaourt -S --asdeps python2-passlib
+    yaourt -S --asdeps python2-passlib sshpass
 fi
 
 if [[ "yes" == $(prompt_yesno "Install puppet tools?") ]]; then
