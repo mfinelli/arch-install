@@ -114,6 +114,7 @@ yaourt -S tmuxp
 
 yaourt -S moreutils
 yaourt -S dnsutils net-tools nmap
+yaourt -S ferm
 
 yaourt -S turtl
 
