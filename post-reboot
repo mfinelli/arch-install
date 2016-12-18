@@ -266,7 +266,7 @@ yaourt -S postfix
 yaourt -S beanstalkd
 yaourt -S memcached
 
-yaourt -S s3cmd aws-cli
+yaourt -S s3cmd aws-cli python-boto
 yaourt -S --asdeps python{,2}-magic
 
 yaourt -S python-yapf
