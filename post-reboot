@@ -132,7 +132,7 @@ fi
 
 yaourt -S texlive-most texlive-lang
 
-for package in sublime-text-dev gummi phpstorm rubymine; do
+for package in sublime-text-dev gummi phpstorm rubymine postman-bin; do
     if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
         yaourt -S $package
     fi
