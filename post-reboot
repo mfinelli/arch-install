@@ -261,6 +261,14 @@ if [[ "yes" == $(prompt_yesno "Install ruby packages?") ]]; then
     fi
 fi
 
+if [[ "yes" == $(prompt_yesno "Intall virtualbox?") ]]; then
+    yaourt -S virtualbox{,-host-modules-arch,-guest-iso}
+
+    if [[ "yes" == $(prompt_yesno "Install vagrant?") ]]; then
+        yaourt -S vagrant
+    fi
+fi
+
 yaourt -S jpegoptim
 yaourt -S postfix
 yaourt -S beanstalkd
