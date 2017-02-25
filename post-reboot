@@ -259,7 +259,7 @@ if [[ "yes" == $(prompt_yesno "Install ruby packages?") ]]; then
     yaourt -S ruby{,-bundler}
 
     if [[ "yes" == $(prompt_yesno "Install ruby css tools?") ]]; then
-        yaourt -S ruby-{compass,sass,scss_lint}
+        yaourt -S ruby-{sass,scss_lint}
     fi
 fi
 
