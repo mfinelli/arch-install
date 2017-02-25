@@ -15,8 +15,7 @@ done
 cd
 rm -rf $WORKDIR
 
-yaourt -S reflector abs pkgcacheclean namcap pkgbuild-introspection \
-    downgrade pkgfile
+yaourt -S reflector abs namcap pkgbuild-introspection downgrade pkgfile
 sudo pkgfile --update
 
 # only download from https mirrors
