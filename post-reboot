@@ -184,7 +184,7 @@ if [[ "yes" == $(prompt_yesno "Install spotify?") ]]; then
     yaourt -S spotify
 fi
 
-yaourt -S kdegraphics-okular
+yaourt -S okular
 
 if [[ "yes" == $(prompt_yesno "Install MariaDB?") ]]; then
     yaourt -S mariadb
