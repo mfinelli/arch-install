@@ -19,8 +19,10 @@ yaourt -S reflector abs namcap pkgbuild-introspection downgrade pkgfile
 sudo pkgfile --update
 
 # only download from https mirrors
-sudo reflector --verbose -l 25 -p https --sort rate \
+sudo reflector --verbose -l 100 -p https --sort rate \
     --save /etc/pacman.d/mirrorlist
+
+yaourt -Syyua
 
 PACMAN_TMP=$(mktemp)
 
