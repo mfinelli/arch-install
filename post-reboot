@@ -157,6 +157,7 @@ for package in liferea vinagre handbrake cksfv calibre thefuck; do
 done
 
 yaourt -S redshift
+yaourt -S --asdeps python-xdg
 
 if [[ "yes" == $(prompt_yesno "Install printing packages?") ]]; then
     yaourt -S cups cups-pdf gutenprint foomatic-db{,-engine,-nonfree} \
