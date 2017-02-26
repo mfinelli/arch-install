@@ -56,7 +56,7 @@ yaourt -S ttf-{mathtype,liberation,freefont,symbola} \
     otf-{zxx,fira-sans,fira-mono}
 
 yaourt -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
-    shimmer-wallpapers elementary-{xfce-icons,icon-theme} awoken-icons \
+    shimmer-wallpapers elementary-{xfce-icons,icon-theme} \
     paper-{gtk,icon}-theme-git
 
 if [[ "yes" == $(prompt_yesno "Install bluetooth packages?") ]]; then
@@ -117,8 +117,6 @@ yaourt -S moreutils
 yaourt -S dnsutils net-tools nmap
 yaourt -S ferm
 
-yaourt -S turtl
-
 yaourt -S imagemagick ghostscript
 
 yaourt -S chromium
@@ -150,7 +148,7 @@ if [[ "yes" == $(prompt_yesno "Install wine packages?") ]]; then
     fi
 fi
 
-for package in liferea vinagre handbrake cksfv calibre thefuck; do
+for package in vinagre handbrake cksfv calibre thefuck; do
     if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
         yaourt -S $package
     fi
