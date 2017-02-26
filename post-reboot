@@ -297,7 +297,7 @@ if [[ "yes" == $(prompt_yesno "Install pebble SDK?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
-    yaourt -S go{,-tools}
+    yaourt -S go{,-tools} glide
 fi
 
 yaourt -S poedit
