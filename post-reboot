@@ -204,7 +204,7 @@ if [[ "yes" == $(prompt_yesno "Install MariaDB?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install PHP?") ]]; then
-    yaourt -S php php-{gd,apcu,geoip,intl,tidy} composer
+    yaourt -S php php-{gd,apcu,geoip,intl,tidy} composer xdebug
 
     for extension in curl exif gd iconv intl mysqli pdo_mysql tidy zip; do
         PHP_TMP=$(mktemp)
