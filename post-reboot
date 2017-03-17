@@ -203,6 +203,12 @@ if [[ "yes" == $(prompt_yesno "Install MariaDB?") ]]; then
     sudo chmod 644 /etc/mysql/my.cnf
 fi
 
+if [[ "yes" == $(prompt_yesno "Install PostreSQL?") ]]; then
+  yaourt -S postgresql
+  sudo -u postgres initdb --locale en_US.utf8 -E UTF8 \
+    -D '/var/lib/postgres/data'
+fi
+
 if [[ "yes" == $(prompt_yesno "Install PHP?") ]]; then
     yaourt -S php php-{gd,apcu,geoip,intl,tidy} composer xdebug
 
