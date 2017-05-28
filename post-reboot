@@ -117,6 +117,7 @@ yaourt -S --asdeps unrar cdrkit
 yaourt -S tmuxp
 
 yaourt -S moreutils
+yaourt -S ripgrep
 yaourt -S dnsutils net-tools nmap
 yaourt -S ferm
 
