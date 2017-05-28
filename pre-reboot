@@ -39,7 +39,7 @@ sed -i "/greeter-hide-users=false/cgreeter-hide-users=true" \
     /etc/lightdm/lightdm.conf
 
 pacman -S wget firefox firefox-i18n-{it,fr} vim yajl git gnome-keyring \
-    seahorse openssh
+    seahorse openssh expac
 
 systemctl enable lightdm
 systemctl enable NetworkManager

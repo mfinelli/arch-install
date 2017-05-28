@@ -4,7 +4,7 @@ source helpers.sh
 
 WORKDIR=$(mktemp -d)
 
-for package in package-query yaourt; do
+for package in cower pacaur package-query yaourt; do
     cd $WORKDIR
     wget https://aur.archlinux.org/cgit/aur.git/snapshot/$package.tar.gz
     tar -zxvf $package.tar.gz
@@ -15,7 +15,7 @@ done
 cd
 rm -rf $WORKDIR
 
-yaourt -S reflector namcap pkgbuild-introspection pkgfile
+yaourt -S reflector namcap pkgbuild-introspection pkgfile rsync
 sudo pkgfile --update
 
 # only download from https mirrors
