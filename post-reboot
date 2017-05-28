@@ -4,6 +4,9 @@ source helpers.sh
 
 WORKDIR=$(mktemp -d)
 
+# falconindy key for cower
+gpg --keyserver pgp.mit.edu --recv-keys 1EB2638FF56C0C53
+
 for package in cower pacaur package-query yaourt; do
     cd $WORKDIR
     wget https://aur.archlinux.org/cgit/aur.git/snapshot/$package.tar.gz
