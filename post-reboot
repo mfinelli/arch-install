@@ -43,6 +43,14 @@ sudo mv $PACMAN_TMP /etc/pacman.conf
 sudo chown root:root /etc/pacman.conf
 sudo chmod 644 /etc/pacman.conf
 
+for item in Color VerbosePkgLists; do
+  PACMAN_TMP=$(mktemp)
+  sed "/#${item}/s/^#//" /etc/pacman.conf > $PACMAN_TMP
+  sudo mv $PACMAN_TMP /etc/pacman.conf
+  sudo chown root:root /etc/pacman.conf
+  sudo chmod 644 /etc/pacman.conf
+done
+
 MAKEPKG_TMP=$(mktemp)
 read -p "How many cores to use when compiling packages from source? "
 CORES=$((REPLY + 1))
