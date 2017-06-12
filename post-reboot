@@ -299,6 +299,7 @@ yaourt -S --asdeps python{,2}-magic
 
 yaourt -S python-yapf
 yaourt -S python-pytest
+yaourt -S python-sqlparse
 
 if [[ "yes" == $(prompt_yesno "Install ansible?") ]]; then
     yaourt -S ansible ansible-lint
