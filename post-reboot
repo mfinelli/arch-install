@@ -293,6 +293,7 @@ yaourt -S jpegoptim
 yaourt -S postfix
 yaourt -S beanstalkd
 yaourt -S memcached
+yaourt -S shellcheck
 
 yaourt -S s3cmd aws-cli python{,2}-boto python-boto3
 yaourt -S --asdeps python{,2}-magic
