@@ -60,7 +60,7 @@ sudo mv $MAKEPKG_TMP /etc/makepkg.conf
 sudo chown root:root /etc/makepkg.conf
 sudo chmod 644 /etc/makepkg.conf
 
-yaourt -S volumeicon xterm kalu
+yaourt -S xterm kalu
 yaourt -S xcursor-openzone
 yaourt -S ttf-{mathtype,liberation,freefont,symbola} \
     ttf-{linux-libertine,google-fonts-git,carlito,caladea} \
@@ -71,7 +71,7 @@ yaourt -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
     paper-{gtk,icon}-theme-git
 
 if [[ "yes" == $(prompt_yesno "Install bluetooth packages?") ]]; then
-    yaourt -S bluez{,-utils} blueman
+    yaourt -S bluez{,-utils} blueman pulseaudio-bluetooth
     sudo systemctl enable bluetooth
     gsettings set org.blueman.transfer shared-path /home/`whoami`/Downloads
 fi
