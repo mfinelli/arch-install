@@ -153,6 +153,7 @@ echo "Wine on 64bit systems requires the multilib repository."
 if [[ "yes" == $(prompt_yesno "Install wine packages?") ]]; then
     yaourt -S wine wine-mono wine_gecko winetricks
     yaourt -S --asdeps perl-lwp-protocol-https
+    yaourt -S lib32-{libpulse,alsa-plugins}
 
     if [[ "yes" == $(prompt_yesno "Install music manipulation programs?") ]]
     then
