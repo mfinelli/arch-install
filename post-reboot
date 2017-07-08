@@ -126,7 +126,7 @@ yaourt -S tmuxp
 
 yaourt -S moreutils
 yaourt -S ripgrep
-yaourt -S dnsutils net-tools nmap
+yaourt -S dnsutils net-tools nmap geo-bash
 yaourt -S ferm
 
 yaourt -S imagemagick ghostscript
