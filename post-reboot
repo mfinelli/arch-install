@@ -275,7 +275,7 @@ if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install ruby packages?") ]]; then
-    yaourt -S ruby{,-bundler,-rubocop}
+    yaourt -S ruby{,-bundler,-rubocop,-install} chruby
 
     if [[ "yes" == $(prompt_yesno "Install ruby css tools?") ]]; then
         yaourt -S ruby-{sass,scss_lint}
