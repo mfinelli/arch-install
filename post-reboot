@@ -329,3 +329,5 @@ yaourt -S git-crypt jgit
 # if we don't have a java runtime yet, install java 8
 command -v java >/dev/null 2>&1 || { \
   yaourt -S jre8-openjdk; }
+
+yaourt -S zoom
