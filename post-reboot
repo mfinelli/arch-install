@@ -321,6 +321,7 @@ if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
 fi
 
 yaourt -S terraform graphviz
+yaourt -S kops kubernetes minikube
 yaourt -S poedit
 
 yaourt -S backblaze-b2-git
