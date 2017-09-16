@@ -298,6 +298,7 @@ yaourt -S shellcheck
 
 yaourt -S s3cmd aws-cli python{,2}-boto python-boto3
 yaourt -S --asdeps python{,2}-magic
+yaourt -S google-cloud-sdk
 
 yaourt -S python-yapf
 yaourt -S python-pytest
