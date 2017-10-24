@@ -7,7 +7,7 @@ WORKDIR=$(mktemp -d)
 # falconindy key for cower
 gpg --keyserver pgp.mit.edu --recv-keys 1EB2638FF56C0C53
 
-for package in cower pacaur package-query yaourt; do
+for package in cower pacaur; do
     cd $WORKDIR
     wget https://aur.archlinux.org/cgit/aur.git/snapshot/$package.tar.gz
     tar -zxvf $package.tar.gz
@@ -18,14 +18,14 @@ done
 cd
 rm -rf $WORKDIR
 
-yaourt -S reflector namcap pkgbuild-introspection pkgfile rsync
+pacaur -S yaourt reflector namcap pkgbuild-introspection pkgfile rsync
 sudo pkgfile --update
 
 # only download from https mirrors
 sudo reflector --verbose -l 100 -p https --sort rate \
     --save /etc/pacman.d/mirrorlist
 
-yaourt -Syyua
+pacaur -Syyu
 
 PACMAN_TMP=$(mktemp)
 
@@ -60,30 +60,30 @@ sudo mv $MAKEPKG_TMP /etc/makepkg.conf
 sudo chown root:root /etc/makepkg.conf
 sudo chmod 644 /etc/makepkg.conf
 
-yaourt -S xterm kalu
-yaourt -S xcursor-openzone
-yaourt -S ttf-{mathtype,liberation,freefont,symbola} \
+pacaur -S xterm kalu
+pacaur -S xcursor-openzone
+pacaur -S ttf-{mathtype,liberation,freefont,symbola} \
     ttf-{linux-libertine,google-fonts-git,carlito,caladea} \
     otf-{zxx,fira-sans,fira-mono}
 
-yaourt -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
+pacaur -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
     shimmer-wallpapers elementary-{xfce-icons,icon-theme} \
     paper-{gtk,icon}-theme-git
 
 if [[ "yes" == $(prompt_yesno "Install bluetooth packages?") ]]; then
-    yaourt -S bluez{,-utils} blueman pulseaudio-bluetooth
+    pacaur -S bluez{,-utils} blueman pulseaudio-bluetooth
     sudo systemctl enable bluetooth
     gsettings set org.blueman.transfer shared-path /home/`whoami`/Downloads
 fi
 
-yaourt -S keepass xsel spideroak-one dropbox
+pacaur -S keepass xsel spideroak-one dropbox
 
-yaourt -S libreoffice-fresh{,-it,-fr} hunspell-{en,it,fr} hyphen-{en,it,fr} \
+pacaur -S libreoffice-fresh{,-it,-fr} hunspell-{en,it,fr} hyphen-{en,it,fr} \
     mythes{,-en,-it,-fr}
 
 if [[ "yes" == $(prompt_yesno "Install the GIMP?") ]]; then
     GIMP_INSTALL=true
-    yaourt -S gimp{,-extras} \
+    pacaur -S gimp{,-extras} \
         gimp-plugin-{resynthesizer-git,saveforweb,exif-browser} \
         gimp-script-{descreen,smart-remove} gimp-fourier
 else
@@ -92,114 +92,114 @@ fi
 
 if [[ "yes" == $(prompt_yesno "Install scanning software?") ]]; then
     if [[ $GIMP_INSTALL == true ]]; then
-        yaourt -S sane xsane xsane-gimp
+        pacaur -S sane xsane xsane-gimp
     else
-        yaourt -S sane xsane
+        pacaur -S sane xsane
     fi
 fi
 
-yaourt -S shotwell dia dcraw inkscape
+pacaur -S shotwell dia dcraw inkscape
 
-yaourt -S pidgin purple-plugin-pack aspell-{en,it,fr} pidgin-otr hexchat
+pacaur -S pidgin purple-plugin-pack aspell-{en,it,fr} pidgin-otr hexchat
 
 if [[ "yes" == $(prompt_yesno "Install thunderbird?") ]]; then
-    yaourt -S thunderbird thunderbird-i18n-{it,fr}
+    pacaur -S thunderbird thunderbird-i18n-{it,fr}
 
     if [[ "yes" == $(prompt_yesno "Install enigmail for thunderbird?") ]]
     then
         gpg --keyserver pgp.mit.edu --recv-keys 9369CDF3 DD5F693B
-        yaourt -S thunderbird-enigmail
+        pacaur -S thunderbird-enigmail
     fi
 fi
 
-yaourt -S mutt isync msmtp lynx vim-spell-{en,it,fr}
+pacaur -S mutt isync msmtp lynx vim-spell-{en,it,fr}
 
 if [[ "yes" == $(prompt_yesno "Install tor browser bundle?") ]]; then
     gpg --keyserver pgp.mit.edu --recv-keys D40814E0
-    yaourt -S tor-browser-en
+    pacaur -S tor-browser-en
 fi
 
-yaourt -S file-roller snapper archey-git grub-customizer colordiff \
+pacaur -S file-roller snapper archey-git grub-customizer colordiff \
     cfv tmux p7zip htop pwgen
-yaourt -S --asdeps unrar cdrkit
-yaourt -S tmuxp
+pacaur -S --asdeps unrar cdrkit
+pacaur -S tmuxp
 
-yaourt -S moreutils
-yaourt -S ripgrep
-yaourt -S dnsutils net-tools nmap geo-bash
-yaourt -S ferm
+pacaur -S moreutils
+pacaur -S ripgrep
+pacaur -S dnsutils net-tools nmap geo-bash
+pacaur -S ferm
 
-yaourt -S imagemagick ghostscript
+pacaur -S imagemagick ghostscript
 
-yaourt -S chromium
-yaourt -S deluge vlc youtube-dl
-yaourt -S --asdeps libdvdcss libaacs
+pacaur -S chromium
+pacaur -S deluge vlc youtube-dl
+pacaur -S --asdeps libdvdcss libaacs
 
-yaourt -S guake
+pacaur -S guake
 
 if [[ "yes" == $(prompt_yesno "Install google chrome?") ]]; then
-    yaourt -S google-chrome
+    pacaur -S google-chrome
 fi
 
-yaourt -S texlive-most texlive-lang
+pacaur -S texlive-most texlive-lang
 
 for package in sublime-text-dev gummi phpstorm rubymine postman-bin; do
     if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
-        yaourt -S $package
+        pacaur -S $package
     fi
 done
 
 echo "Wine on 64bit systems requires the multilib repository."
 if [[ "yes" == $(prompt_yesno "Install wine packages?") ]]; then
-    yaourt -S wine wine-mono wine_gecko winetricks
-    yaourt -S --asdeps perl-lwp-protocol-https
-    yaourt -S lib32-{libpulse,alsa-plugins}
+    pacaur -S wine wine-mono wine_gecko winetricks
+    pacaur -S --asdeps perl-lwp-protocol-https
+    pacaur -S lib32-{libpulse,alsa-plugins}
 
     if [[ "yes" == $(prompt_yesno "Install music manipulation programs?") ]]
     then
-        yaourt -S foobar2000 mp3tag musicbrainz picard
+        pacaur -S foobar2000 mp3tag musicbrainz picard
     fi
 fi
 
 for package in vinagre handbrake cksfv calibre thefuck; do
     if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
-        yaourt -S $package
+        pacaur -S $package
     fi
 done
 
-yaourt -S redshift
-yaourt -S --asdeps python-xdg
+pacaur -S redshift
+pacaur -S --asdeps python-xdg
 
 if [[ "yes" == $(prompt_yesno "Install printing packages?") ]]; then
-    yaourt -S cups cups-pdf gutenprint foomatic-db{,-engine,-nonfree} \
+    pacaur -S cups cups-pdf gutenprint foomatic-db{,-engine,-nonfree} \
         hplip splix
 
     if [[ "yes" == $(prompt_yesno "Install packages for network printing?") ]]
     then
-        yaourt -S avahi samba
+        pacaur -S avahi samba
         sudo systemctl enable avahi-daemon.service
     fi
 
     sudo systemctl enable org.cups.cupsd.service
 fi
 
-yaourt -S gnucash
-yaourt -S --asdeps perl-{finance-quote,date-manip}
+pacaur -S gnucash
+pacaur -S --asdeps perl-{finance-quote,date-manip}
 
 if [[ "yes" == $(prompt_yesno "Install zsh?") ]]; then
-    yaourt -S zsh grml-zsh-config zsh-syntax-highlighting
+    pacaur -S zsh grml-zsh-config zsh-syntax-highlighting
 fi
 
-yaourt -S bash-completion
+pacaur -S bash-completion
 
 if [[ "yes" == $(prompt_yesno "Install spotify?") ]]; then
-    yaourt -S spotify
+    pacaur -S spotify
 fi
 
-yaourt -S okular
+pacaur -S okular
 
 if [[ "yes" == $(prompt_yesno "Install MariaDB?") ]]; then
-    yaourt -S mariadb
+    pacaur -S mariadb
     sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 
     MARIADB_TMP=$(mktemp)
@@ -217,13 +217,13 @@ if [[ "yes" == $(prompt_yesno "Install MariaDB?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install PostreSQL?") ]]; then
-  yaourt -S postgresql
+  pacaur -S postgresql
   sudo -u postgres initdb --locale en_US.utf8 -E UTF8 \
     -D '/var/lib/postgres/data'
 fi
 
 if [[ "yes" == $(prompt_yesno "Install PHP?") ]]; then
-    yaourt -S php php-{gd,apcu,geoip,intl,tidy} composer xdebug
+    pacaur -S php php-{gd,apcu,geoip,intl,tidy} composer xdebug
 
     for extension in curl exif gd iconv intl mysqli pdo_mysql tidy zip; do
         PHP_TMP=$(mktemp)
@@ -249,87 +249,87 @@ if [[ "yes" == $(prompt_yesno "Install PHP?") ]]; then
     sudo chown root:root /etc/php/php.ini
     sudo chmod 644 /etc/php/php.ini
 
-    yaourt -S php-imagick
+    pacaur -S php-imagick
 
     gpg --keyserver pgp.mit.edu --recv-keys 41515FE8
-    yaourt -S php-box
+    pacaur -S php-box
 
-    yaourt -S php-codesniffer{,-symfony2-git} php-cs-fixer phpunit
+    pacaur -S php-codesniffer{,-symfony2-git} php-cs-fixer phpunit
 
     if [[ "yes" == $(prompt_yesno "Install drupal packages?") ]]; then
-        yaourt -S php-codesniffer-drupal drush
+        pacaur -S php-codesniffer-drupal drush
     fi
 fi
 
 if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
-    yaourt -S redis
+    pacaur -S redis
 fi
 
 if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
-    yaourt -S nodejs npm bower gulp uglify-js pm2 eslint coffee-script
-    yaourt -S nodejs-{uglifycss,autoprefixer,sequelize-cli,mocha,knex} \
+    pacaur -S nodejs npm bower gulp uglify-js pm2 eslint coffee-script
+    pacaur -S nodejs-{uglifycss,autoprefixer,sequelize-cli,mocha,knex} \
         nodejs-{babel,webpack,bunyan,foundation-cli,handlebars,pug-cli} \
         nodejs-ember-cli yarn
-    yaourt -S coffeelint
-    yaourt -S phantomjs
+    pacaur -S coffeelint
+    pacaur -S phantomjs
 fi
 
 if [[ "yes" == $(prompt_yesno "Install ruby packages?") ]]; then
-    yaourt -S ruby{,-bundler,-rubocop,-install} chruby
+    pacaur -S ruby{,-bundler,-rubocop,-install} chruby
 
     if [[ "yes" == $(prompt_yesno "Install ruby css tools?") ]]; then
-        yaourt -S ruby-{sass,scss_lint}
+        pacaur -S ruby-{sass,scss_lint}
     fi
 fi
 
 if [[ "yes" == $(prompt_yesno "Intall virtualbox?") ]]; then
-    yaourt -S virtualbox{,-host-modules-arch,-guest-iso}
+    pacaur -S virtualbox{,-host-modules-arch,-guest-iso}
 
     if [[ "yes" == $(prompt_yesno "Install vagrant?") ]]; then
-        yaourt -S vagrant
+        pacaur -S vagrant
     fi
 fi
 
-yaourt -S jpegoptim
-yaourt -S postfix
-yaourt -S beanstalkd
-yaourt -S memcached
-yaourt -S shellcheck
+pacaur -S jpegoptim
+pacaur -S postfix
+pacaur -S beanstalkd
+pacaur -S memcached
+pacaur -S shellcheck
 
-yaourt -S s3cmd aws-cli python{,2}-boto python-boto3
-yaourt -S --asdeps python{,2}-magic
-yaourt -S google-cloud-sdk
+pacaur -S s3cmd aws-cli python{,2}-boto python-boto3
+pacaur -S --asdeps python{,2}-magic
+pacaur -S google-cloud-sdk
 
-yaourt -S python-yapf
-yaourt -S python-pytest
-yaourt -S python-sqlparse
+pacaur -S python-yapf
+pacaur -S python-pytest
+pacaur -S python-sqlparse
 
 if [[ "yes" == $(prompt_yesno "Install ansible?") ]]; then
-    yaourt -S ansible ansible-lint
-    yaourt -S --asdeps python2-passlib sshpass
+    pacaur -S ansible ansible-lint
+    pacaur -S --asdeps python2-passlib sshpass
 fi
 
 if [[ "yes" == $(prompt_yesno "Install puppet tools?") ]]; then
-    yaourt -S puppet puppet-lint
+    pacaur -S puppet puppet-lint
 fi
 
 if [[ "yes" == $(prompt_yesno "Install pebble SDK?") ]]; then
-    yaourt -S pebble-sdk
+    pacaur -S pebble-sdk
 fi
 
 if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
-    yaourt -S go{,-tools} glide
+    pacaur -S go{,-tools} glide
 fi
 
-yaourt -S terraform graphviz
-yaourt -S kops kubernetes minikube
-yaourt -S poedit
+pacaur -S terraform graphviz
+pacaur -S kops kubernetes minikube
+pacaur -S poedit
 
-yaourt -S backblaze-b2-git
-yaourt -S git-crypt jgit
+pacaur -S backblaze-b2-git
+pacaur -S git-crypt jgit
 
 # if we don't have a java runtime yet, install java 8
 command -v java >/dev/null 2>&1 || { \
-  yaourt -S jre8-openjdk; }
+  pacaur -S jre8-openjdk; }
 
-yaourt -S zoom
+pacaur -S zoom
