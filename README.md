@@ -6,7 +6,7 @@ package installation.
 ## Files
 
 * `bootstrap`: Use this to pacstrap the new system
-* `prepare`: Do initial setup in the chroot (but don't install any packages)
+* `prepare`: Do initial setup in the chroot and install boot packages
 * `pre-reboot`: This installs and configures package before rebooting
 * `post-reboot`: This installs and configures packages after the first reboot
 
