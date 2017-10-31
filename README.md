@@ -25,8 +25,34 @@ Connect to a network:
 wifi-menu wlp1s0
 ```
 
-Ensure the internet is working
+Ensure the internet is working:
 
 ```shell
 ping -c 5 google.com
+```
+
+### Step 3: Sync the time to the internet
+
+```shell
+timedatectl set-ntp true
+```
+
+### Step 4: Download the bootstrap script
+
+```shell
+wget https://raw.githubusercontent.com/mfinelli/arch-install/master/bootstrap
+```
+
+Make sure it's executable:
+
+```shell
+chmod +x bootstrap
+```
+
+### Step 5: Bootstrap!
+
+Run the script and answer when prompted:
+
+```shell
+./bootstrap
 ```
