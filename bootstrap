@@ -26,6 +26,8 @@ EOF
 # let's check one more time that the disks are partitioned as expected
 gdisk -l $INSTALL_DISK
 
+# TODO: confirm
+
 # encrypt the main partition: AES256 (e.g. /dev/sda2)
 cryptsetup --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
   --iter-time 5000 --use-random --verify-passphrase luksFormat ${INSTALL_DISK}2
@@ -57,5 +59,13 @@ mkdir /mnt/{boot,home}
 mount ${INSTALL_DISK}1 /mnt/boot
 mount  -o compress=lzo /dev/crypt/home /mnt/home
 
+# use a known good mirror - we'll generate a new mirrorlist on the new system
+MIRROR='Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch'
+echo "$MIRROR" > /etc/pacman.d/mirrorlist
+
 # do the needful
 pacstrap -i /mnt base base-devel
+
+genfstab -U -p /mnt >> /mnt/etc/fstab
+
+# TODO: confirm
