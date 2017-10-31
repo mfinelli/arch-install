@@ -1,0 +1,18 @@
+#!/bin/bash
+
+read -p "What timezone should we use? (e.g. America/New_York) "
+timedatectl set-timezone "$REPLY"
+hwclock --systohc --utc
+
+for locale in de_DE en_US es_ES fr_FR it_IT; do
+    sed -i "/#${locale}.UTF-8 UTF-8/c${locale}.UTF-8 UTF-8" /etc/locale.gen
+done
+
+locale-gen
+
+read -p "What language should we use? (e.g. en_US) "
+echo "LANG=${REPLY}.UTF-8" > /etc/locale.conf
+
+# can't have a baby without a name
+read -p "What's the new hostname? "
+hostnamectl set-hostname $REPLY

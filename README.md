@@ -3,6 +3,13 @@
 I have several machines that I need to install Arch Linux, this should automate
 package installation.
 
+## Files
+
+* `bootstrap`: Use this to pacstrap the new system
+* `prepare': Do initial setup in the chroot (but don't install any packages)
+* `pre-reboot`: This installs and configures package before rebooting
+* `post-reboot`: This installs and configures packages after the first reboot
+
 ## Bootstrap
 
 ### Step 1: Ensure we're booted in UEFI mode
