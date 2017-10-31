@@ -18,3 +18,7 @@ read -p "What's the new hostname? "
 hostnamectl set-hostname $REPLY
 
 pacman -S grub efibootmgr intel-ucode btrfs-progs dosfstools ntfs-3g os-prober
+
+# we actually only add encrypt and lvm2 and remove fsck
+HOOKS="base udev autodetect modconf block encrypt lvm2 filesystems keyboard"
+sed -i "s/^HOOKS=.*/HOOKS=(${HOOKS})/" /etc/mkinitcpio.conf
