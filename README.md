@@ -63,3 +63,9 @@ Run the script and answer when prompted:
 ```shell
 ./bootstrap
 ```
+
+### Step 6: Chroot and prepare
+
+```shell
+arch-chroot /mnt /bin/bash
+```
