@@ -22,3 +22,7 @@ pacman -S grub efibootmgr intel-ucode btrfs-progs dosfstools ntfs-3g os-prober
 # we actually only add encrypt and lvm2 and remove fsck
 HOOKS="base udev autodetect modconf block encrypt lvm2 filesystems keyboard"
 sed -i "s/^HOOKS=.*/HOOKS=(${HOOKS})/" /etc/mkinitcpio.conf
+mkinitcpio -p linux
+
+# awful, i know
+sed "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"cryptdevice=$(echo $INSTALL_DISK | sed 's/\//\\\//g')2:crypt\"/" /etc/default/grub
