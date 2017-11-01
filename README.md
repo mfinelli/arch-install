@@ -69,3 +69,31 @@ Run the script and answer when prompted:
 ```shell
 arch-chroot /mnt /bin/bash
 ```
+
+### Step 7: Get the prepare script
+
+Use a temporary directory:
+
+```shell
+cd $(mktemp -d)
+```
+
+Download the script
+
+```shell
+wget https://raw.githubusercontent.com/mfinelli/arch-install/master/prepare
+```
+
+Make sure it's executable:
+
+```shell
+chmod +x prepare
+```
+
+### Step 8: Run the prepare!
+
+Make sure you pass in the device from bootstrap! (e.g. /dev/sda)
+
+```shell
+./prepare /dev/sda
+```
