@@ -24,5 +24,8 @@ HOOKS="base udev autodetect modconf block encrypt lvm2 filesystems keyboard"
 sed -i "s/^HOOKS=.*/HOOKS=(${HOOKS})/" /etc/mkinitcpio.conf
 mkinitcpio -p linux
 
-# awful, i know
-sed "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"cryptdevice=$(echo $INSTALL_DISK | sed 's/\//\\\//g')2:crypt\"/" /etc/default/grub
+# awful, i know - basically we need to escape any /'s in the device name when
+# passing it into sed or we get an "unknown option to `s' error"
+CRYPTD="cryptdevice=$(echo $INSTALL_DISK | sed 's/\//\\\//g')2:crypt"
+sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"${CRYPTD}\"/" \
+    /etc/default/grub
