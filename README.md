@@ -81,7 +81,7 @@ cd $(mktemp -d)
 Download the script
 
 ```shell
-wget https://raw.githubusercontent.com/mfinelli/arch-install/master/prepare
+curl -O https://raw.githubusercontent.com/mfinelli/arch-install/master/prepare
 ```
 
 Make sure it's executable:
@@ -96,4 +96,37 @@ Make sure you pass in the device from bootstrap! (e.g. /dev/sda)
 
 ```shell
 ./prepare /dev/sda
+```
+
+### Step 9: Now is a good time to set the `root` password
+
+```shell
+passwd
+```
+
+### Step 10: Download the pre-reboot script
+
+Do the work in a temporary directory (or reuse the existing one):
+
+```shell
+cd $(mktemp -d)
+```
+
+Download the script and helpers:
+
+```shell
+curl -O https://raw.githubusercontent.com/mfinelli/arch-install/master/helpers.sh
+curl -O https://raw.githubusercontent.com/mfinelli/arch-install/master/pre-reboot
+```
+
+Make sure it's executable:
+
+```shell
+chmod +x pre-reboot
+```
+
+### Step 11: Run the `pre-reboot` script
+
+```shell
+./pre-reboot
 ```
