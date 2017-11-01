@@ -32,7 +32,7 @@ sed -i "s/^HOOKS=.*/HOOKS=(${HOOKS})/" /etc/mkinitcpio.conf
 mkinitcpio -p linux
 
 # awful, i know - basically we need to escape any /'s in the device name when
-# passing it into sed or we get an "unknown option to `s' error"
+# passing it into sed or we get an "unknown option to `s'" error
 CRYPTD="cryptdevice=$(echo $INSTALL_DISK | sed 's/\//\\\//g')2:crypt"
 sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"${CRYPTD}\"/" \
     /etc/default/grub
