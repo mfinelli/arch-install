@@ -112,10 +112,9 @@ Do the work in a temporary directory (or reuse the existing one):
 cd $(mktemp -d)
 ```
 
-Download the script and helpers:
+Download the script:
 
 ```shell
-curl -O https://raw.githubusercontent.com/mfinelli/arch-install/master/helpers.sh
 curl -O https://raw.githubusercontent.com/mfinelli/arch-install/master/pre-reboot
 ```
 
