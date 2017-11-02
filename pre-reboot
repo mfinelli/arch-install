@@ -26,7 +26,7 @@ fi
 read -p "Install Intel or AMD video drivers? "
 case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
     intel) DRIVER="xf86-video-intel" ;;
-    amd) DRIVER="xf86-video-ati" ;;
+    amd) DRIVER="xf86-video-ati xf86-video-amdgpu" ;;
     *) exit 1;;
 esac
 
