@@ -129,3 +129,45 @@ chmod +x pre-reboot
 ```shell
 ./pre-reboot
 ```
+
+### Step 12: Create the normal user
+
+```shell
+useradd -m -s /bin/bash mario
+```
+
+Set the password:
+
+```shell
+passwd mario
+```
+
+Add the following line to /etc/sudoers after the `root ALL=(ALL) ALL` entry:
+
+```
+mario ALL=(ALL) ALL
+```
+
+```shell
+visudo
+```
+
+### Step 13: Prepare to reboot
+
+Exit the chroot
+
+```shell
+exit
+```
+
+Unmount all the partitions:
+
+```shell
+umount -R /mnt; swapoff /dev/crypt/swap
+```
+
+Finally, reboot:
+
+```shell
+reboot
+```
