@@ -171,3 +171,27 @@ Finally, reboot:
 ```shell
 reboot
 ```
+
+### Step 14: Get the post-reboot script
+
+Do the work in a temporary directory:
+
+```shell
+cd $(mktemp -d)
+```
+
+```shell
+wget https://raw.githubusercontent.com/mfinelli/arch-install/master/post-reboot
+```
+
+Make sure it's executable:
+
+```shell
+chmod +x post-reboot
+```
+
+### Step 15: Run the `post-reboot`!
+
+```shell
+./post-reboot
+```
