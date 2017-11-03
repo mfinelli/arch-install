@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# http://stackoverflow.com/a/17695543
+function prompt_yesno() {
+    read -p "$1 "
+    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
+        y|yes) echo "yes" ;;
+        *)     echo "no" ;;
+    esac
+}
+
 lsblk
 read -p "Which disk to install? "
 INSTALL_DISK="$REPLY"
@@ -26,7 +35,10 @@ EOF
 # let's check one more time that the disks are partitioned as expected
 gdisk -l $INSTALL_DISK
 
-# TODO: confirm
+if [[ "no" == $(prompt_yesno "Does the above partition table look good?") ]]
+then
+    exit 1
+fi
 
 # encrypt the main partition: AES256 (e.g. /dev/sda2)
 cryptsetup --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
@@ -68,5 +80,9 @@ echo "$MIRROR" > /etc/pacman.d/mirrorlist
 pacstrap -i /mnt base base-devel
 
 genfstab -U -p /mnt >> /mnt/etc/fstab
+cat /mnt/etc/fstab
 
-# TODO: confirm
+if [[ "no" == $(prompt_yesno "Does the above fstab table look good?") ]]
+then
+    exit 1
+fi
