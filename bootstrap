@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+set -x -e
 
 # http://stackoverflow.com/a/17695543
 function prompt_yesno() {
