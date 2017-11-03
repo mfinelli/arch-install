@@ -202,7 +202,7 @@ if [[ "yes" == $(prompt_yesno "Install zsh?") ]]; then
     pacaur -S zsh grml-zsh-config zsh-syntax-highlighting
 fi
 
-pacaur -S bash-completion
+pacaur -S bash-completion zsh-completions
 
 if [[ "yes" == $(prompt_yesno "Install spotify?") ]]; then
     pacaur -S spotify
