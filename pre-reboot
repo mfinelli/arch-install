@@ -37,7 +37,7 @@ esac
 
 pacman -S $DRIVER xf86-video-vesa xf86-input-libinput
 pacman -S alsa-{utils,plugins} pulseaudio{,-alsa} pavucontrol
-pacman -S xorg-server{,-utils} xorg-apps
+pacman -S xorg-server xorg-apps
 pacman -S xfce4{,-goodies} lightdm{,-gtk-greeter} accountsservice \
     xdg-user-dirs gvfs{,-afc,-mtp}
 
