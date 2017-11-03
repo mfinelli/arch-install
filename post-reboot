@@ -2,6 +2,7 @@
 
 set -e
 
+timedatectl set-ntp true
 hostnamectl set-hostname $(cat /etc/hostname)
 
 # http://stackoverflow.com/a/17695543

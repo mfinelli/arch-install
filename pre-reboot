@@ -34,7 +34,6 @@ esac
 
 # pacman -S ntp networkmanager-dispatcher-ntpd
 # systemctl enable ntpd
-timedatectl set-ntp true
 
 pacman -S $DRIVER xf86-video-vesa xf86-input-libinput
 pacman -S alsa-{utils,plugins} pulseaudio{,-alsa} pavucontrol
