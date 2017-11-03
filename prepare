@@ -7,7 +7,7 @@ if [[ $# -ne 1 ]]; then
     exit 1
 fi
 
-$INSTALL_DISK="$1"
+INSTALL_DISK="$1"
 
 read -p "What timezone should we use? (e.g. America/New_York) "
 timedatectl set-timezone "$REPLY"
