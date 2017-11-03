@@ -2,6 +2,8 @@
 
 set -e
 
+hostnamectl set-hostname $(cat /etc/hostname)
+
 # http://stackoverflow.com/a/17695543
 function prompt_yesno() {
     read -p "$1 "

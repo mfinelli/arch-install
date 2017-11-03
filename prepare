@@ -23,7 +23,7 @@ echo "LANG=${REPLY}.UTF-8" > /etc/locale.conf
 
 # can't have a baby without a name
 read -p "What's the new hostname? "
-hostnamectl set-hostname $REPLY
+echo "$REPLY" > /etc/hostname
 
 pacman -S grub efibootmgr intel-ucode btrfs-progs dosfstools ntfs-3g os-prober
 
