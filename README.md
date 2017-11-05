@@ -56,7 +56,15 @@ Make sure it's executable:
 chmod +x bootstrap
 ```
 
-### Step 5: Bootstrap!
+### Step 5: Prepare the disk:
+
+If this is the first install the disk needs to be wiped with random data:
+
+```shell
+dd if=/dev/urandom of=/dev/sdX bs=4096
+```
+
+### Step 6: Bootstrap!
 
 Run the script and answer when prompted:
 
@@ -64,13 +72,13 @@ Run the script and answer when prompted:
 ./bootstrap
 ```
 
-### Step 6: Chroot and prepare
+### Step 7: Chroot and prepare
 
 ```shell
 arch-chroot /mnt /bin/bash
 ```
 
-### Step 7: Get the prepare script
+### Step 8: Get the prepare script
 
 Use a temporary directory:
 
@@ -90,7 +98,7 @@ Make sure it's executable:
 chmod +x prepare
 ```
 
-### Step 8: Run the prepare!
+### Step 9: Run the prepare!
 
 Make sure you pass in the device from bootstrap! (e.g. /dev/sda)
 
@@ -98,13 +106,13 @@ Make sure you pass in the device from bootstrap! (e.g. /dev/sda)
 ./prepare /dev/sda
 ```
 
-### Step 9: Now is a good time to set the `root` password
+### Step 10: Now is a good time to set the `root` password
 
 ```shell
 passwd
 ```
 
-### Step 10: Download the pre-reboot script
+### Step 11: Download the pre-reboot script
 
 Do the work in a temporary directory (or reuse the existing one):
 
@@ -124,13 +132,13 @@ Make sure it's executable:
 chmod +x pre-reboot
 ```
 
-### Step 11: Run the `pre-reboot` script
+### Step 12: Run the `pre-reboot` script
 
 ```shell
 ./pre-reboot
 ```
 
-### Step 12: Create the normal user
+### Step 13: Create the normal user
 
 ```shell
 useradd -m -s /bin/bash mario
@@ -152,7 +160,7 @@ mario ALL=(ALL) ALL
 visudo
 ```
 
-### Step 13: Prepare to reboot
+### Step 14: Prepare to reboot
 
 Exit the chroot
 
@@ -172,7 +180,7 @@ Finally, reboot:
 reboot
 ```
 
-### Step 14: Get the post-reboot script
+### Step 15: Get the post-reboot script
 
 Do the work in a temporary directory:
 
@@ -190,7 +198,7 @@ Make sure it's executable:
 chmod +x post-reboot
 ```
 
-### Step 15: Run the `post-reboot`!
+### Step 16: Run the `post-reboot`!
 
 ```shell
 ./post-reboot
