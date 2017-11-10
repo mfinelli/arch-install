@@ -136,7 +136,7 @@ pacaur -S file-roller snapper archey-git grub-customizer colordiff \
 pacaur -S --asdeps unrar cdrkit
 pacaur -S tmuxp
 
-pacaur -S moreutils
+pacaur -S moreutils dos2unix
 pacaur -S ripgrep
 pacaur -S dnsutils net-tools nmap geo-bash
 pacaur -S ferm
