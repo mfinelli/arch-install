@@ -324,10 +324,6 @@ if [[ "yes" == $(prompt_yesno "Install puppet tools?") ]]; then
     pacaur -S puppet puppet-lint
 fi
 
-if [[ "yes" == $(prompt_yesno "Install pebble SDK?") ]]; then
-    pacaur -S pebble-sdk
-fi
-
 if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
     pacaur -S go{,-tools} glide
 fi
