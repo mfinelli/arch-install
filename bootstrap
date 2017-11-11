@@ -54,7 +54,7 @@ read -p "How many root G? "
 ROOTG="$REPLY"
 
 # do the LVM boogie
-cryptsetup luksOpen /dev/sda2 lvm
+cryptsetup luksOpen ${INSTALL_DISK}2 lvm
 pvcreate /dev/mapper/lvm
 vgcreate crypt /dev/mapper/lvm
 lvcreate -L ${SWAPG}G crypt -n swap
