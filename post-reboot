@@ -74,9 +74,9 @@ sudo chmod 644 /etc/makepkg.conf
 
 pacaur -S xterm kalu
 pacaur -S xcursor-openzone
-pacaur -S ttf-{mathtype,liberation,freefont,symbola} \
+pacaur -S ttf-{liberation,freefont,symbola} \
     ttf-{linux-libertine,google-fonts-git,carlito,caladea} \
-    otf-{zxx,fira-sans,fira-mono}
+    otf-{fira-sans,fira-mono} noto-fonts-emoji
 
 pacaur -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
     shimmer-wallpapers elementary-{xfce-icons,icon-theme} \
