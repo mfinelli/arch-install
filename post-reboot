@@ -282,7 +282,6 @@ if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
     pacaur -S nodejs-{uglifycss,autoprefixer,sequelize-cli,mocha,knex} \
         nodejs-{babel,webpack,bunyan,foundation-cli,handlebars,pug-cli} \
         nodejs-ember-cli yarn
-    pacaur -S coffeelint
     pacaur -S phantomjs
 fi
 
