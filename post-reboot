@@ -2,8 +2,8 @@
 
 set -e
 
-timedatectl set-ntp true
-hostnamectl set-hostname $(cat /etc/hostname)
+sudo timedatectl set-ntp true
+sudo hostnamectl set-hostname $(cat /etc/hostname)
 
 # http://stackoverflow.com/a/17695543
 function prompt_yesno() {
