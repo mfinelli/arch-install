@@ -311,7 +311,7 @@ pacaur -S s3cmd aws-cli python{,2}-boto python-boto3
 pacaur -S --asdeps python{,2}-magic
 pacaur -S google-cloud-sdk
 
-pacaur -S python-yapf
+pacaur -S yapf
 pacaur -S python-pytest
 pacaur -S python-sqlparse
 
