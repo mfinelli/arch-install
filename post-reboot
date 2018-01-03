@@ -30,7 +30,7 @@ done
 cd
 rm -rf $WORKDIR
 
-pacaur -S yaourt reflector namcap pkgbuild-introspection pkgfile rsync
+pacaur -S yaourt reflector namcap pkgfile rsync
 sudo pkgfile --update
 
 # only download from https mirrors
