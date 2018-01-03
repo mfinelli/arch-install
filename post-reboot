@@ -332,6 +332,7 @@ fi
 pacaur -S terraform graphviz
 pacaur -S kops kubernetes minikube
 pacaur -S poedit
+pacaur -S audacity
 
 pacaur -S backblaze-b2-git
 pacaur -S git-crypt jgit
