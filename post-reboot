@@ -267,6 +267,7 @@ if [[ "yes" == $(prompt_yesno "Install PHP?") ]]; then
     gpg --keyserver pgp.mit.edu --recv-keys 41515FE8
     pacaur -S php-box
 
+    gpg --keyserver pgp.mit.edu --recv-keys E2138192
     pacaur -S php-codesniffer php-cs-fixer phpunit
 
     if [[ "yes" == $(prompt_yesno "Install drupal packages?") ]]; then
