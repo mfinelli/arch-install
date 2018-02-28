@@ -33,6 +33,9 @@ rm -rf $WORKDIR
 pacaur -S yaourt reflector namcap pkgfile rsync
 sudo pkgfile --update
 
+pacaur -S trizen pacutils perl-{data-dump,libwww,lwp-protocol-https} \
+    perl-json{,-xs} perl-term-{readline-gnu,ui}
+
 # only download from https mirrors
 sudo reflector --verbose -l 100 -p https --sort rate \
     --save /etc/pacman.d/mirrorlist
@@ -165,7 +168,7 @@ done
 echo "Wine on 64bit systems requires the multilib repository."
 if [[ "yes" == $(prompt_yesno "Install wine packages?") ]]; then
     pacaur -S wine wine-mono wine_gecko winetricks
-    pacaur -S --asdeps perl-lwp-protocol-https
+    # pacaur -S --asdeps perl-lwp-protocol-https
     pacaur -S lib32-{libpulse,alsa-plugins}
 
     if [[ "yes" == $(prompt_yesno "Install music manipulation programs?") ]]
