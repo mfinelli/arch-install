@@ -142,7 +142,7 @@ pacaur -S tmuxp
 pacaur -S moreutils dos2unix
 pacaur -S ripgrep
 pacaur -S tldr
-pacaur -S dnsutils net-tools nmap geo-bash
+pacaur -S dnsutils net-tools nmap geo-bash whois
 pacaur -S ferm
 
 pacaur -S imagemagick ghostscript
