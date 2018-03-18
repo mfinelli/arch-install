@@ -30,11 +30,8 @@ done
 cd
 rm -rf $WORKDIR
 
-pacaur -S yaourt reflector namcap pkgfile rsync
+pacaur -S yaourt reflector namcap pkgfile rsync asp pacutils
 sudo pkgfile --update
-
-pacaur -S trizen pacutils perl-{data-dump,libwww,lwp-protocol-https} \
-    perl-json{,-xs} perl-term-{readline-gnu,ui}
 
 # only download from https mirrors
 sudo reflector --verbose -l 100 -p https --sort rate \
@@ -93,8 +90,8 @@ fi
 
 pacaur -S keepass xsel spideroak-one dropbox
 
-pacaur -S libreoffice-fresh{,-it,-fr} hunspell-{en,it,fr} hyphen-{en,it,fr} \
-    mythes{,-en,-it,-fr}
+pacaur -S libreoffice-fresh{-de,-es,-fr,-it} hunspell-{de,en,es,fr,it} \
+    hyphen-{de,en,es,fr,it} mythes{,-de,-en,-es,-fr,-it}
 
 if [[ "yes" == $(prompt_yesno "Install the GIMP?") ]]; then
     GIMP_INSTALL=true
@@ -115,10 +112,10 @@ fi
 
 pacaur -S shotwell dia dcraw inkscape
 
-pacaur -S pidgin purple-plugin-pack aspell-{en,it,fr} pidgin-otr hexchat
+pacaur -S pidgin purple-plugin-pack aspell-{de,en,es,fr,it} pidgin-otr hexchat
 
 if [[ "yes" == $(prompt_yesno "Install thunderbird?") ]]; then
-    pacaur -S thunderbird thunderbird-i18n-{it,fr}
+    pacaur -S thunderbird thunderbird-i18n-{de,en-us,es-es,fr,it}
 
     if [[ "yes" == $(prompt_yesno "Install enigmail for thunderbird?") ]]
     then
@@ -127,7 +124,7 @@ if [[ "yes" == $(prompt_yesno "Install thunderbird?") ]]; then
     fi
 fi
 
-pacaur -S mutt isync msmtp lynx vim-spell-{en,it,fr}
+pacaur -S mutt isync msmtp lynx vim-spell-{de,en,es,fr,it}
 
 if [[ "yes" == $(prompt_yesno "Install tor browser bundle?") ]]; then
     gpg --keyserver pgp.mit.edu --recv-keys D40814E0
@@ -135,13 +132,10 @@ if [[ "yes" == $(prompt_yesno "Install tor browser bundle?") ]]; then
 fi
 
 pacaur -S file-roller snapper archey-git grub-customizer colordiff \
-    cfv tmux p7zip htop pwgen
-pacaur -S --asdeps unrar cdrkit
-pacaur -S tmuxp
+    cfv tmux tmuxp p7zip htop pwgen unrar cdrkit
 
-pacaur -S moreutils dos2unix
-pacaur -S ripgrep
-pacaur -S tldr
+pacaur -S moreutils dos2unix ripgrep
+pacaur -S tldr thefuck
 pacaur -S dnsutils net-tools nmap geo-bash whois
 pacaur -S ferm
 
@@ -149,7 +143,7 @@ pacaur -S imagemagick ghostscript
 
 pacaur -S chromium
 pacaur -S deluge vlc youtube-dl
-pacaur -S --asdeps libdvdcss libaacs
+pacaur -S libdvdcss libaacs
 
 pacaur -S guake
 
@@ -168,7 +162,6 @@ done
 echo "Wine on 64bit systems requires the multilib repository."
 if [[ "yes" == $(prompt_yesno "Install wine packages?") ]]; then
     pacaur -S wine wine-mono wine_gecko winetricks
-    # pacaur -S --asdeps perl-lwp-protocol-https
     pacaur -S lib32-{libpulse,alsa-plugins}
 
     if [[ "yes" == $(prompt_yesno "Install music manipulation programs?") ]]
@@ -177,14 +170,13 @@ if [[ "yes" == $(prompt_yesno "Install wine packages?") ]]; then
     fi
 fi
 
-for package in vinagre handbrake cksfv calibre thefuck; do
+for package in vinagre handbrake cksfv calibre spotify; do
     if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
         pacaur -S $package
     fi
 done
 
-pacaur -S redshift
-pacaur -S --asdeps python-xdg
+pacaur -S redshift python-xdg
 
 if [[ "yes" == $(prompt_yesno "Install printing packages?") ]]; then
     pacaur -S cups cups-pdf gutenprint foomatic-db{,-engine,-nonfree} \
@@ -200,17 +192,13 @@ if [[ "yes" == $(prompt_yesno "Install printing packages?") ]]; then
 fi
 
 pacaur -S gnucash
-pacaur -S --asdeps perl-{finance-quote,date-manip}
+pacaur -S perl-{finance-quote,date-manip,libwww,lwp-protocol-https}
 
 if [[ "yes" == $(prompt_yesno "Install zsh?") ]]; then
-    pacaur -S zsh grml-zsh-config zsh-syntax-highlighting
+    pacaur -S zsh grml-zsh-config zsh-syntax-highlighting zsh-completions
 fi
 
-pacaur -S bash-completion zsh-completions
-
-if [[ "yes" == $(prompt_yesno "Install spotify?") ]]; then
-    pacaur -S spotify
-fi
+pacaur -S bash-completion
 
 pacaur -S okular
 
@@ -268,14 +256,7 @@ if [[ "yes" == $(prompt_yesno "Install PHP?") ]]; then
     pacaur -S php-imagick
 
     gpg --keyserver pgp.mit.edu --recv-keys 41515FE8
-    pacaur -S php-box
-
-    gpg --keyserver pgp.mit.edu --recv-keys E2138192
-    pacaur -S php-codesniffer php-cs-fixer phpunit
-
-    if [[ "yes" == $(prompt_yesno "Install drupal packages?") ]]; then
-        pacaur -S drush
-    fi
+    pacaur -S php-box phpunit
 fi
 
 if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
@@ -283,15 +264,14 @@ if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
-    pacaur -S nodejs npm bower gulp uglify-js pm2 eslint coffee-script
-    pacaur -S nodejs-{uglifycss,autoprefixer,sequelize-cli,mocha,knex} \
-        nodejs-{babel,webpack,bunyan,foundation-cli,handlebars,pug-cli} \
-        nodejs-{ember-cli,vue-cli} yarn
+    pacaur -S nodejs npm bower gulp uglify-js eslint coffee-script yarn
+    pacaur -S nodejs-{uglifycss,sequelize-cli,mocha,knex,babel,webpack} \
+        nodejs-{bunyan,foundation-cli,handlebars,pug-cli,ember-cli,vue-cli}
     pacaur -S phantomjs
 fi
 
 if [[ "yes" == $(prompt_yesno "Install ruby packages?") ]]; then
-    pacaur -S ruby{,-rake,-rdoc,-bundler,-rubocop,-install} chruby
+    pacaur -S ruby{,-rake,-rdoc,-bundler,-rubocop,-install,-pry} chruby
 
     if [[ "yes" == $(prompt_yesno "Install ruby css tools?") ]]; then
         pacaur -S ruby-{sass,scss_lint}
@@ -312,8 +292,7 @@ pacaur -S beanstalkd
 pacaur -S memcached
 pacaur -S shellcheck
 
-pacaur -S s3cmd aws-cli python{,2}-boto python-boto3
-pacaur -S --asdeps python{,2}-magic
+pacaur -S s3cmd aws-cli python{,2}-boto python-boto3 python{,2}-magic
 pacaur -S google-cloud-sdk
 
 pacaur -S yapf
@@ -321,8 +300,7 @@ pacaur -S python-pytest
 pacaur -S python-sqlparse
 
 if [[ "yes" == $(prompt_yesno "Install ansible?") ]]; then
-    pacaur -S ansible ansible-lint
-    pacaur -S --asdeps python2-passlib sshpass
+    pacaur -S ansible ansible-lint python{,2}-passlib sshpass
 fi
 
 if [[ "yes" == $(prompt_yesno "Install puppet tools?") ]]; then
@@ -344,5 +322,3 @@ pacaur -S git-crypt jgit
 # if we don't have a java runtime yet, install java 8
 command -v java >/dev/null 2>&1 || { \
   pacaur -S jre8-openjdk; }
-
-pacaur -S zoom

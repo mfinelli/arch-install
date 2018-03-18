@@ -45,8 +45,8 @@ pacman -S xfce4{,-goodies} lightdm{,-gtk-greeter} accountsservice \
 sed -i "/greeter-hide-users=false/cgreeter-hide-users=true" \
     /etc/lightdm/lightdm.conf
 
-pacman -S wget firefox firefox-i18n-{it,fr} vim yajl git gnome-keyring \
-    seahorse openssh expac stow
+pacman -S wget firefox firefox-i18n-{de,en-us,es-es,fr,it} vim yajl git \
+    gnome-keyring seahorse openssh expac stow
 
 systemctl enable lightdm
 systemctl enable NetworkManager
