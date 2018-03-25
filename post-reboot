@@ -313,7 +313,7 @@ if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
 fi
 
 pacaur -S terraform graphviz
-pacaur -S kops kubernetes minikube
+pacaur -S kops kubernetes minikube-bin
 pacaur -S poedit
 pacaur -S audacity
 
