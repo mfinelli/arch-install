@@ -319,6 +319,7 @@ pacaur -S audacity
 
 pacaur -S backblaze-b2-git
 pacaur -S git-crypt jgit
+pacaur -S ngrok
 
 # if we don't have a java runtime yet, install java 8
 command -v java >/dev/null 2>&1 || { \
