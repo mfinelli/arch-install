@@ -30,7 +30,7 @@ done
 cd
 rm -rf $WORKDIR
 
-pacaur -S yaourt reflector namcap pkgfile rsync asp pacutils
+pacaur -S yaourt reflector namcap pkgfile rsync asp pacutils pikaur
 sudo pkgfile --update
 
 # only download from https mirrors
