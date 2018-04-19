@@ -191,7 +191,7 @@ if [[ "yes" == $(prompt_yesno "Install printing packages?") ]]; then
     sudo systemctl enable org.cups.cupsd.service
 fi
 
-pacaur -S gnucash
+pacaur -S gnucash{,-docs}
 pacaur -S perl-{finance-quote,date-manip,libwww,lwp-protocol-https}
 
 if [[ "yes" == $(prompt_yesno "Install zsh?") ]]; then
