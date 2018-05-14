@@ -88,7 +88,7 @@ if [[ "yes" == $(prompt_yesno "Install bluetooth packages?") ]]; then
     gsettings set org.blueman.transfer shared-path /home/`whoami`/Downloads
 fi
 
-pacaur -S keepass xsel spideroak-one dropbox
+pacaur -S keepass xsel spideroak-one dropbox keybase kbfs
 
 pacaur -S libreoffice-fresh{-de,-es,-fr,-it} hunspell-{de,en,es,fr,it} \
     hyphen-{de,en,es,fr,it} mythes{,-de,-en,-es,-fr,-it}
