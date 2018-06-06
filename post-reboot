@@ -317,6 +317,7 @@ pacaur -S kops kubernetes minikube-bin kubesec kubectx
 pacaur -S poedit
 pacaur -S audacity
 
+pacaur -S firefox-developer-edition
 pacaur -S backblaze-b2-git
 pacaur -S git-crypt jgit
 pacaur -S ngrok
