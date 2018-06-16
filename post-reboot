@@ -326,4 +326,4 @@ pacaur -S docker
 
 # if we don't have a java runtime yet, install java 8
 command -v java >/dev/null 2>&1 || { \
-  pacaur -S jre8-openjdk; }
+  pacaur -S jre8-openjdk jdk8-openjdk; }
