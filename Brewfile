@@ -40,8 +40,10 @@ brew "youtube-dl"
 brew "zsh"
 cask "adobe-creative-cloud"
 cask "apache-directory-studio"
+cask "docker"
 cask "dropbox"
 cask "firefox"
+cask "firefox-developer-edition"
 cask "gimp"
 cask "gnucash"
 cask "google-chrome"
@@ -59,7 +61,6 @@ cask "vagrant"
 cask "virtualbox"
 cask "viscosity"
 cask "vlc"
-cask "homebrew/cask-versions/firefox-developer-edition"
 mas "Evernote", id: 406056744
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
