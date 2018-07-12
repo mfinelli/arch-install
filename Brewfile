@@ -61,6 +61,7 @@ cask "vagrant"
 cask "virtualbox"
 cask "viscosity"
 cask "vlc"
+cask "zoomus"
 mas "Evernote", id: 406056744
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
