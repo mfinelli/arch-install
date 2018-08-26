@@ -310,7 +310,7 @@ if [[ "yes" == $(prompt_yesno "Install puppet tools?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
-    pacaur -S go{,-tools} glide
+    pacaur -S go{,-tools} dep glide
 fi
 
 pacaur -S terraform graphviz
