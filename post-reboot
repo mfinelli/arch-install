@@ -138,6 +138,7 @@ pacaur -S moreutils dos2unix ripgrep
 pacaur -S tldr thefuck
 pacaur -S dnsutils net-tools nmap geo-bash whois
 pacaur -S ferm
+pacaur -S wmuc
 
 pacaur -S imagemagick ghostscript
 
