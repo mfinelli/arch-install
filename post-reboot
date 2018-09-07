@@ -127,7 +127,7 @@ fi
 pacaur -S mutt isync msmtp lynx vim-spell-{de,en,es,fr,it}
 
 if [[ "yes" == $(prompt_yesno "Install tor browser bundle?") ]]; then
-    gpg --keyserver pgp.mit.edu --recv-keys D40814E0
+    gpg --keyserver pgp.mit.edu --recv-keys D9FF06E2
     pacaur -S tor-browser-en
 fi
 
