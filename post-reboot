@@ -115,13 +115,8 @@ pacaur -S shotwell dia dcraw inkscape
 pacaur -S pidgin purple-plugin-pack aspell-{de,en,es,fr,it} pidgin-otr hexchat
 
 if [[ "yes" == $(prompt_yesno "Install thunderbird?") ]]; then
-    pacaur -S thunderbird thunderbird-i18n-{de,en-us,es-es,fr,it}
-
-    if [[ "yes" == $(prompt_yesno "Install enigmail for thunderbird?") ]]
-    then
-        gpg --keyserver pgp.mit.edu --recv-keys 9369CDF3 DD5F693B
-        pacaur -S thunderbird-enigmail
-    fi
+    pacaur -S thunderbird thunderbird-i18n-{de,en-us,es-es,fr,it} \
+        thunderbird-extension-enigmail
 fi
 
 pacaur -S mutt isync msmtp lynx vim-spell-{de,en,es,fr,it}
