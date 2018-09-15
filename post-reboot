@@ -148,7 +148,7 @@ fi
 
 pikaur -S texlive-most texlive-lang
 
-for package in sublime-text-dev gummi phpstorm rubymine postman-bin; do
+for package in sublime-text-dev gummi phpstorm rubymine; do
     if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
         pikaur -S $package
     fi
@@ -251,7 +251,7 @@ if [[ "yes" == $(prompt_yesno "Install PHP?") ]]; then
     pikaur -S php-imagick
 
     gpg --keyserver pgp.mit.edu --recv-keys 41515FE8
-    pikaur -S php-box phpunit
+    pikaur -S php-box
 fi
 
 if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
@@ -259,16 +259,13 @@ if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
-    pikaur -S nodejs npm bower gulp uglify-js eslint coffee-script yarn \
-        babel-cli
-    pikaur -S nodejs-{uglifycss,sequelize-cli,mocha,knex,webpack,bunyan} \
-        nodejs-{foundation-cli,handlebars,pug-cli,ember-cli,vue-cli}
-    pikaur -S phantomjs
+    pikaur -S nodejs npm bower gulp yarn
+    pikaur -S nodejs-{foundation-cli,pug-cli,ember-cli,vue-cli}
     pikaur -S stylelint yamllint
 fi
 
 if [[ "yes" == $(prompt_yesno "Install ruby packages?") ]]; then
-    pikaur -S ruby{,-rake,-rdoc,-bundler,-rubocop,-install,-pry} chruby
+    pikaur -S ruby{,-rake,-rdoc,-bundler,-install,-pry} chruby
 
     if [[ "yes" == $(prompt_yesno "Install ruby css tools?") ]]; then
         pikaur -S ruby-{sass,scss_lint}
