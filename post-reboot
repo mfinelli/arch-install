@@ -96,9 +96,7 @@ pikaur -S libreoffice-fresh{-de,-es,-fr,-it} hunspell-en_{AU,CA,GB,US} \
 
 if [[ "yes" == $(prompt_yesno "Install the GIMP?") ]]; then
     GIMP_INSTALL=true
-    pikaur -S gimp{,-extras} \
-        gimp-plugin-{resynthesizer-git,saveforweb,exif-browser} \
-        gimp-script-{descreen,smart-remove} gimp-fourier
+    pikaur -S gimp{,-extras} gimp-plugin-resynthesizer-git
 else
     GIMP_INSTALL=false
 fi
