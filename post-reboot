@@ -305,7 +305,7 @@ if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
     pikaur -S go{,-tools} dep delve glide
 fi
 
-pikaur -S terraform graphviz
+pikaur -S terraform graphviz packer
 pikaur -S kops kubernetes minikube-bin kubesec kubectx
 pikaur -S poedit
 pikaur -S audacity
