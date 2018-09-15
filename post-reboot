@@ -90,8 +90,9 @@ fi
 
 pikaur -S keepass xsel spideroak-one dropbox keybase kbfs
 
-pikaur -S libreoffice-fresh{-de,-es,-fr,-it} hunspell-{de,en,es,fr,it} \
-    hyphen-{de,en,es,fr,it} mythes{,-de,-en,-es,-fr,-it}
+pikaur -S libreoffice-fresh{-de,-es,-fr,-it} hunspell-en_{AU,CA,GB,US} \
+    hunspell-{de,es,fr,it} hyphen-{de,en,es,fr,it} \
+    mythes{,-de,-en,-es,-fr,-it}
 
 if [[ "yes" == $(prompt_yesno "Install the GIMP?") ]]; then
     GIMP_INSTALL=true
