@@ -46,7 +46,7 @@ sed -i "/greeter-hide-users=false/cgreeter-hide-users=true" \
     /etc/lightdm/lightdm.conf
 
 pacman -S wget firefox firefox-i18n-{de,en-us,es-es,fr,it} vim yajl git \
-    gnome-keyring seahorse openssh expac stow
+    gnome-keyring seahorse openssh expac stow pyalpm asp
 
 systemctl enable lightdm
 systemctl enable NetworkManager
