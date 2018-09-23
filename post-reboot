@@ -315,6 +315,7 @@ pikaur -S backblaze-b2-git
 pikaur -S git-crypt jgit
 pikaur -S ngrok
 pikaur -S docker
+pikaur -S nim{,ble}
 
 # if we don't have a java runtime yet, install java 8
 command -v java >/dev/null 2>&1 || { \
