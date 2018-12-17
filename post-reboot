@@ -16,9 +16,6 @@ function prompt_yesno() {
 
 WORKDIR=$(mktemp -d)
 
-# falconindy key for cower
-gpg --keyserver pgp.mit.edu --recv-keys 1EB2638FF56C0C53
-
 for package in pikaur; do
     cd $WORKDIR
     wget https://aur.archlinux.org/cgit/aur.git/snapshot/$package.tar.gz
@@ -30,7 +27,7 @@ done
 cd
 rm -rf $WORKDIR
 
-pikaur -S cower reflector namcap pkgfile rsync pacutils
+pikaur -S reflector namcap pkgfile rsync pacutils
 sudo pkgfile --update
 
 # only download from https mirrors
