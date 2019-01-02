@@ -190,7 +190,7 @@ if [[ "yes" == $(prompt_yesno "Install zsh?") ]]; then
     pikaur -S zsh grml-zsh-config zsh-syntax-highlighting zsh-completions
 fi
 
-pikaur -S bash-completion
+pikaur -S fish bash-completion
 
 pikaur -S okular
 
@@ -262,7 +262,7 @@ if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install ruby packages?") ]]; then
-    pikaur -S ruby{,-rake,-rdoc,-bundler,-install,-pry} chruby
+    pikaur -S ruby{,-rake,-rdoc,-bundler,-install,-pry} chruby{,-fish}
 
     if [[ "yes" == $(prompt_yesno "Install ruby css tools?") ]]; then
         pikaur -S ruby-{sass,scss_lint}
