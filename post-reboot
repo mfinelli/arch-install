@@ -284,7 +284,7 @@ pikaur -S memcached
 pikaur -S shellcheck
 
 pikaur -S s3cmd aws-cli python{,2}-boto python-boto3 python{,2}-magic
-pikaur -S google-cloud-sdk
+pikaur -S google-cloud-sdk firebase-tools
 
 pikaur -S yapf
 pikaur -S python-pytest
