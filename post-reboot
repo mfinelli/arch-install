@@ -71,7 +71,7 @@ sudo chmod 644 /etc/makepkg.conf
 
 pikaur -S xterm kalu
 pikaur -S xcursor-openzone
-pikaur -S ttf-{liberation,freefont,symbola} \
+pikaur -S ttf-{liberation,symbola} gnu-free-fonts \
     ttf-{linux-libertine,google-fonts-git,carlito,caladea} \
     otf-{fira-sans,fira-mono} noto-fonts-emoji
 
