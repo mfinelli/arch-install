@@ -87,9 +87,11 @@ fi
 
 pikaur -S keepass xsel spideroak-one dropbox keybase kbfs 1password-cli
 
-pikaur -S libreoffice-fresh{-de,-es,-fr,-it} hunspell-en_{AU,CA,GB,US} \
-    hunspell-{de,es,fr,it} hyphen-{de,en,es,fr,it} \
-    mythes{,-de,-en,-es,-fr,-it}
+if [[ "yes" == $(prompt_yesno "Install libreoffice?") ]]; then
+    pikaur -S libreoffice-fresh{-de,-es,-fr,-it} hunspell-en_{AU,CA,GB,US} \
+        hunspell-{de,es,fr,it} hyphen-{de,en,es,fr,it} \
+        mythes{,-de,-en,-es,-fr,-it}
+fi
 
 if [[ "yes" == $(prompt_yesno "Install the GIMP?") ]]; then
     GIMP_INSTALL=true
@@ -106,20 +108,27 @@ if [[ "yes" == $(prompt_yesno "Install scanning software?") ]]; then
     fi
 fi
 
-pikaur -S shotwell dia dcraw inkscape
+if [[ "yes" == $(prompt_yesno "Install graphics software?") ]]; then
+    pikaur -S shotwell dia dcraw inkscape
+fi
 
-pikaur -S pidgin purple-plugin-pack aspell-{de,en,es,fr,it} pidgin-otr hexchat
+if [[ "yes" == $(prompt_yesno "Install chat programs?") ]]; then
+    pikaur -S pidgin purple-plugin-pack aspell-{de,en,es,fr,it} \
+        pidgin-otr hexchat
+fi
 
 if [[ "yes" == $(prompt_yesno "Install thunderbird?") ]]; then
     pikaur -S thunderbird thunderbird-i18n-{de,en-us,es-es,fr,it} \
         thunderbird-extension-enigmail
 fi
 
-pikaur -S mutt isync msmtp lynx vim-spell-{de,en,es,fr,it}
+if [[ "yes" == $(prompt_yesno "Install cli email tools?") ]]; then
+    pikaur -S mutt isync msmtp lynx vim-spell-{de,en,es,fr,it}
+fi
 
 if [[ "yes" == $(prompt_yesno "Install tor browser bundle?") ]]; then
-    gpg --keyserver pgp.mit.edu --recv-keys D9FF06E2
-    pikaur -S tor-browser-en
+    gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org
+    pikaur -S tor-browser
 fi
 
 pikaur -S file-roller snapper archey-git grub-customizer colordiff \
@@ -128,7 +137,6 @@ pikaur -S file-roller snapper archey-git grub-customizer colordiff \
 pikaur -S moreutils dos2unix ripgrep
 pikaur -S tldr thefuck
 pikaur -S dnsutils net-tools nmap geo-bash whois
-pikaur -S ferm
 pikaur -S wmuc
 
 pikaur -S imagemagick ghostscript
@@ -137,13 +145,13 @@ pikaur -S chromium
 pikaur -S deluge vlc youtube-dl
 pikaur -S libdvdcss libaacs
 
-pikaur -S guake
-
 if [[ "yes" == $(prompt_yesno "Install google chrome?") ]]; then
     pikaur -S google-chrome
 fi
 
-pikaur -S texlive-most texlive-lang
+if [[ "yes" == $(prompt_yesno "Install latex packages?") ]]; then
+    pikaur -S texlive-most texlive-lang
+fi
 
 for package in sublime-text-dev gummi phpstorm rubymine; do
     if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
@@ -162,7 +170,7 @@ if [[ "yes" == $(prompt_yesno "Install wine packages?") ]]; then
     fi
 fi
 
-for package in vinagre handbrake cksfv calibre spotify; do
+for package in vinagre handbrake cksfv calibre spotify audacity; do
     if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
         pikaur -S $package
     fi
@@ -183,14 +191,18 @@ if [[ "yes" == $(prompt_yesno "Install printing packages?") ]]; then
     sudo systemctl enable org.cups.cupsd.service
 fi
 
-pikaur -S gnucash{,-docs}
-pikaur -S perl-{finance-quote,date-manip,libwww,lwp-protocol-https}
+if [[ "yes" == $(prompt_yesno "Install gnucash?") ]]; then
+    pikaur -S gnucash{,-docs}
+    pikaur -S perl-{finance-quote,date-manip,libwww,lwp-protocol-https}
+fi
 
 if [[ "yes" == $(prompt_yesno "Install zsh?") ]]; then
     pikaur -S zsh grml-zsh-config zsh-syntax-highlighting zsh-completions
 fi
 
-pikaur -S fish bash-completion
+if [[ "yes" == $(prompt_yesno "Install fish?") ]]; then
+    pikaur -S fish
+fi
 
 pikaur -S okular
 
@@ -256,17 +268,12 @@ if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
-    pikaur -S nodejs npm bower gulp yarn
-    pikaur -S nodejs-{foundation-cli,pug-cli,ember-cli,vue-cli}
-    pikaur -S stylelint yamllint
+    pikaur -S nodejs npm
+    pikaur -S nodejs-{foundation-cli,pug-cli}
 fi
 
 if [[ "yes" == $(prompt_yesno "Install ruby packages?") ]]; then
     pikaur -S ruby{,-rake,-rdoc,-bundler,-install,-pry} chruby{,-fish}
-
-    if [[ "yes" == $(prompt_yesno "Install ruby css tools?") ]]; then
-        pikaur -S ruby-{sass,scss_lint}
-    fi
 fi
 
 if [[ "yes" == $(prompt_yesno "Intall virtualbox?") ]]; then
@@ -277,43 +284,48 @@ if [[ "yes" == $(prompt_yesno "Intall virtualbox?") ]]; then
     fi
 fi
 
-pikaur -S jpegoptim
-pikaur -S postfix
-pikaur -S beanstalkd
-pikaur -S memcached
-pikaur -S shellcheck
+for package in jpegoptim postfix beanstalkd memcached shellcheck; do
+    if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
+        pikaur -S $package
+    fi
+done
 
-pikaur -S s3cmd aws-cli python{,2}-boto python-boto3 python{,2}-magic
-pikaur -S google-cloud-sdk firebase-tools
-
-pikaur -S yapf
-pikaur -S python-pytest
-pikaur -S python-sqlparse
-
-if [[ "yes" == $(prompt_yesno "Install ansible?") ]]; then
-    pikaur -S ansible ansible-lint python{,2}-passlib sshpass
+if [[ "yes" == $(prompt_yesno "Install cloud cli utilities?") ]]; then
+    pikaur -S aws-cli python-boto python-boto3 python-magic
+    pikaur -S google-cloud-sdk
 fi
 
-if [[ "yes" == $(prompt_yesno "Install puppet tools?") ]]; then
-    pikaur -S puppet puppet-lint
+if [[ "yes" == $(prompt_yesno "Install extra python packages?") ]]; then
+    pikaur -S yapf python-{pytest,sqlparse}
+fi
+
+if [[ "yes" == $(prompt_yesno "Install ansible?") ]]; then
+    pikaur -S ansible ansible-lint python-passlib sshpass
 fi
 
 if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
-    pikaur -S go{,-tools} dep delve glide
+    pikaur -S go{,-tools} delve
 fi
 
-pikaur -S terraform graphviz packer
-pikaur -S kops kubernetes minikube-bin kubesec kubectx
-pikaur -S poedit
-pikaur -S audacity
+if [[ "yes" == $(prompt_yesno "Install nim?") ]]; then
+    pikaur -S nim{,ble}
+fi
 
-pikaur -S firefox-developer-edition
-pikaur -S backblaze-b2-git
-pikaur -S git-crypt jgit
-pikaur -S ngrok
-pikaur -S docker
-pikaur -S nim{,ble}
-pikaur -S ffsend
+if [[ "yes" == $(prompt_yesno "Install devops tools?") ]]; then
+    pikaur -S terraform graphviz packer
+    pikaur -S kops kubernetes-bin minikube-bin kubesec kubectx
+    pikaur -S docker
+fi
+
+for package in firefox-developer-edition backblaze-b2-git ngrok ffsend; do
+    if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
+        pikaur -S $package
+    fi
+done
+
+if [[ "yes" == $(prompt_yesno "Install git notes tools?") ]]; then
+    pikaur -S git-crypt jgit
+fi
 
 # if we don't have a java runtime yet, install java 8
 command -v java >/dev/null 2>&1 || { \

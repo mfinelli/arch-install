@@ -14,7 +14,8 @@ function prompt_yesno() {
 pacman -S iw dialog wpa_supplicant easy-rsa networkmanager{,-openvpn} \
     network-manager-applet crda inetutils netctl
 
-pacman -S logrotate man-db nano perl s-nail texinfo vi man-pages
+pacman -S logrotate man-db nano perl s-nail texinfo vi man-pages \
+    bash-completion
 
 read -p "Which wireless country (two-letter-code) should we enable? "
 sed -i "/WIRELESS_REGDOM=\"$REPLY\"/s/^#//" /etc/conf.d/wireless-regdom
