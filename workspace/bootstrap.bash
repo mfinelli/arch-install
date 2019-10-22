@@ -10,6 +10,12 @@ if [[ ! -f workspace.yml ]]; then
   exit 1
 fi
 
+ansver="$(grep my_ansible_version: workspace.yml | awk -F:\  '{print $2}')"
+
+if [[ -z $ansver ]]; then
+  echo >&2 "unable to get ansible version from playbook"
+  exit 1
+fi
 
 # prompt for password right away
 sudo echo -n
