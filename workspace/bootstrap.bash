@@ -5,6 +5,7 @@ if [[ $(id -u) -ne 0 ]]; then
   exit 1
 fi
 
-yum install python3{,-pip}
+yum install python{,-pip}
+pip install ansible==2.8.6
 
 exit 0
