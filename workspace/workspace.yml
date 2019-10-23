@@ -37,6 +37,14 @@
            - zsh
          state: present
 
+     - name: install networking tools
+       become: True
+       yum:
+         name:
+           - bind-utils
+           - telnet
+         state: present
+
      - name: ensure home {{ item }} dir for {{ whoami }}
        file: path=/home/{{ homedir }}/{{ item }} state=directory
        loop:
