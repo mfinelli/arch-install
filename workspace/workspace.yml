@@ -4,6 +4,7 @@
      my_ansible_version: 2.8.6
 
      ffsend_version: 0.2.52
+     golang_version: 1.13.3
      packer_version: 1.4.4
      terraform_version: 0.12.12
      terraform_old_version: 0.11.14
@@ -48,3 +49,6 @@
 
      - name: install hashicorp tools (terraform and packer)
        import_tasks: ./hashicorp.yml
+
+     - name: install golang (amzn2 repo version is too old)
+       import_tasks: ./golang.yml
