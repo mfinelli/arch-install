@@ -1,0 +1,27 @@
+---
+- name: download terraform v0.12
+  unarchive:
+    src: https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip
+    remote_src: yes
+    dest: /home/{{ homedir }}/bin/
+    mode: 0755
+
+- name: download terraform v0.11
+  unarchive:
+    src: https://releases.hashicorp.com/terraform/{{ terraform_old_version }}/terraform_{{ terraform_old_version }}_linux_amd64.zip
+    remote_src: yes
+    dest: /home/{{ homedir }}/tmp/
+    mode: 0755
+
+- name: link old terraform into bin
+  file:
+    src: /home/{{ homedir }}/tmp/terraform
+    dest: /home/{{ homedir }}/bin/terraform_old
+    state: link
+
+- name: download packer
+  unarchive:
+    src: https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_linux_amd64.zip
+    remote_src: yes
+    dest: /home/{{ homedir }}/bin
+    mode: 0755

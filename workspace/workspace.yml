@@ -4,6 +4,9 @@
      my_ansible_version: 2.8.6
 
      ffsend_version: 0.2.52
+     packer_version: 1.4.4
+     terraform_version: 0.12.12
+     terraform_old_version: 0.11.14
    tasks:
      - name: ensure ansible dependencies are installed
        become: True
@@ -33,8 +36,15 @@
            - zsh
          state: present
 
-     - name: ensure home bin dir for {{ whoami }}
-       file: path=/home/{{ homedir }}/bin state=directory
+     - name: ensure home {{ item }} dir for {{ whoami }}
+       file: path=/home/{{ homedir }}/{{ item }} state=directory
+       loop:
+         - bin
+         - src
+         - tmp
 
      - name: install ffsend (firefox send cli)
        import_tasks: ./ffsend.yml
+
+     - name: install hashicorp tools (terraform and packer)
+       import_tasks: ./hashicorp.yml
