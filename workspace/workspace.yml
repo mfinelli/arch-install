@@ -45,6 +45,15 @@
            - telnet
          state: present
 
+     - name: install other tools
+       become: True
+       yum:
+         name:
+           - htop
+           - jq
+           - qrencode
+         state: present
+
      - name: ensure home {{ item }} dir for {{ whoami }}
        file: path=/home/{{ homedir }}/{{ item }} state=directory
        loop:
