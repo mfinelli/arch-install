@@ -5,6 +5,8 @@
     remote_src: yes
     dest: /home/{{ homedir }}/tmp
   register: pwgen_downloaded
+  args:
+    creates: /home/{{ homedir }}/tmp/pwgen-{{ pwgen_version }}.tar.gz
 
 - name: build pwgen
   when: pwgen_downloaded.changed

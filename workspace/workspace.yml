@@ -5,6 +5,7 @@
 
      ffsend_version: 0.2.52
      golang_version: 1.13.3
+     google_authenticator_version: 1.06
      packer_version: 1.4.4
      pwgen_version: 2.08
      terraform_version: 0.12.12
@@ -34,7 +35,10 @@
        become: True
        yum:
          name:
-           - autoconf
+           - autoconf # pwgen
+           - automake # google-authenticator-libpam
+           - libtool # google-authenticator-libpam
+           - pam-devel # google-authenticator-libpam
          state: present
 
      - name: install shell extras
@@ -80,3 +84,6 @@
 
      - name: build and install pwgen from source (no amzn2 package)
        import_tasks: ./pwgen.yml
+
+     - name: build and install google-authenticator-libpam from source
+       import_tasks: ./google-authenticator.yml
