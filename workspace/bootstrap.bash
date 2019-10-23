@@ -23,6 +23,12 @@ sudo echo -n
 sudo yum install python{,-pip}
 sudo pip install ansible=="$ansver"
 
-sudo ansible-playbook --extra-vars whoami="$(whoami)" ./workspace.yml
+ansiblebin="$(sudo which ansible-playbook)"
+
+$ansiblebin \
+  --extra-vars whoami="$(whoami)" \
+  --extra-vars whoami_group="$(id -ng)" \
+  --extra-vars homedir="$(whoami | awk -F\\ '{print $2}')" \
+  ./workspace.yml
 
 exit 0
