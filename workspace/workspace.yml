@@ -3,12 +3,14 @@
    vars:
      my_ansible_version: 2.8.6
 
+     chruby_version: 0.3.9
      ffsend_version: 0.2.52
      golang_version: 1.13.3
      google_authenticator_version: 1.06
      packer_version: 1.4.4
      pwgen_version: 2.08
      ripgrep_version: 11.0.2
+     rubyinstall_version: 0.7.0
      terraform_version: 0.12.12
      terraform_old_version: 0.11.14
    tasks:
@@ -92,3 +94,6 @@
 
      - name: install ripgrep (rg)
        import_tasks: ./ripgrep.yml
+
+     - name: install chruby and ruby-install
+       import_tasks: ./chruby.yml
