@@ -20,6 +20,7 @@ fi
 # prompt for password right away
 sudo echo -n
 
+sudo yum update
 sudo yum install python{,-pip}
 sudo pip install ansible=="$ansver"
 
