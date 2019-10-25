@@ -8,6 +8,7 @@
      google_authenticator_version: 1.06
      packer_version: 1.4.4
      pwgen_version: 2.08
+     ripgrep_version: 11.0.2
      terraform_version: 0.12.12
      terraform_old_version: 0.11.14
    tasks:
@@ -37,6 +38,7 @@
          name:
            - autoconf # pwgen
            - automake # google-authenticator-libpam
+           - bsdtar
            - libtool # google-authenticator-libpam
            - pam-devel # google-authenticator-libpam
          state: present
@@ -87,3 +89,6 @@
 
      - name: build and install google-authenticator-libpam from source
        import_tasks: ./google-authenticator.yml
+
+     - name: install ripgrep (rg)
+       import_tasks: ./ripgrep.yml

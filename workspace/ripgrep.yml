@@ -1,0 +1,60 @@
+---
+- name: creat ripgrep working directory
+  file: path=/home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }} state=directory
+
+# linux binaries aren't provided, so we need to extract it from the upstream
+# debian package (we can't just use unarchive module since it doesn't support
+# .deb files). it's ok to use the debian package since upstream says they're
+# statically linked
+- name: download ripgrep binary
+  get_url:
+    url: https://github.com/BurntSushi/ripgrep/releases/download/{{ ripgrep_version }}/ripgrep_{{ ripgrep_version }}_amd64.deb 
+    dest: /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/
+
+- name: exract ripgrep debian archive
+  shell: /usr/bin/bsdtar -xf /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/ripgrep_{{ ripgrep_version }}_amd64.deb 
+  args:
+    chdir: /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/
+
+- name: extract debian data
+  unarchive:
+    src: /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/data.tar.xz
+    remote_src: yes
+    dest: /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/
+
+- name: move rg binary into place
+  become: True
+  copy:
+    src: /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/usr/bin/rg
+    dest: /usr/local/bin/
+    remote_src: yes
+    owner: root
+    group: root
+    mode: 0755
+
+- name: install rg man mages
+  become: True
+  copy:
+    src: /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/usr/share/man/man1/rg.1
+    dest: /usr/local/share/man/man1/
+    remote_src: yes
+    owner: root
+    group: root
+
+- name: install rg bash completion
+  become: True
+  copy:
+    src: /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/usr/share/bash-completion/completions/rg
+    dest: /etc/bash_completion.d/
+    remote_src: yes
+    owner: root
+    group: root
+
+- name: install rg zsh completion
+  become: True
+  copy:
+    src: /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/usr/share/zsh/vendor-completions/_rg
+    dest: /usr/share/zsh/site-functions/
+    remote_src: yes
+    owner: root
+    group: root
