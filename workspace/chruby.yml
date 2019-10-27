@@ -22,3 +22,17 @@
   shell: make install
   args:
     chdir: /home/{{ homedir }}/tmp/ruby-install-{{ rubyinstall_version }}
+
+- name: install rubies
+  shell: ruby-install ruby-{{ item }}
+  loop: "{{ rubies }}"
+  args:
+    creates: /home/{{ homedir }}/.rubies/ruby-{{ item }}/bin/ruby
+
+- name: install bundler {{ bundler_version }}
+  gem:
+    name: bundler
+    version: "{{ bundler_version }}"
+    include_doc: yes
+    executable: /home/{{ homedir }}/.rubies/ruby-{{ item }}/bin/gem
+  loop: "{{ rubies }}"

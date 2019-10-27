@@ -13,6 +13,10 @@
      rubyinstall_version: 0.7.0
      terraform_version: 0.12.12
      terraform_old_version: 0.11.14
+
+     bundler_version: 2.0.2
+     rubies:
+       - 2.6.5
    tasks:
      - name: ensure ansible dependencies are installed
        become: True
