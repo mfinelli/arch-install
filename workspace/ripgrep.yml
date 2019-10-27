@@ -8,11 +8,11 @@
 # statically linked
 - name: download ripgrep binary
   get_url:
-    url: https://github.com/BurntSushi/ripgrep/releases/download/{{ ripgrep_version }}/ripgrep_{{ ripgrep_version }}_amd64.deb 
+    url: https://github.com/BurntSushi/ripgrep/releases/download/{{ ripgrep_version }}/ripgrep_{{ ripgrep_version }}_amd64.deb
     dest: /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/
 
 - name: exract ripgrep debian archive
-  shell: /usr/bin/bsdtar -xf /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/ripgrep_{{ ripgrep_version }}_amd64.deb 
+  shell: /usr/bin/bsdtar -xf /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/ripgrep_{{ ripgrep_version }}_amd64.deb
   args:
     chdir: /home/{{ homedir }}/tmp/ripgrep-{{ ripgrep_version }}/
 

@@ -11,7 +11,7 @@
 - name: build pwgen
   when: pwgen_downloaded.changed
   shell: autoconf && ./configure && make
-  args: 
+  args:
     chdir: /home/{{ homedir }}/tmp/pwgen-{{ pwgen_version }}
 
 - name: install pwgen
