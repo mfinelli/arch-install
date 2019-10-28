@@ -11,6 +11,7 @@
      pwgen_version: 2.08
      ripgrep_version: 11.0.2
      rubyinstall_version: 0.7.0
+     stow_version: 2.3.1
      terraform_version: 0.12.12
      terraform_old_version: 0.11.14
 
@@ -72,6 +73,7 @@
            - htop
            - jq
            - qrencode
+           - p7zip
          state: present
 
      - name: ensure home {{ item }} dir for {{ whoami }}
@@ -101,3 +103,6 @@
 
      - name: install chruby and ruby-install
        import_tasks: ./chruby.yml
+
+     - name: get my dotfiles
+       import_tasks: ./dotfiles.yml
