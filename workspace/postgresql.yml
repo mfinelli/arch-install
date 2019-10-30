@@ -1,0 +1,8 @@
+---
+- name: install postgresql packages
+  become: True
+  yum:
+    name:
+      - postgresql
+      - postgresql-devel
+      - postgresql-server

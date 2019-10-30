@@ -111,3 +111,6 @@
 
      - name: install nodejs
        import_tasks: ./nodejs.yml
+
+     - name: install postgresql
+       import_tasks: ./postgresql.yml
