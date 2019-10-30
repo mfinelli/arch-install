@@ -7,6 +7,7 @@
      ffsend_version: 0.2.52
      golang_version: 1.13.3
      google_authenticator_version: 1.06
+     nodejs_version: 12.13.0
      packer_version: 1.4.4
      pwgen_version: 2.08
      ripgrep_version: 11.0.2
@@ -74,6 +75,7 @@
            - jq
            - qrencode
            - p7zip
+           - tree
          state: present
 
      - name: ensure home {{ item }} dir for {{ whoami }}
@@ -106,3 +108,6 @@
 
      - name: get my dotfiles
        import_tasks: ./dotfiles.yml
+
+     - name: install nodejs
+       import_tasks: ./nodejs.yml
