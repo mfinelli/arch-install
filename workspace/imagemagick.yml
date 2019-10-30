@@ -1,0 +1,21 @@
+---
+- name: download imagemagick v7 archive
+  unarchive:
+    src: https://github.com/ImageMagick/ImageMagick/archive/{{ imagemagick_version }}.tar.gz
+    remote_src: yes
+    dest: /home/{{ homedir }}/tmp
+  args:
+    creates: /home/{{ homedir }}/tmp/ImageMagick-{{ imagemagick_version }}/README.md
+
+- name: build imagemagick v7
+  shell: ./configure && make
+  args:
+    chdir: /home/{{ homedir }}/tmp/ImageMagick-{{ imagemagick_version }}
+    creates: /home/{{ homedir }}/tmp/ImageMagick-{{ imagemagick_version }}/Makefile
+
+- name: install imagemagick v7
+  become: True
+  shell: make install
+  args:
+    chdir: /home/{{ homedir }}/tmp/ImageMagick-{{ imagemagick_version }}
+    creates: /usr/local/bin/convert

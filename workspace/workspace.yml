@@ -7,6 +7,7 @@
      ffsend_version: 0.2.52
      golang_version: 1.13.3
      google_authenticator_version: 1.06
+     imagemagick_version: 7.0.9-1
      nodejs_version: 12.13.0
      packer_version: 1.4.4
      pwgen_version: 2.08
@@ -114,3 +115,6 @@
 
      - name: install postgresql
        import_tasks: ./postgresql.yml
+
+     - name: install imagemagick v7
+       import_tasks: ./imagemagick.yml
