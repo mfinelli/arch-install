@@ -6,3 +6,4 @@
       - postgresql
       - postgresql-devel
       - postgresql-server
+    state: present

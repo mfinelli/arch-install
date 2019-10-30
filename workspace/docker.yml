@@ -1,0 +1,4 @@
+---
+- name: install docker
+  become: True
+  yum: name=docker state=present

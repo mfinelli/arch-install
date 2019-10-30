@@ -118,3 +118,6 @@
 
      - name: install imagemagick v7
        import_tasks: ./imagemagick.yml
+
+     - name: install docker
+       import_tasks: ./docker.yml
