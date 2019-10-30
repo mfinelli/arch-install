@@ -8,6 +8,9 @@
      golang_version: 1.13.3
      google_authenticator_version: 1.06
      imagemagick_version: 7.0.9-1
+     kubectl_version: 1.16.2
+     kubectx_version: 0.7.0
+     kubesec_version: 0.9.2
      nodejs_version: 12.13.0
      packer_version: 1.4.4
      pwgen_version: 2.08
@@ -121,3 +124,6 @@
 
      - name: install docker
        import_tasks: ./docker.yml
+
+     - name: install kubernetes tools
+       import_tasks: ./k8s.yml
