@@ -62,3 +62,21 @@
   become: True
   when: kubectl_installed.changed
   shell: /usr/local/bin/kubectl completion zsh > /usr/share/zsh/site-functions/_kubectl
+
+- name: install kops
+  become: True
+  register: kops_installed
+  get_url:
+    url: https://github.com/kubernetes/kops/releases/download/{{ kops_version }}/kops-linux-amd64
+    dest: /usr/local/bin/kops
+    mode: 0755
+
+- name: install kops bash completion
+  become: True
+  when: kops_installed.changed
+  shell: /usr/local/bin/kops completion bash > /etc/bash_completion.d/kops
+
+- name: install kops zsh completion
+  become: True
+  when: kops_installed.changed
+  shell: /usr/local/bin/kops completion zsh > /usr/share/zsh/site-functions/_kops
