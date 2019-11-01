@@ -1,0 +1,10 @@
+---
+- name: ensure java is installed
+  yum: name=java-1.8.0-openjdk state=present
+
+- name: download apache directory studio
+  become: True
+  unarchive:
+    src: http://mirrors.ocf.berkeley.edu/apache/directory/studio/2.0.0.v20180908-M14/ApacheDirectoryStudio-2.0.0.v20180908-M14-linux.gtk.x86_64.tar.gz
+    remote_src: yes
+    dest: /opt

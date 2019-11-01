@@ -133,3 +133,6 @@
 
      - name: install redis
        import_tasks: ./redis.yml
+
+     - name: install apache directory studio
+       import_tasks: ./directorystudio.yml
