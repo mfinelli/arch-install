@@ -16,6 +16,7 @@
      packer_version: 1.4.4
      pwgen_version: 2.08
      ripgrep_version: 11.0.2
+     redis_version: 5.0.6
      rubyinstall_version: 0.7.0
      stow_version: 2.3.1
      terraform_version: 0.12.12
@@ -81,6 +82,7 @@
            - qrencode
            - p7zip
            - tree
+           - tmux
          state: present
 
      - name: ensure home {{ item }} dir for {{ whoami }}
@@ -128,3 +130,6 @@
 
      - name: install kubernetes tools
        import_tasks: ./k8s.yml
+
+     - name: install redis
+       import_tasks: ./redis.yml

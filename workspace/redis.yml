@@ -1,0 +1,21 @@
+---
+- name: download redis archive
+  unarchive:
+    src: https://github.com/antirez/redis/archive/{{ redis_version }}.tar.gz
+    remote_src: yes
+    dest: /home/{{ homedir }}/tmp
+  args:
+    creates: /home/{{ homedir }}/tmp/redis-{{ redis_version }}/Makefile
+
+- name: build redis
+  shell: make && make test
+  args:
+    chdir: /home/{{ homedir }}/tmp/redis-{{ redis_version }}
+    creates: /home/{{ homedir }}/tmp/redis-{{ redis_version }}/src/redis-cli
+
+- name: install redis
+  become: True
+  shell: make install
+  args:
+    chdir: /home/{{ homedir }}/tmp/redis-{{ redis_version }}
+    creates: /usr/local/bin/redis-cli
