@@ -4,6 +4,8 @@
     src: https://github.com/postmodern/chruby/archive/v{{ chruby_version }}.tar.gz
     remote_src: yes
     dest: /home/{{ homedir }}/tmp
+  args:
+    creates: /home/{{ homedir }}/tmp/chruby-{{ chruby_version }}/Makefile
 
 - name: get current chruby version
   shell: "[ -e /usr/local/bin/chruby-exec ] && /usr/local/bin/chruby-exec --version || echo ''"
@@ -21,6 +23,8 @@
     src: https://github.com/postmodern/ruby-install/archive/v{{ rubyinstall_version }}.tar.gz
     remote_src: yes
     dest: /home/{{ homedir }}/tmp
+  args:
+    creates: /home/{{ homedir }}/tmp/ruby-install-{{ rubyinstall_version }}/Makefile
 
 - name: get current ruby-install version
   shell: "[ -e /usr/local/bin/ruby-install ] && /usr/local/bin/ruby-install --version || echo ''"
