@@ -5,8 +5,13 @@
     remote_src: yes
     dest: /home/{{ homedir }}/tmp
 
+- name: get current chruby version
+  shell: "[ -e /usr/local/bin/chruby-exec ] && /usr/local/bin/chruby-exec --version || echo ''"
+  register: current_chruby_version
+
 - name: install chruby
   become: True
+  when: "current_chruby_version.stdout != 'chruby version ' + chruby_version"
   shell: make install
   args:
     chdir: /home/{{ homedir }}/tmp/chruby-{{ chruby_version }}
