@@ -1,8 +1,9 @@
 ---
 - name: download statically-linked ffsend binary
+  become: True
   get_url:
     url: https://github.com/timvisee/ffsend/releases/download/v{{ ffsend_version }}/ffsend-v{{ ffsend_version }}-linux-x64-static
-    dest: /home/{{ homedir }}/bin/ffsend
+    dest: /usr/local/bin/ffsend
     mode: 0755
 
 - name: install ffsend bash completion
