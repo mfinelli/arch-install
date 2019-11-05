@@ -1,12 +1,12 @@
 ---
-- name: download google-authentiator-libpam archive
+- name: download google-authenticator-libpam archive
   unarchive:
     src: https://github.com/google/google-authenticator-libpam/archive/{{ google_authenticator_version }}.tar.gz
     remote_src: yes
     dest: /home/{{ homedir }}/tmp/
   register: google_authenticator_downloaded
   args:
-    creates: /home/{{ homedir }}/tmp/google-authenticator-libpam-{{ google_authenticator_version }}.tar.gz
+    creates: /home/{{ homedir }}/tmp/google-authenticator-libpam-{{ google_authenticator_version }}/README.md
 
 - name: build google libpam
   when: google_authenticator_downloaded.changed
@@ -14,7 +14,7 @@
   args:
     chdir: /home/{{ homedir }}/tmp/google-authenticator-libpam-{{ google_authenticator_version }}
 
-- name: install google authenticatr libpam
+- name: install google authenticator libpam
   when: google_authenticator_downloaded.changed
   become: True
   shell: make install
