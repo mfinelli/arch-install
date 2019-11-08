@@ -106,6 +106,7 @@ cask "viscosity"
 cask "vlc"
 cask "zoomus"
 mas "1Password 7", id: 1333542190
+mas "Affinity Designer", id: 824171161
 mas "Bear", id: 1091189122
 mas "Evernote", id: 406056744
 mas "GarageBand", id: 682658836
