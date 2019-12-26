@@ -1,4 +1,8 @@
 ---
+- name: install tcl for redis make test
+  become: True
+  yum: name=tcl state=present
+
 - name: download redis archive
   unarchive:
     src: https://github.com/antirez/redis/archive/{{ redis_version }}.tar.gz
