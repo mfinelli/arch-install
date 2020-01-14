@@ -203,3 +203,9 @@ chmod +x post-reboot
 ```shell
 ./post-reboot
 ```
+# MacOS
+
+Adobe Creative Cloud should be installed manually as homebrew un/installs on
+every update which also uninstalls any installed apps which then need to be
+reinstalled each time. CC keeps itself up-to-date anyway so this is not an
+issue.
