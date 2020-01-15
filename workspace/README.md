@@ -21,3 +21,10 @@ git clone git@github.com:mfinelli/arch-install.git
 cd arch-install/workspace
 ./bootstrap.bash
 ```
+
+3. Configure cloud utilities
+
+```shell
+gcloud init
+aws configure
+```
