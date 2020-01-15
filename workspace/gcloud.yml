@@ -1,0 +1,17 @@
+---
+- name: download gcloud sdk
+  become: True
+  unarchive:
+    src: https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-{{ gcloud_version }}-linux-x86_64.tar.gz
+    remote_src: yes
+    dest: /opt
+
+- name: link google commands into path
+  become: True
+  file:
+    src: /opt/google-cloud-sdk/bin/{{ item }}
+    dest: /usr/local/bin/{{ item }}
+    state: link
+  loop:
+    - gcloud
+    - gsutil
