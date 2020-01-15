@@ -26,6 +26,14 @@
      rubies:
        - 2.6.5
    tasks:
+     - name: ensure we can run sudo without a password
+       become: True
+       lineinfile:
+         path: /etc/sudoers.d/01-ws-admin-user
+         regexp: '#{{ whoami_id }} ALL=(ALL:ALL) ALL'
+         line: '#{{ whoami_id }} ALL=(ALL) NOPASSWD: ALL'
+         validate: /usr/sbin/visudo -cf %s
+
      - name: ensure ansible dependencies are installed
        become: True
        yum:

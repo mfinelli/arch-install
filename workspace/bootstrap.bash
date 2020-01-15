@@ -29,6 +29,7 @@ ansiblebin="$(sudo which ansible-playbook)"
 $ansiblebin \
   --extra-vars whoami="$(whoami)" \
   --extra-vars whoami_group="$(id -ng)" \
+  --extra-vars whoami_id="$(id -u)" \
   --extra-vars homedir="$(whoami | awk -F\\ '{print $2}')" \
   ./workspace.yml
 
