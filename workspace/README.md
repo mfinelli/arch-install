@@ -26,5 +26,6 @@ cd arch-install/workspace
 
 ```shell
 gcloud init
+gcloud auth application-default login
 aws configure
 ```
