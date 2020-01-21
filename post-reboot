@@ -327,6 +327,10 @@ if [[ "yes" == $(prompt_yesno "Install git notes tools?") ]]; then
     pikaur -S git-crypt jgit
 fi
 
+if [[ "yes" == $(prompt_yesno "Install aws workspace client?") ]]; then
+    pikaur -S amazon-workspacesclient
+fi
+
 # if we don't have a java runtime yet, install java 8
 command -v java >/dev/null 2>&1 || { \
   pikaur -S jre8-openjdk jdk8-openjdk; }
