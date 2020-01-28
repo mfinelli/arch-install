@@ -15,3 +15,8 @@
   shell: make install
   args:
     chdir: /home/{{ homedir }}/tmp/stow-{{ stow_version }}
+
+- name: clone my odotfiles
+  git:
+    repo: git@github.com:mfinelli/dotfiles.git
+    dest: /home/{{ homedir }}/.dotfiles
