@@ -20,7 +20,7 @@
      redis_version: 5.0.7
      rubyinstall_version: 0.7.0
      stow_version: 2.3.1
-     terraform_version: 0.12.19
+     terraform_version: 0.12.20
 
      bundler_version: 2.1.4
      pry_version: 0.12.2
