@@ -9,13 +9,15 @@
 
 - name: build imagemagick v7
   shell: ./configure && make
+  register: imagemagick_built
   args:
     chdir: /home/{{ homedir }}/tmp/ImageMagick-{{ imagemagick_version }}
     creates: /home/{{ homedir }}/tmp/ImageMagick-{{ imagemagick_version }}/Makefile
 
 - name: install imagemagick v7
   become: True
+  when: imagemagick_built.changed
   shell: make install
   args:
     chdir: /home/{{ homedir }}/tmp/ImageMagick-{{ imagemagick_version }}
-    creates: /usr/local/bin/convert
+    # creates: /usr/local/bin/magick
