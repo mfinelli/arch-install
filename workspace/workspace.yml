@@ -5,27 +5,28 @@
 
      chruby_version: 0.3.9
      ffsend_version: 0.2.58
-     gcloud_version: 276.0.0
-     golang_version: 1.13.6
+     gcloud_version: 284.0.0
+     golang_version: 1.14
      google_authenticator_version: 1.08
-     imagemagick_version: 7.0.9-16
-     kops_version: 1.15.0
-     kubectl_version: 1.17.1
-     kubectx_version: 0.7.1
+     imagemagick_version: 7.0.10-0
+     kops_version: 1.16.0
+     kubectl_version: 1.17.4
+     kubectx_version: 0.8.0
      kubesec_version: 0.9.2
-     nodejs_version: 12.14.1
-     packer_version: 1.5.1
+     nodejs_version: 12.16.1
+     packer_version: 1.5.4
      pwgen_version: 2.08
      ripgrep_version: 11.0.2
-     redis_version: 5.0.7
+     redis_version: 5.0.8
      rubyinstall_version: 0.7.0
      stow_version: 2.3.1
-     terraform_version: 0.12.20
+     terraform_version: 0.12.23
 
      bundler_version: 2.1.4
      pry_version: 0.12.2
      rubies:
        - 2.6.5
+       - 2.7.0
    tasks:
      - name: ensure we can run sudo without a password
        become: True
