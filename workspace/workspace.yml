@@ -149,6 +149,3 @@
 
      - name: install apache directory studio
        import_tasks: ./directorystudio.yml
-
-     - name: install openjdk12
-       import_tasks: ./java.yml
