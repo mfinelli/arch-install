@@ -5,6 +5,6 @@
 - name: download apache directory studio
   become: True
   unarchive:
-    src: http://mirrors.ocf.berkeley.edu/apache/directory/studio/2.0.0.v20180908-M14/ApacheDirectoryStudio-2.0.0.v20180908-M14-linux.gtk.x86_64.tar.gz
+    src: https://mirrors.ocf.berkeley.edu/apache/directory/studio/2.0.0.v20200411-M15/ApacheDirectoryStudio-2.0.0.v20200411-M15-linux.gtk.x86_64.tar.gz
     remote_src: yes
     dest: /opt
