@@ -292,7 +292,7 @@ done
 
 if [[ "yes" == $(prompt_yesno "Install cloud cli utilities?") ]]; then
     pikaur -S aws-cli python-boto python-boto3 python-magic
-    pikaur -S google-cloud-sdk
+    pikaur -S google-cloud-sdk doctl
 fi
 
 if [[ "yes" == $(prompt_yesno "Install extra python packages?") ]]; then
