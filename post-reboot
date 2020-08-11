@@ -85,7 +85,7 @@ if [[ "yes" == $(prompt_yesno "Install bluetooth packages?") ]]; then
     gsettings set org.blueman.transfer shared-path /home/`whoami`/Downloads
 fi
 
-pikaur -S keepass xsel spideroak-one dropbox keybase kbfs 1password-cli
+pikaur -S keepass xsel spideroak-one dropbox keybase kbfs 1password{,-cli}
 
 if [[ "yes" == $(prompt_yesno "Install libreoffice?") ]]; then
     pikaur -S libreoffice-fresh{-de,-es,-fr,-it} hunspell-en_{AU,CA,GB,US} \
