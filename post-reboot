@@ -139,6 +139,7 @@ pikaur -S moreutils dos2unix ripgrep
 pikaur -S tldr thefuck
 pikaur -S dnsutils net-tools nmap geo-bash whois
 pikaur -S wmuc
+pikaur -S jq go-yq
 
 pikaur -S imagemagick ghostscript
 
