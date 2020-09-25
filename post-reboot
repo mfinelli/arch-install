@@ -200,6 +200,7 @@ fi
 
 if [[ "yes" == $(prompt_yesno "Install zsh?") ]]; then
     pikaur -S zsh grml-zsh-config zsh-syntax-highlighting zsh-completions
+    pikaur -S ttf-meslo-nerd-font-powerlevel10k
 fi
 
 if [[ "yes" == $(prompt_yesno "Install fish?") ]]; then
