@@ -88,6 +88,10 @@ fi
 gpg --keyserver keys.gnupg.net --recv-keys 2012EA22 # 1password
 pikaur -S keepass xsel spideroak-one dropbox keybase kbfs 1password{,-cli}
 
+if [[ "yes" == $(prompt_yesno "Install yubikey tools?") ]]; then
+    pikaur -S pcsclite ccid hopenpgp-tools yubikey-{manager,personalization}
+fi
+
 if [[ "yes" == $(prompt_yesno "Install libreoffice?") ]]; then
     pikaur -S libreoffice-fresh{-de,-es,-fr,-it} hunspell-en_{AU,CA,GB,US} \
         hunspell-{de,es,fr,it} hyphen-{de,en,es,fr,it} \
