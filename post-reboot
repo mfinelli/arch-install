@@ -328,6 +328,7 @@ if [[ "yes" == $(prompt_yesno "Install devops tools?") ]]; then
     pikaur -S terraform graphviz packer
     pikaur -S kops kubectl minikube-bin kubesec kubectx
     pikaur -S docker
+    pikaur -S hadolint
 fi
 
 for package in firefox-developer-edition backblaze-b2-git ngrok ffsend; do
