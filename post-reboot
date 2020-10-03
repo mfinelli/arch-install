@@ -92,6 +92,8 @@ if [[ "yes" == $(prompt_yesno "Install yubikey tools?") ]]; then
     pikaur -S pcsclite ccid hopenpgp-tools yubikey-{manager,personalization}
 fi
 
+pikaur -S urlwatch
+
 if [[ "yes" == $(prompt_yesno "Install libreoffice?") ]]; then
     pikaur -S libreoffice-fresh{-de,-es,-fr,-it} hunspell-en_{AU,CA,GB,US} \
         hunspell-{de,es,fr,it} hyphen-{de,en,es,fr,it} \
