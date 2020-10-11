@@ -146,6 +146,7 @@ pikaur -S tldr thefuck
 pikaur -S dnsutils net-tools nmap geo-bash whois
 pikaur -S wmuc
 pikaur -S jq go-yq vivid
+pikaur -S geckodriver
 
 pikaur -S imagemagick ghostscript
 
