@@ -89,7 +89,8 @@ gpg --keyserver keys.gnupg.net --recv-keys 2012EA22 # 1password
 pikaur -S keepass xsel spideroak-one dropbox keybase kbfs 1password{,-cli}
 
 if [[ "yes" == $(prompt_yesno "Install yubikey tools?") ]]; then
-    pikaur -S pcsclite ccid hopenpgp-tools yubikey-{manager,personalization}
+    pikaur -S pcsclite ccid hopenpgp-tools yubikey-{manager,personalization} \
+        yubikey-personalization-gui
 fi
 
 pikaur -S urlwatch
