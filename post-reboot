@@ -163,7 +163,7 @@ if [[ "yes" == $(prompt_yesno "Install latex packages?") ]]; then
     pikaur -S texlive-most texlive-lang
 fi
 
-for package in sublime-text-dev gummi phpstorm rubymine; do
+for package in sublime-text-dev gummi rubymine; do
     if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
         pikaur -S $package
     fi
@@ -212,10 +212,6 @@ if [[ "yes" == $(prompt_yesno "Install zsh?") ]]; then
     if [[ yes == $(prompt_yesno "Set zsh as default shell?") ]]; then
         chsh -s /bin/zsh
     fi
-fi
-
-if [[ "yes" == $(prompt_yesno "Install fish?") ]]; then
-    pikaur -S fish
 fi
 
 pikaur -S okular
@@ -283,11 +279,10 @@ fi
 
 if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
     pikaur -S nodejs npm
-    pikaur -S nodejs-{foundation-cli,pug-cli}
 fi
 
 if [[ "yes" == $(prompt_yesno "Install ruby packages?") ]]; then
-    pikaur -S ruby{,-rake,-rdoc,-bundler,-install,-pry} chruby{,-fish}
+    pikaur -S ruby{,-rake,-rdoc,-bundler,-install,-pry} chruby
 fi
 
 if [[ "yes" == $(prompt_yesno "Intall virtualbox?") ]]; then
@@ -320,10 +315,6 @@ fi
 
 if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
     pikaur -S go{,-tools} delve
-fi
-
-if [[ "yes" == $(prompt_yesno "Install nim?") ]]; then
-    pikaur -S nim{,ble}
 fi
 
 if [[ "yes" == $(prompt_yesno "Install devops tools?") ]]; then
