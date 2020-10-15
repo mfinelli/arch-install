@@ -1,0 +1,46 @@
+---
+- hosts: localhost
+  vars:
+    terraform_version: 0.13.4
+  tasks:
+    - name: ensure manually installed dependencies
+      apt:
+        name:
+          - ansible
+          - git
+          - sudo
+        update_cache: yes
+
+    - name: install other packages
+      apt:
+        name:
+          - default-jre-headless
+          - font-manager
+          - jq
+          - postgresql-client
+          - pwgen
+          - python3
+          - python3-pip
+          - python3-setuptools
+          - python3-virtualenv
+          - tmux
+          - vim
+          - zsh
+
+    - name: install python dependencies
+      pip:
+        name:
+          - pipenv
+        executable: pip3
+
+    - name: install terraform
+      unarchive:
+        src: https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip
+        remote_src: yes
+        dest: /usr/local/bin
+        mode: 0755
+        owner: root
+        group: root
+
+  roles:
+    - azure-cli
