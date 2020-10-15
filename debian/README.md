@@ -27,13 +27,17 @@ curl -s \
   | bash
 ```
 
-5. Install [dotfiles](https://github.com/mfinelli/dotfiles):
+5. Add a USB filter to the VM to pass-through the Yubikey: Settings > USB
+Then click the little plus while the Yubikey is plugged into the host machine
+to add a filter. Then reboot.
+
+6. Install [dotfiles](https://github.com/mfinelli/dotfiles):
 
 ```shell
 curl -s https://raw.githubusercontent.com/mfinelli/dotfiles/master/go | bash
 ```
 
-6. Change your shell to `zsh`:
+7. Change your shell to `zsh`:
 
 ```shell
 chsh -s /bin/zsh
