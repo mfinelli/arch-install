@@ -1,6 +1,7 @@
 ---
 - hosts: localhost
   vars:
+    bfg_repo_cleaner_version: 1.13.0
     terraform_version: 0.13.4
 
   tasks:
@@ -42,6 +43,19 @@
         remote_src: yes
         dest: /usr/local/bin
         mode: 0755
+        owner: root
+        group: root
+
+    - name: ensure extra directories
+      file: path={{ item}} state=directory mode=0755 owner=root group=root
+      loop:
+        - /usr/local/share/java
+
+    - name: install repo cleaner (https://rtyley.github.io/bfg-repo-cleaner/)
+      get_url:
+        url: https://repo1.maven.org/maven2/com/madgag/bfg/{{ bfg_repo_cleaner_version }}/bfg-{{ bfg_repo_cleaner_version  }}.jar
+        dest: /usr/local/share/java/bfg.jar
+        mode: 0644
         owner: root
         group: root
 
