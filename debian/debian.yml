@@ -18,6 +18,7 @@
           - default-jre-headless
           - font-manager
           - jq
+          - pcscd
           - postgresql-client
           - pwgen
           - python3
