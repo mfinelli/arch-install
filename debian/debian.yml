@@ -45,3 +45,4 @@
 
   roles:
     - azure-cli
+    - github-cli
