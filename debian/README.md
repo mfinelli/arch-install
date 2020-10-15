@@ -27,7 +27,7 @@ curl -s \
   | bash
 ```
 
-5. Install [dotfiles]():
+5. Install [dotfiles](https://github.com/mfinelli/dotfiles):
 
 ```shell
 curl -s https://raw.githubusercontent.com/mfinelli/dotfiles/master/go | bash
