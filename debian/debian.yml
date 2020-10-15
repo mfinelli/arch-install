@@ -2,6 +2,7 @@
 - hosts: localhost
   vars:
     terraform_version: 0.13.4
+
   tasks:
     - name: ensure manually installed dependencies
       apt:
