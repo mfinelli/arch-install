@@ -63,3 +63,4 @@
   roles:
     - azure-cli
     - github-cli
+    - sudo

@@ -1,0 +1,9 @@
+---
+- name: ensure mario is in the sudoers file
+  copy:
+    dest: /etc/sudoers.d/mario
+    owner: root
+    group: root
+    mode: 0440
+    src: mario
+    validate: 'visudo -cf %s'
