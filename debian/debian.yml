@@ -28,6 +28,7 @@
           - python3-virtualenv
           - scdaemon
           - tmux
+          - urlwatch
           - vim
           - zsh
 
