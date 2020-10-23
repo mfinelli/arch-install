@@ -61,6 +61,11 @@
         owner: root
         group: root
 
+    - name: ensure /etc/hosts entries
+      lineinfile: path=/etc/hosts line={{ item }}
+      loop:
+        - 10.247.40.10 gdx-ds-app1
+
   roles:
     - azure-cli
     - github-cli
