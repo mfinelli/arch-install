@@ -1,4 +1,4 @@
-# azure
+# azure-cli
 
 Installs the `azure-cli` and its dependencies.
 
