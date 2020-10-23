@@ -11,11 +11,13 @@
 
 - name: download and install the microsoft signing key
   shell: |
+    set -o pipefail
     curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
     gpg --dearmor | \
     tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
   args:
     creates: /etc/apt/trusted.gpg.d/microsoft.gpg
+    executable: /bin/bash
     warn: false
 
 - name: add the azure cli repository
