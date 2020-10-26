@@ -17,7 +17,8 @@
       apt:
         name:
           - default-jre-headless
-          - docker
+          - docker-compose
+          - docker.io
           - font-manager
           - jq
           - pcscd
