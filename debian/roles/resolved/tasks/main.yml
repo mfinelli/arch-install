@@ -1,0 +1,28 @@
+---
+- name: ensure systemd-resolved is running and enabled
+  systemd: name=systemd-resolved enabled=yes state=started
+
+- name: symlink the systemd resolv.conf stub
+  file:
+    src: /run/systemd/resolve/stub-resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+    force: true # overwrite existing non-symlink file
+
+- name: ensure resolved.conf.d directory
+  file:
+    path: /etc/systemd/resolved.conf.d
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: copy custom systemd-resolved configuration
+  copy:
+    src: resolved.conf
+    dest: /etc/systemd/resolved.conf.d/dns.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart systemd-resolved
