@@ -2,7 +2,7 @@
 - hosts: localhost
   vars:
     bfg_repo_cleaner_version: 1.13.0
-    terraform_version: 0.13.4
+    terraform_version: 0.13.5
 
   tasks:
     - name: ensure manually installed dependencies
