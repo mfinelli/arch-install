@@ -68,6 +68,9 @@
       lineinfile: path=/etc/hosts line={{ item }}
       loop:
         - 10.247.40.10 gdx-ds-app1
+        - 10.247.40.11 gdx-ds-hpc1
+        - 10.247.40.13 gdx-ds-node1
+        - 10.247.40.14 gdx-ds-node2
 
   roles:
     - azure-cli
