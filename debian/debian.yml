@@ -39,6 +39,8 @@
     - name: install python dependencies
       pip:
         name:
+          - azure-identity
+          - azure-mgmt-compute
           - pipenv
           - yapf
         executable: pip3
