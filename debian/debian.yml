@@ -41,6 +41,7 @@
         name:
           - azure-identity
           - azure-mgmt-compute
+          - azure-mgmt-network
           - pipenv
           - yapf
         executable: pip3
