@@ -2,6 +2,7 @@
 - hosts: localhost
   vars:
     bfg_repo_cleaner_version: 1.13.0
+    shfmt_version: 3.2.0
     terraform_version: 0.13.5
 
   tasks:
@@ -52,6 +53,15 @@
         src: https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip
         remote_src: yes
         dest: /usr/local/bin
+        mode: 0755
+        owner: root
+        group: root
+
+    - name: install shfmt
+      get_url:
+        url: https://github.com/mvdan/sh/releases/download/v{{ shfmt_version }}/shfmt_v{{ shfmt_version }}_linux_amd64
+        remote_src: yes
+        dest: /usr/local/bin/shfmt
         mode: 0755
         owner: root
         group: root
