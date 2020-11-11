@@ -17,6 +17,7 @@
     - name: install other packages
       apt:
         name:
+          - ansible-lint
           - default-jre-headless
           - dnsutils
           - docker-compose
