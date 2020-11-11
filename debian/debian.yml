@@ -31,6 +31,7 @@
           - python3-virtualenv
           - ripgrep
           - scdaemon
+          - shellcheck
           - tmux
           - urlwatch
           - vim
