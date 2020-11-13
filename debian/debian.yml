@@ -24,6 +24,8 @@
           - docker.io
           - font-manager
           - jq
+          - nodejs
+          - npm
           - pcscd
           - postgresql-client
           - pwgen
