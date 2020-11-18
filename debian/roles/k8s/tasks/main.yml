@@ -1,0 +1,17 @@
+---
+- name: install kubectl
+  register: kubectl_installed
+  get_url:
+    url: https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version }}/bin/linux/amd64/kubectl
+    dest: /usr/local/bin/kubectl
+    mode: 0755
+    owner: root
+    group: root
+
+- name: install kubectl bash completion
+  when: kubectl_installed.changed
+  shell: /usr/local/bin/kubectl completion bash > /etc/bash_completion.d/kubectl
+
+- name: install kubectl zsh completion
+  when: kubectl_installed.changed
+  shell: /usr/local/bin/kubectl completion zsh > /usr/share/zsh/vendor-completions/_kubectl
