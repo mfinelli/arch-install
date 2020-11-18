@@ -2,6 +2,7 @@
 - hosts: localhost
   vars:
     bfg_repo_cleaner_version: 1.13.0
+    helm_version: 3.4.1
     kubectl_version: 1.19.4
     shfmt_version: 3.2.0
     terraform_version: 0.13.5

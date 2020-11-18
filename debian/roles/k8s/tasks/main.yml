@@ -15,3 +15,31 @@
 - name: install kubectl zsh completion
   when: kubectl_installed.changed
   shell: /usr/local/bin/kubectl completion zsh > /usr/share/zsh/vendor-completions/_kubectl
+
+- name: install helm
+  register: helm_installed
+  unarchive:
+    src: https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz
+    remote_src: yes
+    dest: /usr/local/bin
+    mode: 0755
+    owner: root
+    group: root
+    extra_opts:
+      - --strip-components=1
+
+- name: remove extra helm files
+  file:
+    path: /usr/local/bin/{{ item }}
+    state: absent
+  loop:
+    - LICENSE
+    - README.md
+
+- name: install helm bash completion
+  when: helm_installed.changed
+  shell: /usr/local/bin/helm completion bash > /etc/bash_completion.d/helm
+
+- name: install helm zsh completion
+  when: helm_installed.changed
+  shell: /usr/local/bin/helm completion zsh > /usr/share/zsh/vendor-completions/_helm
