@@ -1,22 +1,20 @@
-#!/bin/bash
+#!/bin/bash -ex
 
-set -x -e
-
-# http://stackoverflow.com/a/17695543
+# https://stackoverflow.com/a/17695543
 function prompt_yesno() {
-    read -p "$1 "
-    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
-        y|yes) echo "yes" ;;
-        *)     echo "no" ;;
-    esac
+  read -rp "$1 "
+  case $(echo "$REPLY" | tr '[:upper:]' '[:lower:]') in
+    y | yes) echo "yes" ;;
+    *) echo "no" ;;
+  esac
 }
 
 lsblk
-read -p "Which disk to install? "
+read -rp "Which disk to install? "
 INSTALL_DISK="$REPLY"
 
 # https://superuser.com/a/984637
-sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk $INSTALL_DISK
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk "$INSTALL_DISK"
     o # create a new, empty GPT partition table with protected MBR
     Y # confirm above
     n # create new partition (efi boot partition)
@@ -35,34 +33,33 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk $INSTALL_DISK
 EOF
 
 # let's check one more time that the disks are partitioned as expected
-gdisk -l $INSTALL_DISK
+gdisk -l "$INSTALL_DISK"
 
-if [[ "no" == $(prompt_yesno "Does the above partition table look good?") ]]
-then
-    exit 1
+if [[ no == $(prompt_yesno "Confirm partition table?") ]]; then
+  exit 1
 fi
 
 # encrypt the main partition: AES256 (e.g. /dev/sda2)
 cryptsetup --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
-    --iter-time 5000 --use-random --verify-passphrase luksFormat \
-    ${INSTALL_DISK}2
+  --iter-time 5000 --use-random --verify-passphrase luksFormat \
+  "${INSTALL_DISK}2"
 
 # get some much needed info
-read -p "How many swap G? "
+read -rp "How many swap G? "
 SWAPG="$REPLY"
-read -p "How many root G? "
+read -rp "How many root G? "
 ROOTG="$REPLY"
 
 # do the LVM boogie
-cryptsetup luksOpen ${INSTALL_DISK}2 lvm
+cryptsetup luksOpen "${INSTALL_DISK}2" lvm
 pvcreate /dev/mapper/lvm
 vgcreate crypt /dev/mapper/lvm
-lvcreate -L ${SWAPG}G crypt -n swap
-lvcreate -L ${ROOTG}G crypt -n root
+lvcreate -L "${SWAPG}G" crypt -n swap
+lvcreate -L "${ROOTG}G" crypt -n root
 lvcreate -l 100%FREE crypt -n home
 
 # make some filesystems
-mkfs.vfat -F32 ${INSTALL_DISK}1
+mkfs.vfat -F32 "${INSTALL_DISK}1"
 mkfs.btrfs /dev/mapper/crypt-root
 mkfs.btrfs /dev/mapper/crypt-home
 mkswap /dev/mapper/crypt-swap
@@ -71,10 +68,11 @@ mkswap /dev/mapper/crypt-swap
 swapon /dev/crypt/swap
 mount -o compress=lzo /dev/crypt/root /mnt
 mkdir /mnt/{boot,home}
-mount ${INSTALL_DISK}1 /mnt/boot
-mount  -o compress=lzo /dev/crypt/home /mnt/home
+mount "${INSTALL_DISK}1" /mnt/boot
+mount -o compress=lzo /dev/crypt/home /mnt/home
 
 # use a known good mirror - we'll generate a new mirrorlist on the new system
+# shellcheck disable=SC2016
 MIRROR='Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch'
 echo "$MIRROR" > /etc/pacman.d/mirrorlist
 
@@ -84,7 +82,8 @@ pacstrap -i /mnt base base-devel linux linux-firmware
 genfstab -U -p /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
 
-if [[ "no" == $(prompt_yesno "Does the above fstab table look good?") ]]
-then
-    exit 1
+if [[ "no" == $(prompt_yesno "Confirm fstab?") ]]; then
+  exit 1
 fi
+
+exit 0
