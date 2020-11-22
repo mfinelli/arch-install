@@ -1,10 +1,8 @@
-#!/bin/bash
-
-set -x -e
+#!/bin/bash -ex
 
 if [[ $# -ne 1 ]]; then
-    echo 'usage: ./prepare DEVICE'
-    exit 1
+  echo "usage: $(basename "$0") DEVICE"
+  exit 1
 fi
 
 INSTALL_DISK="$1"
@@ -13,20 +11,20 @@ tzselect
 hwclock --systohc --utc
 
 for locale in de_DE en_US es_ES fr_FR it_IT; do
-    sed -i "/#${locale}.UTF-8 UTF-8/c${locale}.UTF-8 UTF-8" /etc/locale.gen
+  sed -i "/#${locale}.UTF-8 UTF-8/c${locale}.UTF-8 UTF-8" /etc/locale.gen
 done
 
 locale-gen
 
-read -p "What language should we use? (e.g. en_US) "
+read -rp "What language should we use? (e.g. en_US) "
 echo "LANG=${REPLY}.UTF-8" > /etc/locale.conf
 
 # can't have a baby without a name
-read -p "What's the new hostname? "
+read -rp "What's the new hostname? "
 echo "$REPLY" > /etc/hostname
 
 pacman -S grub efibootmgr intel-ucode btrfs-progs dosfstools ntfs-3g \
-    e2fsprogs exfat-utils os-prober lvm2 cryptsetup mdadm usbutils
+  e2fsprogs exfat-utils os-prober lvm2 cryptsetup mdadm usbutils
 
 # we actually only add encrypt and lvm2 and remove fsck
 HOOKS="base udev autodetect modconf block encrypt lvm2 filesystems keyboard"
@@ -35,10 +33,12 @@ mkinitcpio -p linux
 
 # awful, i know - basically we need to escape any /'s in the device name when
 # passing it into sed or we get an "unknown option to `s'" error
-CRYPTD="cryptdevice=$(echo $INSTALL_DISK | sed 's/\//\\\//g')2:crypt"
+CRYPTD="cryptdevice=$(echo "$INSTALL_DISK" | sed 's/\//\\\//g')2:crypt"
 sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"${CRYPTD}\"/" \
-    /etc/default/grub
+  /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 grub-install --target=x86_64-efi --efi-directory=/boot \
-    --bootloader-id="Arch Linux" --recheck
+  --bootloader-id="Arch Linux" --recheck
+
+exit 0
