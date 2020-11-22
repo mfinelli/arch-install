@@ -22,9 +22,7 @@ the cdrom is mounted with `exec`. Entry from `/etc/fstab`:
 4. Download and run the installer:
 
 ```shell
-curl -s \
-  https://raw.githubusercontent.com/mfinelli/arch-install/master/debian/go \
-  | bash
+curl -Ls https://mfgo.link/debian-install | bash
 ```
 
 5. Add a USB filter to the VM to pass-through the Yubikey: Settings > USB
@@ -34,7 +32,7 @@ to add a filter. Then reboot.
 6. Install [dotfiles](https://github.com/mfinelli/dotfiles):
 
 ```shell
-curl -s https://raw.githubusercontent.com/mfinelli/dotfiles/master/go | bash
+curl -Ls https://mfgo.link/dotfiles | bash
 ```
 
 7. Change your shell to `zsh`:
