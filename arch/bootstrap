@@ -23,8 +23,13 @@ echo "LANG=${REPLY}.UTF-8" > /etc/locale.conf
 read -rp "What's the new hostname? "
 echo "$REPLY" > /etc/hostname
 
-pacman -S grub efibootmgr intel-ucode btrfs-progs dosfstools ntfs-3g \
-  e2fsprogs exfat-utils os-prober lvm2 cryptsetup mdadm usbutils
+pacman -S grub efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs \
+  exfat-utils os-prober lvm2 cryptsetup mdadm usbutils
+
+INTEL=GenuineIntel
+if [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == $INTEL ]]; then
+  pacman -S intel-ucode
+fi
 
 # we actually only add encrypt and lvm2 and remove fsck
 HOOKS="base udev autodetect modconf block encrypt lvm2 filesystems keyboard"
