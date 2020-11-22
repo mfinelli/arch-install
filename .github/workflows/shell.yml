@@ -35,4 +35,4 @@ jobs:
           ./shfmt --version
           ./shfmt -s -i 2 -ci -sr -d arch/bootstrap
           ./shfmt -s -i 2 -ci -sr -d debian/go
-          find . -name '*.bash' | xargs ./shfmt -s -i 2 -ci -sr -d .
+          find . -name '*.bash' | xargs ./shfmt -s -i 2 -ci -sr -d
