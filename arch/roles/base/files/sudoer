@@ -1,0 +1,1 @@
+mario ALL=(ALL:ALL) NOPASSWD:ALL

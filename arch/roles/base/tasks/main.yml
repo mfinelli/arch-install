@@ -1,0 +1,121 @@
+---
+- name: ensure baseline archlinux system
+  become: true
+  pacman:
+    name:
+      - base
+      - base-devel
+      - linux
+      - linux-firmware
+
+- name: install bootstrap packages
+  become: true
+  pacman:
+    name:
+      - grub
+      - efibootmgr
+      - btrfs-progs
+      - dosfstools
+      - ntfs-3g
+      - e2fsprogs
+      - exfat-utils
+      - os-prober
+      - lvm2
+      - cryptsetup
+      - mdadm
+      - usbutils
+
+- name: install intel microcode
+  become: true
+  when: ansible_processor[1] == 'GenuineIntel'
+  pacman: name=intel-ucode
+
+- name: install ansible dependencies
+  become: true
+  pacman:
+    name:
+      - ansible
+      - git
+      - pyalpm
+
+- name: ensure sudoer rule
+  copy:
+    dest: /etc/sudoers.d/mario
+    owner: root
+    group: root
+    mode: 0440
+    src: sudoer
+    validate: 'visudo -cf %s'
+
+- name: install pikaur
+  aur: name=pikaur
+
+- name: install ansible-aur
+  aur:
+    name: ansible-aur-git
+    use: pikaur
+    extra_args: --overwrite /usr/share/ansible/plugins/modules/aur.py
+
+- name: install ansible-gpg-key
+  aur: name=ansible-gpg-key-git
+
+- name: install networking tools
+  become: true
+  pacman:
+    name:
+      - iw
+      - iwd
+      - dialog
+      - wpa_supplicant
+      - easy-rsa
+      - networkmanager
+      - networkmanager-openvpn
+      - cdra
+      - inetutils
+      - netctl
+
+- name: install old base group packages
+  become: true
+  pacman:
+    name:
+      - logrotate
+      - man-db
+      - nano
+      - perl
+      - s-nail
+      - texinfo
+      - vi
+      - man-pages
+      - bash-completion
+
+- name: install audio packages
+  become: true
+  pacman:
+    name:
+      - alsa-utils
+      - alsa-plugins
+      - pulseaudio
+      - pulseaudio-alsa
+      - pavucontrol
+
+- name: install xorg
+  become: true
+  pacman:
+    name:
+      - xorg-server
+      - xorg-apps
+
+- name: install desktop environment (xfce)
+  become: true
+  pacman:
+    name:
+      - xfce4
+      - xfce4-goodies
+      - lightdm
+      - lightdm-gtk-greeter
+      - network-manager-applet
+      - accountsservice
+      - xdg-user-dirs
+      - gvfs
+      - gvfs-afc
+      - gvfs-mtp
