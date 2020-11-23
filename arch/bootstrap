@@ -41,19 +41,22 @@ mkinitcpio -p linux
 CRYPTD="cryptdevice=$(echo "$INSTALL_DISK" | sed 's/\//\\\//g')2:crypt"
 sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"${CRYPTD}\"/" \
   /etc/default/grub
-grub-mkconfig -o /boot/grub/grub.cfg
 
+grub-install --target=x86_64-efi --efi-directory=/boot \
+  --bootloader-id="Arch Linux" --recheck
+grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --target=x86_64-efi --efi-directory=/boot \
   --bootloader-id="Arch Linux" --recheck
 
 # the rest of the system gets installed/configured using ansible so install it
-pacman -S ansible
+pacman -S ansible git pyalpm
 
 # there's a bit of a chicken and egg problem here. there are two options as I
 # see it. manually build/install the package with makepkg or just place the
 # files manually and then overwrite them later. I'm opting for the latter for
 # now that way the "initial" install gets logged in the pikaur build cache.
-curl -o /usr/share/ansible/plugins/modules/aur.py \
+mkdir -p /usr/share/ansible/plugins/modules
+curl -so /usr/share/ansible/plugins/modules/aur.py \
   https://raw.githubusercontent.com/kewlfft/ansible-aur/master/library/aur.py
 
 exit 0
