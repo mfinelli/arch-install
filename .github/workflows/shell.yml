@@ -5,6 +5,7 @@ on:
     paths:
       - .github/workflows/shell.yml
       - arch/bootstrap
+      - arch/go
       - arch/pacstrap
       - debian/go
       - '**.bash'
@@ -19,6 +20,7 @@ jobs:
         run: |
           shellcheck --version
           shellcheck arch/bootstrap
+          shellcheck arch/go
           shellcheck arch/pacstrap
           shellcheck debian/go
           find . -name '*.bash' | xargs shellcheck
@@ -36,6 +38,7 @@ jobs:
         run: |
           ./shfmt --version
           ./shfmt -s -i 2 -ci -sr -d arch/bootstrap
+          ./shfmt -s -i 2 -ci -sr -d arch/go
           ./shfmt -s -i 2 -ci -sr -d arch/pacstrap
           ./shfmt -s -i 2 -ci -sr -d debian/go
           find . -name '*.bash' | xargs ./shfmt -s -i 2 -ci -sr -d
