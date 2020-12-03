@@ -43,6 +43,7 @@
           - tmux
           - urlwatch
           - vim
+          - virtualenv
           - zsh
 
     - name: install python dependencies
