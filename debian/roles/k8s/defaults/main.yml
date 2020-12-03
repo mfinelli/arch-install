@@ -3,3 +3,5 @@ helm_version: ~
 
 # https://storage.googleapis.com/kubernetes-release/release/stable.txt
 kubectl_version: ~
+
+kubectx_version: ~
