@@ -44,4 +44,12 @@
   when: helm_installed.changed
   shell: /usr/local/bin/helm completion zsh > /usr/share/zsh/vendor-completions/_helm
 
+- name: install helmfile
+  get_url:
+    url: https://github.com/roboll/helmfile/releases/download/v{{ helmfile_version }}/helmfile_linux_amd64
+    dest: /usr/local/bin/helmfile
+    mode: 0755
+    owner: root
+    group: root
+
 - include: kubectx.yml

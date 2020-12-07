@@ -3,6 +3,7 @@
   vars:
     bfg_repo_cleaner_version: 1.13.0
     helm_version: 3.4.1
+    helmfile_version: 0.135.0
     kubectl_version: 1.19.4
     kubectx_version: 0.9.1
     shfmt_version: 3.2.0
