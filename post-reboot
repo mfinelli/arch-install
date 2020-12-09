@@ -321,7 +321,8 @@ fi
 
 if [[ "yes" == $(prompt_yesno "Install devops tools?") ]]; then
     pikaur -S terraform graphviz packer
-    pikaur -S kops kubectl minikube-bin kubesec kubectx
+    pikaur -S kops kubectl minikube kubesec kubectx
+    pikaur -S helm{,-secrets,-diff,-gcs} helmfile sops
     pikaur -S docker docker-compose
     pikaur -S hadolint
 fi
@@ -337,7 +338,7 @@ if [[ "yes" == $(prompt_yesno "Install git notes tools?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install aws workspace client?") ]]; then
-    pikaur -S amazon-workspacesclient
+    pikaur -S amazon-workspaces-bin
 fi
 
 # if we don't have a java runtime yet, install java 8
