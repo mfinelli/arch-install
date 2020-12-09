@@ -326,6 +326,7 @@ if [[ "yes" == $(prompt_yesno "Install devops tools?") ]]; then
     pikaur -S helm{,-secrets,-diff,-gcs} helmfile sops
     pikaur -S docker docker-compose
     pikaur -S hadolint
+    pikaur -S newrelic-cli
 fi
 
 for package in firefox-developer-edition backblaze-b2-git ngrok ffsend; do
