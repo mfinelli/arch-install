@@ -27,7 +27,7 @@ done
 cd
 rm -rf $WORKDIR
 
-pikaur -S reflector namcap pkgfile rsync pacutils
+pikaur -S devtools reflector namcap pkgfile rsync pacutils
 sudo pkgfile --update
 
 # only download from https mirrors
