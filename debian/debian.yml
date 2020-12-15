@@ -28,6 +28,7 @@
           - docker-compose
           - docker.io
           - font-manager
+          - golang
           - jq
           - nodejs
           - npm
