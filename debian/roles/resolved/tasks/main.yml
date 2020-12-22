@@ -1,4 +1,14 @@
 ---
+- name: install NetworkManager configuration
+  copy:
+    src: NetworkManager.conf
+    dest: /etc/NetworkManager/NetworkManager.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart NetworkManager
+
 - name: ensure systemd-resolved is running and enabled
   systemd: name=systemd-resolved enabled=yes state=started
 
