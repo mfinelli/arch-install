@@ -105,6 +105,7 @@
         - 10.247.40.11 gdx-ds-hpc1
         - 10.247.40.13 gdx-ds-node1
         - 10.247.40.14 gdx-ds-node2
+        - 10.247.40.12 gdx-ds-db1
 
   roles:
     - azure-cli
