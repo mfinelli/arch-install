@@ -79,6 +79,8 @@ pikaur -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
     shimmer-wallpapers elementary-{xfce-icons,icon-theme} \
     paper-{gtk,icon}-theme-git
 
+pikaur -S xkeysnail
+
 if [[ "yes" == $(prompt_yesno "Install bluetooth packages?") ]]; then
     pikaur -S bluez{,-utils} blueman pulseaudio-bluetooth
     sudo systemctl enable bluetooth
