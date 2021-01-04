@@ -1,9 +1,9 @@
 ---
 - hosts: localhost
   vars:
-    bfg_repo_cleaner_version: 1.13.0
+    bfg_repo_cleaner_version: 1.13.1
     helm_version: 3.4.2
-    helmfile_version: 0.135.0
+    helmfile_version: 0.136.0
     kubectl_version: 1.20.0
     kubectx_version: 0.9.1
     shfmt_version: 3.2.1
