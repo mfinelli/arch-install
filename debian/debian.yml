@@ -107,6 +107,7 @@
         - 10.247.40.13 gdx-ds-node1
         - 10.247.40.14 gdx-ds-node2
         - 10.247.40.12 gdx-ds-db1
+        - 192.168.9.159 gdx-ds-vm01
 
   roles:
     - azure-cli
