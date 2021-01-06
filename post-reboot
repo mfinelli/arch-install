@@ -299,7 +299,7 @@ if [[ "yes" == $(prompt_yesno "Intall virtualbox?") ]]; then
     fi
 fi
 
-for package in jpegoptim postfix beanstalkd memcached shellcheck; do
+for package in jpegoptim postfix beanstalkd memcached shellcheck shfmt; do
     if [[ "yes" == $(prompt_yesno "Install $package?") ]]; then
         pikaur -S $package
     fi
