@@ -1,0 +1,16 @@
+---
+- name: install makepkg configuration
+  template:
+    src: makepkg.conf.j2
+    dest: /etc/makepkg.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: install pacman configuration
+  template:
+    src: pacman.conf
+    dest: /etc/pacman.conf
+    owner: root
+    group: root
+    mode: 0644

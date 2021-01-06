@@ -142,3 +142,5 @@
       - gvfs
       - gvfs-afc
       - gvfs-mtp
+
+- include: pacman.yml
