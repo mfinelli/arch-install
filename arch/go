@@ -15,7 +15,10 @@ else
   gcard=none
 fi
 
-ansible-playbook --extra-vars gcard=$gcard arch.yml
+ansible-playbook \
+  --extra-vars gcard=$gcard \
+  --extra-vars multilib=true \
+  arch.yml
 
 cd "$sdir"
 rm -rf "$wdir"
