@@ -1,0 +1,28 @@
+---
+- name: install unbound and dependencies
+  become: true
+  pacman:
+    name:
+      - unbound
+      - expat
+      - openresolv
+
+- name: download initial root hints
+  become: true
+  get_url:
+    url: https://www.internic.net/domain/named.cache
+    dest: /etc/unbound/root.hints
+    mode: 0644
+    owner: root
+    group: root
+
+- name: copy resolveconf.conf
+  become: true
+  copy:
+    src: resolvconf.conf
+    dest: /etc/resolvconf.conf
+    mode: 0644
+    owner: root
+    group: root
+
+
