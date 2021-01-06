@@ -61,6 +61,7 @@
       - pyalpm
 
 - name: ensure sudoer rule
+  become: true
   copy:
     dest: /etc/sudoers.d/mario
     owner: root
@@ -92,7 +93,7 @@
       - easy-rsa
       - networkmanager
       - networkmanager-openvpn
-      - cdra
+      - crda
       - inetutils
       - netctl
 

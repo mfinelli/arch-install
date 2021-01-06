@@ -15,7 +15,7 @@ else
   gcard=none
 fi
 
-ansible-playbook --exta-vars gcard=$gcard arch.yml
+ansible-playbook --extra-vars gcard=$gcard arch.yml
 
 cd "$sdir"
 rm -rf "$wdir"
