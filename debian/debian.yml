@@ -40,6 +40,7 @@
           - python3-setuptools
           - python3-virtualenv
           - ripgrep
+          - rustc
           - scdaemon
           - shellcheck
           - silversearcher-ag
@@ -47,6 +48,7 @@
           - urlwatch
           - vim
           - virtualenv
+          - whois
           - zsh
 
     - name: install python dependencies
