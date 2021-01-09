@@ -143,5 +143,4 @@
       - gvfs-afc
       - gvfs-mtp
 
-- include: unbound.yml
 - include: pacman.yml
