@@ -7,18 +7,7 @@ cd "$wdir"
 git clone https://github.com/mfinelli/arch-install.git
 cd arch-install/arch
 
-if lspci | grep VGA | grep -qi amd; then
-  gcard=amd
-elif lspci | grep VGA | grep -qi intel; then
-  gcard=intel
-else
-  gcard=none
-fi
-
-ansible-playbook \
-  --extra-vars gcard=$gcard \
-  --extra-vars multilib=true \
-  arch.yml
+./run.bash
 
 cd "$sdir"
 rm -rf "$wdir"
