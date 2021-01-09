@@ -25,4 +25,48 @@
     owner: root
     group: root
 
+- name: Run resolvconf -u
+  become: true
+  command: resolvconf -u
 
+- name: Install unbound configuration
+  become: true
+  copy:
+    src: unbound.conf
+    dest: /etc/unbound/unbound.conf
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Install root-hints service
+  become: true
+  copy:
+    src: root-hints.service
+    dest: /etc/systemd/system/root-hints.service
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Install root-hints timer
+  become: true
+  copy:
+    src: root-hints.timer
+    dest: /etc/systemd/system/root-hints.timer
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Install network manager resolveconf manager config
+  become: true
+  copy:
+    src: rc-manager.conf
+    dest: /etc/NetworkManager/conf.d/rc-manager.conf
+    mode: 0644
+    owner: root
+    group: root
+
+- name: enable root-hints timer
+  systemd: name=root-hints.timer enabled=yes
+
+- name: enable unbound
+  systemd: name=unbound.service enabled=yes
