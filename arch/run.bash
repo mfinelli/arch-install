@@ -13,6 +13,9 @@ else
   gcard=none
 fi
 
+# promp for sudo password right away
+sudo echo -n
+
 ansible-playbook \
   --extra-vars gcard=$gcard \
   --extra-vars multilib=true \
