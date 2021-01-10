@@ -77,9 +77,7 @@ pikaur -S ttf-{liberation,symbola} gnu-free-fonts \
 
 pikaur -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
     shimmer-wallpapers elementary-{xfce-icons,icon-theme} \
-    paper-{gtk,icon}-theme-git
-
-pikaur -S xkeysnail
+    paper-{gtk,icon}-theme-git alacritty
 
 if [[ "yes" == $(prompt_yesno "Install bluetooth packages?") ]]; then
     pikaur -S bluez{,-utils} blueman pulseaudio-bluetooth
@@ -321,6 +319,10 @@ fi
 
 if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
     pikaur -S go{,-tools} delve
+fi
+
+if [[ "yes" == $(prompt_yesno "Install rust?") ]]; then
+    pikaur -S rust
 fi
 
 if [[ "yes" == $(prompt_yesno "Install devops tools?") ]]; then
