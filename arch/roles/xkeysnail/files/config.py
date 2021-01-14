@@ -22,3 +22,12 @@ define_keymap(re.compile("Alacritty|Xfce4-terminal", re.IGNORECASE), {
     K("Super-v"): K("Shift-C-v"),
     K("Super-n"): K("Shift-C-n"),
 }, "Terminals")
+
+# keybindings for libreoffice
+define_keymap(re.compile("libreoffice", re.IGNORECASE), {
+    K("Super-c"): K("C-c"),
+    K("Super-v"): K("C-v"),
+    K("Super-f"): K("C-f"),
+    K("Super-z"): K("C-z"),
+    K("Super-f"): K("C-f"),
+}, "Libre Office")
