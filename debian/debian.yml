@@ -29,6 +29,7 @@
           - docker.io
           - font-manager
           - golang
+          - htop
           - jq
           - nodejs
           - npm
