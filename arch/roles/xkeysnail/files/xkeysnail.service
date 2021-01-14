@@ -1,0 +1,11 @@
+[Unit]
+Description=xkeysnail
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/xkeysnail --quiet --watch /etc/xkeysnail/config.py
+Restart=on-failure
+Environment=DISPLAY=:0.0
+
+[Install]
+WantedBy=graphical.target

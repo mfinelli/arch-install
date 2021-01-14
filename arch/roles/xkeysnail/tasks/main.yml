@@ -1,0 +1,28 @@
+---
+- name: install xkeysnail
+  aur: name=xkeysnail use=pikaur
+
+- name: ensure xkeysnail configuration directory
+  become: true
+  file: path=/etc/xkeysnail mode=0755 owner=root group=root state=directory
+
+- name: copy xkeysnail configuration
+  become: true
+  copy:
+    dest: /etc/xkeysnail/config.py
+    owner: root
+    group: root
+    mode: 0644
+    src: config.py
+
+- name: copy xkeysnail systemd service
+  become: true
+  copy:
+    src: xkeysnail.service
+    dest: /etc/systemd/system/xkeysnail.service
+    mode: 0644
+    owner: root
+    group: root
+
+- name: ensure xkeysnail is enabled
+  systemd: name=xkeysnail.service enabled=yes
