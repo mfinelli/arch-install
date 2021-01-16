@@ -77,7 +77,7 @@ pikaur -S ttf-{liberation,symbola} gnu-free-fonts \
 
 pikaur -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
     shimmer-wallpapers elementary-{xfce-icons,icon-theme} \
-    paper-{gtk,icon}-theme-git alacritty \
+    paper-{gtk,icon}-theme-git alacritty automathemely \
     papirus-icon-theme-git matcha-gtk-theme-git
 
 if [[ "yes" == $(prompt_yesno "Install bluetooth packages?") ]]; then
