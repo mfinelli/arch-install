@@ -210,7 +210,8 @@ if [[ "yes" == $(prompt_yesno "Install gnucash?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install zsh?") ]]; then
-    pikaur -S zsh grml-zsh-config zsh-syntax-highlighting zsh-completions
+    pikaur -S zsh grml-zsh-config zsh-syntax-highlighting zsh-completions \
+      zsh-theme-powerlevel10k
     pikaur -S ttf-meslo-nerd-font-powerlevel10k nerd-fonts-jetbrains-mono
     # pikaur -S ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono \
     #     ttf-nerd-fonts-symbols-mono
