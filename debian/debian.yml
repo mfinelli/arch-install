@@ -2,13 +2,13 @@
 - hosts: localhost
   vars:
     bfg_repo_cleaner_version: 1.13.1
-    helm_version: 3.4.2
-    helmfile_version: 0.136.0
-    kubectl_version: 1.20.0
+    helm_version: 3.5.0
+    helmfile_version: 0.137.0
+    kubectl_version: 1.20.2
     kubectx_version: 0.9.1
     shfmt_version: 3.2.1
     sops_version: 3.6.1
-    terraform_version: 0.14.3
+    terraform_version: 0.14.5
 
   tasks:
     - name: ensure manually installed dependencies
