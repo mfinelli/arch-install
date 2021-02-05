@@ -326,7 +326,7 @@ if [[ "yes" == $(prompt_yesno "Install go?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install rust?") ]]; then
-    pikaur -S rust
+    pikaur -S rust cargo-{outdated,license,lichking}
 fi
 
 if [[ "yes" == $(prompt_yesno "Install devops tools?") ]]; then
