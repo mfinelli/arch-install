@@ -1,0 +1,43 @@
+#!/bin/bash -e
+
+# i'm not crazy about this because there exists at least one ansible module
+# to install and manage homebrew. but there's a chicken and egg problem because
+# python and ansible need to be installed somehow and the best way to do that
+# on macos is with homebrew...
+
+if [[ -z $MF_HOMEBREW_STYLE ]]; then
+  echo >&2 "error: please supply the brewfile to install"
+  exit 1
+fi
+
+if command -v brew > /dev/null 2>&1; then
+  echo >&2 "error: homebrew is already installed!"
+  echo >&2 "error: please run brew bundle install directly"
+  exit 1
+fi
+
+# i'm really not a fan of this pattern but I don't have a better idea right now
+hburl=https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+/bin/bash -c "$(curl -fsSL "$hburl")"
+
+wdir="$(mktemp -d)"
+sdir="$(pwd)"
+cd "$wdir"
+
+git clone https://github.com/mfinelli/arch-install.git
+cd arch-install
+
+if [[ ! -f $MF_HOMEBREW_STYLE.brewfile ]]; then
+  cd "$sdir"
+  rm -rf "$wdir"
+
+  echo >&2 "error: unable to find brewfile $MF_HOMEBREW_STYLE"
+  exit 1
+fi
+
+brew bundle install --file $MF_HOMEBREW_STYLE.brewfile
+
+cd "$sdir"
+rm -rf "$wdir"
+
+exit 0
