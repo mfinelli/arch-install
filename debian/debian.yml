@@ -42,6 +42,7 @@
           - python3-virtualenv
           - ripgrep
           - rustc
+          - rsync
           - scdaemon
           - shellcheck
           - silversearcher-ag
