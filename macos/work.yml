@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  tasks:
+    - name: install python packages
+      pip:
+        name:
+          - azure-identity
+          - azure-mgmt-compute
+          - azure-mgmt-network
+          - urlwatch
+          - yapf
+        executable: /usr/local/bin/pip3

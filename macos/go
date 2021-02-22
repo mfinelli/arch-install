@@ -48,6 +48,11 @@ fi
 
 brew bundle install --file $MF_HOMEBREW_STYLE.brewfile
 
+if [[ $MF_HOMEBREW_STYLE == work ]]; then
+  # for stuff that we can't manage with homebrew
+  ansible-playbook work.yml
+fi
+
 cd "$sdir"
 rm -rf "$wdir"
 
