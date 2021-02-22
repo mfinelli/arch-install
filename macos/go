@@ -20,12 +20,17 @@ fi
 hburl=https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
 /bin/bash -c "$(curl -fsSL "$hburl")"
 
+if ! command -v brew > /dev/null 2>&1; then
+  echo >&2 "error: it appears that homebrew installation was not successful"
+  exit 1
+fi
+
 wdir="$(mktemp -d)"
 sdir="$(pwd)"
 cd "$wdir"
 
 git clone https://github.com/mfinelli/arch-install.git
-cd arch-install
+cd arch-install/macos
 
 if [[ ! -f $MF_HOMEBREW_STYLE.brewfile ]]; then
   cd "$sdir"
