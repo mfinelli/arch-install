@@ -16,6 +16,9 @@ if command -v brew > /dev/null 2>&1; then
   exit 1
 fi
 
+# prompt for sudo password right away
+sudo echo -n
+
 # i'm really not a fan of this pattern but I don't have a better idea right now
 hburl=https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
 /bin/bash -c "$(curl -fsSL "$hburl")"
