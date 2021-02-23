@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'debian/**'
+      - 'macos/**'
       - 'workspace/**'
 
 jobs:
@@ -17,4 +18,5 @@ jobs:
         with:
           targets: |
             debian/debian.yml
+            macos/work.yml
             workspace/workspace.yml
