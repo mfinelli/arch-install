@@ -21,6 +21,14 @@ brew bundle install --file personal.brewfile
 brew bundle cleanup --file personal.brewfile
 ```
 
+We also have an ansible component for things that can't be managed with
+homebrew. You can use normal ansible commands:
+
+```shell
+ansible-galaxy install -r requirements.yml
+ansible-playbook personal.yml
+```
+
 ## additional
 
 Current shell default is still `bash` but it's changing to `zsh`.

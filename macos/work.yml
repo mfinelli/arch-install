@@ -2,7 +2,7 @@
 - hosts: localhost
   tasks:
     - name: install python packages
-      pip:
+      ansible.builtin.pip:
         name:
           - azure-identity
           - azure-mgmt-compute
