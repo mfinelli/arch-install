@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  tasks:
+    - name: install python packages
+      ansible.builtin.pip:
+        name:
+          - urlwatch
+          - yapf
+        executable: /usr/local/bin/pip3
+
+    - name: install helm plugins
+      community.kubernetes.helm_plugin:
+        plugin_path: "{{ item }}"
+      loop:
+        - https://github.com/databus23/helm-diff.git
+        - https://github.com/jkroepke/helm-secrets.git
