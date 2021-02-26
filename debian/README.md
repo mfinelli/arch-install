@@ -22,7 +22,11 @@ the cdrom is mounted with `exec`. Entry from `/etc/fstab`:
 4. Download and run the installer:
 
 ```shell
-curl -Ls https://mfgo.link/debian-install | bash
+su -c 'apt-get install -y curl'
+curl -LfSs https://mfgo.link/debian-install > go
+chmod +x go
+./go
+rm go
 ```
 
 5. Add a USB filter to the VM to pass-through the Yubikey: Settings > USB
