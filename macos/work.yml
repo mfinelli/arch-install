@@ -17,3 +17,22 @@
       loop:
         - https://github.com/databus23/helm-diff.git
         - https://github.com/jkroepke/helm-secrets.git
+
+    - name: ensure local bin directory
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/bin"
+        state: directory
+
+    - name: install pluto
+      ansible.builtin.unarchive:
+        src: https://github.com/FairwindsOps/pluto/releases/download/v4.0.5/pluto_4.0.5_darwin_amd64.tar.gz
+        dest: "{{ ansible_user_dir }}/bin"
+        remote_src: true
+
+    - name: cleanup extra pluto files
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/bin/{{ item }}"
+        state: absent
+      loop:
+        - LICENSE
+        - README.md
