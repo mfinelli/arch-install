@@ -74,7 +74,7 @@ sudo systemctl enable keymapperd
 pikaur -S xterm kalu
 pikaur -S xcursor-openzone
 pikaur -S ttf-{liberation,symbola} gnu-free-fonts \
-    ttf-{linux-libertine,google-fonts-git,carlito,caladea} \
+    ttf-{google-fonts-git,carlito,caladea} libertinus-font \
     otf-{fira-sans,fira-mono} noto-fonts-emoji ttf-ubuntu-font-family
 
 pikaur -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
