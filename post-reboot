@@ -286,7 +286,7 @@ if [[ "yes" == $(prompt_yesno "Install redis?") ]]; then
 fi
 
 if [[ "yes" == $(prompt_yesno "Install nodejs packages?") ]]; then
-    pikaur -S nodejs npm
+    pikaur -S nodejs npm nodejs-n
 fi
 
 if [[ "yes" == $(prompt_yesno "Install ruby packages?") ]]; then
