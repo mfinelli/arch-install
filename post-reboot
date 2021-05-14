@@ -77,7 +77,7 @@ pikaur -S ttf-{liberation,symbola} gnu-free-fonts \
     ttf-{google-fonts-git,carlito,caladea} libertinus-font \
     otf-{fira-sans,fira-mono} noto-fonts-emoji ttf-ubuntu-font-family
 
-pikaur -S xfce-theme-{manager,greybird,bluebird,albatross,blackbird} \
+pikaur -S xfce-theme-{manager,greybird,bluebird,blackbird} \
     shimmer-wallpapers elementary-{xfce-icons,icon-theme} \
     paper-{gtk,icon}-theme-git alacritty \
     papirus-icon-theme-git matcha-gtk-theme-git
