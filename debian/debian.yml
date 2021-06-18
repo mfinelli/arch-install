@@ -1,6 +1,7 @@
 ---
 - hosts: localhost
   vars:
+    bat_version: 0.18.1
     bfg_repo_cleaner_version: 1.14.0
     helm_version: 3.6.1
     helmfile_version: 0.139.9
@@ -52,6 +53,7 @@
           - vim
           - virtualenv
           - whois
+          - xz-utils
           - zsh
 
     - name: install python dependencies
@@ -103,6 +105,9 @@
         mode: 0644
         owner: root
         group: root
+
+    - name: install bat
+      apt: deb=https://github.com/sharkdp/bat/releases/download/v{{ bat_version }}/bat_{{ bat_version }}_amd64.deb
 
     - name: ensure /etc/hosts entries
       lineinfile: path=/etc/hosts line={{ item }}
