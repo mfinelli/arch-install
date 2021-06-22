@@ -29,7 +29,9 @@
           - dnsutils
           - docker-compose
           - docker.io
+          - fd-find
           - font-manager
+          - fzf
           - golang
           - htop
           - jq
@@ -49,6 +51,7 @@
           - shellcheck
           - silversearcher-ag
           - tmux
+          - universal-ctags
           - urlwatch
           - vim
           - virtualenv
