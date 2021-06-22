@@ -145,7 +145,7 @@ fi
 pikaur -S file-roller snapper archey-git grub-customizer colordiff \
     cfv tmux tmuxp p7zip htop pwgen unrar cdrkit
 
-pikaur -S moreutils dos2unix ripgrep the_silver_searcher bat fd
+pikaur -S moreutils dos2unix ripgrep the_silver_searcher bat fd fzf
 pikaur -S tldr thefuck
 pikaur -S dnsutils net-tools nmap geo-bash whois
 pikaur -S wmuc
