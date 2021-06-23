@@ -7,6 +7,7 @@
           - azure-identity
           - azure-mgmt-compute
           - azure-mgmt-network
+          - azure-storage-blob
           - urlwatch
           - yapf
         executable: /usr/local/bin/pip3
