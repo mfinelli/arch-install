@@ -77,11 +77,13 @@
 - name: install ansible-aur
   aur:
     name: ansible-aur-git
-    use: pikaur
+    use: pikaur # extra_args cannot be used in auto mode
     extra_args: --overwrite /usr/share/ansible/plugins/modules/aur.py
 
 - name: install ansible-gpg-key
   aur: name=ansible-gpg-key-git
+
+- include: pacman.yml
 
 - name: install networking tools
   become: true
@@ -146,13 +148,22 @@
       - gnome-keyring
       - seahorse
 
+- name: install lightdm configuration
+  become: true
+  template:
+    src: lightdm.conf.j2
+    dest: /etc/lightdm/lightdm.conf
+    owner: root
+    group: root
+    mode: 0644
+
 - name: enable lightdm
+  become: true
   systemd: name=lightdm.service enabled=yes
 
 - name: enable network manager
+  become: true
   systemd: name=NetworkManager.service enabled=yes
-
-- include: pacman.yml
 
 - name: install base packages
   become: true
@@ -166,4 +177,5 @@
       - firefox-i18n-it
       - openssh
       - vim
+      - rsync
       - wget
