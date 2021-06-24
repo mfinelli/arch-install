@@ -77,7 +77,7 @@ MIRROR='Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch'
 echo "$MIRROR" > /etc/pacman.d/mirrorlist
 
 # do the needful
-pacstrap -i /mnt base base-devel linux linux-firmware
+pacstrap -i /mnt base base-devel linux linux-firmware posix
 
 genfstab -U -p /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
