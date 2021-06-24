@@ -56,7 +56,7 @@ pacman -S ansible git pyalpm
 # files manually and then overwrite them later. I'm opting for the latter for
 # now that way the "initial" install gets logged in the pikaur build cache.
 mkdir -p /usr/share/ansible/plugins/modules
-curl -so /usr/share/ansible/plugins/modules/aur.py \
+curl -fLso /usr/share/ansible/plugins/modules/aur.py \
   https://raw.githubusercontent.com/kewlfft/ansible-aur/master/library/aur.py
 
 exit 0
