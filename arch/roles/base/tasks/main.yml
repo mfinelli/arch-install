@@ -143,5 +143,27 @@
       - gvfs
       - gvfs-afc
       - gvfs-mtp
+      - gnome-keyring
+      - seahorse
+
+- name: enable lightdm
+  systemd: name=lightdm.service enabled=yes
+
+- name: enable network manager
+  systemd: name=NetworkManager.service enabled=yes
 
 - include: pacman.yml
+
+- name: install base packages
+  become: true
+  pacman:
+    name:
+      - firefox
+      - firefox-i18n-de
+      - firefox-i18n-en-us
+      - firefox-i18n-es-es
+      - firefox-i18n-fr
+      - firefox-i18n-it
+      - openssh
+      - vim
+      - wget

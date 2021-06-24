@@ -16,3 +16,10 @@
     owner: root
     group: root
     mode: 0644
+
+- name: install extra pacman-related packages
+  become: true
+  pacman:
+    name:
+      - expac
+      - asp
