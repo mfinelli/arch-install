@@ -1,0 +1,76 @@
+---
+- name: install keymapper
+  aur: name=keymapper
+
+- name: enable keymapperd
+  become: true
+  systemd: name=keymapperd.service enabled=yes
+
+- name: install terminal emulators
+  become: true
+  pacman:
+    name:
+      - xterm
+
+- name: install cursors
+  aur: name=xcursor-openzone
+
+- name: install fonts
+  become: true
+  pacman:
+    name:
+      - ttf-liberation
+      - ttf-bitstream-vera
+      - gnu-free-fonts
+      - ttf-carlito
+      - ttf-caladea
+      - ttf-dejavu
+      - libertinus-font
+      - otf-fira-sans
+      - otf-fira-mono
+      - noto-fonts
+      - noto-fonts-emoji
+      - noto-fonts-extra
+      - ttf-ubunut-font-family
+      - ttf-linux-libertine
+
+- name: install fonts part two
+  aur:
+    name:
+      - ttf-symbola
+      - ttf-google-fonts-git
+
+- name: install patched fonts
+  aur:
+    name:
+      - ttf-meslo-nerd-font-powerlevel10k
+      - nerd-fonts-jetbrains-mono
+
+- name: install xfce themes
+  become: true
+  pacman:
+    name:
+      - elementary-icon-theme
+
+- name: install xfce themes
+  aur:
+    name:
+      - xfce-theme-manager
+      - xfce-theme-greybird
+      - shimmer-wallpapers
+      - elementary-xfce-icons
+      - paper-icon-theme-git
+      - papirus-icon-theme-git
+      - matcha-gtk-theme-git
+
+- name: install bluetooth packages
+  become: true
+  pacman:
+    name:
+      - bluez
+      - bluez-utils
+      - blueman
+      - pulseaudio-bluetooth
+
+- name: enable bluetooth
+  systemd: name=bluetooth.service enabled=yes

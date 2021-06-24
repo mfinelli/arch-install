@@ -179,3 +179,5 @@
       - vim
       - rsync
       - wget
+
+- include: desktop.yml
