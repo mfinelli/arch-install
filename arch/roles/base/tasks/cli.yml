@@ -1,0 +1,36 @@
+---
+- name: install main cli apps
+  become: true
+  pacman:
+    name:
+      - tmux
+      - htop
+      - pwgen
+      - ctags
+      - ripgrep
+      - the_silver_searcher
+      - bat
+      - fd
+      - fzf
+      - thefuck
+      - tldr
+      - bind
+      - net-tools
+      - nmap
+      - whois
+      - jq
+      - vivid
+      - zoxide
+
+- name: install main cli apps from aur
+  aur:
+    name:
+      - go-yq
+
+- name: install secondary cli apps
+  when: "mtype == 'personal'"
+  become: true
+  pacman:
+    name:
+      - moreutils
+      - dos2unix

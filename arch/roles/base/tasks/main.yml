@@ -189,3 +189,5 @@
 
 - include: desktop.yml
 - include: apps.yml
+- include: cli.yml
+- include: dev.yml

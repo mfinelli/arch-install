@@ -1,0 +1,25 @@
+---
+- name: install main development packages
+  when: "mtype == 'personal'"
+  become: true
+  pacman:
+    name:
+      - firefox-developer-edition
+      - imagemagick
+      - geckodriver
+
+- name: download extra editors
+  when: "mtype == 'personal'"
+  aur:
+    name:
+      - sublime-text-4
+      - rubymine
+
+- name: install latex packages
+  when: "mtype != 'media'"
+  become: true
+  pacman:
+    name:
+      - gummi
+      - texlive-most
+      - texlive-lang
