@@ -23,7 +23,7 @@
       - ttf-bitstream-vera
       - gnu-free-fonts
       - ttf-carlito
-      - ttf-caladea
+      # - ttf-caladea
       - ttf-dejavu
       - libertinus-font
       - otf-fira-sans
@@ -31,7 +31,7 @@
       - noto-fonts
       - noto-fonts-emoji
       - noto-fonts-extra
-      - ttf-ubunut-font-family
+      - ttf-ubuntu-font-family
       - ttf-linux-libertine
 
 - name: install fonts part two
