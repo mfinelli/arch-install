@@ -1,0 +1,122 @@
+---
+- name: install sync apps
+  when: "mtype == 'personal'"
+  become: true
+  pacman:
+    name:
+      - dropbox
+      - spideroak-one
+
+- name: add 1password signing key
+  when: "mtype == 'personal'"
+  gpg_key:
+    fpr: 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
+
+- name: install password apps
+  when: "mtype == 'personal'"
+  aur:
+    name:
+      - 1password
+      - 1password-cli
+
+- name: install keepass
+  become: true
+  pacman: name=keepass
+
+- name: install yubikey tools
+  when: "mtype == 'personal'"
+  become: true
+  pacman:
+    name:
+      - pcsclite
+      - ccid
+      - hopenpgp-tools
+      - yubikey-manager
+      - yubikey-personalization
+      - yubikey-personalization-gui
+
+- name: install libreoffice
+  when: "mtype != 'media'"
+  become: true
+  pacman:
+    name:
+      - libreoffice-fresh
+      - libreoffice-fresh-de
+      - libreoffice-fresh-en-gb
+      - libreoffice-fresh-es
+      - libreoffice-fresh-fr
+      - libreoffice-fresh-it
+      - hunspell
+      - hunspell-en_au
+      - hunspell-en_ca
+      - hunspell-en_gb
+      - hunspell-en_us
+      - hunspell-de
+      - hunspell-es_any
+      - hunspell-es_es
+      - hunspell-es_mx
+      - hunspell-fr
+      - hunspell-it
+      - hyphen
+      - hyphen-de
+      - hyphen-en
+      - hyphen-es
+      - hyphen-fr
+      - hyphen-it
+      - mythes
+      - mythes-de
+      - mythes-en
+      - mythes-es
+      - mythes-fr
+      - mythes-it
+
+- name: install the gimp
+  when: "mtype != 'media'"
+  become: true
+  pacman:
+    name:
+      - gimp
+      - xsane-gimp
+
+- name: install gimp plugins
+  when: "mtype != 'media'"
+  aur:
+    name:
+      - gimp-extras
+      - gimp-plugin-resynthesizer-git
+
+- name: install graphics extras
+  when: "mtype != 'media'"
+  become: true
+  pacman:
+    name:
+      - dcraw
+      - inkscape
+
+- name: install chat programs
+  when: "mtype == 'personal'"
+  become: true
+  pacman:
+    name:
+      - pidgin
+      - pidgin-otr
+      - purple-plugin-pack
+      - aspell
+      - aspell-de
+      - aspell-en
+      - aspell-es
+      - aspell-fr
+      - aspell-it
+      - hexchat
+
+- name: install thunderbird
+  when: "mtype == 'personal'"
+  become: true
+  pacman:
+    name:
+      - thunderbird
+      - thunderbird-i18n-de
+      - thunderbird-i18n-en-us
+      - thunderbird-i18n-es-es
+      - thunderbird-i18n-fr
+      - thunderbird-i18n-it

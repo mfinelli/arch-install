@@ -177,7 +177,15 @@
       - firefox-i18n-it
       - openssh
       - vim
+      - vim-spell-de
+      - vim-spell-en
+      - vim-spell-es
+      - vim-spell-fr
+      - vim-spell-it
+      - lynx
       - rsync
       - wget
+      - xsel
 
 - include: desktop.yml
+- include: apps.yml
