@@ -58,6 +58,8 @@
           - whois
           - xz-utils
           - zsh
+          - zsh-autosuggestions
+          - zsh-syntax-highlighting
 
     - name: install python dependencies
       pip:
