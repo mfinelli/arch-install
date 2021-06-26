@@ -1,10 +1,24 @@
 ---
+- name: install ansible-extras
+  become: true
+  pacman:
+    name:
+      - ansible-lint
+      - python-passlib
+      - sshpass
+      - yapf
+
 - name: install keymapper
   aur: name=keymapper
 
 - name: enable keymapperd
   become: true
   systemd: name=keymapperd.service enabled=yes
+
+- name: start keymapperd
+  when: "mmode != 'setup'"
+  become: true
+  systemd: name=keymapperd.service state=started
 
 - name: install terminal emulators
   become: true
@@ -73,4 +87,13 @@
       - pulseaudio-bluetooth
 
 - name: enable bluetooth
+  become: true
   systemd: name=bluetooth.service enabled=yes
+
+- name: install redshift
+  become: true
+  pacman:
+    name:
+      - redshift
+      - python-gobject
+      - python-xdg
