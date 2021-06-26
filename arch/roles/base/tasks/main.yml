@@ -192,3 +192,4 @@
 - include: cli.yml
 - include: dev.yml
 - include: media.yml
+- include: printing.yml
