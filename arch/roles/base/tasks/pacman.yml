@@ -28,3 +28,31 @@
       - pacutils
       - pkgfile
       - aurpublish
+
+- name: install reflector
+  become: true
+  pacman: name=reflector
+
+- name: install reflector config
+  become: true
+  copy:
+    src: reflector.conf
+    dest: /etc/xdg/reflector/reflector.conf
+    owner: root
+    group: root
+    mode: 0644
+  register: reflector_config
+
+- name: enable reflector timer
+  become: true
+  systemd: name=reflector.timer state=enabled
+
+- name: run reflector on-demand
+  when: reflector_config.changed
+  become: true
+  systemd: name=reflector.service state=started
+
+- name: run pacman -Syyu because the mirrorlist changed
+  when: reflector_config.changed
+  become: true
+  pacman: update_cache=yes upgrade=yes force=yes
