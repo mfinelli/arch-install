@@ -191,3 +191,4 @@
 - include: apps.yml
 - include: cli.yml
 - include: dev.yml
+- include: media.yml
