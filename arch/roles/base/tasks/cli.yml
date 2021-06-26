@@ -1,4 +1,22 @@
 ---
+- name: install zsh
+  become: true
+  pacman:
+    name:
+      - zsh
+      - grml-zsh-config
+      - zsh-syntax-highlighting
+      - zsh-completions
+      - zsh-theme-powerlevel10k
+
+- name: install terminal fonts
+  aur:
+    name:
+      - ttf-meslo-nerd-font-powerlevel10k
+      - nerd-fonts-jetbrains-mono
+      # - ttf-jetbrains-mono
+      # - ttf-nerd-fonts-symbols-mono
+
 - name: install main cli apps
   become: true
   pacman:
