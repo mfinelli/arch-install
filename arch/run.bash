@@ -1,8 +1,21 @@
 #!/bin/bash -e
 
-if [[ $# -ne 0 ]]; then
-  echo >&2 "usage: $(basename "$0")"
+if [[ $# -gt 1 ]]; then
+  echo >&2 "usage: $(basename "$0") [setup]"
   exit 1
+fi
+
+if [[ $# -eq 1 ]] && [[ $1 != setup ]]; then
+  echo >&2 "error: unrecognized playbook $1"
+  exit 1
+fi
+
+if [[ $1 == setup ]]; then
+  playbook=setup.yml
+  mmode=setup
+else
+  playbook=arch.yml
+  mmode=post
 fi
 
 if lspci | grep VGA | grep -qi amd; then
@@ -19,6 +32,8 @@ sudo echo -n
 ansible-playbook \
   --extra-vars gcard=$gcard \
   --extra-vars multilib=true \
-  arch.yml
+  --extra-vars mmode=$mmode \
+  --extra-vars mtype=personal \
+  $playbook
 
 exit 0

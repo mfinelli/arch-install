@@ -1,0 +1,15 @@
+#!/bin/bash -e
+
+wdir="$(mktemp -d)"
+sdir="$(pwd)"
+cd "$wdir"
+
+git clone https://github.com/mfinelli/arch-install.git
+cd arch-install/arch
+
+./run.bash setup
+
+cd "$sdir"
+rm -rf "$wdir"
+
+exit 0
