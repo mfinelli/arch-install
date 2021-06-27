@@ -83,6 +83,9 @@
 - name: install ansible-gpg-key
   aur: name=ansible-gpg-key-git
 
+- name: install ansible-gsetting
+  aur: name=ansible-gsetting-git
+
 - include: pacman.yml
 
 - name: install networking tools
