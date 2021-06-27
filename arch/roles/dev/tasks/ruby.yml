@@ -1,0 +1,19 @@
+---
+- name: install ruby
+  when: "mtype == 'personal'"
+  become: true
+  pacman:
+    name:
+      - ruby
+      - ruby-rake
+      - ruby-rdoc
+      - ruby-bundler
+
+- name: install ruby aur packages
+  when: "mtype == 'personal'"
+  aur:
+    name:
+      - ruby-install
+      - ruby-pry
+      - ruby-rubocop
+      - chruby
