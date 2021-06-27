@@ -114,3 +114,7 @@
       - thunderbird-i18n-es-es
       - thunderbird-i18n-fr
       - thunderbird-i18n-it
+
+- name: install pdf viewer
+  become: true
+  pacman: name=evince
