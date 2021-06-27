@@ -41,7 +41,6 @@
   pacman:
     name:
       - libreoffice-fresh
-      - libreoffice-fresh-de
       - libreoffice-fresh-en-gb
       - libreoffice-fresh-es
       - libreoffice-fresh-fr
@@ -51,20 +50,17 @@
       - hunspell-en_ca
       - hunspell-en_gb
       - hunspell-en_us
-      - hunspell-de
       - hunspell-es_any
       - hunspell-es_es
       - hunspell-es_mx
       - hunspell-fr
       - hunspell-it
       - hyphen
-      - hyphen-de
       - hyphen-en
       - hyphen-es
       - hyphen-fr
       - hyphen-it
       - mythes
-      - mythes-de
       - mythes-en
       - mythes-es
       - mythes-fr
@@ -102,7 +98,6 @@
       - pidgin-otr
       - purple-plugin-pack
       - aspell
-      - aspell-de
       - aspell-en
       - aspell-es
       - aspell-fr
@@ -115,7 +110,6 @@
   pacman:
     name:
       - thunderbird
-      - thunderbird-i18n-de
       - thunderbird-i18n-en-us
       - thunderbird-i18n-es-es
       - thunderbird-i18n-fr

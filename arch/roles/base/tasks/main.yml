@@ -173,7 +173,6 @@
   pacman:
     name:
       - firefox
-      - firefox-i18n-de
       - firefox-i18n-en-us
       - firefox-i18n-es-es
       - firefox-i18n-fr
