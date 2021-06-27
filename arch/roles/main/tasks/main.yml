@@ -101,4 +101,4 @@
 - name: ensure bluetooth download directory is correct
   gsetting:
     key: org.blueman.transfer.shared-path
-    value: "{{ ansible_user_dir }}/Downloads"
+    value: "'{{ ansible_user_dir }}/Downloads'"
