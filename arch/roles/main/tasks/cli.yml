@@ -5,6 +5,7 @@
     name:
       - zsh
       - grml-zsh-config
+      - zsh-autosuggestions
       - zsh-syntax-highlighting
       - zsh-completions
       - zsh-theme-powerlevel10k

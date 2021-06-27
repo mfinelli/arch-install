@@ -104,3 +104,4 @@
     value: "'{{ ansible_user_dir }}/Downloads'"
 
 - include: apps.yml
+- include: cli.yml
