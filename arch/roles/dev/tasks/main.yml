@@ -23,3 +23,5 @@
       - gummi
       - texlive-most
       - texlive-lang
+
+- include: php.yml

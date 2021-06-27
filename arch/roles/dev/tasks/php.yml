@@ -1,0 +1,31 @@
+---
+- name: install php
+  when: "mtype == 'personal'"
+  become: true
+  pacman:
+    name:
+      - php
+      - php-gd
+      - php-apcu
+      - php-geoip
+      - php-fpm
+      - php-intl
+      - php-tidy
+      - php-imagick
+      - php-phpdbg
+      - php-redis
+      - php-sodium
+      - php-sqlite
+      - xdebug
+      - composer
+
+- name: install php.ini
+  when: "mtype == 'personal'"
+  become: true
+  copy:
+    src: php.ini
+    dest: /etc/php/php.ini
+    owner: root
+    group: root
+    mode: 0644
+
