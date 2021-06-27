@@ -12,7 +12,9 @@
       - winetricks
 
 - name: install lib32 libraries
-  when: "multilib == 'true' and (mtype == 'personal' or mtype == 'media')"
+  when:
+    - "multilib == 'true'"
+    - "mtype == 'personal' or mtype == 'media'"
   become: true
   pacman:
     name:
