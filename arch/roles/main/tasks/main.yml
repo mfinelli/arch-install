@@ -102,3 +102,5 @@
   gsetting:
     key: org.blueman.transfer.shared-path
     value: "'{{ ansible_user_dir }}/Downloads'"
+
+- include: apps.yml

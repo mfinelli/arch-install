@@ -189,7 +189,6 @@
       - wget
       - xsel
 
-- include: apps.yml
 - include: cli.yml
 - include: dev.yml
 - include: printing.yml
