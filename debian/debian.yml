@@ -114,6 +114,27 @@
     - name: install bat
       apt: deb=https://github.com/sharkdp/bat/releases/download/v{{ bat_version }}/bat_{{ bat_version }}_amd64.deb
 
+    - name: download zoxide
+      unarchive:
+        src: https://github.com/ajeetdsouza/zoxide/releases/download/v0.7.2/zoxide-x86_64-unknown-linux-musl.tar.gz
+        remote_src: yes
+        dest: /usr/local/bin
+        mode: 0755
+        owner: root
+        group: root
+        extra_opts:
+          - --strip-components=1
+
+    - name: remove extra zoxide files
+      file:
+        path: /usr/local/bin/{{ item }}
+        state: absent
+      loop:
+        - CHANGELOG.md
+        - LICENSE
+        - man
+        - README.md
+
     - name: ensure /etc/hosts entries
       lineinfile: path=/etc/hosts line={{ item }}
       loop:
