@@ -5,11 +5,11 @@
     bfg_repo_cleaner_version: 1.14.0
     helm_version: 3.6.1
     helmfile_version: 0.139.9
-    kubectl_version: 1.21.1
+    kubectl_version: 1.21.2
     kubectx_version: 0.9.3
     shfmt_version: 3.3.0
     sops_version: 3.7.1
-    terraform_version: 1.0.0
+    terraform_version: 1.0.1
 
   tasks:
     - name: ensure manually installed dependencies
