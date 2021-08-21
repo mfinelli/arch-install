@@ -17,6 +17,18 @@
     group: root
     mode: 0644
 
+- name: add supermario key to keyring and locally sign it
+  become: true
+  community.general.pacman_key:
+    id: C3CD75B002978A8468CA7B1F6C3ADDDE36FDA306
+    url: https://finelli.pub/36FDA306.asc
+  register: supermario_key
+
+- name: run pacman -Syyu because the repositories changed
+  when: supermario_key.changed
+  become: true
+  pacman: update_cache=yes upgrade=yes force=yes
+
 - name: install extra pacman-related packages
   become: true
   pacman:
