@@ -26,7 +26,7 @@ else
   gcard=none
 fi
 
-# promp for sudo password right away
+# prompt for sudo password right away
 sudo echo -n
 
 ansible-playbook \
