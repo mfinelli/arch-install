@@ -57,7 +57,7 @@
 
 - name: enable reflector timer
   become: true
-  systemd: name=reflector.timer state=enabled
+  systemd: name=reflector.timer enabled=yes
 
 - name: run reflector on-demand
   when: reflector_config.changed
