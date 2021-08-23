@@ -1,15 +1,15 @@
 ---
 - hosts: localhost
   vars:
-    bat_version: 0.18.1
+    bat_version: 0.18.3
     bfg_repo_cleaner_version: 1.14.0
-    helm_version: 3.6.1
-    helmfile_version: 0.139.9
-    kubectl_version: 1.21.2
-    kubectx_version: 0.9.3
-    shfmt_version: 3.3.0
+    helm_version: 3.6.3
+    helmfile_version: 0.140.0
+    kubectl_version: 1.22.1
+    kubectx_version: 0.9.4
+    shfmt_version: 3.3.1
     sops_version: 3.7.1
-    terraform_version: 1.0.1
+    terraform_version: 1.0.5
 
   tasks:
     - name: ensure manually installed dependencies
