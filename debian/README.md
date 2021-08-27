@@ -22,7 +22,7 @@ the cdrom is mounted with `exec`. Entry from `/etc/fstab`:
 4. Download and run the installer:
 
 ```shell
-su -c 'apt-get install -y curl'
+su -c 'apt install -y curl'
 curl -LfSs https://mfgo.link/debian > go
 chmod +x go
 ./go
