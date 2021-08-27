@@ -9,24 +9,14 @@
       - gnupg
     update_cache: yes
 
-- name: download and install the microsoft signing key
-  ansible.builtin.shell
-    set -o pipefail
-    curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
-    gpg --dearmor | \
-    tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
-  args:
-    creates: /etc/apt/trusted.gpg.d/microsoft.gpg
-    executable: /bin/bash
-    warn: false
+- name: add the microsoft signing key
+  ansible.builtin.apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
 
 - name: add the azure cli repository
-  ansible.builtin.template:
-    dest: /etc/apt/sources.list.d/azure-cli.list
-    owner: root
-    group: root
-    mode: 0644
-    src: azure-cli.list.j2
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ ansible_distribution_release }} main
+    filename: azure-cli
 
 - name: install the azure-cli
   ansible.builtin.apt:
