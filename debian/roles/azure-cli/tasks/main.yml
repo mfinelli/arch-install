@@ -1,6 +1,6 @@
 ---
 - name: install azure-cli dependencies
-  apt:
+  ansible.builtin.apt:
     name:
       - ca-certificates
       - curl
@@ -10,7 +10,7 @@
     update_cache: yes
 
 - name: download and install the microsoft signing key
-  shell: |
+  ansible.builtin.shell
     set -o pipefail
     curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
     gpg --dearmor | \
@@ -21,7 +21,7 @@
     warn: false
 
 - name: add the azure cli repository
-  template:
+  ansible.builtin.template:
     dest: /etc/apt/sources.list.d/azure-cli.list
     owner: root
     group: root
@@ -29,13 +29,13 @@
     src: azure-cli.list.j2
 
 - name: install the azure-cli
-  apt:
+  ansible.builtin.apt:
     name:
       - azure-cli
     update_cache: yes
 
 - name: download azcopy
-  unarchive:
+  ansible.builtin.unarchive:
     # curl -sI https://aka.ms/downloadazcopy-v10-linux | grep -i location
     src: https://azcopyvnext.azureedge.net/release20210616/azcopy_linux_amd64_10.11.0.tar.gz
     remote_src: yes
@@ -47,7 +47,7 @@
       - --strip-components=1
 
 - name: remove extra azcopy files
-  file:
+  ansible.builtin.file:
     path: /usr/local/bin/{{ item }}
     state: absent
   loop:

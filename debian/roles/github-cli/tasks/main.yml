@@ -1,15 +1,13 @@
 ---
 - name: add github signing key
-  apt_key:
+  ansible.builtin.apt_key:
     keyserver: keyserver.ubuntu.com
     id: C99B11DEB97541F0
 
 - name: add the github cli repo
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb https://cli.github.com/packages {{ ansible_distribution_release }} main
     filename: github-cli
 
 - name: install github-cli
-  apt:
-    name: gh
-    update_cache: yes
+  ansible.builtin.apt: name=gh update_cache=yes

@@ -1,6 +1,6 @@
 ---
 - name: ensure mario is in the sudoers file
-  copy:
+  ansible.builtin.copy:
     dest: /etc/sudoers.d/mario
     owner: root
     group: root
