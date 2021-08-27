@@ -126,3 +126,5 @@
     - k8s
     - resolved
     - sudo
+
+# vim: ft=yaml.ansible
