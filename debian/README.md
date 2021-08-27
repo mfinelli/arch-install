@@ -23,10 +23,7 @@ the cdrom is mounted with `exec`. Entry from `/etc/fstab`:
 
 ```shell
 su -c 'apt install -y curl'
-curl -LfSs https://mfgo.link/debian > go
-chmod +x go
-./go
-rm go
+bash -c "$(curl -LfSs https://mfgo.link/debian)"
 ```
 
 5. Add a USB filter to the VM to pass-through the Yubikey: Settings > USB
