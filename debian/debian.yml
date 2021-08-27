@@ -1,7 +1,6 @@
 ---
 - hosts: localhost
   vars:
-    bat_version: 0.18.3
     bfg_repo_cleaner_version: 1.14.0
     helm_version: 3.6.3
     helmfile_version: 0.140.0
@@ -26,7 +25,8 @@
         name:
           - ansible-lint
           - default-jre-headless
-          - dnsutils
+          - bat
+          - bind9-dnsutils
           - docker-compose
           - docker.io
           - fd-find
@@ -43,7 +43,6 @@
           - python3
           - python3-pip
           - python3-setuptools
-          - python3-virtualenv
           - ripgrep
           - rustc
           - rsync
@@ -56,7 +55,7 @@
           - vim
           - virtualenv
           - whois
-          - xz-utils
+          - zoxide
           - zsh
           - zsh-autosuggestions
           - zsh-syntax-highlighting
@@ -110,30 +109,6 @@
         mode: 0644
         owner: root
         group: root
-
-    - name: install bat
-      apt: deb=https://github.com/sharkdp/bat/releases/download/v{{ bat_version }}/bat_{{ bat_version }}_amd64.deb
-
-    - name: download zoxide
-      unarchive:
-        src: https://github.com/ajeetdsouza/zoxide/releases/download/v0.7.2/zoxide-x86_64-unknown-linux-musl.tar.gz
-        remote_src: yes
-        dest: /usr/local/bin
-        mode: 0755
-        owner: root
-        group: root
-        extra_opts:
-          - --strip-components=1
-
-    - name: remove extra zoxide files
-      file:
-        path: /usr/local/bin/{{ item }}
-        state: absent
-      loop:
-        - CHANGELOG.md
-        - LICENSE
-        - man
-        - README.md
 
     - name: ensure /etc/hosts entries
       lineinfile: path=/etc/hosts line={{ item }}
