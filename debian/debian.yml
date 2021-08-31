@@ -50,6 +50,7 @@
           - scdaemon
           - shellcheck
           - silversearcher-ag
+          - tabix
           - tmux
           - universal-ctags
           - urlwatch
