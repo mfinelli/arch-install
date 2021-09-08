@@ -1,6 +1,6 @@
 ---
 - name: install kubectx
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/kubectx
     dest: /usr/local/bin/kubectx
     mode: 0755
@@ -8,7 +8,7 @@
     group: root
 
 - name: install kubens
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/kubens
     dest: /usr/local/bin/kubens
     mode: 0755
@@ -16,7 +16,7 @@
     group: root
 
 - name: install kubectx bash completion
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.bash
     dest: /etc/bash_completion.d/kubectx
     mode: 0644
@@ -24,7 +24,7 @@
     group: root
 
 - name: install kubectx zsh completion
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.zsh
     dest: /usr/share/zsh/vendor-completions/_kubectx
     mode: 0644
@@ -32,7 +32,7 @@
     group: root
 
 - name: install kubens bash completion
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubens.bash
     dest: /etc/bash_completion.d/kubens
     mode: 0644
@@ -41,7 +41,7 @@
 
 - name: install kubens zsh completion
   become: True
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.zsh
     dest: /usr/share/zsh/vendor-completions/_kubens
     mode: 0644

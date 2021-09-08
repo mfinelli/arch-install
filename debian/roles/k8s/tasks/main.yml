@@ -1,7 +1,7 @@
 ---
 - name: install kubectl
   register: kubectl_installed
-  get_url:
+  ansible.builtin.get_url:
     url: https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version }}/bin/linux/amd64/kubectl
     dest: /usr/local/bin/kubectl
     mode: 0755
@@ -10,15 +10,15 @@
 
 - name: install kubectl bash completion
   when: kubectl_installed.changed
-  shell: /usr/local/bin/kubectl completion bash > /etc/bash_completion.d/kubectl
+  ansible.builtin.shell: /usr/local/bin/kubectl completion bash > /etc/bash_completion.d/kubectl
 
 - name: install kubectl zsh completion
   when: kubectl_installed.changed
-  shell: /usr/local/bin/kubectl completion zsh > /usr/share/zsh/vendor-completions/_kubectl
+  ansible.builtin.shell: /usr/local/bin/kubectl completion zsh > /usr/share/zsh/vendor-completions/_kubectl
 
 - name: install helm
   register: helm_installed
-  unarchive:
+  ansible.builtin.unarchive:
     src: https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz
     remote_src: yes
     dest: /usr/local/bin
@@ -29,7 +29,7 @@
       - --strip-components=1
 
 - name: remove extra helm files
-  file:
+  ansible.builtin.file:
     path: /usr/local/bin/{{ item }}
     state: absent
   loop:
@@ -38,14 +38,14 @@
 
 - name: install helm bash completion
   when: helm_installed.changed
-  shell: /usr/local/bin/helm completion bash > /etc/bash_completion.d/helm
+  ansible.builtin.shell: /usr/local/bin/helm completion bash > /etc/bash_completion.d/helm
 
 - name: install helm zsh completion
   when: helm_installed.changed
-  shell: /usr/local/bin/helm completion zsh > /usr/share/zsh/vendor-completions/_helm
+  ansible.builtin.shell: /usr/local/bin/helm completion zsh > /usr/share/zsh/vendor-completions/_helm
 
 - name: install helmfile
-  get_url:
+  ansible.builtin.get_url:
     url: https://github.com/roboll/helmfile/releases/download/v{{ helmfile_version }}/helmfile_linux_amd64
     dest: /usr/local/bin/helmfile
     mode: 0755
