@@ -58,6 +58,7 @@
           - virtualenv
           - whois
           - zoxide
+          - xz-utils
           - zsh
           - zsh-autosuggestions
           - zsh-syntax-highlighting
