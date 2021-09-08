@@ -85,7 +85,6 @@
     - name: install shfmt
       ansible.builtin.get_url:
         url: https://github.com/mvdan/sh/releases/download/v{{ shfmt_version }}/shfmt_v{{ shfmt_version }}_linux_amd64
-        remote_src: yes
         dest: /usr/local/bin/shfmt
         mode: 0755
         owner: root
@@ -94,7 +93,6 @@
     - name: install sops
       ansible.builtin.get_url:
         url: https://github.com/mozilla/sops/releases/download/v{{ sops_version }}/sops-v{{ sops_version }}.linux
-        remote_src: yes
         dest: /usr/local/bin/sops
         mode: 0755
         owner: root
