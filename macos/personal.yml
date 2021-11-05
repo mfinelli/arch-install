@@ -5,7 +5,6 @@
       ansible.builtin.pip:
         name:
           - urlwatch
-          - yapf
         executable: /usr/local/bin/pip3
 
     - name: install helm plugins
