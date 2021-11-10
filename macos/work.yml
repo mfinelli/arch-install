@@ -36,3 +36,17 @@
       loop:
         - LICENSE
         - README.md
+
+    - name: create docker plugins directory
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/{{ item }}"
+        state: directory
+      loop:
+        - .docker
+        - .docker/cli-plugins
+
+    - name: symlink docker-compose plugin
+      ansible.builtin.file:
+        src: /usr/local/opt/docker-compose/bin/docker-compose
+        dest: "{{ ansible_user_dir }}/.docker/cli-plugins/docker-compose"
+        state: link
