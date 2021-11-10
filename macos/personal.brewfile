@@ -77,7 +77,6 @@ brew "zsh-completions"
 brew "zsh-syntax-highlighting"
 cask "1password-cli"
 cask "amazon-workspaces"
-cask "apache-directory-studio"
 cask "docker"
 cask "dropbox"
 cask "firefox"
@@ -97,21 +96,16 @@ cask "ngrok"
 cask "spideroakone"
 cask "sublime-text"
 cask "thunderbird"
-cask "vagrant"
-cask "virtualbox"
 cask "viscosity"
 cask "vlc"
 cask "zoom"
 mas "1Password 7", id: 1333542190
 mas "Affinity Designer", id: 824171161
-mas "Bear", id: 1091189122
-mas "Evernote", id: 406056744
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
 mas "Microsoft Remote Desktop", id: 1295203466
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
-mas "Skitch", id: 425955336
 mas "Textual IRC Client", id: 1262957439
 mas "Xcode", id: 497799835
