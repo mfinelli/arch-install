@@ -1,12 +1,6 @@
 ---
 - hosts: localhost
   tasks:
-    - name: install python packages
-      ansible.builtin.pip:
-        name:
-          - urlwatch
-        executable: /usr/local/bin/pip3
-
     - name: install helm plugins
       community.kubernetes.helm_plugin:
         plugin_path: "{{ item }}"
