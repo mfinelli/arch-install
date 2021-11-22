@@ -2,8 +2,10 @@
 
 Automation for getting macOS up and running.
 
-**N.B.** that this assumes both `curl` and `git` are available (which they
-appear to be on a fresh MacBook Pro).
+**N.B.** that this assumes that both `curl` and `git` are available (the
+former appears to be on both a fresh MacBook Pro and MacBook Air, the latter
+needs to be installed manually first either by installing Xcode from the App
+Store or by running `xcode-select --install`)
 
 ## usage
 
