@@ -5,7 +5,8 @@ Automation for getting macOS up and running.
 **N.B.** that this assumes that both `curl` and `git` are available (the
 former appears to be on both a fresh MacBook Pro and MacBook Air, the latter
 needs to be installed manually first either by installing Xcode from the App
-Store or by running `xcode-select --install`)
+Store or by running `xcode-select --install`, then you must accept the
+license by running `sudo xcodebuild -license`)
 
 ## usage
 
