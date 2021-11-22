@@ -33,8 +33,9 @@ ansible-playbook personal.yml
 
 ## additional
 
-Current shell default is still `bash` but it's changing to `zsh`.
+You may want to change your shell to `zsh` provided by homebrew because it
+will be newer and more up-to-date than what is provided by macOS.
 
 ```shell
-chsh -s /bin/zsh
+chsh -s "$(brew --prefix)/bin/zsh"
 ```
