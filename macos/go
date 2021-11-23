@@ -1,4 +1,6 @@
-#!/bin/bash -e
+#!/bin/bash
+
+set -e
 
 # i'm not crazy about this because there exists at least one ansible module
 # to install and manage homebrew. but there's a chicken and egg problem because
