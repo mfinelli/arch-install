@@ -13,7 +13,8 @@ license by running `sudo xcodebuild -license`)
 For first time installation, open a terminal and run:
 
 ```shell
-export MF_HOMEBREW_STYLE=personal; curl -Ls https://mfgo.link/macos | bash
+export MF_HOMEBREW_STYLE=personal
+bash -c "$(curl -fsSL https://mfgo.link/macos)"
 ```
 
 For subsequent updates use the brew bundle commands directly:
