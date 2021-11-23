@@ -52,11 +52,11 @@ if [[ ! -f $MF_HOMEBREW_STYLE.brewfile ]]; then
   exit 1
 fi
 
-brew bundle install --file $MF_HOMEBREW_STYLE.brewfile
+brew bundle install --file "$MF_HOMEBREW_STYLE.brewfile"
 
 # for stuff that we can't manage with homebrew
 ansible-galaxy install -r requirements.yml
-ansible-playbook $MF_HOMEBREW_STYLE.yml
+ansible-playbook "$MF_HOMEBREW_STYLE.yml"
 
 cd "$sdir"
 rm -rf "$wdir"
