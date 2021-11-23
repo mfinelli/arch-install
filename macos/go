@@ -26,7 +26,13 @@ sudo echo -n
 hburl=https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
 /bin/bash -c "$(curl -fsSL "$hburl")"
 
-if [[ ! -e /usr/local/bin/brew ]] && [[ ! -e /opt/homebrew/bin/brew ]]; then
+if [[ $(uname -m) == arm64 ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+if ! command -v brew > /dev/null 2>&1; then
   echo >&2 "error: it appears that homebrew installation was not successful"
   exit 1
 fi
