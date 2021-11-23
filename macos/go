@@ -54,6 +54,11 @@ fi
 
 brew bundle install --file "$MF_HOMEBREW_STYLE.brewfile"
 
+if ! command -v ansible-playbook > /dev/null 2>&1; then
+  echo >&2 "error: ansible was not installed so we can't proceed"
+  exit 1
+fi
+
 # for stuff that we can't manage with homebrew
 ansible-galaxy install -r requirements.yml
 ansible-playbook "$MF_HOMEBREW_STYLE.yml"
