@@ -8,6 +8,9 @@ needs to be installed manually first either by installing Xcode from the App
 Store or by running `xcode-select --install`, then you must accept the
 license by running `sudo xcodebuild -license`)
 
+If you have `mas` entries in the brewfile that you intend to use be sure to
+login to the App Store first!
+
 ## usage
 
 For first time installation, open a terminal and run:
