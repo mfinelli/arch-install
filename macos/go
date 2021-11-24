@@ -62,6 +62,9 @@ fi
 brew bundle install --file "$MF_HOMEBREW_STYLE.brewfile"
 
 if ! command -v ansible-playbook > /dev/null 2>&1; then
+  cd "$sdir"
+  rm -rf "$wdir"
+
   echo >&2 "error: ansible was not installed so we can't proceed"
   exit 1
 fi
