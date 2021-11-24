@@ -31,7 +31,7 @@ brew "htop"
 brew "imagemagick"
 brew "jpegoptim"
 brew "jq"
-brew "kubernetes-cli", link: false
+brew "kubernetes-cli"
 brew "kubectx"
 brew "less"
 brew "libsodium"
