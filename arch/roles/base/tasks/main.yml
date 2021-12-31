@@ -11,6 +11,7 @@
 
 - name: install bootstrap packages
   become: true
+  when: mtype != 'server'
   pacman:
     name:
       - grub
@@ -28,6 +29,7 @@
 
 - name: install video and input drivers
   become: true
+  when: mtype != 'server'
   pacman:
     name:
       - xf86-video-vesa
@@ -35,14 +37,14 @@
 
 - name: install intel video drivers
   become: true
-  when: gcard == 'intel'
+  when: mtype != 'server' and gcard == 'intel'
   pacman:
     name:
       - xf86-video-intel
 
 - name: install amd video drivers
   become: true
-  when: gcard == 'amd'
+  when: mtype != 'server' and gcard == 'amd'
   pacman:
     name:
       - xf86-video-ati
@@ -50,9 +52,22 @@
 
 - name: install intel microcode
   become: true
-  when: ansible_processor[1] == 'GenuineIntel'
+  when: mtype != 'server' and ansible_local.cpuinfo.cpu_vendor == 'Intel'
   pacman: name=intel-ucode
 
+- name: install amd microcode
+  when: mtype != 'server' and ansible_local.cpuinfo.cpu_vendor == 'AMD'
+  pacman: name=amd-ucode
+
+# - name: ensure sudoer rule
+#   become: true
+#   copy:
+#     dest: /etc/sudoers.d/mario
+#     owner: root
+#     group: root
+#     mode: 0440
+#     src: sudoer
+#     validate: 'visudo -cf %s'
 
 - include: pacman.yml
 
@@ -68,6 +83,7 @@
 
 - name: install networking tools
   become: true
+  when: mtype != 'server'
   pacman:
     name:
       - iw

@@ -11,6 +11,7 @@
       - zsh-theme-powerlevel10k
 
 - name: install terminal fonts
+  when: mtype != 'server'
   aur:
     name:
       - ttf-meslo-nerd-font-powerlevel10k

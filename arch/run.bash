@@ -26,6 +26,14 @@ else
   gcard=none
 fi
 
+if [[ $(hostnamectl --static) == stig ]]; then
+  mtype=personal
+elif [[ $(hostnamectl --static) == dev.finelli.dev ]]; then
+  mtype=server
+else
+  mtype=media
+fi
+
 # prompt for sudo password right away
 sudo echo -n
 
@@ -33,7 +41,7 @@ ansible-playbook \
   --extra-vars gcard=$gcard \
   --extra-vars multilib=true \
   --extra-vars mmode=$mmode \
-  --extra-vars mtype=personal \
+  --extra-vars mtype=$mtype \
   $playbook
 
 exit 0

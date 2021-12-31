@@ -46,7 +46,7 @@ CXXFLAGS="$CFLAGS -Wp,-D_GLIBCXX_ASSERTIONS"
 LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 #RUSTFLAGS="-C opt-level=2"
 #-- Make Flags: change this for DistCC/SMP systems
-MAKEFLAGS="-j{{ ansible_processor[-3] | int + 2 }}"
+MAKEFLAGS="-j{{ ansible_local.cpuinfo.cpu_cores + 1 }}"
 #-- Debugging flags
 DEBUG_CFLAGS="-g -fvar-tracking-assignments"
 DEBUG_CXXFLAGS="-g -fvar-tracking-assignments"

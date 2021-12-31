@@ -9,14 +9,13 @@
       - yapf
 
 - name: install keymapper
-  aur: name=keymapper
+  pacman: name=keymapper
 
 - name: enable keymapperd
   become: true
   systemd: name=keymapperd.service enabled=yes
 
 - name: start keymapperd
-  when: "mmode != 'setup'"
   become: true
   systemd: name=keymapperd.service state=started
 
