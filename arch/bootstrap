@@ -1,11 +1,22 @@
 #!/bin/bash -ex
 
-if [[ $# -ne 1 ]]; then
-  echo "usage: $(basename "$0") DEVICE"
+if [[ $# -ne 0 ]]; then
+  echo >&2 "usage: $(basename "$0")"
   exit 1
 fi
 
-INSTALL_DISK="$1"
+# use a known good mirror for initial package installation - we'll generate a
+# new mirrorlist shortly
+# shellcheck disable=SC2016
+MIRROR='Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch'
+echo "$MIRROR" > /etc/pacman.d/mirrorlist
+
+read -rp "What's the install disk? (e.g., /dev/sda) " INSTALL_DISK
+
+if [[ ! -e $INSTALL_DISK ]]; then
+  echo >&2 "error: install disk $INSTALL_DISK doesn't exist"
+  exit 1
+fi
 
 tzselect
 hwclock --systohc --utc
@@ -27,8 +38,10 @@ pacman -S grub efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs \
   exfat-utils os-prober lvm2 cryptsetup mdadm usbutils
 
 INTEL=GenuineIntel
-if [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == $INTEL ]]; then
+if [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == "$INTEL" ]]; then
   pacman -S intel-ucode
+else
+  pacman -S amd-ucode
 fi
 
 # we actually only add encrypt and lvm2 and remove fsck

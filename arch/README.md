@@ -23,9 +23,7 @@ dd if=/dev/urandom of=/dev/sdX bs=4096
 4. Install the baseline Arch Linux installation:
 
 ```shell
-curl -Ls https://mfgo.link/arch-pacstrap > pacstrap
-chmod +x pacstrap
-./pacstrap
+bash -c "$(curl -fsSL https://mfgo.link/arch-pacstrap)"
 ```
 
 5. `chroot` into the new system and bootstrap it (install required packages
@@ -36,17 +34,16 @@ arch-chroot /mnt /bin/bash
 ```
 
 ```shell
-cd
-curl -Ls https://mfgo.link/arch-bootstrap > bootstrap
-chmod +x bootstrap
-./bootstrap /dev/sdX
-rm bootstrap
+bash -c "$(curl -fsSL https://mfgo.link/arch-bootstrap)"
 ```
 
 6. Set `root` password, create user and add sudo rule:
 
 ```shell
 passwd
+```
+
+```shell
 useradd -m -s /bin/bash mario
 passwd mario
 echo "mario ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/mario

@@ -10,8 +10,7 @@ function prompt_yesno() {
 }
 
 lsblk
-read -rp "Which disk to install? "
-INSTALL_DISK="$REPLY"
+read -rp "Which disk to install? " INSTALL_DISK
 
 # https://superuser.com/a/984637
 sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk "$INSTALL_DISK"
@@ -45,10 +44,8 @@ cryptsetup --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
   "${INSTALL_DISK}2"
 
 # get some much needed info
-read -rp "How many swap G? "
-SWAPG="$REPLY"
-read -rp "How many root G? "
-ROOTG="$REPLY"
+read -rp "How many swap G? " SWAPG
+read -rp "How many root G? " ROOTG
 
 # do the LVM boogie
 cryptsetup luksOpen "${INSTALL_DISK}2" lvm
