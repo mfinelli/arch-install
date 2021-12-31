@@ -1,9 +1,10 @@
 ---
 - name: install printing packages
-  when: "mtype != 'media'"
+  when: mtype != 'media'
   become: true
   pacman:
     name:
+      - ghostscript
       - cups
       - cups-pdf
       - gutenprint
@@ -17,7 +18,7 @@
       - splix
 
 - name: install network printing packages
-  when: "mtype != 'media'"
+  when: mtype != 'media'
   become: true
   pacman:
     name:
@@ -25,7 +26,7 @@
       - samba
 
 - name: enable printing services
-  when: "mtype != 'media'"
+  when: mtype != 'media'
   become: true
   systemd: name={{ item }} enabled=yes
   loop:
