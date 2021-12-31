@@ -1,6 +1,7 @@
 ---
 - hosts: localhost
   roles:
+    - ansible
     - base
     - unbound
     - main

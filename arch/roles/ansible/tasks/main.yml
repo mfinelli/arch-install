@@ -1,0 +1,30 @@
+---
+- name: install ansible and dependencies
+  become: true
+  pacman:
+    name:
+      - ansible
+      - git
+      - pyalpm
+
+- name: install custom fact dependencies are installed
+  become: true
+  pacman:
+    name: python-py-cpuinfo
+
+- name: ensure custom facts directory
+  become: true
+  file:
+    path: /etc/ansible/facts.d
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: copy custom cpuinfo fact
+  copy:
+    dest: /etc/ansible/facts.d/cpuinfo.fact
+    owner: root
+    group: root
+    mode: 0755
+    src: cpuinfo.fact
