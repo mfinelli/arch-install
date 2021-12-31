@@ -24,6 +24,59 @@
       - texlive-most
       - texlive-lang
 
+- name: install docker
+  when: mtype != 'media'
+  become: true
+  pacman:
+    name:
+      - docker
+      - docker-compose
+      - hadolint
+
+- name: install virtualbox
+  when: mtype != 'media'
+  become: true
+  pacman:
+    name:
+      - vagrant
+      - virtualbox
+      - virtualbox-host-modules-arch
+      - virtualbox-guest-iso
+
+- name: install command line utilities
+  when: mtype != 'media'
+  become: true
+  pacman:
+    name:
+      - jpegoptim
+      - optipng
+      - shellcheck
+      - shfmt
+
+- name: install go
+  when: mtype != 'media'
+  become: true
+  pacman:
+    name:
+      - go
+      - go-tools
+
+- name: install rust
+  when: mtype != 'media'
+  become: true
+  pacman:
+    name:
+      - rust
+      - cargo-outdated
+
+- name: install cargo extensions
+  when: mtype != 'media'
+  aur:
+    name:
+      - cargo-about
+
 - include: php.yml
 - include: nodejs.yml
 - include: ruby.yml
+- include: cloud.yml
+- include: devops.yml

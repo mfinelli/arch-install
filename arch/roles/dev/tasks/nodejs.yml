@@ -7,14 +7,12 @@
       - nodejs
       - npm
 
-- name: install n node version manager
-  when: "mtype == 'personal'"
-  aur: name=nodejs-n
-
-- name: install other nodejs packages
-  when: "mtype == 'personal'"
-  aur:
+- name: install nodejs packages
+  when: mtype == 'personal'
+  become: true
+  pacman:
     name:
+      - nodejs-n
       - nodejs-autoprefixer
       - nodejs-clean-css-cli
       - nodejs-pug-cli

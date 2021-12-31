@@ -1,0 +1,35 @@
+---
+- name: install devops tools
+  when: mtype == 'personal'
+  become: true
+  pacman:
+    name:
+      - terraform
+      - packer
+      - sops
+      - newrelic-cli
+
+- name: install kubernetes tools
+  when: mtype == 'personal'
+  become: true
+  pacman:
+    name:
+      - kubectl
+      - kubectx
+      - helm
+      - helmfile
+      - pluto
+      - helm-secrets
+      - helm-diff
+      - helm-gcs
+      - helm-s3
+
+- name: install helm plugins
+  when: mtype == 'personal'
+  community.kubernetes.helm_plugin:
+    plugin_path: /usr/lib/helm/plugins/{{ item }}
+  loop:
+    - diff
+    - gcs
+    - s3
+    - secrets

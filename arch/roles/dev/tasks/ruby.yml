@@ -9,9 +9,10 @@
       - ruby-rdoc
       - ruby-bundler
 
-- name: install ruby aur packages
-  when: "mtype == 'personal'"
-  aur:
+- name: install ruby packages
+  when: mtype == 'personal'
+  become: true
+  pacman:
     name:
       - ruby-install
       - ruby-pry
