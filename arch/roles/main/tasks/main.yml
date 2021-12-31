@@ -53,22 +53,16 @@
       - ttf-symbola
       - ttf-google-fonts-git
 
-- name: install patched fonts
-  aur:
-    name:
-      - ttf-meslo-nerd-font-powerlevel10k
-      - nerd-fonts-jetbrains-mono
-
 - name: install xfce themes
   become: true
   pacman:
     name:
+      - xfce-theme-manager
       - elementary-icon-theme
 
 - name: install xfce themes
   aur:
     name:
-      - xfce-theme-manager
       - xfce-theme-greybird
       - shimmer-wallpapers
       - elementary-xfce-icons

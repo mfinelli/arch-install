@@ -29,4 +29,5 @@
 
 - name: install redli
   when: "mtype == 'personal'"
-  aur: name=redli
+  become: true
+  pacman: name=redli

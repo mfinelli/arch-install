@@ -1,8 +1,7 @@
 ---
 - name: install sync apps
   when: "mtype == 'personal'"
-  become: true
-  pacman:
+  aur:
     name:
       - dropbox
       - spideroak-one

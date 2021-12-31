@@ -32,3 +32,33 @@
     name:
       - foobar2000
       - mp3tag
+
+# TODO: switch this to WKD once supported by the module
+- name: add tor browser bundle signing key
+  when: mtype == 'personal' or mtype == 'media'
+  gpg_key:
+    fpr: EF6E286DDA85EA2A4BA7DE684E2C6E8793298290
+
+- name: install tor browser bundle
+  when: mtype == 'personal' or mtype == 'media'
+  aur: name=tor-browser
+
+- name: install google-chrome
+  aur: name=google-chrome
+
+- name: install youtube-dl
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman:
+    name:
+      - youtube-dl
+      - yt-dlp
+
+- name: install other media dependencies
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman:
+    name:
+      - vlc
+      - libdvdcss
+      - libaacs

@@ -32,25 +32,31 @@
       - bat
       - fd
       - fzf
+      - go-yq
       - thefuck
       - tldr
       - bind
       - net-tools
       - nmap
+      - p7zip
       - whois
       - jq
       - vivid
       - zoxide
 
-- name: install main cli apps from aur
-  aur:
-    name:
-      - go-yq
-
 - name: install secondary cli apps
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   become: true
   pacman:
     name:
       - moreutils
       - dos2unix
+      - github-cli
+
+- name: install shared secondary cli apps
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman:
+    name:
+      - cdrtools
+      - unrar
