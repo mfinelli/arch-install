@@ -53,40 +53,18 @@
   when: ansible_processor[1] == 'GenuineIntel'
   pacman: name=intel-ucode
 
-- name: install ansible dependencies
-  become: true
+
+- include: pacman.yml
+
+- name: install ansible-aur (from supermario repo)
   pacman:
     name:
-      - ansible
-      - git
-      - pyalpm
-
-- name: ensure sudoer rule
-  become: true
-  copy:
-    dest: /etc/sudoers.d/mario
-    owner: root
-    group: root
-    mode: 0440
-    src: sudoer
-    validate: 'visudo -cf %s'
+      - ansible-aur
+      - ansible-gpg-key-git
+      - ansible-gsetting-git
 
 - name: install pikaur
   aur: name=pikaur
-
-- name: install ansible-aur
-  aur:
-    name: ansible-aur-git
-    use: pikaur # extra_args cannot be used in auto mode
-    extra_args: --overwrite /usr/share/ansible/plugins/modules/aur.py
-
-- name: install ansible-gpg-key
-  aur: name=ansible-gpg-key-git
-
-- name: install ansible-gsetting
-  aur: name=ansible-gsetting-git
-
-- include: pacman.yml
 
 - name: install networking tools
   become: true
