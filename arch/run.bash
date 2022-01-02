@@ -10,13 +10,26 @@ if [[ $# -eq 1 ]] && [[ $1 != setup ]]; then
   exit 1
 fi
 
-if [[ $1 == setup ]]; then
-  playbook=setup.yml
-  mmode=setup
-else
-  playbook=arch.yml
-  mmode=post
-fi
+# https://stackoverflow.com/a/14367368
+array_contains() {
+  local haystack="$1[@]"
+  local needle="$2"
+  local found=1
+
+  for element in "${!haystack}"; do
+    if [[ $element == "$needle" ]]; then
+      found=0
+      break
+    fi
+  done
+
+  return $found
+}
+
+PERSONAL_MACHINES=(stig)
+SERVER_MACHINES=(dev.finelli.dev)
+WORK_MACHINES=()
+MEDIA_MACHINES=()
 
 if lspci | grep VGA | grep -qi amd; then
   gcard=amd
@@ -26,10 +39,13 @@ else
   gcard=none
 fi
 
-if [[ $(hostnamectl --static) == stig ]]; then
+hn="$(hostnamectl --static)"
+if array_contains PERSONAL_MACHINES "$hn"; then
   mtype=personal
-elif [[ $(hostnamectl --static) == dev.finelli.dev ]]; then
+elif array_contains SERVER_MACHINES "$hn"; then
   mtype=server
+elif array_contains WORK_MACHINES "$hn"; then
+  mtype=work
 else
   mtype=media
 fi
@@ -37,11 +53,31 @@ fi
 # prompt for sudo password right away
 sudo echo -n
 
-ansible-playbook \
-  --extra-vars gcard=$gcard \
-  --extra-vars multilib=true \
-  --extra-vars mmode=$mmode \
-  --extra-vars mtype=$mtype \
-  $playbook
+if [[ $1 == setup ]]; then
+  mmode=setup
+
+  # run once first just to setup custom facts
+  ansible-playbook \
+    --extra-vars gcard=$gcard \
+    --extra-vars multilib=true \
+    --extra-vars mmode=$mmode \
+    --extra-vars mtype=$mtype \
+    setup.yml --tags init
+
+  # now we can run the main setup
+  ansible-playbook \
+    --extra-vars gcard=$gcard \
+    --extra-vars multilib=true \
+    --extra-vars mmode=$mmode \
+    --extra-vars mtype=$mtype \
+    setup.yml
+else
+  ansible-playbook \
+    --extra-vars gcard=$gcard \
+    --extra-vars multilib=true \
+    --extra-vars mmode=post \
+    --extra-vars mtype=$mtype \
+    setup.yml
+fi
 
 exit 0

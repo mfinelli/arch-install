@@ -2,7 +2,9 @@
 
 Automation for Arch Linux installations.
 
-## manual steps
+## desktop / media installations
+
+### manual steps
 
 1. Download the install [image](https://www.archlinux.org/download/) and
 [prepare](https://wiki.archlinux.org/index.php/USB_flash_installation_medium)
@@ -54,6 +56,32 @@ chmod 0440 /etc/sudoers.d/mario
 
 ```shell
 su mario -
-cd
-curl -Ls https://mfgo.link/arch-install | bash
+bash -c "$(curl -fsSL https://mfgo.link/arch-setup)"
 ```
+
+8. Reboot
+
+```shell
+exit
+umount -R /mnt
+swapoff /dev/crypt/swap
+reboot
+```
+
+9. Run the post-first reboot portion of the setup
+
+```shell
+bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
+```
+
+10. Set default shell to zsh
+
+```shell
+chsh -s /bin/zsh
+```
+
+## server installations
+
+### manual steps
+
+TODO

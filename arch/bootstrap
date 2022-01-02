@@ -11,6 +11,13 @@ fi
 MIRROR='Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch'
 echo "$MIRROR" > /etc/pacman.d/mirrorlist
 
+# add the supermario repo and then refresh - we'll set it "correctly" once
+# ansible runs
+echo '[supermario]' >> /etc/pacman.conf
+# shellcheck disable=SC2016
+echo 'Server = https://pkgs.finelli.dev/arch/$arch' >> /etc/pacman.conf
+pacman -Syyu
+
 read -rp "What's the install disk? (e.g., /dev/sda) " INSTALL_DISK
 
 if [[ ! -e $INSTALL_DISK ]]; then
@@ -61,7 +68,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --target=x86_64-efi --efi-directory=/boot \
   --bootloader-id="Arch Linux" --recheck
 
-# the rest of the system gets installed/configured using ansible so install it
-pacman -S ansible git pyalpm python-py-cpuinfo
+# the rest of the system gets installed/configured using ansible
+pacman -S ansible git pyalpm python-py-cpuinfo \
+  ansible-{aur,gpg-key-git,gsetting-git}
 
 exit 0

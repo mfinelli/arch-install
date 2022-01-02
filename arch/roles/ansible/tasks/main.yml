@@ -22,6 +22,7 @@
     state: directory
 
 - name: copy custom cpuinfo fact
+  become: true
   copy:
     dest: /etc/ansible/facts.d/cpuinfo.fact
     owner: root
