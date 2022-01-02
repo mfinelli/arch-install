@@ -52,6 +52,7 @@
       - moreutils
       - dos2unix
       - github-cli
+      - urlwatch
 
 - name: install shared secondary cli apps
   when: mtype == 'personal' or mtype == 'media'

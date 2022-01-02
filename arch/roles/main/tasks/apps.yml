@@ -117,3 +117,19 @@
 - name: install pdf viewer
   become: true
   pacman: name=evince
+
+- name: install archive tools
+  become: true
+  pacman: name=file-roller
+
+- name: install gnucash
+  when: mtype == 'personal'
+  become: true
+  pacman:
+    name:
+      - gnucash
+      - gnucash-docs
+      - perl-finance-quote
+      - perl-date-manip
+      - perl-libwww
+      - perl-lwp-protocol-https
