@@ -1,3 +1,20 @@
 ---
 - name: install firefox
-  apt: name=firefox-esr
+  ansible.builtin.apt: name=firefox-esr
+
+- name: ensure openssh is installed
+  ansible.builtin.apt: name=openssh-server
+
+- name: copy sshd config
+  ansible.builtin.copy:
+    src: sshd_config
+    owner: root
+    group: root
+    mode: 0644
+    dest: /etc/ssh/sshd_config
+    validate: /usr/sbin/sshd -tf %s
+  notify:
+    - restart sshd
+
+- name: ensure sshd is running and enabled
+  ansible.builtin.system: name=ssh.service enabled=yes state=started
