@@ -14,9 +14,11 @@ network VPN.
 
 3. Update the hostname so that the role picker works as expected
 
-```shell
-hostnamectl set-static homepi
-```
+   ```shell
+   sudo raspi-config
+   ```
+
+   System Options > Hostname
 
 4. Reboot
 

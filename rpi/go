@@ -7,9 +7,9 @@ sdir="$(pwd)"
 cd "$wdir"
 
 git clone https://github.com/mfinelli/arch-install.git
-cd arch-install/debian
+cd arch-install/rpi
 
-sudo ansible-playbook debian.yml
+sudo ansible-playbook rpi.yml
 
 cd "$sdir"
 rm -rf "$wdir"
