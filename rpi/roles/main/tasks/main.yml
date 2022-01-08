@@ -17,4 +17,4 @@
     - restart sshd
 
 - name: ensure sshd is running and enabled
-  ansible.builtin.system: name=ssh.service enabled=yes state=started
+  ansible.builtin.systemd: name=ssh.service enabled=yes state=started
