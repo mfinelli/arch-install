@@ -3,7 +3,7 @@
 Automation for my debian installation running in a
 [Virtual Box VM](https://www.virtualbox.org).
 
-# manual steps
+## manual steps
 
 1. Install debian using the installer GUI
 ([download](https://www.debian.org/distrib/netinst#smallcd)). Set the hostname
