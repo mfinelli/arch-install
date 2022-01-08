@@ -16,4 +16,4 @@
 - name: clone this repository for easy updates
   ansible.builtin.git:
     repo: https://github.com/mfinelli/arch-install.git
-    dest: "{{ ansible_user_dir }}/src/arch-install
+    dest: "{{ ansible_user_dir }}/src/arch-install"
