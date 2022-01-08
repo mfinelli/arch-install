@@ -27,6 +27,6 @@ network VPN.
 
 6. Open a terminal and run:
 
-```shell
-bash -c "$(curl -LfSs https://mfgo.link/rpi)"
-```
+   ```shell
+   bash -c "$(curl -LfSs https://mfgo.link/rpi)"
+   ```
