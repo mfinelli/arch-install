@@ -1,0 +1,6 @@
+---
+- name: add home ssh key
+  ansible.posix.authorized_key:
+    user: "{{ ansible_user_id }}"
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4MZX4N4c73onEGKP3x8DEo7mhd8ahqQEhydgM2hTHo mario
+    exclusive: yes
