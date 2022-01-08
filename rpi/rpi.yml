@@ -10,5 +10,6 @@
           - git
 
   roles:
+    - main
     - tailscale
     - user

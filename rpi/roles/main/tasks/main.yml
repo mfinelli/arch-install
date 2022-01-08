@@ -1,0 +1,3 @@
+---
+- name: install firefox
+  apt: name=firefox-esr
