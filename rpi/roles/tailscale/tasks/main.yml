@@ -1,0 +1,20 @@
+---
+- name: install apt-transport-https
+  ansible.builtin.apt: name=apt-transport-https
+
+- name: add the tailscale signing key
+  ansible.bultin.apt_key:
+    url: https://pkgs.tailscale.com/stable/raspbian/{{ ansible_distribution_release }}.asc
+
+- name: add tailscale apt repository
+  ansible.builtin.apt:
+    repo: deb https://pkgs.tailscale.com/stable/raspbian {{ ansible_distribution_release }} main
+    filename: tailscale
+
+- name: install tailscale
+  ansible.builtin.apt:
+    name: tailscale
+    update_cache: yes
+
+- name: ensure tailscaled is running and enabled
+  ansible.builtin.systemd: name=tailscaled enabled=yes state=started

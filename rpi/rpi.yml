@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+
+  tasks:
+    - name: ensure go dependencies
+      ansible.builtin.apt:
+        name:
+          - ansible
+          - git
+
+  roles:
+    - tailscale
