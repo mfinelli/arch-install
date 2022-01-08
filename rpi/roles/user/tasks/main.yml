@@ -4,3 +4,16 @@
     user: "{{ ansible_user_id }}"
     key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4MZX4N4c73onEGKP3x8DEo7mhd8ahqQEhydgM2hTHo mario
     exclusive: yes
+
+- name: ensure src directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/src"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: 0755
+    state: directory
+
+- name: clone this repository for easy updates
+  ansible.builtin.git:
+    repo: https://github.com/mfinelli/arch-install.git
+    dest: "{{ ansible_user_dir }}/src/arch-install
