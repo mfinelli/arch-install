@@ -11,6 +11,7 @@ cd arch-install/rpi
 
 ansible-galaxy install -r requirements.yml
 ansible-playbook rpi.yml
+ansible-playbook user.yml
 
 cd "$sdir"
 rm -rf "$wdir"
