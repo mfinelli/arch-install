@@ -133,3 +133,8 @@
       - perl-date-manip
       - perl-libwww
       - perl-lwp-protocol-https
+
+- name: install raspberry pi imager
+  when: mtype == 'personal'
+  become: true
+  pacman: name=rpi-imager
