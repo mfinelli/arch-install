@@ -61,3 +61,7 @@
     name:
       - cdrtools
       - unrar
+
+- name: install tailscale
+  become: true
+  pacman: name=tailscale
