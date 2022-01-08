@@ -7,7 +7,7 @@
     url: https://pkgs.tailscale.com/stable/raspbian/{{ ansible_distribution_release }}.asc
 
 - name: add tailscale apt repository
-  ansible.builtin.apt:
+  ansible.builtin.apt_repository:
     repo: deb https://pkgs.tailscale.com/stable/raspbian {{ ansible_distribution_release }} main
     filename: tailscale
 
