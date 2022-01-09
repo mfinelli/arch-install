@@ -18,3 +18,12 @@
 
 - name: ensure sshd is running and enabled
   ansible.builtin.systemd: name=ssh.service enabled=yes state=started
+
+- name: install other applications
+  ansible.builtin.apt:
+    name:
+      - htop
+      - libarchive-tools
+      - ripgrep
+      - screen
+      - vim
