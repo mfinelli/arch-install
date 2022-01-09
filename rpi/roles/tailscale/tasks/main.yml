@@ -1,7 +1,4 @@
 ---
-- name: install apt-transport-https
-  ansible.builtin.apt: name=apt-transport-https
-
 - name: add the tailscale signing key
   ansible.builtin.apt_key:
     url: https://pkgs.tailscale.com/stable/raspbian/{{ ansible_distribution_release }}.asc
