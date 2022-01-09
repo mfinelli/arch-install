@@ -9,9 +9,7 @@ cd "$wdir"
 git clone https://github.com/mfinelli/arch-install.git
 cd arch-install/rpi
 
-ansible-galaxy install -r requirements.yml
-ansible-playbook rpi.yml
-ansible-playbook user.yml
+./run.bash
 
 cd "$sdir"
 rm -rf "$wdir"
