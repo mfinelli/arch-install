@@ -1,3 +1,4 @@
-deb http://archive.raspberrypi.org/debian/ bullseye main
+deb https://archive.raspberrypi.org/debian/ {{ ansible_distribution_release }} main
 # Uncomment line below then 'apt-get update' to enable 'apt-get source'
 # deb-src http://archive.raspberrypi.org/debian/ bullseye main
+# vim: ft=debsources.jinja2
