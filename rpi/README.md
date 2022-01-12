@@ -30,3 +30,14 @@ network VPN.
    ```shell
    bash -c "$(curl -LfSs https://mfgo.link/rpi)"
    ```
+
+7. If you have installed the case fan you can adjust it so that it only turns
+   on if it reaches a certain temperature (default 80 degrees Celsius):
+
+   ```shell
+   sudo raspi-config
+   ```
+
+   Performance Options > Fan > Enable Fan Temperature Control > (Fan is
+   connected to GPIO control `14`) > At what temperature should the fan turn
+   on: `70`
