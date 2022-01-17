@@ -29,7 +29,7 @@ network VPN.
    [readme](https://github.com/mfinelli/arch-install/blob/master/rpi/roles/fde/README.md)
    for the `fde` role.
 
-   Make sure to edit which hostnames are enabled in `fde.bash` and `run.bash`.
+   Make sure to edit which hostnames are enabled in `run.bash`.
 
 7. Open a terminal and run:
 

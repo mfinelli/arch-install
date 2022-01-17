@@ -1,0 +1,18 @@
+#!/bin/bash -e
+
+sudo apt install -y ansible git
+
+wdir="$(mktemp -d)"
+sdir="$(pwd)"
+cd "$wdir"
+
+git clone https://github.com/mfinelli/arch-install.git
+cd arch-install/rpi
+git checkout rpi-fde
+
+ansible-playbook --extra-vars fde=true rpi.yml --tags fde
+
+cd "$sdir"
+rm -rf "$wdir"
+
+exit 0
