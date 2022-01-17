@@ -24,6 +24,7 @@
     src: fstab.j2
 
 - name: install updated crypttab
+  when: fde == 'true'
   ansible.builtin.copy:
     dest: /etc/crypttab
     owner: root
