@@ -14,3 +14,19 @@
     group: root
     mode: 0755 # all rpi files in /boot are +x
     src: cmdline.txt.j2
+
+- name: install updated fstab
+  ansible.builtin.template:
+    dest: /etc/fstab
+    owner: root
+    group: root
+    mode: 0644
+    src: fstab.j2
+
+- name: install updated crypttab
+  ansible.builtin.copy:
+    dest: /etc/crypttab
+    owner: root
+    group: root
+    mode: 0644
+    src: crypttab
