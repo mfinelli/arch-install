@@ -1,0 +1,16 @@
+---
+- name: install kernel boot config
+  ansible.builtin.template:
+    dest: /boot/config.txt
+    owner: root
+    group: root
+    mode: 0755 # all rpi files in /boot are +x
+    src: config.txt.j2
+
+- name: install kernel command line config
+  ansible.builtin.template:
+    dest: /boot/cmdline.txt
+    owner: root
+    group: root
+    mode: 0755 # all rpi files in /boot are +x
+    src: cmdline.txt.j2

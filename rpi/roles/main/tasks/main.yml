@@ -52,3 +52,5 @@
       - ripgrep
       - screen
       - vim
+
+- include: boot.yml
