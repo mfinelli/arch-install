@@ -13,14 +13,21 @@ fi
 version="$1"
 current_version="$(uname -r)"
 case "${current_version}" in
+  *-v7l+)
+    case "${version}" in
+      *-v7l+) ;;
+      *) exit 0 ;;
+    esac
+  ;;
   *-v7+)
     case "${version}" in
       *-v7+) ;;
-      *) exit 0
+      *) exit 0 ;;
     esac
   ;;
   *+)
     case "${version}" in
+      *-v7l+) exit 0 ;;
       *-v7+) exit 0 ;;
     esac
   ;;
