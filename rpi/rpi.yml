@@ -2,13 +2,10 @@
 - hosts: localhost
   become: yes
 
-  tasks:
-    - name: ensure go dependencies
-      ansible.builtin.apt:
-        name:
-          - ansible
-          - git
-
   roles:
-    - main
-    - tailscale
+    - role: fde
+      tags: [all, fde]
+    - role: main
+      tags: [all]
+    - role: tailscale
+      tags: [all]

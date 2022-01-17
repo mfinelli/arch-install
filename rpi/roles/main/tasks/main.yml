@@ -1,4 +1,10 @@
 ---
+- name: ensure setup dependencies
+  ansible.builtin.apt:
+    name:
+      - ansible
+      - git
+
 - name: install apt-transport-https
   ansible.builtin.apt: name=apt-transport-https
 
