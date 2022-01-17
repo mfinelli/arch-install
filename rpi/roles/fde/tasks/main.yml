@@ -1,0 +1,7 @@
+---
+- name: install full disk encryption dependencies
+  ansible.builtin.apt:
+    name:
+      - busybox
+      - cryptsetup
+      - initramfs-tools
