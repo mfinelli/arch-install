@@ -63,7 +63,7 @@ dtoverlay=vc4-kms-v3d
 max_framebuffers=2
 
 # Disable compensation for displays with overscan
-disable_overscan=1
+disable_overscan=0
 
 [cm4]
 # Enable host mode on the 2711 built-in XHCI USB controller.
@@ -78,3 +78,4 @@ otg_mode=1
 arm_boost=1
 
 [all]
+dtoverlay=gpio-fan,gpiopin=14,temp=70000
