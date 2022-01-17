@@ -1,0 +1,5 @@
+---
+- name: rebuild initramfs
+  ansible.builtin.command: /usr/sbin/mkinitramfs -o /boot/initramfs.gz
+  environment:
+    CRYPTSETUP: y

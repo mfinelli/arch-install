@@ -5,3 +5,33 @@
       - busybox
       - cryptsetup
       - initramfs-tools
+
+- name: install kernel initramfs rebuild script
+  ansible.builtin.copy:
+    dest: /etc/kernel/postinst.d/initramfs-rebuild
+    owner: root
+    group: root
+    mode: 0755
+    src: initramfs-rebuild.sh
+  notify:
+    - rebuild initramfs
+
+- name: install initramfs luks hooks script
+  ansible.builtin.copy:
+    dest: /etc/initramfs-tools/hooks/luks
+    owner: root
+    group: root
+    mode: 0755
+    src: luks.sh
+  notify:
+    - rebuild initramfs
+
+- name: install initramfs modules list
+  ansible.builtin.copy:
+    dest: /etc/initramfs-tools/modules
+    owner: root
+    group: root
+    mode: 0644
+    src: modules
+  notify:
+    - rebuild initramfs
