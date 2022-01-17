@@ -1,0 +1,6 @@
+---
+# TODO: we should detect if the case fan is installed
+fan_enabled_hosts:
+  - parkpi
+
+fan_enable_at_degrees_celsius: 70

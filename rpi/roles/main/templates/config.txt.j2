@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 # For more options and information see
 # http://rpf.io/configtxt
 # Some settings may impact device functionality. See link above for details
@@ -78,4 +79,9 @@ otg_mode=1
 arm_boost=1
 
 [all]
-dtoverlay=gpio-fan,gpiopin=14,temp=70000
+{% if ansible_hostname in fan_enabled_hosts %}
+dtoverlay=gpio-fan,gpiopin=14,temp={{ fan_enable_at_degrees_celsius }}000
+{% endif %}
+{% if fde == 'true' %}
+initramfs initramfs.gz followkernel
+{% endif %}
