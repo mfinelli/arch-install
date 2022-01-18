@@ -113,8 +113,8 @@ you can additionally follow these instructions.
    the root filesystem during encryption you'll need to reformat it. It can
    easily be done with `gparted`, by selecting the device (probably `/dev/sda`),
    formatting it as "cleared", creating a new partition table (Device -> Create
-   Partition Table -> `msdos` type), and then creating a new `exfat` partition.
-   Give the filesystem a label (e.g., `cryptkey`) so that we can use it in the
+   Partition Table -> `msdos` type), and then creating a new `fat32` partition.
+   Give the filesystem a label (e.g., `CRYPTKEY`) so that we can use it in the
    `crypttab` later.
 
 2. Ensure that the drive is plugged in and mounted.
