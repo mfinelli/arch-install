@@ -6,6 +6,12 @@
       - cryptsetup
       - initramfs-tools
 
+- name: install tools for working with usb drive keyfiles
+  ansible.builtin.apt:
+    name:
+      - gparted
+      - exfatprogs
+
 - name: install kernel initramfs rebuild script
   ansible.builtin.copy:
     dest: /etc/kernel/postinst.d/initramfs-rebuild

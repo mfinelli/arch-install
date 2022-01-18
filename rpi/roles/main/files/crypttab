@@ -1,3 +1,0 @@
-# Ansible managed
-# <target name>	<source device>	<key file>	<options>
-crypt	/dev/mmcblk0p2	none	luks

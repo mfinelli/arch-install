@@ -4,3 +4,5 @@ fan_enabled_hosts:
   - parkpi
 
 fan_enable_at_degrees_celsius: 70
+
+cryptkey_timeout_seconds: 20
