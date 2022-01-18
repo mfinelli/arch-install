@@ -11,6 +11,7 @@ esac
 
 . /usr/share/initramfs-tools/hook-functions
 
+copy_exec /sbin/e2fsck /sbin
 copy_exec /sbin/resize2fs /sbin
 copy_exec /sbin/fdisk /sbin
 copy_exec /sbin/cryptsetup /sbin
