@@ -3,6 +3,7 @@
 # https://serverfault.com/q/881908
 - name: check if this host uses a keyfile
   when: fde == 'true'
+  tags: fde
   block:
     - name: default keyfile to false
       set_fact: crypttab_keyfile=false
