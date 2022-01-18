@@ -61,7 +61,7 @@ Enables full-disk encryption.
 
    ```shell
    cryptsetup --type luks2 --cipher xchacha20,aes-adiantum-plain64 \
-     --hash 256 --iter-time 5000 --keysize 256 --pbkdf argon21 \
+     --hash sha256 --iter-time 5000 --key-size 256 --pbkdf argon2i \
      luksFormat /dev/mmcblk0p2
    ```
 
