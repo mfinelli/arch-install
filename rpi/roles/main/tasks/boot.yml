@@ -9,7 +9,8 @@
       set_fact: crypttab_keyfile=false
 
     - name: check if a keyfile exists in the root
-      stat: path=/root/cryptkey register=crypttab_cryptkey
+      stat: path=/root/cryptkey
+      register: crypttab_cryptkey
 
     - name: update keyfile setting
       set_fact: crypttab_keyfile=true
