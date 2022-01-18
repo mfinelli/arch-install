@@ -6,6 +6,7 @@ Enables full-disk encryption.
 
 - https://robpol86.com/raspberry_pi_luks.html
 - https://rr-developer.github.io/LUKS-on-Raspberry-Pi/
+- https://blog.fidelramos.net/software/unlock-luks-usb-drive
 
 ## steps
 
@@ -102,3 +103,49 @@ Enables full-disk encryption.
     ```
 
 13. Reboot and continue with the rest of the installation.
+
+## keyfiles
+
+If you want to setup the device to boot with a keyfile via USB key on boot
+you can additionally follow these instructions.
+
+1. If you're going to reuse the USB drive that you used to temporarily store
+   the root filesystem during encryption you'll need to reformat it. It can
+   easily be done with `gparted`, by selecting the device (probably `/dev/sda`),
+   formatting it as "cleared", creating a new partition table (Device -> Create
+   Partition Table -> `msdos` type), and then creating a new `exfat` partition.
+   Give the filesystem a label (e.g., `cryptkey`) so that we can use it in the
+   `crypttab` later.
+
+2. Ensure that the drive is plugged in and mounted.
+
+3. Create the keyfile, we initially create it in `/root` so that we have a
+   backup in case we need to create a new USB drive we can just use the normal
+   luks password to decrypt and then copy the keyfile to a new device.
+
+   ```shell
+   sudo dd if=/dev/random of=/root/cryptkey bs=1024 count=4
+   sudo chmod 0400 /root/cryptkey
+   sudo cp /root/cryptkey /media/pi/cryptkey/key
+   ```
+
+4. Add the new keyfile to the luks header:
+
+   ```shell
+   sudo cryptsetup luksAddKey /dev/mmcblk0p2 /root/cryptkey
+   ```
+
+5. Re-run the FDE setup script so that the `crypttab` template detects the new
+   keyfile and makes the necessary changes.
+
+   ```shell
+   bash -c "$(curl -LfSs https://mfgo.link/rpi-fde)"
+   ```
+
+6. Update the initramfs one more time so that the `passdev` script gets
+   included.
+
+   ```shell
+   sudo mkinitramfs -o /tmp/initramfs.gz
+   sudo cp /tmp/initramfs.gz /boot/initramfs.gz
+   ```
