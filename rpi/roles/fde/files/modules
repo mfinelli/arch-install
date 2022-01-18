@@ -9,6 +9,8 @@
 #
 # raid1
 # sd_mod
+
+# required for luks
 algif_skcipher
 xchacha20
 adiantum
@@ -16,3 +18,10 @@ aes_arm
 sha256
 nhpoly1305
 dm-crypt
+
+# required for usb drive keyfiles
+uhci_hcd
+ehci_hcd
+usb_storage
+vfat
+fat
