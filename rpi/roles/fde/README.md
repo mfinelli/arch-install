@@ -149,3 +149,14 @@ you can additionally follow these instructions.
    sudo mkinitramfs -o /tmp/initramfs.gz
    sudo cp /tmp/initramfs.gz /boot/initramfs.gz
    ```
+
+## todo
+
+- Boot time is artificially delayed because "there is a start job running for
+  `/dev/disk/by-label/CRYPTKEY:/key:20` which waits 90 seconds before aborting
+  and continuing the boot process.
+
+- When a keyfile is configured if it fails to mount or load it does not prompt
+  for a password, but instead loops failure several times and then drops into
+  the initramfs shell where you need to manually `cryptsetup luksopen
+  /dev/mmcblk0p2 crypt` and then `exit` to successfully continue to boot.
