@@ -25,7 +25,13 @@ network VPN.
 5. Log back in with the default `pi` user (the default password if not
    changed during the setup step is "raspberry").
 
-6. Open a terminal and run:
+6. If you want to enable full disk encryption follow the steps in the
+   [readme](https://github.com/mfinelli/arch-install/blob/master/rpi/roles/fde/README.md)
+   for the `fde` role.
+
+   Make sure to edit which hostnames are enabled in `run.bash`.
+
+7. Open a terminal and run:
 
    ```shell
    bash -c "$(curl -LfSs https://mfgo.link/rpi)"
@@ -41,3 +47,6 @@ network VPN.
    Performance Options > Fan > Enable Fan Temperature Control > (Fan is
    connected to GPIO control `14`) > At what temperature should the fan turn
    on: `70`
+
+   **N.B.** you should update which hosts have the case fan in
+   `roles/main/vars/main.yml`.

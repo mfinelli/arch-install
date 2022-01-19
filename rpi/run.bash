@@ -5,8 +5,15 @@ if [[ $# -ne 0 ]]; then
   exit 1
 fi
 
+hn="$(cat /etc/hostname)"
+if [[ $hn == raspberrypi || $hn == parkpi ]]; then
+  fde=true
+else
+  fde=false
+fi
+
 ansible-galaxy install -r requirements.yml
-ansible-playbook rpi.yml
+ansible-playbook --extra-vars fde=$fde rpi.yml
 ansible-playbook user.yml
 
 exit 0
