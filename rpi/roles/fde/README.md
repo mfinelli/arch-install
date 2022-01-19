@@ -98,7 +98,7 @@ Enables full-disk encryption.
     boot time:
 
     ```shell
-    sudo mkinitramfs -o /tmp/initramfs.gz
+    sudo CRYPTSETUP=y mkinitramfs -o /tmp/initramfs.gz
     sudo cp /tmp/initramfs.gz /boot/initramfs.gz
     ```
 
@@ -146,7 +146,7 @@ you can additionally follow these instructions.
    included.
 
    ```shell
-   sudo mkinitramfs -o /tmp/initramfs.gz
+   sudo CRYPTSETUP=y mkinitramfs -o /tmp/initramfs.gz
    sudo cp /tmp/initramfs.gz /boot/initramfs.gz
    ```
 
