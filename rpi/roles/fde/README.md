@@ -117,6 +117,23 @@ you can additionally follow these instructions.
    Give the filesystem a label (e.g., `CRYPTKEY`) so that we can use it in the
    `crypttab` later.
 
+   You may also want to wipe the data from the drive before using it, which
+   can be accomplished like so:
+
+   1. First note the optimal sector size and the total number of sectors
+      (assuming `/dev/sda`):
+
+      ```shell
+      sudo fdisk -l /dev/sda
+      ```
+
+   2. Wipe the disk using a simple `dd` command using the data from above
+      (e.g., sector size 512 bytes and 30629376 sectors):
+
+      ```shell
+      sudo dd bs=512 count=30629376 if=/dev/urandom of=/dev/sda status=progress
+      ```
+
 2. Ensure that the drive is plugged in and mounted.
 
 3. Create the keyfile, we initially create it in `/root` so that we have a
