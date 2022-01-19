@@ -8,7 +8,6 @@ cd "$wdir"
 
 git clone https://github.com/mfinelli/arch-install.git
 cd arch-install/rpi
-git checkout rpi-fde
 
 ansible-galaxy install -r requirements.yml
 ansible-playbook --extra-vars fde=true rpi.yml --tags fde
