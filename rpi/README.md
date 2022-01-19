@@ -19,6 +19,7 @@ network VPN.
    ```shell
    sudo apt update
    sudo apt upgrade
+   sudo apt autoremove --purge
    ```
 
 5. Update the hostname so that the role picker works as expected
