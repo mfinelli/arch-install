@@ -18,6 +18,7 @@ case "${current_version}" in
       *-v8+) ;;
       *) exit 0 ;;
     esac
+  ;;
   *-v7l+)
     case "${version}" in
       *-v7l+) ;;
