@@ -49,6 +49,7 @@
     name:
       - htop
       - libarchive-tools
+      - lm-sensors
       - ripgrep
       - screen
       - vim
