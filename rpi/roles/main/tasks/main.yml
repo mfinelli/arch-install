@@ -30,6 +30,9 @@
 - name: ensure openssh is installed
   ansible.builtin.apt: name=openssh-server
 
+- name: ensure sshd is running and enabled
+  ansible.builtin.systemd: name=ssh.service enabled=yes state=started
+
 - name: copy sshd config
   ansible.builtin.copy:
     src: sshd_config
@@ -40,9 +43,6 @@
     validate: /usr/sbin/sshd -tf %s
   notify:
     - restart sshd
-
-- name: ensure sshd is running and enabled
-  ansible.builtin.systemd: name=ssh.service enabled=yes state=started
 
 - name: install other applications
   ansible.builtin.apt:
