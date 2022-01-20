@@ -143,7 +143,7 @@ you can additionally follow these instructions.
    ```shell
    sudo dd if=/dev/random of=/root/cryptkey bs=1024 count=4
    sudo chmod 0400 /root/cryptkey
-   sudo cp /root/cryptkey /media/pi/cryptkey/key
+   sudo cp /root/cryptkey /media/pi/CRYPTKEY/key
    ```
 
 4. Add the new keyfile to the luks header:
