@@ -167,6 +167,8 @@ you can additionally follow these instructions.
    sudo cp /tmp/initramfs.gz /boot/initramfs.gz
    ```
 
+7. Reboot
+
 ## todo
 
 - Boot time is artificially delayed because "there is a start job running for
