@@ -7,5 +7,7 @@
       tags: [all, fde]
     - role: main
       tags: [all]
+    - role: unbound
+      tags: [all]
     - role: tailscale
       tags: [all]
