@@ -73,6 +73,7 @@ brew "zsh-autosuggestions"
 brew "zsh-completions"
 brew "zsh-syntax-highlighting"
 cask "1password-cli"
+cask "cloudflare-warp"
 cask "docker"
 cask "dropbox"
 cask "firefox"
@@ -89,6 +90,7 @@ cask "libreoffice"
 cask "little-snitch"
 cask "mactex"
 cask "micro-snitch"
+cask "mullvadvpn"
 cask "ngrok"
 cask "spideroakone"
 cask "sublime-text"
@@ -104,5 +106,6 @@ mas "Keynote", id: 409183694
 mas "Microsoft Remote Desktop", id: 1295203466
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
+mas "Tailscale", id: 1475387142
 mas "Textual IRC Client", id: 1262957439
 mas "Xcode", id: 497799835
