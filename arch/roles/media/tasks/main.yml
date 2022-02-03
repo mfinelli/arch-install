@@ -1,8 +1,8 @@
 ---
 - name: install wine
   when:
-    - "multilib == 'true'"
-    - "mtype == 'personal' or mtype == 'media'"
+    - multilib == 'true'
+    - mtype == 'personal' or mtype == 'media'
   become: true
   pacman:
     name:
@@ -13,8 +13,8 @@
 
 - name: install lib32 libraries
   when:
-    - "multilib == 'true'"
-    - "mtype == 'personal' or mtype == 'media'"
+    - multilib == 'true'
+    - mtype == 'personal' or mtype == 'media'
   become: true
   pacman:
     name:
@@ -22,12 +22,12 @@
       - lib32-alsa-plugins
 
 - name: install picard
-  when: "mtype == 'personal' or mtype == 'media'"
+  when: mtype == 'personal' or mtype == 'media'
   become: true
   pacman: name=picard
 
 - name: install other music applications
-  when: "mtype == 'personal' or mtype == 'media'"
+  when: mtype == 'personal' or mtype == 'media'
   aur:
     name:
       - foobar2000

@@ -1,18 +1,18 @@
 ---
 - name: install sync apps
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   aur:
     name:
       - dropbox
       - spideroak-one
 
 - name: add 1password signing key
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   gpg_key:
     fpr: 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
 
 - name: install password apps
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   aur:
     name:
       - 1password
@@ -23,7 +23,7 @@
   pacman: name=keepass
 
 - name: install yubikey tools
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   become: true
   pacman:
     name:
@@ -35,7 +35,7 @@
       - yubikey-personalization-gui
 
 - name: install libreoffice
-  when: "mtype != 'media'"
+  when: mtype != 'media'
   become: true
   pacman:
     name:
@@ -66,7 +66,7 @@
       - mythes-it
 
 - name: install the gimp
-  when: "mtype != 'media'"
+  when: mtype != 'media'
   become: true
   pacman:
     name:
@@ -104,7 +104,7 @@
       - hexchat
 
 - name: install thunderbird
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   become: true
   pacman:
     name:
