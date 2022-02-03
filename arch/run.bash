@@ -62,7 +62,7 @@ if [[ $1 == setup ]]; then
     --extra-vars multilib=true \
     --extra-vars mmode=$mmode \
     --extra-vars mtype=$mtype \
-    setup.yml --tags init
+    arch.yml --tags init
 
   # now we can run the main setup
   ansible-playbook \
@@ -70,14 +70,14 @@ if [[ $1 == setup ]]; then
     --extra-vars multilib=true \
     --extra-vars mmode=$mmode \
     --extra-vars mtype=$mtype \
-    setup.yml
+    arch.yml --tags setup
 else
   ansible-playbook \
     --extra-vars gcard=$gcard \
     --extra-vars multilib=true \
     --extra-vars mmode=post \
     --extra-vars mtype=$mtype \
-    setup.yml
+    arch.yml
 fi
 
 exit 0

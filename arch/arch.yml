@@ -1,10 +1,17 @@
 ---
 - hosts: localhost
   roles:
-    - ansible
-    - base
-    - unbound
-    - main
-    - dev
-    - media
-    - databases
+    - role: ansible
+      tags: [all, init, setup]
+    - role: base
+      tags: [all, setup]
+    - role: unbound
+      tags: [all, setup]
+    - role: main
+      tags: [all]
+    - role: dev
+      tags: [all]
+    - role: media
+      tags: [all]
+    - role: databases
+      tags: [all]
