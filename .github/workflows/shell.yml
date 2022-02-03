@@ -32,16 +32,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Download shfmt
-        run: |
-          wget -O shfmt https://github.com/mvdan/sh/releases/download/v3.2.0/shfmt_v3.2.0_linux_amd64
-          chmod +x shfmt
+      - uses: mfinelli/setup-shfmt@v1
       - name: Run shfmt
         run: |
-          ./shfmt --version
-          ./shfmt -s -i 2 -ci -sr -d arch/bootstrap
-          ./shfmt -s -i 2 -ci -sr -d arch/go
-          ./shfmt -s -i 2 -ci -sr -d arch/init
-          ./shfmt -s -i 2 -ci -sr -d arch/pacstrap
-          ./shfmt -s -i 2 -ci -sr -d debian/go
-          find . -name '*.bash' | xargs ./shfmt -s -i 2 -ci -sr -d
+          shfmt --version
+          shfmt -s -i 2 -ci -sr -d arch/bootstrap
+          shfmt -s -i 2 -ci -sr -d arch/go
+          shfmt -s -i 2 -ci -sr -d arch/init
+          shfmt -s -i 2 -ci -sr -d arch/pacstrap
+          shfmt -s -i 2 -ci -sr -d debian/go
+          find . -name '*.bash' | xargs shfmt -s -i 2 -ci -sr -d
