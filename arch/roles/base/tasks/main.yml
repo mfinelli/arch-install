@@ -59,19 +59,20 @@
   when: mtype != 'server' and ansible_local.cpuinfo.cpu_vendor == 'AMD'
   pacman: name=amd-ucode
 
-# - name: ensure sudoer rule
-#   become: true
-#   copy:
-#     dest: /etc/sudoers.d/mario
-#     owner: root
-#     group: root
-#     mode: 0440
-#     src: sudoer
-#     validate: 'visudo -cf %s'
+- name: ensure sudoer rule
+  become: true
+  copy:
+    dest: /etc/sudoers.d/mario
+    owner: root
+    group: root
+    mode: 0440
+    src: sudoer
+    validate: 'visudo -cf %s'
 
 - include: pacman.yml
 
 - name: install ansible-aur (from supermario repo)
+  become: true
   pacman:
     name:
       - ansible-aur

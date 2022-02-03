@@ -28,7 +28,7 @@ array_contains() {
 
 PERSONAL_MACHINES=(stig)
 SERVER_MACHINES=(dev.finelli.dev)
-WORK_MACHINES=()
+WORK_MACHINES=(easy)
 MEDIA_MACHINES=()
 
 if lspci | grep VGA | grep -qi amd; then

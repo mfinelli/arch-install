@@ -9,6 +9,7 @@
       - yapf
 
 - name: install keymapper
+  become: true
   pacman: name=keymapper
 
 - name: enable keymapperd
