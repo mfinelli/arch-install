@@ -39,7 +39,7 @@ if [[ no == $(prompt_yesno "Confirm partition table?") ]]; then
 fi
 
 # encrypt the main partition: AES256 (e.g. /dev/sda2)
-cryptsetup --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
+cryptsetup --type luks2 --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
   --iter-time 5000 --use-random --verify-passphrase luksFormat \
   "${INSTALL_DISK}2"
 
