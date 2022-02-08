@@ -62,3 +62,12 @@
       - vlc
       - libdvdcss
       - libaacs
+      - handbrake
+
+- name: install torrent client
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman:
+    name:
+      - deluge
+      - cksfv

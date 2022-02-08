@@ -75,6 +75,11 @@
     name:
       - cargo-about
 
+- name: install postfix
+  when: mtype != 'media'
+  become: true
+  pacman: name=postfix
+
 - include: php.yml
 - include: nodejs.yml
 - include: ruby.yml
