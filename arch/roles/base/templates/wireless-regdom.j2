@@ -1,6 +1,9 @@
+# {{ ansible_managed }}
 #
 # Wireless regulatory domain configuration
 #
+
+WIRELESS_REGDOM="{{ wireless_regdom }}"
 
 #WIRELESS_REGDOM="00"
 #WIRELESS_REGDOM="AD"
@@ -176,3 +179,5 @@
 #WIRELESS_REGDOM="YT"
 #WIRELESS_REGDOM="ZA"
 #WIRELESS_REGDOM="ZW"
+
+# vim: ft=conf.jinja2

@@ -98,6 +98,16 @@
       - inetutils
       - netctl
 
+- name: install wireless regdom
+  become: true
+  when: mtype != 'server'
+  template:
+    dest: etc/conf.d/wireless-regdom
+    owner: root
+    group: root
+    mode: 0644
+    src: wireless-regdom.j2
+
 - name: install old base group packages
   become: true
   pacman:

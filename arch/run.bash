@@ -50,6 +50,9 @@ else
   mtype=media
 fi
 
+# TODO: this needs to be configurable somewhere
+wirelessregdom=US
+
 # prompt for sudo password right away
 sudo echo -n
 
@@ -62,6 +65,7 @@ if [[ $1 == setup ]]; then
     --extra-vars multilib=true \
     --extra-vars mmode=$mmode \
     --extra-vars mtype=$mtype \
+    --extra-vars wireless_regdom=$wirelessregdom \
     arch.yml --tags init
 
   # now we can run the main setup
@@ -70,6 +74,7 @@ if [[ $1 == setup ]]; then
     --extra-vars multilib=true \
     --extra-vars mmode=$mmode \
     --extra-vars mtype=$mtype \
+    --extra-vars wireless_regdom=$wirelessregdom \
     arch.yml --tags setup
 else
   ansible-playbook \
@@ -77,6 +82,7 @@ else
     --extra-vars multilib=true \
     --extra-vars mmode=post \
     --extra-vars mtype=$mtype \
+    --extra-vars wireless_regdom=$wirelessregdom \
     arch.yml
 fi
 
