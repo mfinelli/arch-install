@@ -1,6 +1,6 @@
 ---
 - name: install php
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   become: true
   pacman:
     name:
@@ -20,7 +20,7 @@
       - composer
 
 - name: install php.ini
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   become: true
   copy:
     src: php.ini

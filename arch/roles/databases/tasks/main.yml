@@ -1,6 +1,6 @@
 ---
 - name: install mariadb
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   become: true
   pacman: name=mariadb
   register: mariadb_installed
@@ -11,7 +11,7 @@
   when: mariadb_installed.changed
 
 - name: install postgresql
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   become: true
   pacman: name=postgresql
   register: postgresql_installed
@@ -23,11 +23,11 @@
   when: postgresql_installed.changed
 
 - name: install redis
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   become: true
   pacman: name=redis
 
 - name: install redli
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   become: true
   pacman: name=redli

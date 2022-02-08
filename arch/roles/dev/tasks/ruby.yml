@@ -1,6 +1,6 @@
 ---
 - name: install ruby
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   become: true
   pacman:
     name:

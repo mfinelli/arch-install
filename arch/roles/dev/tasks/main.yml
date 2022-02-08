@@ -1,22 +1,26 @@
 ---
+- name: install firefox developer edition
+  when: mtype != 'media' and mtype != 'server'
+  become: true
+  pacman: name=firefox-developer-edition
+
 - name: install main development packages
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   become: true
   pacman:
     name:
-      - firefox-developer-edition
       - imagemagick
       - geckodriver
 
 - name: download extra editors
-  when: "mtype == 'personal'"
+  when: mtype == 'personal'
   aur:
     name:
       - sublime-text-4
       - rubymine
 
 - name: install latex packages
-  when: "mtype != 'media'"
+  when: mtype != 'media'
   become: true
   pacman:
     name:

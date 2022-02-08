@@ -9,27 +9,28 @@
       - yapf
 
 - name: install keymapper
+  when: mtype != 'server'
   become: true
   pacman: name=keymapper
 
 - name: enable keymapperd
+  when: mtype != 'server'
   become: true
-  systemd: name=keymapperd.service enabled=yes
-
-- name: start keymapperd
-  become: true
-  systemd: name=keymapperd.service state=started
+  systemd: name=keymapperd.service enabled=yes state=started
 
 - name: install terminal emulators
+  when: mtype != 'server'
   become: true
   pacman:
     name:
       - xterm
 
 - name: install cursors
+  when: mtype != 'server'
   aur: name=xcursor-openzone
 
 - name: install fonts
+  when: mtype != 'server'
   become: true
   pacman:
     name:
@@ -49,12 +50,14 @@
       - ttf-linux-libertine
 
 - name: install fonts part two
+  when: mtype != 'server'
   aur:
     name:
       - ttf-symbola
       - ttf-google-fonts-git
 
 - name: install xfce themes
+  when: mtype != 'server'
   become: true
   pacman:
     name:
@@ -62,6 +65,7 @@
       - elementary-icon-theme
 
 - name: install xfce themes
+  when: mtype != 'server'
   aur:
     name:
       - xfce-theme-greybird
@@ -72,6 +76,7 @@
       - matcha-gtk-theme-git
 
 - name: install bluetooth packages
+  when: mtype != 'server'
   become: true
   pacman:
     name:
@@ -81,10 +86,12 @@
       - pulseaudio-bluetooth
 
 - name: enable bluetooth
+  when: mtype != 'server'
   become: true
   systemd: name=bluetooth.service enabled=yes
 
 - name: install redshift
+  when: mtype != 'server'
   become: true
   pacman:
     name:
@@ -93,6 +100,7 @@
       - python-xdg
 
 - name: ensure bluetooth download directory is correct
+  when: mtype != 'server'
   gsetting:
     key: org.blueman.transfer.shared-path
     value: "'{{ ansible_user_dir }}/Downloads'"

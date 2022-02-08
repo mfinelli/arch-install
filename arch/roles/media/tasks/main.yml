@@ -44,6 +44,7 @@
   aur: name=tor-browser
 
 - name: install google-chrome
+  when: mtype != 'server'
   aur: name=google-chrome
 
 - name: install youtube-dl

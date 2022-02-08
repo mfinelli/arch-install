@@ -9,6 +9,9 @@
       tags: [all, setup]
     - role: main
       tags: [all]
+    - role: desktop
+      tags: [all]
+      when: mtype != 'server'
     - role: dev
       tags: [all]
     - role: media

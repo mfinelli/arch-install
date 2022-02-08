@@ -45,7 +45,7 @@
       - zoxide
 
 - name: install secondary cli apps
-  when: mtype == 'personal'
+  when: mtype != 'media'
   become: true
   pacman:
     name:
@@ -63,5 +63,6 @@
       - unrar
 
 - name: install tailscale
+  when: mtype == 'personal' or mtype == 'media'
   become: true
   pacman: name=tailscale

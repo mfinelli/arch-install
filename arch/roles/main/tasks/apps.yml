@@ -19,6 +19,7 @@
       - 1password-cli
 
 - name: install keepass
+  when: mtype != 'server'
   become: true
   pacman: name=keepass
 
@@ -35,7 +36,7 @@
       - yubikey-personalization-gui
 
 - name: install libreoffice
-  when: mtype != 'media'
+  when: mtype != 'media' and mtype != 'server'
   become: true
   pacman:
     name:
@@ -66,7 +67,7 @@
       - mythes-it
 
 - name: install the gimp
-  when: mtype != 'media'
+  when: mtype != 'media' and mtype != 'server'
   become: true
   pacman:
     name:
@@ -74,14 +75,14 @@
       - xsane-gimp
 
 - name: install gimp plugins
-  when: "mtype != 'media'"
+  when: mtype != 'media' and mtype != 'server'
   aur:
     name:
       - gimp-extras
       - gimp-plugin-resynthesizer-git
 
 - name: install graphics extras
-  when: "mtype != 'media'"
+  when: mtype == 'personal'
   become: true
   pacman:
     name:
@@ -89,7 +90,7 @@
       - inkscape
 
 - name: install chat programs
-  when: "mtype == 'personal'"
+  when: mtype != 'media' and mtype != 'server'
   become: true
   pacman:
     name:
@@ -115,10 +116,12 @@
       - thunderbird-i18n-it
 
 - name: install pdf viewer
+  when: mtype != 'server'
   become: true
   pacman: name=evince
 
 - name: install archive tools
+  when: mtype != 'server'
   become: true
   pacman: name=file-roller
 
