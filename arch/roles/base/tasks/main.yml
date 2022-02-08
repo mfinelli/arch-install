@@ -1,4 +1,8 @@
 ---
+- name: use systemd for ntp
+  become: true
+  command: timedatectl set-ntp true
+
 - name: ensure baseline archlinux system
   become: true
   pacman:
