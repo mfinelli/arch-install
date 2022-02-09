@@ -4,3 +4,14 @@
   pacman:
     name:
       - screen
+
+- name: install sshd_config
+  become: true
+  copy:
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+    src: sshd_config
+  notify:
+    - restart sshd
