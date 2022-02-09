@@ -8,6 +8,7 @@ on:
       - arch/go
       - arch/init
       - arch/pacstrap
+      - arch/server
       - debian/go
       - '**.bash'
 
@@ -24,6 +25,7 @@ jobs:
           shellcheck arch/go
           shellcheck arch/init
           shellcheck arch/pacstrap
+          shellcheck arch/server
           shellcheck debian/go
           find . -name '*.bash' | xargs shellcheck
 
@@ -40,5 +42,6 @@ jobs:
           shfmt -s -i 2 -ci -sr -d arch/go
           shfmt -s -i 2 -ci -sr -d arch/init
           shfmt -s -i 2 -ci -sr -d arch/pacstrap
+          shfmt -s -i 2 -ci -sr -d arch/server
           shfmt -s -i 2 -ci -sr -d debian/go
           find . -name '*.bash' | xargs shfmt -s -i 2 -ci -sr -d
