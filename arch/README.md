@@ -103,8 +103,7 @@ chsh -s /bin/zsh
    ```shell
    su mario -
    cd ~
-   sudo pacman -Syyu
-   sudo pacman -S ansible git pyalpm python-py-cpuinfo
+   bash -c "$(curl -fsSL https://mfgo.link/arch-server)"
    bash -c "$(curl -fsSL https://mfgo.link/arch-setup)"
    bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
    ```
