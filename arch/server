@@ -19,10 +19,10 @@ echo '[supermario]' | sudo tee -a /etc/pacman.conf
 # shellcheck disable=SC2016
 echo 'Server = https://pkgs.finelli.dev/arch/$arch' |
   sudo tee -a /etc/pacman.conf
-pacman -Syyu
+sudo pacman -Syyu
 
 # the rest of the system gets installed/configured using ansible
-pacman -S ansible git pyalpm python-py-cpuinfo \
+sudo pacman -S ansible git pyalpm python-py-cpuinfo \
   ansible-{aur,gpg-key-git,gsetting-git}
 
 exit 0
