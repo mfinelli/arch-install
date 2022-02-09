@@ -20,7 +20,11 @@
 
 - name: allow ssh traffic
   become: true
-  community.general.ufw: rule=allow port=443 proto=tcp
+  community.general.ufw: rule=allow port=22 proto=tcp
+
+- name: temp fix
+  become: true
+  community.general.ufw: rule=allow port=443 proto=tcp delete=yes
 
 - name: install sshd_config
   become: true
