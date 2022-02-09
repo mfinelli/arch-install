@@ -128,3 +128,16 @@
       - vi
       - man-pages
       - bash-completion
+
+- name: install everywhere packages
+  become: true
+  pacman:
+    name:
+      - vim
+      - vim-spell-en
+      - vim-spell-es
+      - vim-spell-fr
+      - vim-spell-it
+      - lynx
+      - rsync
+      - wget
