@@ -20,6 +20,10 @@
 -A ufw6-before-input -i lo -j ACCEPT
 -A ufw6-before-output -o lo -j ACCEPT
 
+# hand off control for sshd to sshguard
+:sshguard - [0:0]
+-A ufw6-before-input -p tcp --dport 22 -j sshguard
+
 # drop packets with RH0 headers
 -A ufw6-before-input -m rt --rt-type 0 -j DROP
 -A ufw6-before-forward -m rt --rt-type 0 -j DROP
