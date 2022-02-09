@@ -67,7 +67,9 @@
     group: root
 
 - name: enable root-hints timer
+  become: true
   systemd: name=root-hints.timer enabled=yes
 
 - name: enable unbound
+  become: true
   systemd: name=unbound.service enabled=yes
