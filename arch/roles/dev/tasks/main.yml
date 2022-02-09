@@ -34,6 +34,11 @@
     name:
       - docker
       - docker-compose
+
+- name: install hadolint
+  when: mtype == 'personal'
+  aur:
+    name:
       - hadolint
 
 - name: install virtualbox
