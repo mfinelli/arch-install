@@ -1,9 +1,26 @@
 ---
-- name: install server software
+- name: install firewall software
   become: true
   pacman:
     name:
-      - screen
+      - ufw
+      - sshguard
+
+- name: start and enable ufw
+  become: true
+  systemd: name=ufw.service state=started enabled=yes
+
+- name: start and enable sshguard
+  become: true
+  systemd: name=sshguard.service state=started enabled=yes
+
+- name: set default ufw policy to deny
+  become: true
+  community.general.ufw: state=enabled policy=deny
+
+- name: allow ssh traffic
+  become: true
+  community.general.ufw: rule=allow port=443 proto=tcp
 
 - name: install sshd_config
   become: true
@@ -15,3 +32,9 @@
     src: sshd_config
   notify:
     - restart sshd
+
+- name: install server software
+  become: true
+  pacman:
+    name:
+      - screen
