@@ -2,3 +2,7 @@
 - name: restart sshd
   become: true
   systemd: name=sshd.service state=restarted daemon_reload=yes
+
+- name: restart ufw
+  become: true
+  systemd: name=ufw.service state=restarted daemon_reload=yes

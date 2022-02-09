@@ -22,9 +22,19 @@
   become: true
   community.general.ufw: rule=allow port=22 proto=tcp
 
-- name: temp fix
+- name: install ufw before rules
   become: true
-  community.general.ufw: rule=allow port=443 proto=tcp delete=yes
+  copy:
+    dest: /etc/ufw/{{ item }}.rules
+    owner: root
+    group: root
+    mode: 0640
+    src: "{{ item }}.rules"
+  loop:
+    - before
+    - before6
+  notify:
+    - restart ufw
 
 - name: install sshd_config
   become: true
