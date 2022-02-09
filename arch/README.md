@@ -84,4 +84,29 @@ chsh -s /bin/zsh
 
 ### manual steps
 
-TODO
+1. SSH (as root) to the server
+
+   ```shell
+   ssh root@cdev.finelli.dev
+   ```
+
+2. Create user and sudo rules
+
+   ```shell
+   useradd -m -s /bin/bash mario
+   echo "mario ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/mario
+   chmod 0440 /etc/sudoers.d/mario
+   ```
+
+3. Switch user and do the needful
+
+   ```shell
+   su mario -
+   cd ~
+   sudo pacman -Syyu
+   sudo pacman -S ansible git pyalpm python-py-cpuinfo
+   bash -c "$(curl -fsSL https://mfgo.link/arch-setup)"
+   bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
+   ```
+
+4. Reboot
