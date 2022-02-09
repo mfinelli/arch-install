@@ -27,7 +27,7 @@ array_contains() {
 }
 
 PERSONAL_MACHINES=(stig)
-SERVER_MACHINES=(dev.finelli.dev)
+SERVER_MACHINES=(cdev.finelli.dev)
 WORK_MACHINES=(easy)
 MEDIA_MACHINES=()
 
