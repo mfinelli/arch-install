@@ -16,6 +16,7 @@
     owner: root
     group: root
     mode: 0644
+  register: pacman_config
 
 - name: add supermario key to keyring and locally sign it
   become: true
@@ -25,7 +26,7 @@
   register: supermario_key
 
 - name: run pacman -Syyu because the repositories changed
-  when: supermario_key.changed
+  when: supermario_key.changed or pacman_config.changed
   become: true
   pacman: update_cache=yes upgrade=yes force=yes
 
