@@ -99,8 +99,11 @@
       - networkmanager
       - networkmanager-openvpn
       - crda
-      - inetutils
       - netctl
+
+- name: install inetutils for `hostname`
+  become: true
+  pacman: name=inetutils
 
 - name: install wireless regdom
   become: true
