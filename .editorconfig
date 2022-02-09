@@ -11,7 +11,7 @@ trim_trailing_whitespace = true
 [*.{fact,py}]
 indent_size = 4
 
-[arch/roles/base/files/unbound.conf]
+[{unbound.conf,sshd_config}]
 indent_style = tabs
 indent_size = 8
 
