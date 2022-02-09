@@ -1,0 +1,6 @@
+---
+- name: install server software
+  become: true
+  pacman:
+    name:
+      - screen
