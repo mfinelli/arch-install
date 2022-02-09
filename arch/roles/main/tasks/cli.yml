@@ -10,6 +10,9 @@
       - zsh-completions
       - zsh-theme-powerlevel10k
 
+- name: install gitstatus
+  aur: name=gitstatus
+
 - name: install terminal fonts
   when: mtype != 'server'
   aur:
