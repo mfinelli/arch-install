@@ -9,15 +9,16 @@ fi
 # new mirrorlist shortly
 # shellcheck disable=SC2016
 MIRROR='Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch'
-echo "$MIRROR" > /etc/pacman.d/mirrorlist
+echo "$MIRROR" | sudo tee /etc/pacman.d/mirrorlist
 
 # add the supermario repo and then refresh - we'll set it "correctly" once
 # ansible runs
 curl -s https://finelli.pub/36FDA306.asc | sudo pacman-key -a -
 sudo pacman-key --lsign-key C3CD75B002978A8468CA7B1F6C3ADDDE36FDA306
-echo '[supermario]' >> /etc/pacman.conf
+echo '[supermario]' | sudo tee -a /etc/pacman.conf
 # shellcheck disable=SC2016
-echo 'Server = https://pkgs.finelli.dev/arch/$arch' >> /etc/pacman.conf
+echo 'Server = https://pkgs.finelli.dev/arch/$arch' |
+  sudo tee -a /etc/pacman.conf
 pacman -Syyu
 
 # the rest of the system gets installed/configured using ansible
