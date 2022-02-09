@@ -57,6 +57,7 @@
     group: root
 
 - name: Install network manager resolveconf manager config
+  when: mtype != 'server'
   become: true
   copy:
     src: rc-manager.conf
