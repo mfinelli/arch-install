@@ -98,7 +98,17 @@ chsh -s /bin/zsh
    chmod 0440 /etc/sudoers.d/mario
    ```
 
-3. Switch user and do the needful
+3. Copy root authorized ssh keys to user
+
+   ```shell
+   mkdir /home/mario/.ssh
+   chmod 0700 /home/mario/.ssh
+   cat /root/.ssh/authorized_keys > /home/mario/.ssh/authorized_keys
+   chmod 0600 /home/mario/.ssh/authorized_keys
+   chown -R mario:mario /home/mario/.ssh
+   ```
+
+4. Switch user and do the needful
 
    ```shell
    su mario -
@@ -108,4 +118,4 @@ chsh -s /bin/zsh
    bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
    ```
 
-4. Reboot
+5. Reboot
