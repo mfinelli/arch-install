@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+IFS='' read -r -d '' FINELLICTL <<-'EOF'
+  __ _            _ _ _      _   _
+ / _(_)_ __   ___| | (_) ___| |_| |
+| |_| | '_ \ / _ \ | | |/ __| __| |
+|  _| | | | |  __/ | | | (__| |_| |
+|_| |_|_| |_|\___|_|_|_|\___|\__|_|
+
+EOF
+
+if [[ $# -eq 0 || $1 == -h || $1 == --help ]]; then
+  echo "$FINELLICTL"
+  echo "usage: TODO"
+  exit 0
+fi
+
+if [[ $(uname) != Linux ]]; then
+  echo >&2 "error: finellictl only supports linux"
+  exit 1
+fi
+
+if [[ $(id -u) -eq 0 ]]; then
+  echo >&2 "error: don't run finellictl as root"
+  exit 1
+fi
+
+set -e
+
+if [[ $1 == timezone ]]; then
+  if ! command -v tzselect > /dev/null 2>&1; then
+    echo >&2 "error: unable to find tzselect"
+    exit 1
+  fi
+
+  tz="$(tzselect)"
+  sudo timedatectl set-timezone "$tz"
+fi
+
+exit 0
