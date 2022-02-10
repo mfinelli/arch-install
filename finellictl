@@ -9,9 +9,14 @@ IFS='' read -r -d '' FINELLICTL <<-'EOF'
 
 EOF
 
+SETTINGS_PATH=/etc/finelli/arch-install.yml
+
 if [[ $# -eq 0 || $1 == -h || $1 == --help ]]; then
   echo "$FINELLICTL"
-  echo "usage: TODO"
+  echo "usage:"
+  echo
+  echo "    $(basename "$0") timezone # set timezone interactively"
+  echo "    $(basename "$0") timezone America/New_York # set given timezone"
   exit 0
 fi
 
@@ -25,16 +30,40 @@ if [[ $(id -u) -eq 0 ]]; then
   exit 1
 fi
 
+if ! command -v yq > /dev/null 2>&1; then
+  echo >&2 "error: unable to find yq"
+  exit 1
+fi
+
 set -e
 
-if [[ $1 == timezone ]]; then
+function write_settings() {
+  if [[ ! -f $SETTINGS_PATH ]]; then
+    echo --- > $SETTINGS_PATH
+  fi
+
+  local tz="$(timedatectl show -p Timezone | awk -F= '{print $2}')"
+  sudo yq -i ".timezone = \"$tz\"" $SETTINGS_PATH
+}
+
+function set_timezone() {
   if ! command -v tzselect > /dev/null 2>&1; then
     echo >&2 "error: unable to find tzselect"
     exit 1
   fi
 
-  tz="$(tzselect)"
+  if [[ -z $1 ]]; then
+    local tz="$(tzselect)"
+  else
+    local tz="$1"
+  fi
+
   sudo timedatectl set-timezone "$tz"
+  write_settings
+}
+
+if [[ $1 == timezone ]]; then
+  set_timezone "$2"
 fi
 
 exit 0
