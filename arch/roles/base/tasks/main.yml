@@ -141,3 +141,5 @@
       - lynx
       - rsync
       - wget
+
+- include: finellictl.yml
