@@ -27,7 +27,6 @@ if [[ ! -e $INSTALL_DISK ]]; then
   exit 1
 fi
 
-tzselect
 hwclock --systohc --utc
 
 for locale in en_US es_ES fr_FR it_IT; do

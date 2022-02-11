@@ -3,6 +3,10 @@
   become: true
   command: timedatectl set-ntp true
 
+- name: set timezone
+  become: true
+  community.general.timezone: name={{ timezone }}
+
 - name: ensure baseline archlinux system
   become: true
   pacman:

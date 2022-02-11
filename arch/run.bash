@@ -55,6 +55,7 @@ fi
 if [[ -f /etc/finelli/arch-install.yml ]]; then
   if command -v yq > /dev/null 2>&1; then
     wirelessregdom="$(yq eval '.wireless-regdom' $FINELLICTL_CONFIG)"
+    timezone="$(yq eval '.timezone' $FINELLICTL_CONFIG)"
   fi
 fi
 
@@ -63,6 +64,16 @@ if [[ -z $wirelessregdom ]]; then
 
   if [[ -z $wirelessregdom ]]; then
     wirelessregdom=US
+  fi
+fi
+
+if [[ -z $timezone ]]; then
+  if command -v tzselect > /dev/null 2>&1; then
+    echo "Current timezone: $(timedatectl show -p Timezone)"
+    timezone="$(tzselect)"
+  else
+    # we could also attempt a normal `read`
+    timezone=America/New_York
   fi
 fi
 
@@ -81,6 +92,7 @@ if [[ $1 == setup ]]; then
     --extra-vars mmode=$mmode \
     --extra-vars mtype=$mtype \
     --extra-vars wireless_regdom=$wirelessregdom \
+    --extra-vars timezone=$timezone \
     arch.yml --tags init
 
   # now we can run the main setup
@@ -90,6 +102,7 @@ if [[ $1 == setup ]]; then
     --extra-vars mmode=$mmode \
     --extra-vars mtype=$mtype \
     --extra-vars wireless_regdom=$wirelessregdom \
+    --extra-vars timezone=$timezone \
     arch.yml --tags setup
 else
   ansible-playbook \
@@ -98,6 +111,7 @@ else
     --extra-vars mmode=post \
     --extra-vars mtype=$mtype \
     --extra-vars wireless_regdom=$wirelessregdom \
+    --extra-vars timezone=$timezone \
     arch.yml
 fi
 
