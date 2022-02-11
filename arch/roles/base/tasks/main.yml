@@ -109,7 +109,7 @@
   become: true
   when: mtype != 'server'
   template:
-    dest: etc/conf.d/wireless-regdom
+    dest: /etc/conf.d/wireless-regdom
     owner: root
     group: root
     mode: 0644
