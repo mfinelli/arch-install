@@ -11,9 +11,4 @@
     name:
       - direnv
       - git-crypt
-
-- name: install required tools from the aur
-  when: mtype == 'work'
-  aur:
-    name:
       - asdf-vm

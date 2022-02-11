@@ -11,11 +11,13 @@
       - zsh-theme-powerlevel10k
 
 - name: install gitstatus
-  aur: name=gitstatus
+  become: true
+  pacman: name=gitstatus
 
 - name: install terminal fonts
   when: mtype != 'server'
-  aur:
+  become: true
+  pacman:
     name:
       - ttf-meslo-nerd-font-powerlevel10k
       - nerd-fonts-jetbrains-mono

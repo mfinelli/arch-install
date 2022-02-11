@@ -75,13 +75,8 @@
   pacman:
     name:
       - rust
-      - cargo-outdated
-
-- name: install cargo extensions
-  when: mtype != 'media'
-  aur:
-    name:
       - cargo-about
+      - cargo-outdated
 
 - name: install postfix
   when: mtype != 'media'
