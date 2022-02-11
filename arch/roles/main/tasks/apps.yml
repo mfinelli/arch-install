@@ -73,13 +73,7 @@
     name:
       - gimp
       - xsane-gimp
-
-- name: install gimp plugins
-  when: mtype != 'media' and mtype != 'server'
-  aur:
-    name:
       - gimp-extras
-      - gimp-plugin-resynthesizer-git
 
 - name: install graphics extras
   when: mtype == 'personal'
