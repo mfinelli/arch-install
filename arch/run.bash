@@ -10,6 +10,8 @@ if [[ $# -eq 1 ]] && [[ $1 != setup ]]; then
   exit 1
 fi
 
+FINELLICTL_CONFIG=/etc/finelli/arch-install.yml
+
 # https://stackoverflow.com/a/14367368
 array_contains() {
   local haystack="$1[@]"
@@ -50,8 +52,19 @@ else
   mtype=media
 fi
 
-# TODO: this needs to be configurable somewhere
-wirelessregdom=US
+if [[ -f /etc/finelli/arch-install.yml ]]; then
+  if command -v yq > /dev/null 2>&1; then
+    wirelessregdom="$(yq eval '.wireless-regdom' $FINELLICTL_CONFIG)"
+  fi
+fi
+
+if [[ -z $wirelessregdom ]]; then
+  read -rp "What's the wireless regdom? (US) " wirelessregdom
+
+  if [[ -z $wirelessregdom ]]; then
+    wirelessregdom=US
+  fi
+fi
 
 # prompt for sudo password right away
 sudo echo -n
