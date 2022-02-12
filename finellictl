@@ -63,6 +63,13 @@ function set_timezone() {
 
   if [[ -z $1 ]]; then
     local tz="$(tzselect)"
+
+    # UTC is not available with tzselect, so we need to specify (11) POSIX
+    # entry and write "UTC-0" to get UTC which isn't valid for timedatectl
+    # so if we detect that we tried to get UTC then just use it directly.
+    if [[ ${tz:0:3} == UTC ]]; then
+      local tz=UTC
+    fi
   else
     local tz="$1"
   fi
