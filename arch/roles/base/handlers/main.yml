@@ -1,0 +1,4 @@
+---
+- name: locale-gen
+  become: true
+  command: locale-gen

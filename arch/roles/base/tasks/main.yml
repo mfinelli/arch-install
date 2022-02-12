@@ -17,6 +17,17 @@
       - linux-firmware
       - posix
 
+- name: install locale.gen
+  become: true
+  copy:
+    dest: /etc/locale.gen
+    owner: root
+    group: root
+    mode: 0644
+    src: locale.gen
+  notify:
+    - locale-gen
+
 - name: install bootstrap packages
   become: true
   when: mtype != 'server'
