@@ -36,4 +36,21 @@
           - zsh-autosuggestions
           - zsh-syntax-highlighting
 
+    - name: install packaging dependencies
+      ansible.builtin.apt:
+        name:
+          - apt-file
+          - bzr-builddeb
+          - dh-make
+          - pbuilder
+          - ubuntu-dev-tools
+
+    - name: install keymapper dependencies
+      ansible.builtin.apt:
+        name:
+          - cmake
+          - libudev-dev
+          - libusb-1.0-0-dev
+          - libx11-dev
+
 # vim: ft=yaml.ansible
