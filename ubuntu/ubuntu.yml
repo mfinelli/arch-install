@@ -12,7 +12,6 @@
     - name: install other dependencies
       ansible.builtin.apt:
         name:
-          - bat
           - docker-compose
           - docker.io
           - fd-find
