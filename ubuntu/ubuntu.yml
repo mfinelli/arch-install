@@ -1,0 +1,39 @@
+---
+- hosts: localhost
+  tasks:
+    - name: ensure manual dependencies
+      ansible.builtin.apt:
+        name:
+          - ansible
+          - git
+        update_cache: yes
+
+    - name: install other dependencies
+      ansible.builtin.apt:
+        name:
+          - bat
+          - docker-compose
+          - docker.io
+          - fd-find
+          - font-manager
+          - fzf
+          - golang
+          - htop
+          - jq
+          - libarchive-tools
+          - pcscd
+          - pwgen
+          - ripgrep
+          - scdaemon
+          - shellcheck
+          - silversearcher-ag
+          - tmux
+          - universal-ctags
+          - urlwatch
+          - vim
+          - whois
+          - zsh
+          - zsh-autosuggestions
+          - zsh-syntax-highlighting
+
+# vim: ft=yaml.ansible
