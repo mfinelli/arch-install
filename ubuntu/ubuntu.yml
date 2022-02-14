@@ -5,6 +5,7 @@
       ansible.builtin.apt:
         name:
           - ansible
+          - curl
           - git
         update_cache: yes
 
