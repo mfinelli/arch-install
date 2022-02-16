@@ -1,6 +1,9 @@
 ---
 - hosts: localhost
   tasks:
+    - name: add supermario ppa
+      ansible.builtin.apt_repository: repo=ppa:mfinelli/supermario
+
     - name: ensure manual dependencies
       ansible.builtin.apt:
         name:
