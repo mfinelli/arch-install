@@ -119,7 +119,6 @@
     name:
       - ansible-aur
       - ansible-gpg-key-git
-      - ansible-gsetting-git
 
 - name: install pikaur
   aur: name=pikaur
