@@ -92,7 +92,7 @@
 - name: install mkinitcpio configuration
   become: true
   when: mtype != 'server'
-  template:
+  copy:
     dest: /etc/mkinitcpio.conf
     owner: root
     group: root
