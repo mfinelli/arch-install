@@ -39,6 +39,14 @@
           - zsh-autosuggestions
           - zsh-syntax-highlighting
 
+    - name: install other software
+      ansible.builtin.apt:
+        name:
+          - gnome-tweaks
+          - git-crypt
+          - default-jre-headless
+          - kubectx
+
     - name: install packaging dependencies
       ansible.builtin.apt:
         name:
