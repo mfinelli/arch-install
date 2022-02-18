@@ -1,4 +1,6 @@
-#!/bin/bash -ex
+#!/bin/bash
+
+set -ex
 
 # https://dev.to/ifenna__/adding-colors-to-bash-scripts-48g4
 ENDCOLOR="\e[0m"
