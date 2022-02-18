@@ -1,9 +1,6 @@
-#!/bin/bash -ex
+#!/bin/bash
 
-if [[ $# -ne 0 ]]; then
-  echo >&2 "usage: $(basename "$0")"
-  exit 1
-fi
+set -ex
 
 # use a known good mirror for initial package installation - we'll generate a
 # new mirrorlist shortly
@@ -20,6 +17,7 @@ echo '[supermario]' >> /etc/pacman.conf
 echo 'Server = https://pkgs.finelli.dev/arch/$arch' >> /etc/pacman.conf
 pacman -Syyu
 
+lsblk
 read -rp "What's the install disk? (e.g., /dev/sda) " INSTALL_DISK
 
 if [[ ! -e $INSTALL_DISK ]]; then
@@ -59,7 +57,7 @@ mkinitcpio -p linux
 
 # awful, i know - basically we need to escape any /'s in the device name when
 # passing it into sed or we get an "unknown option to `s'" error
-CRYPTD="cryptdevice=$(echo "$INSTALL_DISK" | sed 's/\//\\\//g')2:crypt"
+CRYPTD="cryptdevice=$(echo "$INSTALL_DISK" | sed 's/\//\\\//g')3:crypt"
 sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"${CRYPTD}\"/" \
   /etc/default/grub
 
