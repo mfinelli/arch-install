@@ -54,9 +54,14 @@ fi
 
 if [[ -f /etc/finelli/arch-install.yml ]]; then
   if command -v yq > /dev/null 2>&1; then
+    syslang="$(yq eval '.language' $FINELLICTL_CONFIG)"
     wirelessregdom="$(yq eval '.wireless-regdom' $FINELLICTL_CONFIG)"
     timezone="$(yq eval '.timezone' $FINELLICTL_CONFIG)"
   fi
+fi
+
+if [[ -z $syslang ]]; then
+  syslang=en_US
 fi
 
 if [[ -z $wirelessregdom ]]; then
@@ -99,6 +104,7 @@ if [[ $1 == setup ]]; then
     --extra-vars mtype=$mtype \
     --extra-vars wireless_regdom=$wirelessregdom \
     --extra-vars timezone=$timezone \
+    --extra-vars system_lang=$syslang \
     arch.yml --tags init
 
   # now we can run the main setup
@@ -109,6 +115,7 @@ if [[ $1 == setup ]]; then
     --extra-vars mtype=$mtype \
     --extra-vars wireless_regdom=$wirelessregdom \
     --extra-vars timezone=$timezone \
+    --extra-vars system_lang=$syslang \
     arch.yml --tags setup
 else
   ansible-playbook \
@@ -118,6 +125,7 @@ else
     --extra-vars mtype=$mtype \
     --extra-vars wireless_regdom=$wirelessregdom \
     --extra-vars timezone=$timezone \
+    --extra-vars system_lang=$syslang \
     arch.yml
 fi
 

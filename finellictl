@@ -15,6 +15,9 @@ if [[ $# -eq 0 || $1 == -h || $1 == --help ]]; then
   echo "$FINELLICTL"
   echo "usage:"
   echo
+  echo "    $(basename "$0") language en_US # set system language"
+  echo "                              # common options: it_IT"
+  echo
   echo "    $(basename "$0") timezone # set timezone interactively"
   echo "    $(basename "$0") timezone America/New_York # set given timezone"
   echo "                              # common options: Europe/Rome"
@@ -47,12 +50,32 @@ function write_settings() {
     echo --- > $SETTINGS_PATH
   fi
 
+  local lng="$(grep LANG /etc/locale.conf | awk -F= '{print $2}' |
+    awk -F. '{print $1}')"
+  sudo yq -i ".language = \"$lng\"" $SETTINGS_PATH
+
   local tz="$(timedatectl show -p Timezone | awk -F= '{print $2}')"
   sudo yq -i ".timezone = \"$tz\"" $SETTINGS_PATH
 
   local wreg="$(grep '^WIRELESS_REGDOM="' /etc/conf.d/wireless-regdom |
     awk -F\" '{print $2}')"
   sudo yq -i ".wireless-regdom = \"$wreg\"" $SETTINGS_PATH
+}
+
+function set_language() {
+  if [[ $1 =~ ^[a-z]{2}_[A-Z]{2}$ ]]; then
+    if grep "^${1}.UTF-8" /etc/locale.gen; then
+      echo "LANG=$1.UTF-8" | sudo tee /etc/locale.conf
+    else
+      echo >&2 "error: $1 is not enabled in /etc/locale.gen"
+      exit 1
+    fi
+  else
+    echo >&2 "error: $1 does not have expected format xx_XX"
+    exit 1
+  fi
+
+  write_settings
 }
 
 function set_timezone() {
