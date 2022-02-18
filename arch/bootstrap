@@ -2,6 +2,7 @@
 
 set -ex
 
+# default timezone to UTC
 hwclock --systohc --utc
 timedatectl set-timezone UTC
 
@@ -34,23 +35,8 @@ if [[ ! -e $INSTALL_DISK ]]; then
 fi
 
 # can't have a baby without a name
-read -rp "What's the new hostname? " NHOSTNAME
-echo "$NHOSTNAME" > /etc/hostname
-
-pacman -S grub efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs \
-  exfat-utils os-prober lvm2 cryptsetup mdadm usbutils
-
-INTEL=GenuineIntel
-if [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == "$INTEL" ]]; then
-  pacman -S intel-ucode
-else
-  pacman -S amd-ucode
-fi
-
-# we actually only add encrypt and lvm2 and remove fsck
-HOOKS="base udev autodetect modconf block encrypt lvm2 filesystems keyboard"
-sed -i "s/^HOOKS=.*/HOOKS=(${HOOKS})/" /etc/mkinitcpio.conf
-mkinitcpio -p linux
+read -rp "What's the new hostname? " NEW_HOSTNAME
+echo "$NEW_HOSTNAME" > /etc/hostname
 
 # awful, i know - basically we need to escape any /'s in the device name when
 # passing it into sed or we get an "unknown option to `s'" error
@@ -58,14 +44,12 @@ CRYPTD="cryptdevice=$(echo "$INSTALL_DISK" | sed 's/\//\\\//g')3:crypt"
 sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"${CRYPTD}\"/" \
   /etc/default/grub
 
-grub-install --target=x86_64-efi --efi-directory=/boot \
-  --bootloader-id="Arch Linux" --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 grub-install --target=x86_64-efi --efi-directory=/boot \
   --bootloader-id="Arch Linux" --recheck
 
 # the rest of the system gets installed/configured using ansible
 pacman -S ansible git pyalpm python-py-cpuinfo \
-  ansible-{aur,gpg-key-git,gsetting-git}
+  ansible-{aur,gpg-key-git}
 
 exit 0
