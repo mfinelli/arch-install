@@ -2,6 +2,15 @@
 
 set -ex
 
+hwclock --systohc --utc
+timedatectl set-timezone UTC
+
+for locale in en_US es_ES fr_FR it_IT; do
+  sed -i "/#${locale}.UTF-8 UTF-8/c${locale}.UTF-8 UTF-8" /etc/locale.gen
+done
+
+locale-gen
+
 # use a known good mirror for initial package installation - we'll generate a
 # new mirrorlist shortly
 # shellcheck disable=SC2016
@@ -25,20 +34,12 @@ if [[ ! -e $INSTALL_DISK ]]; then
   exit 1
 fi
 
-hwclock --systohc --utc
-
-for locale in en_US es_ES fr_FR it_IT; do
-  sed -i "/#${locale}.UTF-8 UTF-8/c${locale}.UTF-8 UTF-8" /etc/locale.gen
-done
-
-locale-gen
-
-read -rp "What language should we use? (e.g. en_US) "
-echo "LANG=${REPLY}.UTF-8" > /etc/locale.conf
+read -rp "What language should we use? (e.g. en_US) " ULANG
+echo "LANG=${ULANG}.UTF-8" > /etc/locale.conf
 
 # can't have a baby without a name
-read -rp "What's the new hostname? "
-echo "$REPLY" > /etc/hostname
+read -rp "What's the new hostname? " NHOSTNAME
+echo "$NHOSTNAME" > /etc/hostname
 
 pacman -S grub efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs \
   exfat-utils os-prober lvm2 cryptsetup mdadm usbutils
