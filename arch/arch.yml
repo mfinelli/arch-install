@@ -6,6 +6,7 @@
     - role: base
       tags: [all, setup]
     - role: unbound
+      when: mtype != 'work'
       tags: [all, setup]
     - role: main
       tags: [all]
