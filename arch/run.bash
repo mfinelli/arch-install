@@ -41,7 +41,7 @@ else
   gcard=none
 fi
 
-hn="$(hostnamectl --static)"
+hn="$(cat /etc/hostname)"
 if array_contains PERSONAL_MACHINES "$hn"; then
   mtype=personal
 elif array_contains SERVER_MACHINES "$hn"; then
