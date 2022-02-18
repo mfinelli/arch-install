@@ -5,11 +5,10 @@ set -ex
 hwclock --systohc --utc
 timedatectl set-timezone UTC
 
-for locale in en_US es_ES fr_FR it_IT; do
-  sed -i "/#${locale}.UTF-8 UTF-8/c${locale}.UTF-8 UTF-8" /etc/locale.gen
-done
-
+# Set default language to US english
+sed -i "/#en_US.UTF-8 UTF-8/cen_US.UTF-8 UTF-8" /etc/locale.gen
 locale-gen
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
 # use a known good mirror for initial package installation - we'll generate a
 # new mirrorlist shortly
@@ -33,9 +32,6 @@ if [[ ! -e $INSTALL_DISK ]]; then
   echo >&2 "error: install disk $INSTALL_DISK doesn't exist"
   exit 1
 fi
-
-read -rp "What language should we use? (e.g. en_US) " ULANG
-echo "LANG=${ULANG}.UTF-8" > /etc/locale.conf
 
 # can't have a baby without a name
 read -rp "What's the new hostname? " NHOSTNAME
