@@ -24,7 +24,7 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk "$INSTALL_DISK"
     n # create new partion (boot directory)
       # default (partition number 2)
       # default (start immediately after preceding partition)
-    1G # 1G boot partion
+    +1G # 1G boot partion
     8300 # (Linux filesystem)
     n # create new partition (luks container)
       # default (partition number 2)
