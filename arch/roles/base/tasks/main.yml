@@ -15,6 +15,7 @@
       - base-devel
       - linux
       - linux-firmware
+      - sof-firmware
       - posix
 
 - name: install locale.gen
