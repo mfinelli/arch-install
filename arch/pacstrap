@@ -1,5 +1,11 @@
 #!/bin/bash -ex
 
+# https://dev.to/ifenna__/adding-colors-to-bash-scripts-48g4
+ENDCOLOR="\e[0m"
+CYAN="\e[36m"
+BOLDGREEN="\e[1;32m"
+BOLDMAGENTA="\e[1;35m"
+
 # https://stackoverflow.com/a/17695543
 function prompt_yesno() {
   read -rp "$1 "
@@ -8,6 +14,8 @@ function prompt_yesno() {
     *) echo "no" ;;
   esac
 }
+
+echo -e "${BOLDGREEN}Beginning disk partitioning${ENDCOLOR}"
 
 lsblk
 read -rp "Which disk to install? " INSTALL_DISK
@@ -43,10 +51,16 @@ if [[ no == $(prompt_yesno "Confirm partition table?") ]]; then
   exit 1
 fi
 
+echo -e "${CYAN}Disk partitioning complete${ENDCOLOR}"
+echo -e "${BOLDGREEN}Beginning disk encryption${ENDCOLOR}"
+
 # encrypt the main partition: AES256 (e.g. /dev/sda2)
 cryptsetup --type luks2 --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
   --iter-time 5000 --use-random --verify-passphrase luksFormat \
   "${INSTALL_DISK}3"
+
+echo -e "${CYAN}Disk encryption complete${ENDCOLOR}"
+echo -e "${BOLDGREEN}Beginning LVM setup${ENDCOLOR}"
 
 # get some much needed info
 read -rp "How many swap G? " SWAPG
@@ -60,28 +74,43 @@ lvcreate -L "${SWAPG}G" crypt -n swap
 lvcreate -L "${ROOTG}G" crypt -n root
 lvcreate -l 100%FREE crypt -n home
 
+echo -e "${CYAN}LVM setup complete, making filesystems${ENDCOLOR}"
+
 # make some filesystems
 mkfs.vfat -F32 "${INSTALL_DISK}1"
+echo -e "${CYAN}Made FAT32 on ${INSTALL_DISK}1${ENDCOLOR}" && sleep 1
 mkfs.ext4 "${INSTALL_DISK}2"
+echo -e "${CYAN}Made EXT4 on ${INSTALL_DISK}2${ENDCOLOR}" && sleep 1
 mkfs.btrfs /dev/mapper/crypt-root
 mkfs.btrfs /dev/mapper/crypt-home
+echo -e "${CYAN}Made BTRFS on /root and /home${ENDCOLOR}" && sleep 1
 mkswap /dev/mapper/crypt-swap
+echo -e "${CYAN}Made swap${ENDCOLOR}" && sleep 1
+
+echo -e "${CYAN}Filesystems complete${ENDCOLOR}"
+echo -e "${BOLDGREEN}Beginning fileystem mount for pacstrap${ENDCOLOR}"
 
 # get everything ready
 swapon /dev/crypt/swap
 mount -o compress=lzo /dev/crypt/root /mnt
 mkdir /mnt/{boot,efi,home}
-mound "${INSTALL_DISK}1" /mnt/efi
+mount "${INSTALL_DISK}1" /mnt/efi
 mount "${INSTALL_DISK}2" /mnt/boot
 mount -o compress=lzo /dev/crypt/home /mnt/home
+echo -e "${CYAN}Mounted filesystems${ENDCOLOR}" && sleep 1
 
+echo -e "${CYAN}Setting known good mirror${ENDCOLOR}"
 # use a known good mirror - we'll generate a new mirrorlist on the new system
 # shellcheck disable=SC2016
 MIRROR='Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch'
 echo "$MIRROR" > /etc/pacman.d/mirrorlist
+echo -e "${CYAN}Setup for pacstrap done${ENDCOLOR}"
+
+echo -e "${BOLDGREEN}Pacstrapping system${ENDCOLOR}"
 
 # do the needful
 pacstrap -i /mnt base base-devel linux linux-firmware posix
+echo -e "${CYAN}Pacstrap done, generating fstab${ENDCOLOR}"
 
 genfstab -U -p /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
@@ -89,5 +118,7 @@ cat /mnt/etc/fstab
 if [[ "no" == $(prompt_yesno "Confirm fstab?") ]]; then
   exit 1
 fi
+
+echo -e "${BOLDMAGENTA}arch-install/pacstrap complete${ENDCOLOR}"
 
 exit 0
