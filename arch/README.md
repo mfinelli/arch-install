@@ -57,6 +57,7 @@ chmod 0440 /etc/sudoers.d/mario
 
 ```shell
 su mario -
+cd
 bash -c "$(curl -fsSL https://mfgo.link/arch-setup)"
 ```
 
