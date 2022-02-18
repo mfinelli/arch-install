@@ -65,27 +65,11 @@ if [[ -z $syslang ]]; then
 fi
 
 if [[ -z $wirelessregdom ]]; then
-  read -rp "What's the wireless regdom? (US) " wirelessregdom
-
-  if [[ -z $wirelessregdom ]]; then
-    wirelessregdom=US
-  fi
+  wirelessregdom=US
 fi
 
 if [[ -z $timezone ]]; then
-  if command -v tzselect > /dev/null 2>&1; then
-    echo "Current timezone: $(timedatectl show -p Timezone)"
-    timezone="$(tzselect)"
-
-    # this follows the same logic in finellictl for UTC special handling
-    # see the full description of the problem/solution in that file
-    if [[ ${timezone:0:3} == UTC ]]; then
-      timezone=UTC
-    fi
-  else
-    # we could also attempt a normal `read`
-    timezone=America/New_York
-  fi
+  timezone=UTC
 fi
 
 # prompt for sudo password right away
