@@ -47,6 +47,7 @@ passwd
 
 ```shell
 useradd -m -s /bin/bash mario
+chfn mario
 passwd mario
 echo "mario ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/mario
 chmod 0440 /etc/sudoers.d/mario
