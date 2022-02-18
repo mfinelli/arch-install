@@ -27,6 +27,7 @@
           - pcscd
           - pwgen
           - ripgrep
+          - rust-all
           - scdaemon
           - shellcheck
           - silversearcher-ag
