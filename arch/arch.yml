@@ -8,11 +8,11 @@
     - role: unbound
       when: mtype != 'work'
       tags: [all, setup]
-    - role: main
-      tags: [all]
     - role: desktop
       tags: [all]
       when: mtype != 'server'
+    - role: main
+      tags: [all]
     - role: dev
       tags: [all]
     - role: media

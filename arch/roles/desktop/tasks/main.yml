@@ -9,46 +9,36 @@
       - pulseaudio-alsa
       - pavucontrol
 
-- name: install xorg
-  become: true
-  pacman:
-    name:
-      - xorg-server
-      - xorg-apps
-
-- name: install desktop environment (xfce)
-  become: true
-  pacman:
-    name:
-      - xfce4
-      - xfce4-goodies
-      - lightdm
-      - lightdm-gtk-greeter
-      - network-manager-applet
-      - accountsservice
-      - xdg-user-dirs
-      - gvfs
-      - gvfs-afc
-      - gvfs-mtp
-      - gnome-keyring
-      - seahorse
-
-- name: install lightdm configuration
-  become: true
-  template:
-    src: lightdm.conf.j2
-    dest: /etc/lightdm/lightdm.conf
-    owner: root
-    group: root
-    mode: 0644
-
-- name: enable lightdm
-  become: true
-  systemd: name=lightdm.service enabled=yes
-
 - name: enable network manager
   become: true
   systemd: name=NetworkManager.service enabled=yes
+
+- name: install keymapper
+  become: true
+  pacman: name=keymapper
+
+- name: enable keymapperd
+  become: true
+  systemd: name=keymapperd.service enabled=yes state=started
+
+- name: install bluetooth packages
+  become: true
+  pacman:
+    name:
+      - bluez
+      - bluez-utils
+      - blueman
+      - pulseaudio-bluetooth
+
+- name: enable bluetooth
+  become: true
+  systemd: name=bluetooth.service enabled=yes
+
+- name: install terminal emulators
+  become: true
+  pacman:
+    name:
+      - xterm
 
 - name: install base packages
   become: true
@@ -62,5 +52,17 @@
       - openssh
       - xsel
 
+- include: gnome.yml
+  when: mtype != 'media'
+
+- include: xfce.yml
+  when: mtype == 'media'
+
 - include: printing.yml
-  when: mtype == 'personal'
+  when: mtype != 'media'
+
+- include: fonts.yml
+
+# - name: install cursors
+#   when: mtype != 'server'
+#   aur: name=xcursor-openzone

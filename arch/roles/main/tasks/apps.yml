@@ -109,16 +109,6 @@
       - thunderbird-i18n-fr
       - thunderbird-i18n-it
 
-- name: install pdf viewer
-  when: mtype != 'server'
-  become: true
-  pacman: name=evince
-
-- name: install archive tools
-  when: mtype != 'server'
-  become: true
-  pacman: name=file-roller
-
 - name: install gnucash
   when: mtype == 'personal'
   become: true

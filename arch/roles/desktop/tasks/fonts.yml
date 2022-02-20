@@ -1,0 +1,25 @@
+---
+- name: install fonts
+  become: true
+  pacman:
+    name:
+      - ttf-liberation
+      - ttf-bitstream-vera
+      - gnu-free-fonts
+      - ttf-carlito
+      # - ttf-caladea
+      - ttf-dejavu
+      - libertinus-font
+      - otf-fira-sans
+      - otf-fira-mono
+      - noto-fonts
+      - noto-fonts-emoji
+      - noto-fonts-extra
+      - ttf-ubuntu-font-family
+      - ttf-linux-libertine
+
+- name: install fonts part two
+  aur:
+    name:
+      - ttf-symbola
+      - ttf-google-fonts-git

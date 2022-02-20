@@ -38,6 +38,7 @@
       - asp
       - devtools
       - namcap
+      - pacman-contrib
       - pacutils
       - pkgfile
       - aurpublish

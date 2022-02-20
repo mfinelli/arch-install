@@ -1,0 +1,70 @@
+---
+- name: install xorg
+  become: true
+  pacman:
+    name:
+      - xorg-server
+      - xorg-apps
+
+- name: install desktop environment (xfce)
+  become: true
+  pacman:
+    name:
+      - xfce4
+      - xfce4-goodies
+      - lightdm
+      - lightdm-gtk-greeter
+      - network-manager-applet
+      - accountsservice
+      - xdg-user-dirs
+      - gvfs
+      - gvfs-afc
+      - gvfs-mtp
+      - gnome-keyring
+      - seahorse
+
+- name: install lightdm configuration
+  become: true
+  template:
+    src: lightdm.conf.j2
+    dest: /etc/lightdm/lightdm.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: enable lightdm
+  become: true
+  systemd: name=lightdm.service enabled=yes
+
+- name: install xfce themes
+  become: true
+  pacman:
+    name:
+      - xfce-theme-manager
+      - elementary-icon-theme
+
+- name: install xfce themes
+  aur:
+    name:
+      - xfce-theme-greybird
+      - shimmer-wallpapers
+      - elementary-xfce-icons
+      - paper-icon-theme-git
+      - papirus-icon-theme-git
+      - matcha-gtk-theme-git
+
+- name: install redshift
+  become: true
+  pacman:
+    name:
+      - redshift
+      - python-gobject
+      - python-xdg
+
+- name: install pdf viewer
+  become: true
+  pacman: name=evince
+
+- name: install archive tools
+  become: true
+  pacman: name=file-roller
