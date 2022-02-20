@@ -1,0 +1,26 @@
+---
+- name: install gnome
+  become: true
+  pacman:
+    name:
+      - gnome
+      - gnome-extra
+
+- name: install gnome extras
+  become: true
+  pacman:
+    name:
+      - seahorse
+      - network-manager-applet
+      - xdg-user-dirs-gtk
+
+- name: install gnome extras from aur
+  aur:
+    name:
+      - gnome-shell-extension-arch-update
+      - gnome-shell-extension-bluetooth-quick-connect
+      - gnome-shell-extension-freon
+
+- name: enable gdm
+  become: true
+  systemd: name=gdm.service enabled=yes
