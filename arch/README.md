@@ -10,77 +10,100 @@ Automation for Arch Linux installations.
 [prepare](https://wiki.archlinux.org/index.php/USB_flash_installation_medium)
 a USB flash drive.
 
-2. After booting into the live image connect to the internet:
+2. If necessary, change the keymap: e.g.,
 
-```
-TODO
-```
+   ```shell
+   loadkeys it2
+   ```
 
-3. Prepare the installation disk by overwriting it with random data:
+   TODO: make this permanent in /etc/vconsole.conf
 
-```shell
-dd if=/dev/urandom of=/dev/sdX bs=4096
-```
+   - https://wiki.archlinux.org/title/Linux_console/Keyboard_configuration
 
-4. Install the baseline Arch Linux installation:
+3. Ensure that we're booted in UEFI mode:
 
-```shell
-bash -c "$(curl -fsSL https://mfgo.link/arch-pacstrap)"
-```
+   ```shell
+   efivar -l
+   ls /sys/firmware/efi/efivars
+   ```
 
-5. `chroot` into the new system and bootstrap it (install required packages
+4. After booting into the live image connect to the internet:
+
+   ```
+   TODO
+   ```
+
+5. Prepare the installation disk by overwriting it with random data:
+
+   ```shell
+   dd if=/dev/urandom of=/dev/sdX bs=4096
+   ```
+
+6. Install the baseline Arch Linux installation:
+
+   ```shell
+   bash -c "$(curl -fsSL https://mfgo.link/arch-pacstrap)"
+   ```
+
+7. `chroot` into the new system and bootstrap it (install required packages
 and bootloader):
 
-```shell
-arch-chroot /mnt /bin/bash
-```
+   ```shell
+   arch-chroot /mnt /bin/bash
+   ```
 
-```shell
-bash -c "$(curl -fsSL https://mfgo.link/arch-bootstrap)"
-```
+   ```shell
+   bash -c "$(curl -fsSL https://mfgo.link/arch-bootstrap)"
+   ```
 
-6. Set `root` password, create user and add sudo rule:
+8. Set `root` password, create user and add sudo rule:
 
-```shell
-passwd
-```
+   ```shell
+   passwd
+   ```
 
-```shell
-useradd -m -s /bin/bash mario
-chfn mario
-passwd mario
-echo "mario ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/mario
-chmod 0440 /etc/sudoers.d/mario
-```
+   ```shell
+   useradd -m -s /bin/bash mario
+   chfn mario
+   passwd mario
+   echo "mario ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/mario
+   chmod 0440 /etc/sudoers.d/mario
+   ```
 
-7. Switch user and run ansible
+9. Switch user and run ansible
 
-```shell
-su mario -
-cd
-bash -c "$(curl -fsSL https://mfgo.link/arch-setup)"
-```
+   ```shell
+   su mario -
+   cd
+   bash -c "$(curl -fsSL https://mfgo.link/arch-setup)"
+   ```
 
-8. Reboot
+10. Reboot
 
-```shell
-exit
-umount -R /mnt
-swapoff /dev/crypt/swap
-reboot
-```
+    ```shell
+    exit
+    umount -R /mnt
+    swapoff /dev/crypt/swap
+    reboot
+    ```
 
-9. Run the post-first reboot portion of the setup
+11. Run the post-first reboot portion of the setup
 
-```shell
-bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
-```
+    ```shell
+    bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
+    ```
 
-10. Set default shell to zsh
+12. Set default shell to zsh
 
-```shell
-chsh -s /bin/zsh
-```
+    ```shell
+    chsh -s /bin/zsh
+    ```
+
+13. Reboot
+
+    ```shell
+    sudo reboot
+    ```
 
 ## server installations
 
