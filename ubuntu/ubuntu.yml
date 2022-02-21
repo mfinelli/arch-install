@@ -53,6 +53,7 @@
         name:
           - apt-file
           - bzr-builddeb
+          - brz-debian
           - dh-make
           - pbuilder
           - ubuntu-dev-tools
