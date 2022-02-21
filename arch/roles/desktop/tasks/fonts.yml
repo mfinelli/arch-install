@@ -19,6 +19,7 @@
       - ttf-linux-libertine
 
 - name: remove conflicting fonts
+  become: true
   pacman:
     name:
       - adobe-source-code-pro-fonts
