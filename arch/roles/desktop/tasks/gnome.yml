@@ -12,7 +12,7 @@
     name:
       - seahorse
       - network-manager-applet
-      - xdg-user-dirs-gtk
+      - hddtemp # for freon extension
 
 - name: install gnome extras from aur
   aur:
@@ -20,6 +20,14 @@
       - gnome-shell-extension-arch-update
       - gnome-shell-extension-bluetooth-quick-connect
       - gnome-shell-extension-freon
+      - gnome-shell-extension-espresso-git
+      - gnome-shell-extension-systemd-manager # TODO: policy file
+
+# - name: disabled extensions
+#   aur:
+#     name:
+#       - gnome-shell-extension-openweather-git
+#       - gnome-shell-extension-appindicator-git
 
 - name: enable gdm
   become: true
