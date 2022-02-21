@@ -17,6 +17,7 @@
 - name: install gnome extras from aur
   aur:
     name:
+      - gnome-shell-extension-dash-to-dock
       - gnome-shell-extension-arch-update
       - gnome-shell-extension-bluetooth-quick-connect
       - gnome-shell-extension-freon
