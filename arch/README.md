@@ -82,24 +82,32 @@ and bootloader):
 
     ```shell
     exit
+    exit
     umount -R /mnt
     swapoff /dev/crypt/swap
     reboot
     ```
 
-11. Run the post-first reboot portion of the setup
+11. Reconnect to the internet. In a virtual machine it is enough to just
+    start `NetworkManager.service`. Otherwise:
+
+    ```
+    TODO
+    ```
+
+12. Run the post-first reboot portion of the setup
 
     ```shell
     bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
     ```
 
-12. Set default shell to zsh
+13. Set default shell to zsh
 
     ```shell
     chsh -s /bin/zsh
     ```
 
-13. Reboot
+14. Reboot
 
     ```shell
     sudo reboot
