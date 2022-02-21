@@ -26,8 +26,12 @@
     group: root
     mode: 0644
     src: locale.gen
-  notify:
-    - locale-gen
+  register: locales_list
+
+- name: locale-gen
+  when: locales_list.changed
+  become: true
+  command: locale-gen
 
 - name: install locale.conf
   become: true
@@ -98,8 +102,12 @@
     group: root
     mode: 0644
     src: mkinitcpio.conf
-  notify:
-    - mkinitcpio
+  register: mkinitcpio_config
+
+- name: mkinitcpio
+  when: mkinitcpio_config.changed
+  become: true
+  command: mkinitcpio -p linux
 
 - name: ensure sudoer rule
   become: true

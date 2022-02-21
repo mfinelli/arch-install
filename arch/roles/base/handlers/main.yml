@@ -1,8 +1,0 @@
----
-- name: locale-gen
-  become: true
-  command: locale-gen
-
-- name: mkinitcpio
-  become: true
-  command: mkinitcpio -p linux
