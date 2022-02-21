@@ -13,12 +13,8 @@ a USB flash drive.
 2. If necessary, change the keymap: e.g.,
 
    ```shell
-   loadkeys it2
+   loadkeys it
    ```
-
-   TODO: make this permanent in /etc/vconsole.conf
-
-   - https://wiki.archlinux.org/title/Linux_console/Keyboard_configuration
 
 3. Ensure that we're booted in UEFI mode:
 
@@ -46,7 +42,7 @@ a USB flash drive.
    ```
 
 7. `chroot` into the new system and bootstrap it (install required packages
-and bootloader):
+   and bootloader):
 
    ```shell
    arch-chroot /mnt /bin/bash
@@ -88,6 +84,13 @@ and bootloader):
     reboot
     ```
 
+11. If necessary, make the keymap change permanent
+
+    ```shell
+    sudo loadkeys it
+    sudo localectl set-keymap --no-convert it
+    ```
+
 11. Reconnect to the internet. In a virtual machine it is enough to just
     start `NetworkManager.service`. Otherwise:
 
@@ -101,16 +104,18 @@ and bootloader):
     bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
     ```
 
-13. Set default shell to zsh
-
-    ```shell
-    chsh -s /bin/zsh
-    ```
-
-14. Reboot
+13. Reboot
 
     ```shell
     sudo reboot
+    ```
+
+14. Install [dotfiles](https://github.com/mfinelli/dotfiles)
+
+15. Set default shell to zsh
+
+    ```shell
+    chsh -s /bin/zsh
     ```
 
 ## server installations
