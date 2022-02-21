@@ -6,4 +6,5 @@
         plugin_path: "{{ item }}"
       loop:
         - https://github.com/databus23/helm-diff.git
+        - https://github.com/hayorov/helm-gcs.git
         - https://github.com/jkroepke/helm-secrets.git
