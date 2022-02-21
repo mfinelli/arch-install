@@ -34,12 +34,6 @@
   become: true
   systemd: name=bluetooth.service enabled=yes
 
-- name: install terminal emulators
-  become: true
-  pacman:
-    name:
-      - xterm
-
 - name: install base packages
   become: true
   pacman:

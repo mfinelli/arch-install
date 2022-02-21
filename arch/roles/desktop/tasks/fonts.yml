@@ -18,6 +18,12 @@
       - ttf-ubuntu-font-family
       - ttf-linux-libertine
 
+- name: remove conflicting fonts
+  pacman:
+    name:
+      - adobe-source-code-pro-fonts
+    state: absent
+
 - name: install fonts part two
   aur:
     name:

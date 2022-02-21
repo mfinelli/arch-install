@@ -68,3 +68,7 @@
 - name: install archive tools
   become: true
   pacman: name=file-roller
+
+- name: install xterm
+  become: true
+  pacman: name=xterm
