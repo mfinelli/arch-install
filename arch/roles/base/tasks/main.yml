@@ -54,6 +54,7 @@
       - ntfs-3g
       - e2fsprogs
       - exfat-utils
+      - f2fs-tools
       - os-prober
       - lvm2
       - cryptsetup

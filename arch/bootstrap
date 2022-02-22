@@ -39,7 +39,7 @@ read -rp "What's the new hostname? " NEW_HOSTNAME
 echo "$NEW_HOSTNAME" > /etc/hostname
 
 pacman -S grub efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs \
-  exfat-utils os-prober lvm2 cryptsetup mdadm usbutils
+  exfat-utils f2fs-tools os-prober lvm2 cryptsetup mdadm usbutils
 
 INTEL=GenuineIntel
 if [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == "$INTEL" ]]; then
