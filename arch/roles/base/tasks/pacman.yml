@@ -62,7 +62,7 @@
   systemd: name=reflector.timer enabled=yes
 
 - name: run reflector on-demand
-  when: reflector_config.changed
+  when: mmode != 'setup' and reflector_config.changed
   become: true
   systemd: name=reflector.service state=started
 
