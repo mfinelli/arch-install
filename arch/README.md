@@ -62,8 +62,9 @@ a USB flash drive.
    useradd -m -s /bin/bash mario
    chfn mario
    passwd mario
-   echo "mario ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/mario
-   chmod 0440 /etc/sudoers.d/mario
+   groupadd --system -U mario sudo
+   echo "%sudo ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/gsudo
+   chmod 0440 /etc/sudoers.d/gsudo
    ```
 
 9. Switch user and run ansible

@@ -112,8 +112,8 @@
 
 - name: ensure sudoer rule
   become: true
-  template:
-    dest: /etc/sudoers.d/{{ sudouser }}
+  copy:
+    dest: /etc/sudoers.d/gsudo
     owner: root
     group: root
     mode: 0440

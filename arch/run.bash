@@ -72,15 +72,6 @@ if [[ -z $timezone ]]; then
   timezone=UTC
 fi
 
-# this shouldn't ever be run as root, but just in case prompt the user for the
-# sudo rule to create
-if [[ $(id -u) -eq 0 ]]; then
-  read -rp "What username should we give passwordless-sudo? " sudouser
-else
-  sudouser="$(whoami)"
-fi
-
-
 # prompt for sudo password right away
 sudo echo -n
 
@@ -98,7 +89,6 @@ if [[ $1 == setup ]]; then
     --extra-vars wireless_regdom=$wirelessregdom \
     --extra-vars timezone=$timezone \
     --extra-vars system_lang=$syslang \
-    --extra-vers sudouser=$sudouser \
     arch.yml --tags init
 
   # now we can run the main setup
@@ -110,7 +100,6 @@ if [[ $1 == setup ]]; then
     --extra-vars wireless_regdom=$wirelessregdom \
     --extra-vars timezone=$timezone \
     --extra-vars system_lang=$syslang \
-    --extra-vers sudouser=$sudouser \
     arch.yml --tags setup
 else
   ansible-playbook \
@@ -121,7 +110,6 @@ else
     --extra-vars wireless_regdom=$wirelessregdom \
     --extra-vars timezone=$timezone \
     --extra-vars system_lang=$syslang \
-    --extra-vers sudouser=$sudouser \
     arch.yml
 fi
 
