@@ -49,6 +49,16 @@ EOF
 # let's check one more time that the disks are partitioned as expected
 gdisk -l "$INSTALL_DISK"
 
+if [[ $INSTALL_DISK == /dev/nvme* ]]; then
+  EFI_INSTALL_DISK="${INSTALL_DISK}p1"
+  BOOT_INSTALL_DISK="${INSTALL_DISK}p2"
+  ROOT_INSTALL_DISK="${INSTALL_DISK}p3"
+else
+  EFI_INSTALL_DISK="${INSTALL_DISK}1"
+  BOOT_INSTALL_DISK="${INSTALL_DISK}2"
+  ROOT_INSTALL_DISK="${INSTALL_DISK}3"
+fi
+
 if [[ no == $(prompt_yesno "Confirm partition table?") ]]; then
   exit 1
 fi
@@ -59,7 +69,7 @@ echo -e "${BOLDGREEN}Beginning disk encryption${ENDCOLOR}"
 # encrypt the main partition: AES256 (e.g. /dev/sda2)
 cryptsetup --type luks2 --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
   --iter-time 5000 --use-random --verify-passphrase luksFormat \
-  "${INSTALL_DISK}3"
+  "${ROOT_INSTALL_DISK}"
 
 echo -e "${CYAN}Disk encryption complete${ENDCOLOR}"
 echo -e "${BOLDGREEN}Beginning LVM setup${ENDCOLOR}"
@@ -69,7 +79,7 @@ read -rp "How many swap G? " SWAPG
 read -rp "How many root G? " ROOTG
 
 # do the LVM boogie
-cryptsetup luksOpen "${INSTALL_DISK}3" lvm
+cryptsetup luksOpen "${ROOT_INSTALL_DISK}" lvm
 pvcreate /dev/mapper/lvm
 vgcreate crypt /dev/mapper/lvm
 lvcreate -L "${SWAPG}G" crypt -n swap
@@ -79,10 +89,10 @@ lvcreate -l 100%FREE crypt -n home
 echo -e "${CYAN}LVM setup complete, making filesystems${ENDCOLOR}"
 
 # make some filesystems
-mkfs.vfat -F32 "${INSTALL_DISK}1"
-echo -e "${CYAN}Made FAT32 on ${INSTALL_DISK}1${ENDCOLOR}" && sleep 1
-mkfs.ext4 "${INSTALL_DISK}2"
-echo -e "${CYAN}Made EXT4 on ${INSTALL_DISK}2${ENDCOLOR}" && sleep 1
+mkfs.vfat -F32 "${EFI_INSTALL_DISK}"
+echo -e "${CYAN}Made FAT32 on ${EFI_INSTALL_DISK}${ENDCOLOR}" && sleep 1
+mkfs.ext4 "${BOOT_INSTALL_DISK}"
+echo -e "${CYAN}Made EXT4 on ${BOOT_INSTALL_DISK}${ENDCOLOR}" && sleep 1
 mkfs.btrfs /dev/mapper/crypt-root
 mkfs.btrfs /dev/mapper/crypt-home
 echo -e "${CYAN}Made BTRFS on /root and /home${ENDCOLOR}" && sleep 1
@@ -96,8 +106,8 @@ echo -e "${BOLDGREEN}Beginning fileystem mount for pacstrap${ENDCOLOR}"
 swapon /dev/crypt/swap
 mount -o compress=lzo /dev/crypt/root /mnt
 mkdir /mnt/{boot,efi,home}
-mount "${INSTALL_DISK}1" /mnt/efi
-mount "${INSTALL_DISK}2" /mnt/boot
+mount "${EFI_INSTALL_DISK}" /mnt/efi
+mount "${BOOT_INSTALL_DISK}" /mnt/boot
 mount -o compress=lzo /dev/crypt/home /mnt/home
 echo -e "${CYAN}Mounted filesystems${ENDCOLOR}" && sleep 1
 

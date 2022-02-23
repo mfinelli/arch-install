@@ -34,6 +34,12 @@ if [[ ! -e $INSTALL_DISK ]]; then
   exit 1
 fi
 
+if [[ $INSTALL_DISK == /dev/nvme* ]]; then
+  ROOT_INSTALL_DISK="${INSTALL_DISK}p3"
+else
+  ROOT_INSTALL_DISK="${INSTALL_DISK}3"
+fi
+
 # can't have a baby without a name
 read -rp "What's the new hostname? " NEW_HOSTNAME
 echo "$NEW_HOSTNAME" > /etc/hostname
@@ -50,7 +56,7 @@ fi
 
 # awful, i know - basically we need to escape any /'s in the device name when
 # passing it into sed or we get an "unknown option to `s'" error
-CRYPTD="cryptdevice=$(echo "$INSTALL_DISK" | sed 's/\//\\\//g')3:crypt"
+CRYPTD="cryptdevice=$(echo "$ROOT_INSTALL_DISK" | sed 's/\//\\\//g'):crypt"
 sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"${CRYPTD}\"/" \
   /etc/default/grub
 
