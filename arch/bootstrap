@@ -62,11 +62,10 @@ sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"${CRYPTD}\"/" \
 
 # we need to run grub install _before_ we run mkconfig because mkconfig
 # expects a grub.cfg.new file which doesn't exist until then
-EFI_MOUNT_PATH=/boot/efi
-grub-install --target=x86_64-efi --efi-directory=$EFI_MOUNT_PATH \
+grub-install --target=x86_64-efi --efi-directory=/efi \
   --bootloader-id="Arch Linux" --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
-grub-install --target=x86_64-efi --efi-directory=$EFI_MOUNT_PATH \
+grub-install --target=x86_64-efi --efi-directory=/efi \
   --bootloader-id="Arch Linux" --recheck
 
 # the rest of the system gets installed/configured using ansible

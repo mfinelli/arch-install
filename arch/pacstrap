@@ -105,9 +105,9 @@ echo -e "${BOLDGREEN}Beginning fileystem mount for pacstrap${ENDCOLOR}"
 # get everything ready
 swapon /dev/crypt/swap
 mount -o compress=lzo /dev/crypt/root /mnt
-mkdir /mnt/{boot,boot/efi,home}
+mkdir /mnt/{boot,efi,home}
+mount "${EFI_INSTALL_DISK}" /mnt/efi
 mount "${BOOT_INSTALL_DISK}" /mnt/boot
-mount "${EFI_INSTALL_DISK}" /mnt/boot/efi
 mount -o compress=lzo /dev/crypt/home /mnt/home
 echo -e "${CYAN}Mounted filesystems${ENDCOLOR}" && sleep 1
 
