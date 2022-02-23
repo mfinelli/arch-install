@@ -109,7 +109,8 @@ a USB flash drive.
     ```
 
 11. Reconnect to the internet. In a virtual machine it is enough to just
-    start `NetworkManager.service`.
+    start `NetworkManager.service`. Otherwise you will need to start
+    `iwd.service` and connect using `iwctl` as above.
 
 12. Run the post-first reboot portion of the setup
 
