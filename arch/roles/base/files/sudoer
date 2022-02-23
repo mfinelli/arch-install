@@ -1,2 +1,0 @@
-mario ALL=(ALL:ALL) NOPASSWD:ALL
-# vim: ft=sudoers

@@ -112,8 +112,8 @@
 
 - name: ensure sudoer rule
   become: true
-  copy:
-    dest: /etc/sudoers.d/mario
+  template:
+    dest: /etc/sudoers.d/{{ sudouser }}
     owner: root
     group: root
     mode: 0440
