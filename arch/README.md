@@ -62,7 +62,7 @@ a USB flash drive.
    useradd -m -s /bin/bash mario
    chfn mario
    passwd mario
-   groupadd --system -U mario sudo
+   groupadd --system -g 27 -U mario sudo # use gid 27 like they do in debian
    echo "%sudo ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/gsudo
    chmod 0440 /etc/sudoers.d/gsudo
    ```
