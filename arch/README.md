@@ -25,8 +25,24 @@ a USB flash drive.
 
 4. After booting into the live image connect to the internet:
 
+   ```shell
+   ip link # get device name
+   iwctl # start interactive prompt
    ```
-   TODO
+
+   Presuming our device is called `wlan0`:
+
+   ```
+   [iwd]# device list
+   [iwd]# station wlan0 scan
+   [iwd]# station wlan0 get-networks
+   [iwd]# station wlan0 connect SSID(network name)
+   ```
+
+   Confirm connectivity:
+
+   ```shell
+   ping -c 3 archlinux.org
    ```
 
 5. Prepare the installation disk by overwriting it with random data:
@@ -93,11 +109,7 @@ a USB flash drive.
     ```
 
 11. Reconnect to the internet. In a virtual machine it is enough to just
-    start `NetworkManager.service`. Otherwise:
-
-    ```
-    TODO
-    ```
+    start `NetworkManager.service`.
 
 12. Run the post-first reboot portion of the setup
 
