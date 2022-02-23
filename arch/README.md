@@ -109,8 +109,15 @@ a USB flash drive.
     ```
 
 11. Reconnect to the internet. In a virtual machine it is enough to just
-    start `NetworkManager.service`. Otherwise you will need to start
-    `iwd.service` and connect using `iwctl` as above.
+    start `NetworkManager.service`. Otherwise, you will need to enable it
+    _and_ connect with `nmcli`.
+
+    ```shell
+    nmcli dev status
+    nmcli radio wifi
+    nmcli dev wifi list
+    sudo nmcli --ask dev wifi connect SSID(network name)
+    ```
 
 12. Run the post-first reboot portion of the setup
 
