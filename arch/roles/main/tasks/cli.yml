@@ -44,6 +44,7 @@
       - net-tools
       - nmap
       - p7zip
+      - pv
       - whois
       - jq
       - vivid
