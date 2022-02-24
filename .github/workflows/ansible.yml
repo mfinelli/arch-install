@@ -6,6 +6,8 @@ on:
       - 'arch/**'
       - 'debian/**'
       - 'macos/**'
+      - 'rpi/**'
+      - 'ubuntu/**'
       - 'workspace/**'
 
 jobs:
@@ -15,10 +17,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: ansible/ansible-lint-action@master
-        with:
-          targets: |
-            arch/arch.yml
-            debian/debian.yml
-            macos/work.yml
-            workspace/workspace.yml
+      - run: pip3 install ansible-lint
+      - run: |
+          ansible-lint -c .ansible_lint \
+            arch/arch.yml \
+            debian/debian.yml \
+            macos/personal.yml \
+            macos/work.yml \
+            rpi/rpi.yml \
+            rpi/user.yml \
+            ubuntu/ubuntu.yml

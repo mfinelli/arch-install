@@ -1,0 +1,5 @@
+---
+warn_list:
+  - no-handler
+
+# vim: ft=yaml
