@@ -8,7 +8,6 @@ on:
       - 'macos/**'
       - 'rpi/**'
       - 'ubuntu/**'
-      - 'workspace/**'
 
 jobs:
   main:

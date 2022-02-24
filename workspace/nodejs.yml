@@ -1,9 +1,0 @@
----
-- name: install nodejs v{{ nodejs_version }}
-  become: True
-  unarchive:
-    src: https://nodejs.org/dist/v{{ nodejs_version }}/node-v{{ nodejs_version }}-linux-x64.tar.xz
-    remote_src: yes
-    dest: /usr/local
-    extra_opts:
-      - --strip-components=1
