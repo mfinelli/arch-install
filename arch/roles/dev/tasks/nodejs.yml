@@ -1,0 +1,19 @@
+---
+- name: install nodejs
+  when: mtype == 'personal'
+  become: true
+  pacman:
+    name:
+      - nodejs
+      - npm
+
+- name: install nodejs packages
+  when: mtype == 'personal'
+  become: true
+  pacman:
+    name:
+      - nodejs-n
+      - nodejs-autoprefixer
+      - nodejs-clean-css-cli
+      - nodejs-pug-cli
+      - nodejs-mjml

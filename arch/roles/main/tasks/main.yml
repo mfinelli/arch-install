@@ -1,0 +1,15 @@
+---
+- name: install ansible-extras
+  become: true
+  pacman:
+    name:
+      - ansible-lint
+      - python-passlib
+      - sshpass
+      - yapf
+
+- name: install downgrade
+  aur: name=downgrade
+
+- include: apps.yml
+- include: cli.yml

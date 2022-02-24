@@ -1,0 +1,27 @@
+---
+- name: install finellictl
+  become: true
+  copy:
+    dest: /usr/bin/finellictl
+    owner: root
+    group: root
+    mode: 0755
+    src: finellictl
+
+- name: create configuration directory
+  become: true
+  file:
+    path: /etc/finelli
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: install configuration file
+  become: true
+  template:
+    dest: /etc/finelli/arch-install.yml
+    owner: root
+    group: root
+    mode: 0644
+    src: arch-install.yml.j2

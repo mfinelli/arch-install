@@ -1,0 +1,62 @@
+---
+- name: install audio packages
+  become: true
+  pacman:
+    name:
+      - alsa-utils
+      - alsa-plugins
+      - pulseaudio
+      - pulseaudio-alsa
+      - pavucontrol
+
+- name: enable network manager
+  become: true
+  systemd: name=NetworkManager.service enabled=yes
+
+- name: install keymapper
+  become: true
+  pacman: name=keymapper
+
+- name: enable keymapperd
+  become: true
+  systemd: name=keymapperd.service enabled=yes state=started
+
+- name: install bluetooth packages
+  become: true
+  pacman:
+    name:
+      - bluez
+      - bluez-utils
+      - blueman
+      - pulseaudio-bluetooth
+
+- name: enable bluetooth
+  become: true
+  systemd: name=bluetooth.service enabled=yes
+
+- name: install base packages
+  become: true
+  pacman:
+    name:
+      - firefox
+      - firefox-i18n-en-us
+      - firefox-i18n-es-es
+      - firefox-i18n-fr
+      - firefox-i18n-it
+      - openssh
+      - xsel
+
+- include: gnome.yml
+  when: mtype != 'media'
+
+- include: xfce.yml
+  when: mtype == 'media'
+
+- include: printing.yml
+  when: mtype != 'media'
+
+- include: fonts.yml
+
+# - name: install cursors
+#   when: mtype != 'server'
+#   aur: name=xcursor-openzone

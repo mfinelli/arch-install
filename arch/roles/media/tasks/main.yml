@@ -1,0 +1,69 @@
+---
+- name: install wine
+  when:
+    - multilib == 'true'
+    - mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman:
+    name:
+      - wine
+      - wine-mono
+      - wine-gecko
+      - winetricks
+
+- name: install lib32 libraries
+  when:
+    - multilib == 'true'
+    - mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman:
+    name:
+      - lib32-libpulse
+      - lib32-alsa-plugins
+
+- name: install picard
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman: name=picard
+
+- name: install other music applications
+  when: mtype == 'personal' or mtype == 'media'
+  aur:
+    name:
+      - foobar2000
+      - mp3tag
+
+- name: install tor browser bundle
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman: name=tor-browser
+
+- name: install google-chrome
+  when: mtype != 'server'
+  aur: name=google-chrome
+
+- name: install youtube-dl
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman:
+    name:
+      - youtube-dl
+      - yt-dlp
+
+- name: install other media dependencies
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman:
+    name:
+      - vlc
+      - libdvdcss
+      - libaacs
+      - handbrake
+
+- name: install torrent client
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman:
+    name:
+      - deluge
+      - cksfv

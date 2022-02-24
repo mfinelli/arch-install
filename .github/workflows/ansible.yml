@@ -3,6 +3,7 @@ name: Ansible Lint
 on:
   push:
     paths:
+      - 'arch/**'
       - 'debian/**'
       - 'macos/**'
       - 'workspace/**'
@@ -17,6 +18,7 @@ jobs:
       - uses: ansible/ansible-lint-action@master
         with:
           targets: |
+            arch/arch.yml
             debian/debian.yml
             macos/work.yml
             workspace/workspace.yml

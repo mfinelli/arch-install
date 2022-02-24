@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+
+wdir="$(mktemp -d)"
+sdir="$(pwd)"
+cd "$wdir"
+
+git clone https://github.com/mfinelli/arch-install.git
+
+# TODO: temporary until this branch lands on master
+cd arch-install
+git checkout ansible
+cd ..
+# TODO: end temporary
+
+cd arch-install/arch
+
+./run.bash setup
+
+cd "$sdir"
+rm -rf "$wdir"
+
+exit 0

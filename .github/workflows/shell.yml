@@ -1,0 +1,47 @@
+---
+name: Shell
+on:
+  push:
+    paths:
+      - .github/workflows/shell.yml
+      - arch/bootstrap
+      - arch/go
+      - arch/init
+      - arch/pacstrap
+      - arch/server
+      - debian/go
+      - '**.bash'
+
+jobs:
+  shellcheck:
+    name: shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run shellcheck
+        run: |
+          shellcheck --version
+          shellcheck arch/bootstrap
+          shellcheck arch/go
+          shellcheck arch/init
+          shellcheck arch/pacstrap
+          shellcheck arch/server
+          shellcheck debian/go
+          find . -name '*.bash' | xargs shellcheck
+
+  shfmt:
+    name: shfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: mfinelli/setup-shfmt@v1
+      - name: Run shfmt
+        run: |
+          shfmt --version
+          shfmt -s -i 2 -ci -sr -d arch/bootstrap
+          shfmt -s -i 2 -ci -sr -d arch/go
+          shfmt -s -i 2 -ci -sr -d arch/init
+          shfmt -s -i 2 -ci -sr -d arch/pacstrap
+          shfmt -s -i 2 -ci -sr -d arch/server
+          shfmt -s -i 2 -ci -sr -d debian/go
+          find . -name '*.bash' | xargs shfmt -s -i 2 -ci -sr -d

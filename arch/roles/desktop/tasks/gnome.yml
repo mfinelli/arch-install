@@ -1,0 +1,37 @@
+---
+- name: install gnome
+  become: true
+  pacman:
+    name:
+      - gnome
+      - gnome-extra
+
+- name: install gnome extras
+  become: true
+  pacman:
+    name:
+      - seahorse
+      - network-manager-applet
+      - hddtemp # for freon extension
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gnome
+
+- name: install gnome extras from aur
+  aur:
+    name:
+      - gnome-shell-extension-dash-to-dock
+      - gnome-shell-extension-arch-update
+      - gnome-shell-extension-bluetooth-quick-connect
+      - gnome-shell-extension-freon
+      - gnome-shell-extension-espresso-git
+      - gnome-shell-extension-systemd-manager # TODO: policy file
+
+# - name: disabled extensions
+#   aur:
+#     name:
+#       - gnome-shell-extension-openweather-git
+#       - gnome-shell-extension-appindicator-git
+
+- name: enable gdm
+  become: true
+  systemd: name=gdm.service enabled=yes

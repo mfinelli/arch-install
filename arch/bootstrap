@@ -1,0 +1,75 @@
+#!/bin/bash
+
+set -ex
+
+# default timezone to UTC
+hwclock --systohc --utc
+timedatectl set-timezone UTC
+
+# Set default language to US english
+sed -i "/#en_US.UTF-8 UTF-8/cen_US.UTF-8 UTF-8" /etc/locale.gen
+locale-gen
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
+# use a known good mirror for initial package installation - we'll generate a
+# new mirrorlist shortly
+# shellcheck disable=SC2016
+MIRROR='Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch'
+echo "$MIRROR" > /etc/pacman.d/mirrorlist
+
+# add the supermario repo and then refresh - we'll set it "correctly" once
+# ansible runs
+curl -s https://finelli.pub/36FDA306.asc | sudo pacman-key -a -
+sudo pacman-key --lsign-key C3CD75B002978A8468CA7B1F6C3ADDDE36FDA306
+echo '[supermario]' >> /etc/pacman.conf
+# shellcheck disable=SC2016
+echo 'Server = https://pkgs.finelli.dev/arch/$arch' >> /etc/pacman.conf
+pacman -Syyu
+
+lsblk
+read -rp "What's the install disk? (e.g., /dev/sda) " INSTALL_DISK
+
+if [[ ! -e $INSTALL_DISK ]]; then
+  echo >&2 "error: install disk $INSTALL_DISK doesn't exist"
+  exit 1
+fi
+
+if [[ $INSTALL_DISK == /dev/nvme* ]]; then
+  ROOT_INSTALL_DISK="${INSTALL_DISK}p3"
+else
+  ROOT_INSTALL_DISK="${INSTALL_DISK}3"
+fi
+
+# can't have a baby without a name
+read -rp "What's the new hostname? " NEW_HOSTNAME
+echo "$NEW_HOSTNAME" > /etc/hostname
+
+pacman -S grub efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs \
+  exfat-utils f2fs-tools os-prober lvm2 cryptsetup mdadm usbutils
+
+INTEL=GenuineIntel
+if [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == "$INTEL" ]]; then
+  pacman -S intel-ucode
+else
+  pacman -S amd-ucode
+fi
+
+# awful, i know - basically we need to escape any /'s in the device name when
+# passing it into sed or we get an "unknown option to `s'" error
+CRYPTD="cryptdevice=$(echo "$ROOT_INSTALL_DISK" | sed 's/\//\\\//g'):crypt"
+sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"${CRYPTD}\"/" \
+  /etc/default/grub
+
+# we need to run grub install _before_ we run mkconfig because mkconfig
+# expects a grub.cfg.new file which doesn't exist until then
+grub-install --target=x86_64-efi --efi-directory=/efi \
+  --bootloader-id="Arch Linux" --recheck
+grub-mkconfig -o /boot/grub/grub.cfg
+grub-install --target=x86_64-efi --efi-directory=/efi \
+  --bootloader-id="Arch Linux" --recheck
+
+# the rest of the system gets installed/configured using ansible
+pacman -S ansible git pyalpm python-py-cpuinfo \
+  ansible-{aur,gpg-key-git}
+
+exit 0

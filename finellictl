@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+
+IFS='' read -r -d '' FINELLICTL <<-'EOF'
+  __ _            _ _ _      _   _
+ / _(_)_ __   ___| | (_) ___| |_| |
+| |_| | '_ \ / _ \ | | |/ __| __| |
+|  _| | | | |  __/ | | | (__| |_| |
+|_| |_|_| |_|\___|_|_|_|\___|\__|_|
+
+EOF
+
+SETTINGS_PATH=/etc/finelli/arch-install.yml
+
+if [[ $# -eq 0 || $1 == -h || $1 == --help ]]; then
+  echo "$FINELLICTL"
+  echo "usage:"
+  echo
+  echo "    $(basename "$0") language en_US # set system language"
+  echo "                              # common options: it_IT"
+  echo
+  echo "    $(basename "$0") timezone # set timezone interactively"
+  echo "    $(basename "$0") timezone America/New_York # set given timezone"
+  echo "                              # common options: Europe/Rome"
+  echo "                              #                 Europe/London"
+  echo
+  echo "    $(basename "$0") wregdom US # set wireless regulatory country"
+  echo "                              # common options: IT, GB"
+  exit 0
+fi
+
+if [[ $(uname) != Linux ]]; then
+  echo >&2 "error: finellictl only supports linux"
+  exit 1
+fi
+
+if [[ $(id -u) -eq 0 ]]; then
+  echo >&2 "error: don't run finellictl as root"
+  exit 1
+fi
+
+if ! command -v yq > /dev/null 2>&1; then
+  echo >&2 "error: unable to find yq"
+  exit 1
+fi
+
+set -e
+
+function write_settings() {
+  if [[ ! -f $SETTINGS_PATH ]]; then
+    echo --- > $SETTINGS_PATH
+  fi
+
+  local lng="$(grep LANG /etc/locale.conf | awk -F= '{print $2}' |
+    awk -F. '{print $1}')"
+  sudo yq -i ".language = \"$lng\"" $SETTINGS_PATH
+
+  local tz="$(timedatectl show -p Timezone | awk -F= '{print $2}')"
+  sudo yq -i ".timezone = \"$tz\"" $SETTINGS_PATH
+
+  local wreg="$(grep '^WIRELESS_REGDOM="' /etc/conf.d/wireless-regdom |
+    awk -F\" '{print $2}')"
+  sudo yq -i ".wireless-regdom = \"$wreg\"" $SETTINGS_PATH
+}
+
+function set_language() {
+  if [[ $1 =~ ^[a-z]{2}_[A-Z]{2}$ ]]; then
+    if grep "^${1}.UTF-8" /etc/locale.gen; then
+      echo "LANG=$1.UTF-8" | sudo tee /etc/locale.conf
+    else
+      echo >&2 "error: $1 is not enabled in /etc/locale.gen"
+      exit 1
+    fi
+  else
+    echo >&2 "error: $1 does not have expected format xx_XX"
+    exit 1
+  fi
+
+  write_settings
+}
+
+function set_timezone() {
+  if ! command -v tzselect > /dev/null 2>&1; then
+    echo >&2 "error: unable to find tzselect"
+    exit 1
+  fi
+
+  if [[ -z $1 ]]; then
+    local tz="$(tzselect)"
+
+    # UTC is not available with tzselect, so we need to specify (11) POSIX
+    # entry and write "UTC-0" to get UTC which isn't valid for timedatectl
+    # so if we detect that we tried to get UTC then just use it directly.
+    if [[ ${tz:0:3} == UTC ]]; then
+      local tz=UTC
+    fi
+  else
+    local tz="$1"
+  fi
+
+  sudo timedatectl set-timezone "$tz"
+  write_settings
+}
+
+function set_wirelessregdom() {
+  if [[ $1 =~ ^[a-zA-Z]{2}$ ]]; then
+    sudo sed -i -E "s/^WIRELESS_REGDOM=\"[A-Z]{2}\"/WIRELESS_REGDOM=\"$1\"/" \
+      /etc/conf.d/wireless-regdom
+  else
+    echo >&2 "error: $1 does not appear to be a valid country code"
+    exit 1
+  fi
+
+  write_settings
+}
+
+if [[ $1 == timezone ]]; then
+  set_timezone "$2"
+fi
+
+if [[ $1 == wregdom ]]; then
+  set_wirelessregdom "$2"
+fi
+
+exit 0

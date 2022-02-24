@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+# normalize select cpu information
+# requires python-py-cpuinfo (https://github.com/workhorsy/py-cpuinfo)
+
+import json
+from cpuinfo import get_cpu_info
+
+facts = {}
+cpuinfo = get_cpu_info()
+
+if "genuineintel" in cpuinfo["vendor_id_raw"].lower():
+    facts["cpu_vendor"] = "Intel"
+else:
+    facts["cpu_vendor"] = "AMD"
+
+facts["cpu_cores"] = cpuinfo["count"]
+
+print(json.dumps(facts))
+
+# vim: ft=python

@@ -1,0 +1,10 @@
+---
+- name: install cloud dependencies
+  when: mtype == 'personal'
+  become: true
+  pacman:
+    name:
+      - aws-cli
+      - python-magic
+      - google-cloud-sdk
+      - doctl

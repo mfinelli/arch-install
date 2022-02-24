@@ -16,7 +16,10 @@ indent_size = 8
 indent_style = tabs
 indent_size = 8
 
-[unbound.conf]
+[*.{fact,py}]
+indent_size = 4
+
+[{unbound.conf,sshd_config}]
 indent_style = tabs
 indent_size = 8
 

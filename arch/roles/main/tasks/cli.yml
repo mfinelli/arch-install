@@ -1,0 +1,76 @@
+---
+- name: install zsh
+  become: true
+  pacman:
+    name:
+      - zsh
+      - grml-zsh-config
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+      - zsh-completions
+      - zsh-theme-powerlevel10k
+
+- name: install gitstatus
+  become: true
+  pacman: name=gitstatus
+
+- name: install terminal fonts
+  when: mtype != 'server'
+  become: true
+  pacman:
+    name:
+      - ttf-meslo-nerd-font-powerlevel10k
+      - nerd-fonts-jetbrains-mono
+      # - ttf-jetbrains-mono
+      # - ttf-nerd-fonts-symbols-mono
+
+- name: install main cli apps
+  become: true
+  pacman:
+    name:
+      - tmux
+      - htop
+      - pwgen
+      - ctags
+      - ripgrep
+      - the_silver_searcher
+      - bat
+      - fd
+      - fzf
+      - go-yq
+      - thefuck
+      - tldr
+      - bind
+      - net-tools
+      - p7zip
+      - whois
+      - jq
+      - vivid
+      - zoxide
+
+- name: install secondary cli apps
+  when: mtype != 'media'
+  become: true
+  pacman:
+    name:
+      - borg
+      - moreutils
+      - dos2unix
+      - github-cli
+      - glab
+      - nmap
+      - pv
+      - urlwatch
+
+- name: install shared secondary cli apps
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman:
+    name:
+      - cdrtools
+      - unrar
+
+- name: install tailscale
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  pacman: name=tailscale

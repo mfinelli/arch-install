@@ -1,0 +1,34 @@
+---
+- name: install printing packages
+  when: mtype != 'media'
+  become: true
+  pacman:
+    name:
+      - ghostscript
+      - cups
+      - cups-pdf
+      - gutenprint
+      - foomatic-db
+      - foomatic-db-engine
+      - foomatic-db-nonfree
+      - foomatic-db-gutenprint-ppds
+      - foomatic-db-nonfree-ppds
+      - foomatic-db-ppds
+      - hplip
+      - splix
+
+- name: install network printing packages
+  when: mtype != 'media'
+  become: true
+  pacman:
+    name:
+      - avahi
+      - samba
+
+- name: enable printing services
+  when: mtype != 'media'
+  become: true
+  systemd: name={{ item }} enabled=yes
+  loop:
+    - cups.service
+    - avahi-daemon.service

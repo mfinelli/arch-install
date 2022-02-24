@@ -1,0 +1,14 @@
+---
+- name: install vpn client
+  when: mtype == 'work'
+  become: true
+  pacman: name=networkmanager-fortisslvpn
+
+- name: install required tools
+  when: mtype == 'work'
+  become: true
+  pacman:
+    name:
+      - direnv
+      - git-crypt
+      - asdf-vm

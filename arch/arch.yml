@@ -1,0 +1,30 @@
+---
+- hosts: localhost
+  roles:
+    - role: ansible
+      tags: [all, init, setup]
+    - role: base
+      tags: [all, setup]
+    - role: unbound
+      when: mtype != 'work'
+      tags: [all, setup]
+    - role: resolvd
+      when: mtype == 'work'
+      tags: [all, setup]
+    - role: desktop
+      tags: [all]
+      when: mtype != 'server'
+    - role: main
+      tags: [all]
+    - role: dev
+      tags: [all]
+    - role: media
+      tags: [all]
+    - role: databases
+      tags: [all]
+    - role: work
+      tags: [all]
+      when: mtype == 'work'
+    - role: server
+      tags: [all]
+      when: mtype == 'server'
