@@ -28,9 +28,16 @@ array_contains() {
   return $found
 }
 
+# Shellcheck returns a false positive here because these variables aren't
+# actually referenced as variables in the conditional below, but they _are_
+# used
+# shellcheck disable=SC2034
 PERSONAL_MACHINES=(stig)
+# shellcheck disable=SC2034
 SERVER_MACHINES=(cdev.finelli.dev)
+# shellcheck disable=SC2034
 WORK_MACHINES=(easy CLIFMI706)
+# shellcheck disable=SC2034
 MEDIA_MACHINES=()
 
 if lspci | grep VGA | grep -qi amd; then

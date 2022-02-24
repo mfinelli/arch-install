@@ -21,12 +21,17 @@ jobs:
       - name: Run shellcheck
         run: |
           shellcheck --version
+          shellcheck finellictl
           shellcheck arch/bootstrap
           shellcheck arch/go
           shellcheck arch/init
           shellcheck arch/pacstrap
           shellcheck arch/server
           shellcheck debian/go
+          shellcheck macos/go
+          shellcheck rpi/fde
+          shellcheck rpi/go
+          shellcheck ubuntu/go
           find . -name '*.bash' | xargs shellcheck
 
   shfmt:
