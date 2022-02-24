@@ -13,6 +13,8 @@
       - seahorse
       - network-manager-applet
       - hddtemp # for freon extension
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gnome
 
 - name: install gnome extras from aur
   aur:
