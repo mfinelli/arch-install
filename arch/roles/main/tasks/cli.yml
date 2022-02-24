@@ -42,9 +42,7 @@
       - tldr
       - bind
       - net-tools
-      - nmap
       - p7zip
-      - pv
       - whois
       - jq
       - vivid
@@ -55,9 +53,13 @@
   become: true
   pacman:
     name:
+      - borg
       - moreutils
       - dos2unix
       - github-cli
+      - glab
+      - nmap
+      - pv
       - urlwatch
 
 - name: install shared secondary cli apps
