@@ -43,10 +43,15 @@ jobs:
       - name: Run shfmt
         run: |
           shfmt --version
+          shfmt -s -i 2 -ci -sr -d finellictl
           shfmt -s -i 2 -ci -sr -d arch/bootstrap
           shfmt -s -i 2 -ci -sr -d arch/go
           shfmt -s -i 2 -ci -sr -d arch/init
           shfmt -s -i 2 -ci -sr -d arch/pacstrap
           shfmt -s -i 2 -ci -sr -d arch/server
           shfmt -s -i 2 -ci -sr -d debian/go
+          shfmt -s -i 2 -ci -sr -d macos/go
+          shfmt -s -i 2 -ci -sr -d rpi/fde
+          shfmt -s -i 2 -ci -sr -d rpi/go
+          shfmt -s -i 2 -ci -sr -d ubuntu/go
           find . -name '*.bash' | xargs shfmt -s -i 2 -ci -sr -d

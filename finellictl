@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-IFS='' read -r -d '' FINELLICTL <<-'EOF'
+IFS='' read -r -d '' FINELLICTL <<- 'EOF'
   __ _            _ _ _      _   _
  / _(_)_ __   ___| | (_) ___| |_| |
 | |_| | '_ \ / _ \ | | |/ __| __| |
@@ -50,14 +50,17 @@ function write_settings() {
     echo --- > $SETTINGS_PATH
   fi
 
-  local lng; lng="$(grep LANG /etc/locale.conf | awk -F= '{print $2}' |
+  local lng
+  lng="$(grep LANG /etc/locale.conf | awk -F= '{print $2}' |
     awk -F. '{print $1}')"
   sudo yq -i ".language = \"$lng\"" $SETTINGS_PATH
 
-  local tz; tz="$(timedatectl show -p Timezone | awk -F= '{print $2}')"
+  local tz
+  tz="$(timedatectl show -p Timezone | awk -F= '{print $2}')"
   sudo yq -i ".timezone = \"$tz\"" $SETTINGS_PATH
 
-  local wreg; wreg="$(grep '^WIRELESS_REGDOM="' /etc/conf.d/wireless-regdom |
+  local wreg
+  wreg="$(grep '^WIRELESS_REGDOM="' /etc/conf.d/wireless-regdom |
     awk -F\" '{print $2}')"
   sudo yq -i ".wireless-regdom = \"$wreg\"" $SETTINGS_PATH
 }
@@ -85,7 +88,8 @@ function set_timezone() {
   fi
 
   if [[ -z $1 ]]; then
-    local tz; tz="$(tzselect)"
+    local tz
+    tz="$(tzselect)"
 
     # UTC is not available with tzselect, so we need to specify (11) POSIX
     # entry and write "UTC-0" to get UTC which isn't valid for timedatectl
