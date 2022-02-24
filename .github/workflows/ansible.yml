@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: pip3 install ansible-lint
+      - run: pip3 install ansible ansible-lint
       - run: |
           ansible-lint -c .ansible_lint \
             arch/arch.yml \
