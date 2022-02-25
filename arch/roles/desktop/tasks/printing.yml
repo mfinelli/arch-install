@@ -17,6 +17,12 @@
       - hplip
       - splix
 
+- name: install drivers from aur
+  when: mtype != 'media'
+  aur:
+    name:
+      - epson-inkjet-printer-escpr
+
 - name: install network printing packages
   when: mtype != 'media'
   become: true
