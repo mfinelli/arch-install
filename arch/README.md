@@ -153,8 +153,10 @@ a USB flash drive.
 
    ```shell
    useradd -m -s /bin/bash mario
-   echo "mario ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/mario
-   chmod 0440 /etc/sudoers.d/mario
+   getent group 27 # ensure gid 27 doesn't already exist
+   groupadd --system -g 27 -U mario sudo
+   echo "%sudo ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/gsudo
+   chmod 0440 /etc/sudoers.d/gsudo
    ```
 
 3. Copy root authorized ssh keys to user
