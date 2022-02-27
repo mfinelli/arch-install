@@ -23,6 +23,6 @@ sudo pacman -Syyu
 
 # the rest of the system gets installed/configured using ansible
 sudo pacman -S ansible git pyalpm python-py-cpuinfo \
-  ansible-{aur,gpg-key-git,gsetting-git}
+  ansible-{aur,gpg-key-git}
 
 exit 0
