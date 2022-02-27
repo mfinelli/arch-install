@@ -175,8 +175,14 @@ a USB flash drive.
    su mario -
    cd ~
    bash -c "$(curl -fsSL https://mfgo.link/arch-server)"
+   ```
+
+5. Reboot if the kernel updated during the previous step and then reconnect
+   and continue:
+
+   ```shell
    bash -c "$(curl -fsSL https://mfgo.link/arch-setup)"
    bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
    ```
 
-5. Reboot
+6. Reboot
