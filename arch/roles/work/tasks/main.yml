@@ -9,6 +9,7 @@
   become: true
   pacman:
     name:
+      - colordiff
       - direnv
       - git-crypt
       - asdf-vm
