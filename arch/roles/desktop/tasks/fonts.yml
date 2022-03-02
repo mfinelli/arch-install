@@ -16,7 +16,6 @@
       - noto-fonts-emoji
       - noto-fonts-extra
       - ttf-ubuntu-font-family
-      - ttf-linux-libertine
 
 - name: install fonts part two
   aur:
