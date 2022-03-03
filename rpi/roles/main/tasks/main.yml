@@ -57,7 +57,7 @@
 - name: install backup applications
   ansible.builtin.apt:
     name:
-      - borg
+      - borgbackup
       - rclone
 
 - include: boot.yml
