@@ -54,4 +54,10 @@
       - screen
       - vim
 
+- name: install backup applications
+  ansible.builtin.apt:
+    name:
+      - borg
+      - rclone
+
 - include: boot.yml
