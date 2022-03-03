@@ -53,7 +53,6 @@
   become: true
   pacman:
     name:
-      - borg
       - moreutils
       - dos2unix
       - github-cli
@@ -69,6 +68,13 @@
     name:
       - cdrtools
       - unrar
+
+- name: install backup apps
+  become: true
+  pacman:
+    name:
+      - borg
+      - rclone
 
 - name: install tailscale
   when: mtype == 'personal' or mtype == 'media'
