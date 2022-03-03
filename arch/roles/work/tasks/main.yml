@@ -14,3 +14,4 @@
       - git-crypt
       - kustomize
       - asdf-vm
+      - python-pip # dependency of asdf-pyapp
