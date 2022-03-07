@@ -75,6 +75,7 @@
     name:
       - borg
       - rclone
+      - pass
 
 - name: install tailscale
   when: mtype == 'personal' or mtype == 'media'
