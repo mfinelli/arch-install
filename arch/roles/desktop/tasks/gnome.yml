@@ -25,6 +25,7 @@
       - gnome-shell-extension-freon
       - gnome-shell-extension-espresso-git
       - gnome-shell-extension-systemd-manager # TODO: policy file
+      - gnome-shell-extension-no-overview
 
 # - name: disabled extensions
 #   aur:
