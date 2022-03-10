@@ -24,8 +24,17 @@
       - gnome-shell-extension-bluetooth-quick-connect
       - gnome-shell-extension-freon
       - gnome-shell-extension-espresso-git
-      - gnome-shell-extension-systemd-manager # TODO: policy file
+      - gnome-shell-extension-systemd-manager
       - gnome-shell-extension-no-overview
+
+- name: install systemd policy file for systemd gnome extension
+  become: true
+  copy:
+    dest: /etc/polkit-1/rules.d/10-service_status.rules
+    owner: root
+    group: root
+    mode: 0644
+    src: service.rules
 
 # - name: disabled extensions
 #   aur:
