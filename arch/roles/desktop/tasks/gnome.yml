@@ -26,6 +26,7 @@
       - gnome-shell-extension-espresso-git
       - gnome-shell-extension-systemd-manager
       - gnome-shell-extension-no-overview
+      - gnome-shell-extension-weather-in-the-clock-git
 
 - name: install systemd policy file for systemd gnome extension
   become: true
