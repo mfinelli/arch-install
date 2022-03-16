@@ -15,3 +15,9 @@
       - kustomize
       - asdf-vm
       - python-pip # dependency of asdf-pyapp
+
+- name: install required tools from aur
+  when: mtype == 'work'
+  aur:
+    name:
+      - nodejs-lhci-cli
