@@ -54,6 +54,7 @@
   pacman:
     name:
       - moreutils
+      - difftastic
       - dos2unix
       - github-cli
       - glab
