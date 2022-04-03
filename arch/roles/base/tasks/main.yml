@@ -144,7 +144,7 @@
       - easy-rsa
       - networkmanager
       - networkmanager-openvpn
-      - crda
+      - wireless-regdb
       - netctl
 
 - name: install inetutils for `hostname`
