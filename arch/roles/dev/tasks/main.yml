@@ -83,6 +83,11 @@
   become: true
   pacman: name=postfix
 
+- name: install neovim
+  when: mtype != 'media'
+  become: true
+  pacman: name=neovim
+
 - include: php.yml
 - include: nodejs.yml
 - include: ruby.yml
