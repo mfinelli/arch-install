@@ -15,6 +15,7 @@
       - hddtemp # for freon extension
       - xdg-desktop-portal
       - xdg-desktop-portal-gnome
+      - wl-clipboard
 
 - name: install gnome extras from aur
   aur:
