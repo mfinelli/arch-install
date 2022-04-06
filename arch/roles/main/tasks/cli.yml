@@ -77,6 +77,7 @@
       - borg
       - rclone
       - pass
+      - pass-otp
 
 - name: install tailscale
   when: mtype == 'personal' or mtype == 'media'
