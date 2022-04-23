@@ -1,0 +1,12 @@
+---
+# https://support.1password.com/install-linux/
+
+- name: add 1password signing key
+  ansible.builtin.apt_key: url=https://downloads.1password.com/linux/keys/1password.asc
+
+- name: add 1password repository
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://downloads.1password.com/linux/debian/amd64 stable main
+
+- name: install 1password
+  ansible.builtin.apt: name=1password update_cache=yes
