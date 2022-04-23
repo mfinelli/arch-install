@@ -6,7 +6,7 @@
     url: https://downloads.1password.com/linux/keys/1password.asc
     dest: /usr/share/keyrings/1password-archive-keyring.asc
     owner: root
-    mode: root
+    group: root
     mode: 0644
 
 - name: dearmor 1password signing key
