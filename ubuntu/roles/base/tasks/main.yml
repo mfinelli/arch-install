@@ -13,6 +13,14 @@
 - name: install apt https transport
   ansible.builtin.apt: name=apt-transport-https
 
+- name: install new sources list
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list
+    owner: root
+    group: root
+    mode: 0664
+    src: sources.list.j2
+
 - name: install main packages
   ansible.builtin.apt:
     name:
@@ -37,6 +45,7 @@
       - vim
       - whois
       - zoxide
+    update_cache: yes
 
 - name: install yubikey dependencies
   ansible.builtin.apt:
