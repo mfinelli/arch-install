@@ -4,6 +4,7 @@
 
   roles:
     - role: base
+    - role: chrome
     - role: gaming
       when: mtype == 'gaming'
     - role: media

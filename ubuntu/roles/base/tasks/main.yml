@@ -10,6 +10,9 @@
       - git
     update_cache: yes
 
+- name: install apt https transport
+  ansible.builtin.apt: name=apt-transport-https
+
 - name: install main packages
   ansible.builtin.apt:
     name:
