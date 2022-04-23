@@ -13,6 +13,6 @@ else
 fi
 
 sudo echo -n
-ansible-playbook --extra-vars mtype=$mtype ubuntu.yml
+ansible-playbook --inventory ../localhost --extra-vars mtype=$mtype ubuntu.yml
 
 exit 0
