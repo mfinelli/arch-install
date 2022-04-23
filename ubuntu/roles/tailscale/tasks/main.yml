@@ -1,0 +1,14 @@
+---
+# https://tailscale.com/download/linux/ubuntu-2204
+
+- name: add tailscale signing key
+  ansible.builtin.apt_key:
+    url: https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release }}.gpg
+
+- name: add tailscale repository
+  ansible.builtin.apt_repository:
+    repo: deb https://pkgs.tailscale.com/stable/ubuntu {{ ansible_distribution_release }} main
+    filename: tailscale
+
+- name: install tailscale
+  ansible.builtin.apt: name=tailscale update_cache=yes
