@@ -54,3 +54,11 @@
       - pass
       - pass-extension-otp
       - rclone
+
+- name: install gdm dconf greeter
+  ansible.builtin.copy:
+    dest: /etc/gdm3/greeter.dconf-defaults
+    owner: root
+    group: root
+    mode: 0644
+    src: greeter.dconf-defaults

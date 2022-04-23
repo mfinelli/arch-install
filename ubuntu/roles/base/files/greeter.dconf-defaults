@@ -1,3 +1,5 @@
+# Ansible managed
+
 # These are the options for the greeter session that can be set
 # through GSettings. Any GSettings setting that is used by the
 # greeter session can be set here.
