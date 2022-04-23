@@ -1,6 +1,6 @@
 # ubuntu
 
-Automation for temporary ubuntu installation.
+Automation for ubuntu gaming and/or media installation.
 
 ```shell
 sudo apt install curl
@@ -8,10 +8,6 @@ sudo apt install curl
 
 ```shell
 bash -c "$(curl -fsSL https://mfgo.link/ubuntu)"
-```
-
-```shell
-chsh -s /bin/zsh
 ```
 
 # TODO:

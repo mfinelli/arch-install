@@ -15,55 +15,43 @@
     - name: install other dependencies
       ansible.builtin.apt:
         name:
+          - awscli
+          - borgbackup
+          - cksfv
+          - deluge
           - docker-compose
           - docker.io
           - fd-find
           - font-manager
+          - fonts-firacode
+          - fonts-powerline
           - fzf
-          - golang
+          - gnome-tweaks
           - htop
           - jq
           - libarchive-tools
+          - moreutils
+          - p7zip-full
+          - p7zip-rar
+          - pass
+          - pass-extension-otp
           - pcscd
+          - pv
           - pwgen
+          - rclone
           - ripgrep
-          - rust-all
+          - sabnzbdplus
           - scdaemon
-          - shellcheck
           - silversearcher-ag
+          - thefuck
           - tmux
           - universal-ctags
           - urlwatch
           - vim
+          - vlc
           - whois
-          - zsh
-          - zsh-autosuggestions
-          - zsh-syntax-highlighting
+          - youtube-dl
+          - zoxide
 
-    - name: install other software
-      ansible.builtin.apt:
-        name:
-          - gnome-tweaks
-          - git-crypt
-          - default-jre-headless
-          - kubectx
-
-    - name: install packaging dependencies
-      ansible.builtin.apt:
-        name:
-          - apt-file
-          - bzr-builddeb
-          - brz-debian
-          - dh-make
-          - pbuilder
-          - ubuntu-dev-tools
-
-    - name: install keymapper dependencies
-      ansible.builtin.apt:
-        name:
-          - cmake
-          - libudev-dev
-          - libusb-1.0-0-dev
-          - libx11-dev
 
 # vim: ft=yaml.ansible
