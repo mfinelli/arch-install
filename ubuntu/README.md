@@ -1,6 +1,12 @@
 # ubuntu
 
-Automation for ubuntu gaming and/or media installation.
+Automation for ubuntu gaming and/or media installation based on a "minimal"
+ubuntu desktop installation (without enabling third party software during
+install).
+
+```shell
+sudo apt update && sudo apt upgrade
+```
 
 ```shell
 sudo apt install curl
