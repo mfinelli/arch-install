@@ -12,6 +12,7 @@ else
   exit 1
 fi
 
+sudo echo -n
 ansible-playbook --extra-vars mtype=$mtype ubuntu.yml
 
 exit 0
