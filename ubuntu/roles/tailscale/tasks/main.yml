@@ -22,3 +22,6 @@
 
 - name: install tailscale
   ansible.builtin.apt: name=tailscale update_cache=yes
+
+- name: disable tailscale from startup
+  ansible.builtin.systemd: name=tailscaled.service enabled=no

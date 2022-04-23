@@ -65,6 +65,9 @@
       - zoxide
     update_cache: yes
 
+- name: disable docker from startup
+  ansible.builtin.systemd: name=docker.service enabled=no
+
 - name: install yubikey dependencies
   ansible.builtin.apt:
     name:
