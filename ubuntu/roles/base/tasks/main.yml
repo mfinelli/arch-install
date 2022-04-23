@@ -2,6 +2,24 @@
 # - name: add supermario ppa
 #   ansible.builtin.apt_repository: repo=ppa:mfinelli/supermario
 
+- name: ensure resolved.conf.d directory
+  ansible.builtin.file:
+    path: /etc/systemd/resolved.conf.d
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: copy custom systemd-resolved configuration
+  ansible.builtin.copy:
+    src: resolved.conf
+    dest: /etc/systemd/resolved.conf.d/dns.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart systemd-resolved
+
 - name: ensure manual dependencies
   ansible.builtin.apt:
     name:
