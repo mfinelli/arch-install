@@ -1,0 +1,9 @@
+---
+- name: install media packages
+  ansible.builtin.apt:
+    name:
+      - cksfv
+      - deluge
+      - sabnzbdplus
+      - vlc
+      - youtube-dl

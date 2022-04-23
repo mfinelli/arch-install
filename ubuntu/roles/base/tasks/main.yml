@@ -1,0 +1,55 @@
+---
+- name: add supermario ppa
+  ansible.builtin.apt_repository: repo=ppa:mfinelli/supermario
+
+- name: ensure manual dependencies
+  ansible.builtin.apt:
+    name:
+      - ansible
+      - curl
+      - git
+    update_cache: yes
+
+- name: install main packages
+  ansible.builtin.apt:
+    name:
+      - docker-compose
+      - docker.io
+      - fd-find
+      - font-manager
+      - fonts-firacode
+      - fonts-powerline
+      - fzf
+      - gnome-tweaks
+      - htop
+      - jq
+      - libarchive-tools
+      - moreutils
+      - pv
+      - pwgen
+      - ripgrep
+      - silversearcher-ag
+      - thefuck
+      - tmux
+      - universal-ctags
+      - urlwatch
+      - vim
+      - whois
+      - zoxide
+
+- name: install yubikey dependencies
+  ansible.builtin.apt:
+    name:
+      - pcscd
+      - scdaemon
+
+- name: install backup programs
+  ansible.builtin.apt:
+    name:
+      - awscli
+      - borgbackup
+      - p7zip-full
+      - p7zip-rar
+      - pass
+      - pass-extension-otp
+      - rclone

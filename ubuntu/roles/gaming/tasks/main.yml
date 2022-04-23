@@ -1,0 +1,5 @@
+---
+- name: install gaming packages
+  ansible.builtin.apt:
+    name:
+      - steam-installer

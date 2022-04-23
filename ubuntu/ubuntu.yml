@@ -1,57 +1,10 @@
 ---
 - hosts: localhost
-  tasks:
-    - name: add supermario ppa
-      ansible.builtin.apt_repository: repo=ppa:mfinelli/supermario
+  become: yes
 
-    - name: ensure manual dependencies
-      ansible.builtin.apt:
-        name:
-          - ansible
-          - curl
-          - git
-        update_cache: yes
+  roles:
+    - role: base
+    - role: gaming
+      when: mtype == 'gaming'
+    - role: media
 
-    - name: install other dependencies
-      ansible.builtin.apt:
-        name:
-          - awscli
-          - borgbackup
-          - cksfv
-          - deluge
-          - docker-compose
-          - docker.io
-          - fd-find
-          - font-manager
-          - fonts-firacode
-          - fonts-powerline
-          - fzf
-          - gnome-tweaks
-          - htop
-          - jq
-          - libarchive-tools
-          - moreutils
-          - p7zip-full
-          - p7zip-rar
-          - pass
-          - pass-extension-otp
-          - pcscd
-          - pv
-          - pwgen
-          - rclone
-          - ripgrep
-          - sabnzbdplus
-          - scdaemon
-          - silversearcher-ag
-          - thefuck
-          - tmux
-          - universal-ctags
-          - urlwatch
-          - vim
-          - vlc
-          - whois
-          - youtube-dl
-          - zoxide
-
-
-# vim: ft=yaml.ansible
