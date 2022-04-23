@@ -1,8 +1,8 @@
-# These are the options for the greeter session that can be set 
-# through GSettings. Any GSettings setting that is used by the 
+# These are the options for the greeter session that can be set
+# through GSettings. Any GSettings setting that is used by the
 # greeter session can be set here.
 
-# Note that you must configure the path used by dconf to store the 
+# Note that you must configure the path used by dconf to store the
 # configuration, not the GSettings path.
 
 
@@ -26,7 +26,7 @@
 #logo='/usr/share/images/vendor-logos/logo-text-version-64.png'
 
 # - Disable user list
-# disable-user-list=true
+disable-user-list=true
 # - Disable restart buttons
 # disable-restart-buttons=true
 # - Show a login welcome message
