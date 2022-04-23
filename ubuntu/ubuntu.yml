@@ -9,3 +9,8 @@
       when: mtype == 'gaming'
     - role: media
 
+  tasks:
+    # mullvad doesn't seem to have an apt repository right now, so I'm keeping
+    # this here to make it easier to update
+    - name: install mullvad vpn
+      ansible.builtin.apt: deb=https://mullvad.net/media/app/MullvadVPN-2022.1_amd64.deb
