@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
-# sudo add-apt-repository ppa:mfinelli/supermario
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y ansible git
+sudo apt install -y apt-transport-https ansible git
+sudo add-apt-repository ppa:mfinelli/supermario
 
 wdir="$(mktemp -d)"
 sdir="$(pwd)"

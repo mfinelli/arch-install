@@ -1,7 +1,4 @@
 ---
-# - name: add supermario ppa
-#   ansible.builtin.apt_repository: repo=ppa:mfinelli/supermario
-
 - name: ensure resolved.conf.d directory
   ansible.builtin.file:
     path: /etc/systemd/resolved.conf.d
@@ -30,6 +27,9 @@
 
 - name: install apt https transport
   ansible.builtin.apt: name=apt-transport-https
+
+- name: add supermario ppa
+  ansible.builtin.apt_repository: repo=ppa:mfinelli/supermario
 
 - name: install new sources list
   ansible.builtin.template:
@@ -86,6 +86,12 @@
       - pass
       - pass-extension-otp
       - rclone
+
+- name: install packages from my ppa
+  ansible.builtin.apt:
+    name:
+      - fonts-ubuntu-mono-nerd-font
+    update_cache: yes
 
 - name: install gdm dconf greeter
   ansible.builtin.copy:

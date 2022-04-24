@@ -16,7 +16,3 @@ sudo apt install curl
 bash -c "$(curl -fsSL https://mfgo.link/ubuntu)"
 ```
 
-# TODO:
-
-- switch PPA to https
-- switch regular sources to https
