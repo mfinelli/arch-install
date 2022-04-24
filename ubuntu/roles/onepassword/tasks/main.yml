@@ -1,6 +1,4 @@
 ---
-# https://support.1password.com/install-linux/
-
 - name: download 1password signing key
   ansible.builtin.get_url:
     url: https://downloads.1password.com/linux/keys/1password.asc

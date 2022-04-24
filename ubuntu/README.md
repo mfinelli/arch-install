@@ -16,3 +16,6 @@ sudo apt install curl
 bash -c "$(curl -fsSL https://mfgo.link/ubuntu)"
 ```
 
+**N.B.** there is not a dedicated role for [Mullvad](https://mullvad.net) at
+this time because they do not provide an apt repository, just single `.deb`
+packages, so updates need to be performed manually in `ubuntu.yml` directly.

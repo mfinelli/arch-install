@@ -1,6 +1,4 @@
 ---
-# https://tailscale.com/download/linux/ubuntu-2204
-
 - name: download tailscale signing key
   ansible.builtin.get_url:
     url: https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release }}.noarmor.gpg
