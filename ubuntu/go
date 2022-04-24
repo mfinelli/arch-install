@@ -1,8 +1,23 @@
 #!/bin/bash -e
 
-sudo apt update && sudo apt upgrade -y
-sudo apt install -y apt-transport-https ansible git
+# step 1: update the system and enable https apt transport
+# step 2: manually add our ppa repository
+#   step 2a: use add-apt-repository so that the repository key gets imported
+#            but we'll need to remove the sources list and write it out with
+#            a file later because the URL format has changed in ubuntu 22.04
+#            and ansible doesn't (yet) recognize them as the same
+# step 3: install dependencies for running ansible
+# step 4: remove the ppa-added sources list and copy the file that ansible
+#         will write out shortly
+# step 4: run ansible!
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y apt-transport-https
+
 sudo add-apt-repository ppa:mfinelli/supermario
+sudo apt update
+sudo apt install -y ansible git
 
 wdir="$(mktemp -d)"
 sdir="$(pwd)"
@@ -10,6 +25,12 @@ cd "$wdir"
 
 git clone https://github.com/mfinelli/arch-install.git
 cd arch-install/ubuntu
+
+sudo rm /etc/apt/sources.list.d/mfinelli-ubuntu-supermario-*.list
+codename="$(grep UBUNTU_CODENAME /etc/os-release | awk -F= '{print $2}')"
+sed "s/{{ ansible_distribution_release }}/${codename}/" \
+  roles/base/templates/supermario.list.j2 \
+  | sudo tee /etc/apt/sources.list.d/supermario.list
 
 ./run.bash
 
