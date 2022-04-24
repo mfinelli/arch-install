@@ -29,8 +29,8 @@ cd arch-install/ubuntu
 sudo rm /etc/apt/sources.list.d/mfinelli-ubuntu-supermario-*.list
 codename="$(grep UBUNTU_CODENAME /etc/os-release | awk -F= '{print $2}')"
 sed "s/{{ ansible_distribution_release }}/${codename}/" \
-  roles/base/templates/supermario.list.j2 \
-  | sudo tee /etc/apt/sources.list.d/supermario.list
+  roles/base/templates/supermario.list.j2 |
+  sudo tee /etc/apt/sources.list.d/supermario.list
 
 ./run.bash
 
