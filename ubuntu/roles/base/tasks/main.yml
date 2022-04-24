@@ -42,12 +42,14 @@
 - name: install main packages
   ansible.builtin.apt:
     name:
+      - caffeine
       - docker-compose
       - docker.io
       - fd-find
       - fonts-firacode
       - fonts-powerline
       - fzf
+      - gnome-shell-extensions
       - htop
       - jq
       - libarchive-tools
