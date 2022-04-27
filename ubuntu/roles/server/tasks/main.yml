@@ -3,3 +3,24 @@
   ansible.builtin.apt:
     name:
       - screen
+
+- name: ensure mario user
+  ansible.builtin.user:
+    name: mario
+
+- name: add cloud dev ssh key
+  ansible.posix.authorized_key:
+    user: mario
+    key: |
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII4kUwwZEPUHbx17N3VOVXPmQoRF9u+gkWj2nnvtYt2h mario
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOy1DGNkaHw4UiGX8H7L4ruWjWBYFSkOEvB1jqAt5rdz mario@iphone
+    exclusive: yes
+
+- name: ensure mario sudo rule
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/mario
+    owner: root
+    group: root
+    mode: 0440
+    src: mario.sudoer
+    validate: visudo -cf %s
