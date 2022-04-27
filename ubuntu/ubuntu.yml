@@ -6,14 +6,22 @@
   roles:
     - role: base
     - role: chrome
+      when: mtype != 'server'
+    - role: desktop
+      when: mtype != 'server'
     - role: gaming
       when: mtype == 'gaming'
     - role: media
+      when: mtype != 'server'
     - role: onepassword
+      when: mtype != 'server'
+    - role: server
+      when: mtype == 'server'
     - role: tailscale
 
   tasks:
     # mullvad doesn't seem to have an apt repository right now, so I'm keeping
     # this here to make it easier to update
     - name: install mullvad vpn
+      when: mtype != 'server'
       ansible.builtin.apt: deb=https://mullvad.net/media/app/MullvadVPN-2022.1_amd64.deb

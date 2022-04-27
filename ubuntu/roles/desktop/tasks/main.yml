@@ -1,0 +1,47 @@
+---
+- name: install desktop packages
+  ansible.builtin.apt:
+    name:
+      - caffeine
+      - docker-compose
+      - docker.io
+      - fonts-firacode
+      - fonts-powerline
+      - gnome-shell-extensions
+      - tmux
+      - zoxide
+    update_cache: yes
+
+- name: disable docker from startup
+  ansible.builtin.systemd: name=docker.service enabled=no
+
+- name: install yubikey dependencies
+  ansible.builtin.apt:
+    name:
+      - pcscd
+      - scdaemon
+
+- name: install backup programs
+  ansible.builtin.apt:
+    name:
+      - awscli
+      - borgbackup
+      - p7zip-full
+      - p7zip-rar
+      - pass
+      - pass-extension-otp
+      - rclone
+
+- name: install packages from my ppa
+  ansible.builtin.apt:
+    name:
+      - fonts-ubuntu-mono-nerd-font
+    update_cache: yes
+
+- name: install gdm dconf greeter
+  ansible.builtin.copy:
+    dest: /etc/gdm3/greeter.dconf-defaults
+    owner: root
+    group: root
+    mode: 0644
+    src: greeter.dconf-defaults

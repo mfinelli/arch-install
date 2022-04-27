@@ -7,6 +7,8 @@ if [[ $hn == zen ]]; then
   mtype=media
 elif [[ $hn == stig ]]; then
   mtype=gaming
+elif [[ $hn == odev ]]; then
+  mtype=server
 else
   echo >&2 "error: unkown machine type"
   exit 1

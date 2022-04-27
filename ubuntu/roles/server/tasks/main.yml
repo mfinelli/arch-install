@@ -1,0 +1,5 @@
+---
+- name: install server packages
+  ansible.builtin.apt:
+    name:
+      - screen
