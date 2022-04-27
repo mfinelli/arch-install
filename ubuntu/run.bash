@@ -14,6 +14,8 @@ else
   exit 1
 fi
 
+ansible-galaxy install -r requirements.yml
+
 sudo echo -n
 ansible-playbook --inventory ../localhost --extra-vars mtype=$mtype ubuntu.yml
 
