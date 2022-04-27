@@ -54,6 +54,7 @@
   pacman:
     name:
       - moreutils
+      - bat-extras
       - difftastic
       - dos2unix
       - github-cli
