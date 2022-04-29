@@ -57,6 +57,7 @@
       - jq
       - libarchive-tools
       - moreutils
+      - neofetch
       - pv
       - pwgen
       - ripgrep

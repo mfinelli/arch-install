@@ -50,6 +50,7 @@
       - htop
       - libarchive-tools
       - lm-sensors
+      - neofetch
       - ripgrep
       - screen
       - vim

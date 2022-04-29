@@ -36,6 +36,7 @@
           - htop
           - jq
           - libarchive-tools
+          - neofetch
           - nodejs
           - npm
           - pcscd

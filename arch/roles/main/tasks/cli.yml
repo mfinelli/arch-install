@@ -38,6 +38,7 @@
       - fd
       - fzf
       - go-yq
+      - neofetch
       - thefuck
       - tldr
       - bind
