@@ -44,3 +44,9 @@ will be newer and more up-to-date than what is provided by macOS.
 ```shell
 chsh -s "$(brew --prefix)/bin/zsh"
 ```
+
+## manual installs
+
+Because homebrew cask does a full uninstall and reinstall during upgrades it's
+inconvenient to install steam or creative cloud using brew and so those need
+to be installed and updated manually.
