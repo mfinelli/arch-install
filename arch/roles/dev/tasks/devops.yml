@@ -9,12 +9,16 @@
       - sops
       - newrelic-cli
 
+- name: install kubectl
+  when: mtype == 'personal' or mtype == 'work'
+  become: true
+  pacman: name=kubectl
+
 - name: install kubernetes tools
   when: mtype == 'personal'
   become: true
   pacman:
     name:
-      - kubectl
       - helm
       - helmfile
       - pluto

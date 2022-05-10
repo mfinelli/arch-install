@@ -13,6 +13,7 @@
       - direnv
       - git-crypt
       - kustomize
+      - lens
       - asdf-vm
       - python-pip # dependency of asdf-pyapp
 
