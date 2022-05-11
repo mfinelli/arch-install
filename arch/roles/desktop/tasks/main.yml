@@ -5,8 +5,11 @@
     name:
       - alsa-utils
       - alsa-plugins
-      - pulseaudio
-      - pulseaudio-alsa
+      - pipewire
+      - pipewire-docs
+      - pipewire-alsa
+      - pipewire-pulse
+      - wireplumber
       - pavucontrol
 
 - name: enable network manager
@@ -28,7 +31,6 @@
       - bluez
       - bluez-utils
       - blueman
-      - pulseaudio-bluetooth
 
 - name: enable bluetooth
   become: true
