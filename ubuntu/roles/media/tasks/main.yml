@@ -4,6 +4,7 @@
     name:
       - cksfv
       - deluge
+      - gallery-dl
       - sabnzbdplus
       - torbrowser-launcher
       - vlc

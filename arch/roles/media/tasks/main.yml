@@ -50,6 +50,10 @@
       - youtube-dl
       - yt-dlp
 
+- name: install gallery-dl
+  when: mtype == 'personal' or mtype == 'media'
+  aur: name=gallery-dl
+
 - name: install other media dependencies
   when: mtype == 'personal' or mtype == 'media'
   become: true
