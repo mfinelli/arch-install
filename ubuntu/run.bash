@@ -14,6 +14,11 @@ else
   exit 1
 fi
 
+# on first run we probably have snap installed
+if command -v snap > /dev/null 2>&1; then
+  ./snapd.bash
+fi
+
 ansible-galaxy install -r requirements.yml
 
 sudo echo -n
