@@ -1,15 +1,8 @@
 ---
-- name: download tailscale signing key
-  ansible.builtin.get_url:
-    url: https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release }}.noarmor.gpg
-    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
-    owner: root
-    group: root
-    mode: 0644
-
 - name: add tailscale signing key
   ansible.builtin.apt_key:
     url: https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release }}.gpg
+    keyring: /usr/share/keyrings/tailscale-archive-keyring.gpg
 
 - name: add tailscale repository
   ansible.builtin.apt_repository:
