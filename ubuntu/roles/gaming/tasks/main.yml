@@ -53,7 +53,8 @@
 - name: install wine
   ansible.builtin.apt:
     name:
-      - winehq-stable
+      # - winehq-stable
+      - winehq-staging
       - fonts-wine
     install_recommends: yes
 
