@@ -17,7 +17,7 @@
   ansible.builtin.apt_repository:
     repo: >
       deb [arch=amd64,i386]
-      http://repo.steampowered.com/steam/ stable steam
+      https://repo.steampowered.com/steam/ stable steam
     filename: steam
 
 - name: add steam source repository
