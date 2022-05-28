@@ -36,3 +36,27 @@
       - libgl1-mesa-glx:amd64
       - libgl1-mesa-glx:i386
       - steam-launcher
+
+- name: install wine
+  ansible.builtin.apt:
+    name:
+      - wine
+      - fonts-wine
+      - wine-binfmt
+      - winetricks
+
+- name: add lutris ppa signing key
+  ansible.builtin.apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 82D96E430A1F1C0F0502747E37B90EDD4E3EFAE4
+    keyring: /etc/apt/trusted.gpg.d/lutris-team-ubuntu-lutris.gpg
+
+- name: add lutris ppa
+  ansible.builtin.apt_repository:
+    repo: >
+      deb https://ppa.launchpadcontent.net/lutris-team/lutris/ubuntu
+      {{ ansible_distribution_release }} main
+    filename: lutris
+
+- name: install lutris
+  ansible.builtin.apt: name=lutris update_cache=yes
