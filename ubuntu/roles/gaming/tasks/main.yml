@@ -1,5 +1,38 @@
 ---
-- name: install gaming packages
+- name: add steam repo key
+  ansible.builtin.apt_key:
+    url: https://repo.steampowered.com/steam/archive/stable/steam.gpg
+
+- name: check if i386 is enabled
+  ansible.builtin.shell: dpkg --print-foreign-architectures | grep i386
+  register: i386_enabled
+  changed_when: i386_enabled.rc == 1
+  failed_when: i386_enabled.rc > 1
+
+- name: enable i386 architecture
+  ansible.builtin.command: dpkg --add-architecture i386
+  when: i386_enabled.rc == 1
+
+- name: add steam repository
+  ansible.builtin.apt_repository:
+    repo: >
+      deb [arch=amd64,i386]
+      http://repo.steampowered.com/steam/ stable steam
+    filename: steam
+
+- name: add steam source repository
+  ansible.builtin.apt_repository:
+    repo: >
+      deb-src [arch=amd64,i386]
+      http://repo.steampowered.com/steam/ stable steam
+    filename: steam
+    update_cache: yes
+
+- name: install steam
   ansible.builtin.apt:
     name:
-      - steam-installer
+      - libgl1-mesa-dri:amd64
+      - libgl1-mesa-dri:i386
+      - libgl1-mesa-glx:amd64
+      - libgl1-mesa-glx:i386
+      - steam-launcher
