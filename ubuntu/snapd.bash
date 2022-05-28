@@ -17,7 +17,7 @@ if ! command -v snap > /dev/null 2>&1; then
 fi
 
 # step 1: remove other snaps
-sudo snap remove $(snap list | tail -n +2 | awk '{print $1}'
+sudo snap remove $(snap list | tail -n +2 | awk '{print $1}' |
   grep -vE '^bare|core|snapd' | tr '\n' ' ')
 
 # step 2: remove core snaps
