@@ -27,7 +27,7 @@ sudo snap remove bare
 sudo snap remove snapd
 
 # step 3: uninstall snapd
-sudo apt autoremove --purge snapd
+sudo apt autoremove -y --purge snapd
 
 # step 4: additional cleanup
 rm -rf ~/snap
