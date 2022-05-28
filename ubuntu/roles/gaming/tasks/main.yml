@@ -1,8 +1,4 @@
 ---
-- name: add steam repo key
-  ansible.builtin.apt_key:
-    url: https://repo.steampowered.com/steam/archive/stable/steam.gpg
-
 - name: check if i386 is enabled
   ansible.builtin.shell: dpkg --print-foreign-architectures | grep i386
   register: i386_enabled
@@ -12,6 +8,10 @@
 - name: enable i386 architecture
   ansible.builtin.command: dpkg --add-architecture i386
   when: i386_enabled.rc == 1
+
+- name: add steam repo key
+  ansible.builtin.apt_key:
+    url: https://repo.steampowered.com/steam/archive/stable/steam.gpg
 
 - name: add steam repository
   ansible.builtin.apt_repository:
@@ -37,13 +37,25 @@
       - libgl1-mesa-glx:i386
       - steam-launcher
 
+- name: add winehq apt key
+  ansible.builtin.apt_key:
+    url: https://dl.winehq.org/wine-builds/winehq.key
+    keyring: /usr/share/keyrings/winehq-archive.gpg
+
+- name: add winehq repository
+  ansible.builtin.apt_repository:
+    repo: >
+      deb [arch=amd64,i386 signed-by=/usr/share/keyrings/winehq-archive.gpg]
+      https://dl.winehq.org/wine-builds/ubuntu {{ansible_distribution_release }} main
+    filename: winehq
+    update_cache: yes
+
 - name: install wine
   ansible.builtin.apt:
     name:
-      - wine
+      - winehq-stable
       - fonts-wine
-      - wine-binfmt
-      - winetricks
+    install_recommends: yes
 
 - name: add lutris ppa signing key
   ansible.builtin.apt_key:
