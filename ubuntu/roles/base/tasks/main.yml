@@ -67,3 +67,4 @@
       - urlwatch
       - vim
       - whois
+    update_cache: yes

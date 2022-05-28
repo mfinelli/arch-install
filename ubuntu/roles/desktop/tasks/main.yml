@@ -1,4 +1,28 @@
 ---
+- name: add the mozillateam ppa signing key
+  ansible.builtin.apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 0AB215679C571D1C8325275B9BDB3D89CE49EC21
+
+- name: add the mozillateam ppa
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/mozillateam.list
+    owner: root
+    group: root
+    mode: 0644
+    src: mozillateam.list.j2
+
+- name: add firefox no-snap pin
+  ansible.builtin.copy:
+    dest: /etc/apt/preferences.d/firefox-no-snap
+    owner: root
+    group: root
+    mode: 0644
+    src: firefox-no-snap
+
+- name: install firefox from mozillateam ppa
+  ansible.builtin.apt: name=firefox update_cache=yes
+
 - name: install desktop packages
   ansible.builtin.apt:
     name:
@@ -10,7 +34,6 @@
       - gnome-shell-extensions
       - tmux
       - zoxide
-    update_cache: yes
 
 - name: disable docker from startup
   ansible.builtin.systemd: name=docker.service enabled=no
