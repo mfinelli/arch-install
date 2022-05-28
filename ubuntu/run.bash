@@ -5,7 +5,7 @@ set -e
 hn="$(cat /etc/hostname)"
 if [[ $hn == zen ]]; then
   mtype=media
-elif [[ $hn == stig ]]; then
+elif [[ $hn == bowser || $hn == wario ]]; then
   mtype=gaming
 elif [[ $hn == odev || $hn == ubuilder ]]; then
   mtype=server
