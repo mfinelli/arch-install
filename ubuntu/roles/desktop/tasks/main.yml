@@ -3,6 +3,7 @@
   ansible.builtin.apt_key:
     keyserver: keyserver.ubuntu.com
     id: 0AB215679C571D1C8325275B9BDB3D89CE49EC21
+    keyring: /etc/apt/trusted.gpg.d/mozillateam-ubuntu-ppa.gpg
 
 - name: add the mozillateam ppa
   ansible.builtin.template:
