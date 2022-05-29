@@ -2,6 +2,9 @@
 - name: use systemd for ntp
   become: true
   ansible.builtin.command: timedatectl set-ntp true
+  register: timedatectl_setntp
+  changed_when: timedatectl_setntp.rc == 0
+  failed_when: timedatectl_setntp.rc != 0
 
 - name: set timezone
   become: true
@@ -29,7 +32,7 @@
   register: locales_list
 
 - name: locale-gen
-  when: locales_list.changed
+  when: locales_list.changed # noqa no-handler
   become: true
   ansible.builtin.command: locale-gen
 
@@ -106,7 +109,7 @@
   register: mkinitcpio_config
 
 - name: mkinitcpio
-  when: mkinitcpio_config.changed
+  when: mkinitcpio_config.changed # noqa no-handler
   become: true
   ansible.builtin.command: mkinitcpio -p linux
 

@@ -26,7 +26,7 @@
   register: supermario_key
 
 - name: run pacman -Syyu because the repositories changed
-  when: supermario_key.changed or pacman_config.changed
+  when: supermario_key.changed or pacman_config.changed # noqa no-handler
   become: true
   community.general.pacman: update_cache=true upgrade=true force=true
 
@@ -67,6 +67,6 @@
   ansible.builtin.systemd: name=reflector.service state=started
 
 - name: run pacman -Syyu because the mirrorlist changed
-  when: reflector_config.changed
+  when: reflector_config.changed # noqa no-handler
   become: true
   community.general.pacman: update_cache=true upgrade=true force=true
