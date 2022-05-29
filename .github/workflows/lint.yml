@@ -12,6 +12,7 @@ jobs:
         with:
           path: ~/.ansible
           key: ansible-${{ hashFiles('requirements.yml') }}
+      - run: pip3 install ansible ansible-lint
       - run: ansible-galaxy install -r requirements.yml
       - run: |
           mkdir -p ~/.ansible/plugins/modules
@@ -39,9 +40,7 @@ jobs:
           shfmt -s -i 2 -ci -sr -d ubuntu/go
           find . -name '*.bash' | xargs shfmt -s -i 2 -ci -sr -d
           find . -name '*.sh' | xargs shfmt -s -i 2 -ci -sr -d
-      - uses: ansible-community/ansible-lint-action@v6
-        with:
-          path: arch/arch.yml
+      - run: ansible-lint arch/arch.yml
       - uses: ansible-community/ansible-lint-action@v6
         with:
           path: debian/debian.yml
