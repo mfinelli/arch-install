@@ -12,7 +12,7 @@ else
   fde=false
 fi
 
-ansible-galaxy install -r requirements.yml
+ansible-galaxy install -r ../requirements.yml
 ansible-playbook --extra-vars fde=$fde rpi.yml
 ansible-playbook user.yml
 

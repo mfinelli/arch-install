@@ -82,7 +82,7 @@ fi
 # prompt for sudo password right away
 sudo echo -n
 
-ansible-galaxy install -r requirements.yml
+ansible-galaxy install -r ../requirements.yml
 
 if [[ $1 == setup ]]; then
   mmode=setup

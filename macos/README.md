@@ -32,7 +32,7 @@ We also have an ansible component for things that can't be managed with
 homebrew. You can use normal ansible commands:
 
 ```shell
-ansible-galaxy install -r requirements.yml
+ansible-galaxy install -r ../requirements.yml
 ansible-playbook personal.yml
 ```
 
