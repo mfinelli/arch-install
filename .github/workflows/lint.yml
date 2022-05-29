@@ -41,21 +41,9 @@ jobs:
           find . -name '*.bash' | xargs shfmt -s -i 2 -ci -sr -d
           find . -name '*.sh' | xargs shfmt -s -i 2 -ci -sr -d
       - run: ansible-lint arch/arch.yml
-      - uses: ansible-community/ansible-lint-action@v6
-        with:
-          path: debian/debian.yml
-      - uses: ansible-community/ansible-lint-action@v6
-        with:
-          path: macos/personal.yml
-      - uses: ansible-community/ansible-lint-action@v6
-        with:
-          path: macos/work.yml
-      - uses: ansible-community/ansible-lint-action@v6
-        with:
-          path: rpi/rpi.yml
-      - uses: ansible-community/ansible-lint-action@v6
-        with:
-          path: rpi/user.yml
-      - uses: ansible-community/ansible-lint-action@v6
-        with:
-          path: ubuntu/ubuntu.yml
+      - run: ansible-lint debian/debian.yml
+      - run: ansible-lint macos/personal.yml
+      - run: ansible-lint macos/work.yml
+      - run: ansible-lint rpi/rpi.yml
+      - run: ansible-lint rpi/user.yml
+      - run: ansible-lint ubuntu/ubuntu.yml
