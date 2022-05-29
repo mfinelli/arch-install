@@ -1,14 +1,14 @@
 ---
 - name: install gnome
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - gnome
       - gnome-extra
 
 - name: install gnome extras
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - seahorse
       - network-manager-applet
@@ -31,7 +31,7 @@
 
 - name: install systemd policy file for systemd gnome extension
   become: true
-  copy:
+  ansible.builtin.copy:
     dest: /etc/polkit-1/rules.d/10-service_status.rules
     owner: root
     group: root
@@ -46,4 +46,4 @@
 
 - name: enable gdm
   become: true
-  systemd: name=gdm.service enabled=true
+  ansible.builtin.systemd: name=gdm.service enabled=true

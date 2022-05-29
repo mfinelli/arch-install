@@ -2,7 +2,7 @@
 - name: install printing packages
   when: mtype != 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - ghostscript
       - cups
@@ -27,7 +27,7 @@
 - name: install network printing packages
   when: mtype != 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - avahi
       - samba
@@ -35,7 +35,7 @@
 - name: enable printing services
   when: mtype != 'media'
   become: true
-  systemd: name={{ item }} enabled=true
+  ansible.builtin.systemd: name={{ item }} enabled=true
   loop:
     - cups.service
     - avahi-daemon.service

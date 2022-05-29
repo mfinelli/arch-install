@@ -1,7 +1,7 @@
 ---
 - name: install makepkg configuration
   become: true
-  template:
+  ansible.builtin.template:
     src: makepkg.conf.j2
     dest: /etc/makepkg.conf
     owner: root
@@ -10,7 +10,7 @@
 
 - name: install pacman configuration
   become: true
-  template:
+  ansible.builtin.template:
     src: pacman.conf.j2
     dest: /etc/pacman.conf
     owner: root
@@ -28,11 +28,11 @@
 - name: run pacman -Syyu because the repositories changed
   when: supermario_key.changed or pacman_config.changed
   become: true
-  pacman: update_cache=true upgrade=true force=true
+  community.general.pacman: update_cache=true upgrade=true force=true
 
 - name: install extra pacman-related packages
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - expac
       - asp
@@ -45,11 +45,11 @@
 
 - name: install reflector
   become: true
-  pacman: name=reflector
+  community.general.pacman: name=reflector
 
 - name: install reflector config
   become: true
-  copy:
+  ansible.builtin.copy:
     src: reflector.conf
     dest: /etc/xdg/reflector/reflector.conf
     owner: root
@@ -59,14 +59,14 @@
 
 - name: enable reflector timer
   become: true
-  systemd: name=reflector.timer enabled=true
+  ansible.builtin.systemd: name=reflector.timer enabled=true
 
 - name: run reflector on-demand
   when: mmode != 'setup' and reflector_config.changed
   become: true
-  systemd: name=reflector.service state=started
+  ansible.builtin.systemd: name=reflector.service state=started
 
 - name: run pacman -Syyu because the mirrorlist changed
   when: reflector_config.changed
   become: true
-  pacman: update_cache=true upgrade=true force=true
+  community.general.pacman: update_cache=true upgrade=true force=true

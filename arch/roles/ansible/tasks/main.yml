@@ -1,7 +1,7 @@
 ---
 - name: install ansible and dependencies
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - ansible
       - git
@@ -9,12 +9,12 @@
 
 - name: install custom fact dependencies are installed
   become: true
-  pacman:
+  community.general.pacman:
     name: python-py-cpuinfo
 
 - name: ensure custom facts directory
   become: true
-  file:
+  ansible.builtin.file:
     path: /etc/ansible/facts.d
     owner: root
     group: root
@@ -23,7 +23,7 @@
 
 - name: copy custom cpuinfo fact
   become: true
-  copy:
+  ansible.builtin.copy:
     dest: /etc/ansible/facts.d/cpuinfo.fact
     owner: root
     group: root

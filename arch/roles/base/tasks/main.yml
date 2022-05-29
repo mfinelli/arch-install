@@ -1,7 +1,7 @@
 ---
 - name: use systemd for ntp
   become: true
-  command: timedatectl set-ntp true
+  ansible.builtin.command: timedatectl set-ntp true
 
 - name: set timezone
   become: true
@@ -9,7 +9,7 @@
 
 - name: ensure baseline archlinux system
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - base
       - base-devel
@@ -20,7 +20,7 @@
 
 - name: install locale.gen
   become: true
-  copy:
+  ansible.builtin.copy:
     dest: /etc/locale.gen
     owner: root
     group: root
@@ -31,11 +31,11 @@
 - name: locale-gen
   when: locales_list.changed
   become: true
-  command: locale-gen
+  ansible.builtin.command: locale-gen
 
 - name: install locale.conf
   become: true
-  template:
+  ansible.builtin.template:
     dest: /etc/locale.conf
     owner: root
     group: root
@@ -45,7 +45,7 @@
 - name: install bootstrap packages
   become: true
   when: mtype != 'server'
-  pacman:
+  community.general.pacman:
     name:
       - grub
       - efibootmgr
@@ -64,7 +64,7 @@
 - name: install video and input drivers
   become: true
   when: mtype != 'server'
-  pacman:
+  community.general.pacman:
     name:
       - xf86-video-vesa
       - xf86-input-libinput
@@ -72,14 +72,14 @@
 - name: install intel video drivers
   become: true
   when: mtype != 'server' and gcard == 'intel'
-  pacman:
+  community.general.pacman:
     name:
       - xf86-video-intel
 
 - name: install amd video drivers
   become: true
   when: mtype != 'server' and gcard == 'amd'
-  pacman:
+  community.general.pacman:
     name:
       - xf86-video-ati
       - xf86-video-amdgpu
@@ -87,17 +87,17 @@
 - name: install intel microcode
   become: true
   when: mtype != 'server' and ansible_local.cpuinfo.cpu_vendor == 'Intel'
-  pacman: name=intel-ucode
+  community.general.pacman: name=intel-ucode
 
 - name: install amd microcode
   become: true
   when: mtype != 'server' and ansible_local.cpuinfo.cpu_vendor == 'AMD'
-  pacman: name=amd-ucode
+  community.general.pacman: name=amd-ucode
 
 - name: install mkinitcpio configuration
   become: true
   when: mtype != 'server'
-  copy:
+  ansible.builtin.copy:
     dest: /etc/mkinitcpio.conf
     owner: root
     group: root
@@ -108,11 +108,11 @@
 - name: mkinitcpio
   when: mkinitcpio_config.changed
   become: true
-  command: mkinitcpio -p linux
+  ansible.builtin.command: mkinitcpio -p linux
 
 - name: ensure sudoer rule
   become: true
-  copy:
+  ansible.builtin.copy:
     dest: /etc/sudoers.d/gsudo
     owner: root
     group: root
@@ -124,7 +124,7 @@
 
 - name: install ansible-aur (from supermario repo)
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - ansible-aur
       - ansible-gpg-key-git
@@ -135,7 +135,7 @@
 - name: install networking tools
   become: true
   when: mtype != 'server'
-  pacman:
+  community.general.pacman:
     name:
       - iw
       - iwd
@@ -149,12 +149,12 @@
 
 - name: install inetutils for `hostname`
   become: true
-  pacman: name=inetutils
+  community.general.pacman: name=inetutils
 
 - name: install wireless regdom
   become: true
   when: mtype != 'server'
-  template:
+  ansible.builtin.template:
     dest: /etc/conf.d/wireless-regdom
     owner: root
     group: root
@@ -163,7 +163,7 @@
 
 - name: install old base group packages
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - logrotate
       - man-db
@@ -177,7 +177,7 @@
 
 - name: install everywhere packages
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - vim
       - vim-spell-en

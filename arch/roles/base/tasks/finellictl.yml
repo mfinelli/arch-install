@@ -1,7 +1,7 @@
 ---
 - name: install finellictl
   become: true
-  copy:
+  ansible.builtin.copy:
     dest: /usr/bin/finellictl
     owner: root
     group: root
@@ -10,7 +10,7 @@
 
 - name: create configuration directory
   become: true
-  file:
+  ansible.builtin.file:
     path: /etc/finelli
     owner: root
     group: root
@@ -19,7 +19,7 @@
 
 - name: install configuration file
   become: true
-  template:
+  ansible.builtin.template:
     dest: /etc/finelli/arch-install.yml
     owner: root
     group: root

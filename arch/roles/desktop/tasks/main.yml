@@ -1,7 +1,7 @@
 ---
 - name: install audio packages
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - alsa-utils
       - alsa-plugins
@@ -14,19 +14,19 @@
 
 - name: enable network manager
   become: true
-  systemd: name=NetworkManager.service enabled=true
+  ansible.builtin.systemd: name=NetworkManager.service enabled=true
 
 - name: install keymapper
   become: true
-  pacman: name=keymapper
+  community.general.pacman: name=keymapper
 
 - name: enable keymapperd
   become: true
-  systemd: name=keymapperd.service enabled=true state=started
+  ansible.builtin.systemd: name=keymapperd.service enabled=true state=started
 
 - name: install bluetooth packages
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - bluez
       - bluez-utils
@@ -34,11 +34,11 @@
 
 - name: enable bluetooth
   become: true
-  systemd: name=bluetooth.service enabled=true
+  ansible.builtin.systemd: name=bluetooth.service enabled=true
 
 - name: install base packages
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - firefox
       - firefox-i18n-en-us
