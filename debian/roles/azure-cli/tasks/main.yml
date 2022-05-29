@@ -7,7 +7,7 @@
       - apt-transport-https
       - lsb-release
       - gnupg
-    update_cache: yes
+    update_cache: true
 
 - name: add the microsoft signing key
   ansible.builtin.apt_key:
@@ -22,13 +22,13 @@
   ansible.builtin.apt:
     name:
       - azure-cli
-    update_cache: yes
+    update_cache: true
 
 - name: download azcopy
   ansible.builtin.unarchive:
     # curl -sI https://aka.ms/downloadazcopy-v10-linux | grep -i location
     src: https://azcopyvnext.azureedge.net/release20210901/azcopy_linux_amd64_10.12.1.tar.gz
-    remote_src: yes
+    remote_src: true
     dest: /usr/local/bin
     mode: 0755
     owner: root

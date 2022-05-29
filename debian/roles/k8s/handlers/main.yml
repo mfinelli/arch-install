@@ -1,0 +1,16 @@
+---
+- name: install kubectl bash completion
+  when: kubectl_installed.changed
+  ansible.builtin.shell: /usr/local/bin/kubectl completion bash > /etc/bash_completion.d/kubectl
+
+- name: install kubectl zsh completion
+  when: kubectl_installed.changed
+  ansible.builtin.shell: /usr/local/bin/kubectl completion zsh > /usr/share/zsh/vendor-completions/_kubectl
+
+- name: install helm bash completion
+  when: helm_installed.changed
+  ansible.builtin.shell: /usr/local/bin/helm completion bash > /etc/bash_completion.d/helm
+
+- name: install helm zsh completion
+  when: helm_installed.changed
+  ansible.builtin.shell: /usr/local/bin/helm completion zsh > /usr/share/zsh/vendor-completions/_helm

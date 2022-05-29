@@ -18,7 +18,7 @@
           - curl
           - git
           - sudo
-        update_cache: yes
+        update_cache: true
 
     - name: install other packages
       ansible.builtin.apt:
@@ -77,7 +77,7 @@
     - name: install terraform
       ansible.builtin.unarchive:
         src: https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip
-        remote_src: yes
+        remote_src: true
         dest: /usr/local/bin
         mode: 0755
         owner: root

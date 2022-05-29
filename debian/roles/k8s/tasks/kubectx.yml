@@ -40,7 +40,7 @@
     group: root
 
 - name: install kubens zsh completion
-  become: True
+  become: true
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.zsh
     dest: /usr/share/zsh/vendor-completions/_kubens
