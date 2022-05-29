@@ -6,7 +6,10 @@
 
 PREREQS=""
 case $1 in
-  prereqs) echo "${PREREQS}"; exit 0;;
+  prereqs)
+    echo "${PREREQS}"
+    exit 0
+    ;;
 esac
 
 # shellcheck source=/dev/null

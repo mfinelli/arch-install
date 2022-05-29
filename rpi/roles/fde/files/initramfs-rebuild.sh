@@ -18,32 +18,32 @@ case "${current_version}" in
       *-v8+) ;;
       *) exit 0 ;;
     esac
-  ;;
+    ;;
   *-v7l+)
     case "${version}" in
       *-v7l+) ;;
       *) exit 0 ;;
     esac
-  ;;
+    ;;
   *-v7+)
     case "${version}" in
       *-v7+) ;;
       *) exit 0 ;;
     esac
-  ;;
+    ;;
   *+)
     case "${version}" in
       *-v8+) exit 0 ;;
       *-v7l+) exit 0 ;;
       *-v7+) exit 0 ;;
     esac
-  ;;
+    ;;
 esac
 
 # Exit if rebuild cannot be performed or not needed.
 [ -x /usr/sbin/mkinitramfs ] || exit 0
 [ -f /boot/initramfs.gz ] || exit 0
-lsinitramfs /boot/initramfs.gz |grep -q "/$version$" && exit 0  # Already in initramfs.
+lsinitramfs /boot/initramfs.gz | grep -q "/$version$" && exit 0 # Already in initramfs.
 
 # Rebuild.
 mkinitramfs -o /boot/initramfs.gz "$version"
