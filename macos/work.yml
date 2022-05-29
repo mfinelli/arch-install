@@ -1,6 +1,11 @@
 ---
 - hosts: localhost
   tasks:
+    - name: get user's primary group
+      ansible.builtin.command: id -gn {{ ansible_user_id }}
+      register: whoami_group
+      changed_when: false
+
     - name: install python packages
       ansible.builtin.pip:
         name:
@@ -20,6 +25,9 @@
     - name: ensure local bin directory
       ansible.builtin.file:
         path: "{{ ansible_user_dir }}/bin"
+        owner: "{{ ansible_user_id }}"
+        group: "{{ whoami_group.stdout }}"
+        mode: 0755
         state: directory
 
     - name: install pluto
@@ -39,6 +47,9 @@
     - name: create docker plugins directory
       ansible.builtin.file:
         path: "{{ ansible_user_dir }}/{{ item }}"
+        owner: "{{ ansible_user_id }}"
+        group: "{{ whoami_group.stdout }}"
+        mode: 0755
         state: directory
       loop:
         - .docker
