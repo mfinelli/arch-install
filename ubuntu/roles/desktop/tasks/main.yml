@@ -36,8 +36,8 @@
       - tmux
       - zoxide
 
-- name: disable docker from startup
-  ansible.builtin.systemd: name=docker.service enabled=no
+# - name: disable docker from startup
+#   ansible.builtin.systemd: name=docker.service enabled=no
 
 - name: install yubikey dependencies
   ansible.builtin.apt:

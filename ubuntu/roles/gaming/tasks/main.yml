@@ -23,6 +23,7 @@
       deb [arch=amd64,i386]
       https://repo.steampowered.com/steam/ stable steam
     filename: steam
+    update_cache: true
 
 - name: add steam source repository
   ansible.builtin.apt_repository:
@@ -40,6 +41,7 @@
       - libgl1-mesa-glx:amd64
       - libgl1-mesa-glx:i386
       - steam-launcher
+    update_cache: true
 
 - name: add winehq apt key
   ansible.builtin.apt_key:
@@ -74,9 +76,10 @@
       deb https://ppa.launchpadcontent.net/lutris-team/lutris/ubuntu
       {{ ansible_distribution_release }} main
     filename: lutris
+    update_cache: true
 
 - name: install lutris
-  ansible.builtin.apt: name=lutris update_cache=true
+  ansible.builtin.apt: name=lutris
 
 - name: install lutris dependencies for origin
   ansible.builtin.apt:

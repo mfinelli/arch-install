@@ -10,6 +10,7 @@
       deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg]
       https://downloads.1password.com/linux/debian/amd64 stable main
     filename: 1password
+    update_cache: true
 
 - name: create debsig-verify policy directories
   ansible.builtin.file:
@@ -38,4 +39,4 @@
     creates: /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
 
 - name: install 1password
-  ansible.builtin.apt: name=1password update_cache=true
+  ansible.builtin.apt: name=1password

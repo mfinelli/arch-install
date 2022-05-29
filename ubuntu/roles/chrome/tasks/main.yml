@@ -6,6 +6,7 @@
   ansible.builtin.apt_repository:
     repo: deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main
     filename: google-chrome
+    update_cache: true
 
 - name: install google chrome
-  ansible.builtin.apt: name=google-chrome-stable update_cache=true
+  ansible.builtin.apt: name=google-chrome-stable
