@@ -1,4 +1,7 @@
 ---
+skip_list:
+  - git-latest
+
 warn_list:
   - no-handler
 

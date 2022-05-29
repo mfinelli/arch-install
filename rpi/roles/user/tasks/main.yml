@@ -5,7 +5,7 @@
     key: |
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4MZX4N4c73onEGKP3x8DEo7mhd8ahqQEhydgM2hTHo mario
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOy1DGNkaHw4UiGX8H7L4ruWjWBYFSkOEvB1jqAt5rdz mario@iphone
-    exclusive: yes
+    exclusive: true
 
 - name: ensure src directory
   ansible.builtin.file:

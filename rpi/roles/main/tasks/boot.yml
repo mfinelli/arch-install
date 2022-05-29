@@ -6,14 +6,14 @@
   tags: fde
   block:
     - name: default keyfile to false
-      set_fact: crypttab_keyfile=false
+      ansible.builtin.set_fact: crypttab_keyfile=false
 
     - name: check if a keyfile exists in the root
-      stat: path=/root/cryptkey
+      ansible.builtin.stat: path=/root/cryptkey
       register: crypttab_cryptkey
 
     - name: update keyfile setting
-      set_fact: crypttab_keyfile=true
+      ansible.builtin.set_fact: crypttab_keyfile=true
       when: crypttab_cryptkey.stat.exists
 
 - name: install kernel boot config
