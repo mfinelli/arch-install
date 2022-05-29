@@ -19,3 +19,8 @@ stable channel): https://wiki.winehq.org/Ubuntu
 
 We can use lutris to install other launchers (e.g., EA Origin):
 https://lutris.net/downloads
+
+### Origin
+
+Dependencies can be found in the documentation:
+https://github.com/lutris/docs/blob/master/Origin.md
