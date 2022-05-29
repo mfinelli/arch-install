@@ -38,4 +38,4 @@
     creates: /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
 
 - name: install 1password
-  ansible.builtin.apt: name=1password update_cache=yes
+  ansible.builtin.apt: name=1password update_cache=true

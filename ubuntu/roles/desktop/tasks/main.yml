@@ -22,7 +22,7 @@
     src: firefox-no-snap
 
 - name: install firefox from mozillateam ppa
-  ansible.builtin.apt: name=firefox update_cache=yes
+  ansible.builtin.apt: name=firefox update_cache=true
 
 - name: install desktop packages
   ansible.builtin.apt:
@@ -60,7 +60,7 @@
   ansible.builtin.apt:
     name:
       - fonts-ubuntu-mono-nerd-font
-    update_cache: yes
+    update_cache: true
 
 - name: install gdm dconf greeter
   ansible.builtin.copy:

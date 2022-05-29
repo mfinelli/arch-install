@@ -8,4 +8,4 @@
     filename: google-chrome
 
 - name: install google chrome
-  ansible.builtin.apt: name=google-chrome-stable update_cache=yes
+  ansible.builtin.apt: name=google-chrome-stable update_cache=true

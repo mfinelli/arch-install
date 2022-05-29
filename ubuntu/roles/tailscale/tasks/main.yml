@@ -12,4 +12,4 @@
     filename: tailscale
 
 - name: install tailscale
-  ansible.builtin.apt: name=tailscale update_cache=yes
+  ansible.builtin.apt: name=tailscale update_cache=true

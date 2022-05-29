@@ -1,6 +1,10 @@
 ---
 - name: check if i386 is enabled
-  ansible.builtin.shell: dpkg --print-foreign-architectures | grep i386
+  ansible.builtin.shell: >
+    set -e -o pipefail
+    dpkg --print-foreign-architectures | grep i386
+  args:
+    executable: /bin/bash
   register: i386_enabled
   changed_when: i386_enabled.rc == 1
   failed_when: i386_enabled.rc > 1
@@ -26,7 +30,7 @@
       deb-src [arch=amd64,i386]
       https://repo.steampowered.com/steam/ stable steam
     filename: steam
-    update_cache: yes
+    update_cache: true
 
 - name: install steam
   ansible.builtin.apt:
@@ -46,9 +50,9 @@
   ansible.builtin.apt_repository:
     repo: >
       deb [arch=amd64,i386 signed-by=/usr/share/keyrings/winehq-archive.gpg]
-      https://dl.winehq.org/wine-builds/ubuntu {{ansible_distribution_release }} main
+      https://dl.winehq.org/wine-builds/ubuntu {{ ansible_distribution_release }} main
     filename: winehq
-    update_cache: yes
+    update_cache: true
 
 - name: install wine
   ansible.builtin.apt:
@@ -56,7 +60,7 @@
       # - winehq-stable
       - winehq-staging
       - fonts-wine
-    install_recommends: yes
+    install_recommends: true
 
 - name: add lutris ppa signing key
   ansible.builtin.apt_key:
@@ -72,7 +76,7 @@
     filename: lutris
 
 - name: install lutris
-  ansible.builtin.apt: name=lutris update_cache=yes
+  ansible.builtin.apt: name=lutris update_cache=true
 
 - name: install lutris dependencies for origin
   ansible.builtin.apt:

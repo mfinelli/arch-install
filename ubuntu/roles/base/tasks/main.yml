@@ -23,7 +23,7 @@
       - ansible
       - curl
       - git
-    update_cache: yes
+    update_cache: true
 
 - name: install apt https transport
   ansible.builtin.apt: name=apt-transport-https
@@ -67,4 +67,4 @@
       - urlwatch
       - vim
       - whois
-    update_cache: yes
+    update_cache: true
