@@ -14,7 +14,7 @@ cd "$wdir"
 git clone https://github.com/mfinelli/arch-install.git
 cd arch-install/debian
 
-sudo ansible-playbook debian.yml
+sudo ansible-playbook --inventory ../localhost debian.yml
 
 cd "$sdir"
 rm -rf "$wdir"

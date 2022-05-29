@@ -1,5 +1,6 @@
 ---
 - hosts: localhost
+  connection: local
   vars:
     bfg_repo_cleaner_version: 1.14.0
     helm_version: 3.6.3

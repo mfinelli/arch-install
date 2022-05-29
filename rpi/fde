@@ -10,7 +10,9 @@ git clone https://github.com/mfinelli/arch-install.git
 cd arch-install/rpi
 
 ansible-galaxy install -r ../requirements.yml
-ansible-playbook --extra-vars fde=true rpi.yml --tags fde
+ansible-playbook --inventory ../localhost  \
+  --extra-vars fde=true \
+  rpi.yml --tags fde
 
 cd "$sdir"
 rm -rf "$wdir"
