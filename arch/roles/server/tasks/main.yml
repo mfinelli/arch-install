@@ -1,18 +1,18 @@
 ---
 - name: install firewall software
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - ufw
       - sshguard
 
 - name: start and enable ufw
   become: true
-  systemd: name=ufw.service state=started enabled=yes
+  ansible.builtin.systemd: name=ufw.service state=started enabled=true
 
 - name: start and enable sshguard
   become: true
-  systemd: name=sshguard.service state=started enabled=yes
+  ansible.builtin.systemd: name=sshguard.service state=started enabled=true
 
 - name: set default ufw policy to deny
   become: true
@@ -24,7 +24,7 @@
 
 - name: install ufw before rules
   become: true
-  copy:
+  ansible.builtin.copy:
     dest: /etc/ufw/{{ item }}.rules
     owner: root
     group: root
@@ -38,7 +38,7 @@
 
 - name: install sshd_config
   become: true
-  copy:
+  ansible.builtin.copy:
     dest: /etc/ssh/sshd_config
     owner: root
     group: root
@@ -49,6 +49,6 @@
 
 - name: install server software
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - screen

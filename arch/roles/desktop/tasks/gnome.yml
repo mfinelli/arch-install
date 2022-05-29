@@ -46,4 +46,4 @@
 
 - name: enable gdm
   become: true
-  systemd: name=gdm.service enabled=yes
+  systemd: name=gdm.service enabled=true

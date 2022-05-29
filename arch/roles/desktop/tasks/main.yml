@@ -14,7 +14,7 @@
 
 - name: enable network manager
   become: true
-  systemd: name=NetworkManager.service enabled=yes
+  systemd: name=NetworkManager.service enabled=true
 
 - name: install keymapper
   become: true
@@ -22,7 +22,7 @@
 
 - name: enable keymapperd
   become: true
-  systemd: name=keymapperd.service enabled=yes state=started
+  systemd: name=keymapperd.service enabled=true state=started
 
 - name: install bluetooth packages
   become: true
@@ -34,7 +34,7 @@
 
 - name: enable bluetooth
   become: true
-  systemd: name=bluetooth.service enabled=yes
+  systemd: name=bluetooth.service enabled=true
 
 - name: install base packages
   become: true

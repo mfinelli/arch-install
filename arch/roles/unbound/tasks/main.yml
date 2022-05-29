@@ -1,7 +1,7 @@
 ---
 - name: install unbound and dependencies
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - unbound
       - expat
@@ -9,7 +9,7 @@
 
 - name: download initial root hints
   become: true
-  get_url:
+  ansible.builtin.get_url:
     url: https://www.internic.net/domain/named.cache
     dest: /etc/unbound/root.hints
     mode: 0644
@@ -18,7 +18,7 @@
 
 - name: copy resolveconf.conf
   become: true
-  copy:
+  ansible.builtin.copy:
     src: resolvconf.conf
     dest: /etc/resolvconf.conf
     mode: 0644
@@ -27,11 +27,14 @@
 
 - name: Run resolvconf -u
   become: true
-  command: resolvconf -u
+  ansible.builtin.command: resolvconf -u
+  register: resolvconf_updated
+  changed_when: resolvconf_updated.rc == 0
+  failed_when: resolvconf_updated.rc != 0
 
 - name: Install unbound configuration
   become: true
-  copy:
+  ansible.builtin.copy:
     src: unbound.conf
     dest: /etc/unbound/unbound.conf
     mode: 0644
@@ -40,7 +43,7 @@
 
 - name: Install root-hints service
   become: true
-  copy:
+  ansible.builtin.copy:
     src: root-hints.service
     dest: /etc/systemd/system/root-hints.service
     mode: 0644
@@ -49,7 +52,7 @@
 
 - name: Install root-hints timer
   become: true
-  copy:
+  ansible.builtin.copy:
     src: root-hints.timer
     dest: /etc/systemd/system/root-hints.timer
     mode: 0644
@@ -59,7 +62,7 @@
 - name: Install network manager resolveconf manager config
   when: mtype != 'server'
   become: true
-  copy:
+  ansible.builtin.copy:
     src: rc-manager.conf
     dest: /etc/NetworkManager/conf.d/rc-manager.conf
     mode: 0644
@@ -68,8 +71,8 @@
 
 - name: enable root-hints timer
   become: true
-  systemd: name=root-hints.timer enabled=yes
+  ansible.builtin.systemd: name=root-hints.timer enabled=true
 
 - name: enable unbound
   become: true
-  systemd: name=unbound.service enabled=yes
+  ansible.builtin.systemd: name=unbound.service enabled=true

@@ -1,8 +1,8 @@
 ---
 - name: restart sshd
   become: true
-  systemd: name=sshd.service state=restarted daemon_reload=yes
+  ansible.builtin.systemd: name=sshd.service state=restarted daemon_reload=true
 
 - name: restart ufw
   become: true
-  systemd: name=ufw.service state=restarted daemon_reload=yes
+  ansible.builtin.systemd: name=ufw.service state=restarted daemon_reload=true

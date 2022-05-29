@@ -2,7 +2,7 @@
 - name: install php
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - php
       - php-gd
@@ -22,10 +22,9 @@
 - name: install php.ini
   when: mtype == 'personal'
   become: true
-  copy:
+  ansible.builtin.copy:
     src: php.ini
     dest: /etc/php/php.ini
     owner: root
     group: root
     mode: 0644
-
