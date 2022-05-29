@@ -9,6 +9,7 @@ case $1 in
   prereqs) echo "${PREREQS}"; exit 0;;
 esac
 
+# shellcheck source=/dev/null
 . /usr/share/initramfs-tools/hook-functions
 
 copy_exec /sbin/e2fsck /sbin

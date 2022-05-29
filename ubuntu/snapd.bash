@@ -17,11 +17,13 @@ if ! command -v snap > /dev/null 2>&1; then
 fi
 
 # step 1: remove other snaps
+# shellcheck disable=SC2046
 sudo snap remove $(snap list | tail -n +2 | awk '{print $1}' |
   grep -vE '^bare|core|snapd' | tr '\n' ' ')
 
 # step 2: remove core snaps
 sudo snap remove snapd-desktop-integration
+# shellcheck disable=SC2046
 sudo snap remove $(snap list | tail -n +2 | awk '{print $1}' | grep ^core)
 sudo snap remove bare
 sudo snap remove snapd
