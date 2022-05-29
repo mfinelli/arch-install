@@ -18,7 +18,7 @@
       - ttf-ubuntu-font-family
 
 - name: install fonts part two
-  aur:
+  kewlfft.aur.aur:
     name:
       - ttf-symbola
       # - ttf-google-fonts-git

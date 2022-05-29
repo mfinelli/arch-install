@@ -9,7 +9,7 @@
       - yapf
 
 - name: install downgrade
-  aur: name=downgrade
+  kewlfft.aur.aur: name=downgrade
 
 - include: apps.yml
 - include: cli.yml

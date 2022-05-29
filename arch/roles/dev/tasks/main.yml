@@ -14,7 +14,7 @@
 
 - name: download extra editors
   when: mtype == 'personal'
-  aur:
+  kewlfft.aur.aur:
     name:
       - sublime-text-4
       - rubymine
@@ -37,7 +37,7 @@
 
 - name: install hadolint
   when: mtype == 'personal'
-  aur:
+  kewlfft.aur.aur:
     name:
       - hadolint
 

@@ -19,7 +19,7 @@
 
 - name: install required tools from aur
   when: mtype == 'work'
-  aur:
+  kewlfft.aur.aur:
     name:
       - nodejs-lhci-cli
       - slack-desktop # slack-wayland doesn't work very well...

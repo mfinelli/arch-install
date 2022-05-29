@@ -1,7 +1,7 @@
 ---
 - name: install sync apps
   when: mtype == 'personal'
-  aur:
+  kewlfft.aur.aur:
     name:
       - dropbox
       - spideroak-one
@@ -13,7 +13,7 @@
 
 - name: install password apps
   when: mtype == 'personal'
-  aur:
+  kewlfft.aur.aur:
     name:
       - 1password
       - 1password-cli

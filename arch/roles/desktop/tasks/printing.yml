@@ -19,7 +19,7 @@
 
 - name: install drivers from aur
   when: mtype != 'media'
-  aur:
+  kewlfft.aur.aur:
     name:
       - epson-inkjet-printer-escpr
       - epson-inkjet-printer-escpr2

@@ -18,7 +18,7 @@
       - wl-clipboard
 
 - name: install gnome extras from aur
-  aur:
+  kewlfft.aur.aur:
     name:
       - gnome-shell-extension-dash-to-dock
       - gnome-shell-extension-arch-update
@@ -39,7 +39,7 @@
     src: service.rules
 
 # - name: disabled extensions
-#   aur:
+#   kewlfft.aur.aur:
 #     name:
 #       - gnome-shell-extension-openweather-git
 #       - gnome-shell-extension-appindicator-git

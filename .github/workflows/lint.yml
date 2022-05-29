@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: ansible-galaxy install -r requirements.yml
+      - run: |
+          mkdir -p ~/.ansible/plugins/modules
+          curl -o ~/.ansible/plugins/modules/gpg_key.py \
+            https://raw.githubusercontent.com/netson/ansible-gpg-key/master/gpg_key.py
       - uses: mfinelli/setup-shfmt@v1
       - run: |
           shellcheck --version

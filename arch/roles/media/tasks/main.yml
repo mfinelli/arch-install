@@ -28,7 +28,7 @@
 
 - name: install other music applications
   when: mtype == 'personal' or mtype == 'media'
-  aur:
+  kewlfft.aur.aur:
     name:
       - foobar2000
       - mp3tag
@@ -40,7 +40,7 @@
 
 - name: install google-chrome
   when: mtype != 'server'
-  aur: name=google-chrome
+  kewlfft.aur.aur: name=google-chrome
 
 - name: install youtube-dl
   when: mtype == 'personal' or mtype == 'media'
@@ -52,7 +52,7 @@
 
 - name: install gallery-dl
   when: mtype == 'personal' or mtype == 'media'
-  aur: name=gallery-dl
+  kewlfft.aur.aur: name=gallery-dl
 
 - name: install other media dependencies
   when: mtype == 'personal' or mtype == 'media'

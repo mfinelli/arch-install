@@ -130,7 +130,7 @@
       - ansible-gpg-key-git
 
 - name: install pikaur
-  aur: name=pikaur
+  kewlfft.aur.aur: name=pikaur
 
 - name: install networking tools
   become: true

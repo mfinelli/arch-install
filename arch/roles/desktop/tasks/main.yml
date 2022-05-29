@@ -61,4 +61,4 @@
 
 # - name: install cursors
 #   when: mtype != 'server'
-#   aur: name=xcursor-openzone
+#   kewlfft.aur.aur: name=xcursor-openzone
