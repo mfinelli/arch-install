@@ -114,12 +114,9 @@
 
 - include: pacman.yml
 
-- name: install ansible-aur (from supermario repo)
+- name: install ansible-gpg-key (from supermario repo)
   become: true
-  community.general.pacman:
-    name:
-      - ansible-aur
-      - ansible-gpg-key-git
+  community.general.pacman: name=ansible-gpg-key-git
 
 - name: install pikaur
   kewlfft.aur.aur: name=pikaur
@@ -197,6 +194,7 @@
       - xf86-video-intel
       - xf86-video-ati
       - xf86-video-amdgpu
+      - ansible-aur
     state: absent
 
 - include: finellictl.yml

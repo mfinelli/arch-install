@@ -47,10 +47,11 @@ echo "$NEW_HOSTNAME" > /etc/hostname
 pacman -S grub efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs \
   exfat-utils f2fs-tools os-prober lvm2 cryptsetup mdadm usbutils
 
+AMD=AuthenticAMD
 INTEL=GenuineIntel
 if [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == "$INTEL" ]]; then
   pacman -S intel-ucode
-else
+elif [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == "$AMD" ]]; then
   pacman -S amd-ucode
 fi
 
@@ -69,7 +70,6 @@ grub-install --target=x86_64-efi --efi-directory=/efi \
   --bootloader-id="Arch Linux" --recheck
 
 # the rest of the system gets installed/configured using ansible
-pacman -S ansible git pyalpm python-py-cpuinfo \
-  ansible-{aur,gpg-key-git}
+pacman -S ansible git pyalpm ansible-gpg-key-git
 
 exit 0

@@ -1,8 +1,6 @@
 ---
 - hosts: localhost
   roles:
-    - role: ansible
-      tags: [all, init, setup]
     - role: base
       tags: [all, setup]
     - role: unbound
