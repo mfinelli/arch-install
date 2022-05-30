@@ -183,6 +183,7 @@
       - bash-completion
 
 - name: install ansible and dependencies
+  become: true
   community.general.pacman:
     name:
       - ansible
@@ -201,5 +202,12 @@
       - lynx
       - rsync
       - wget
+
+- name: uninstall old packages
+  become: true
+  community.general.pacman:
+    name:
+      - python-py-cpuinfo
+    state: absent
 
 - include: finellictl.yml
