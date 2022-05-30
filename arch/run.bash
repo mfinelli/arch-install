@@ -87,17 +87,6 @@ ansible-galaxy install -r ../requirements.yml
 if [[ $1 == setup ]]; then
   mmode=setup
 
-  # run once first just to setup custom facts
-  ansible-playbook \
-    --extra-vars gcard=$gcard \
-    --extra-vars multilib=true \
-    --extra-vars mmode=$mmode \
-    --extra-vars mtype=$mtype \
-    --extra-vars wireless_regdom=$wirelessregdom \
-    --extra-vars timezone=$timezone \
-    --extra-vars system_lang=$syslang \
-    arch.yml --tags init
-
   # now we can run the main setup
   ansible-playbook \
     --extra-vars gcard=$gcard \

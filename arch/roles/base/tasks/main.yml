@@ -89,12 +89,16 @@
 
 - name: install intel microcode
   become: true
-  when: mtype != 'server' and ansible_local.cpuinfo.cpu_vendor == 'Intel'
+  when:
+    - mtype != 'server'
+    - 'GenuineIntel' in ansible_processor
   community.general.pacman: name=intel-ucode
 
 - name: install amd microcode
   become: true
-  when: mtype != 'server' and ansible_local.cpuinfo.cpu_vendor == 'AMD'
+  when:
+    - mtype != 'server'
+    - 'AuthenticAMD' in ansible_processor
   community.general.pacman: name=amd-ucode
 
 - name: install mkinitcpio configuration
@@ -177,6 +181,13 @@
       - vi
       - man-pages
       - bash-completion
+
+- name: install ansible and dependencies
+  community.general.pacman:
+    name:
+      - ansible
+      - git
+      - pyalpm
 
 - name: install everywhere packages
   become: true
