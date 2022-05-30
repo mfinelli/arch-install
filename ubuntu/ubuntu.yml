@@ -9,6 +9,8 @@
       when: mtype != 'server'
     - role: desktop
       when: mtype != 'server'
+    - role: dropbox
+      when: mtype == 'gaming'
     - role: gaming
       when: mtype == 'gaming'
     - role: media

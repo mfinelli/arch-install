@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Dropbox
+Comment=Dropbox client applications
+Exec=dropbox
+Icon=dropbox
+Terminal=false
+StartupNotify=false
+Categories=Network;
