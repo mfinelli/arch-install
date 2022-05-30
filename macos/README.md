@@ -49,4 +49,6 @@ chsh -s "$(brew --prefix)/bin/zsh"
 
 Because homebrew cask does a full uninstall and reinstall during upgrades it's
 inconvenient to install steam or creative cloud using brew and so those need
-to be installed and updated manually.
+to be installed and updated manually. Fortunately, these applications have
+self-updating mechanisms so this is mostly a non-issue other than the initial
+install.
