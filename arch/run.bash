@@ -40,14 +40,6 @@ WORK_MACHINES=(easy CLIFMI706)
 # shellcheck disable=SC2034
 MEDIA_MACHINES=()
 
-if lspci | grep VGA | grep -qi amd; then
-  gcard=amd
-elif lspci | grep VGA | grep -qi intel; then
-  gcard=intel
-else
-  gcard=none
-fi
-
 hn="$(cat /etc/hostname)"
 if array_contains PERSONAL_MACHINES "$hn"; then
   mtype=personal
@@ -89,7 +81,6 @@ if [[ $1 == setup ]]; then
 
   # now we can run the main setup
   ansible-playbook \
-    --extra-vars gcard=$gcard \
     --extra-vars multilib=true \
     --extra-vars mmode=$mmode \
     --extra-vars mtype=$mtype \
@@ -99,7 +90,6 @@ if [[ $1 == setup ]]; then
     arch.yml --tags setup
 else
   ansible-playbook \
-    --extra-vars gcard=$gcard \
     --extra-vars multilib=true \
     --extra-vars mmode=post \
     --extra-vars mtype=$mtype \
