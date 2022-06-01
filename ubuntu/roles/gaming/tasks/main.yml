@@ -1,7 +1,7 @@
 ---
 - name: check if i386 is enabled
   ansible.builtin.shell: >
-    set -e -o pipefail
+    set -e -o pipefail;
     dpkg --print-foreign-architectures | grep i386
   args:
     executable: /bin/bash
