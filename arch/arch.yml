@@ -18,8 +18,6 @@
       tags: [all]
     - role: media
       tags: [all]
-    - role: databases
-      tags: [all]
     - role: work
       tags: [all]
       when: mtype == 'work'
