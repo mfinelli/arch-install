@@ -88,5 +88,4 @@
 
 - include: nodejs.yml
 - include: ruby.yml
-- include: cloud.yml
 - include: devops.yml
