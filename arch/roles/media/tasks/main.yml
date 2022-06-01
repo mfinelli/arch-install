@@ -31,7 +31,7 @@
   kewlfft.aur.aur:
     name:
       - foobar2000
-      - mp3tag
+      # - mp3tag
 
 - name: install tor browser bundle
   when: mtype == 'personal' or mtype == 'media'
