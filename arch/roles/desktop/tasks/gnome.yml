@@ -16,6 +16,7 @@
       - xdg-desktop-portal
       - xdg-desktop-portal-gnome
       - wl-clipboard
+      - gnome-shell-extension-appindicator
 
 - name: install gnome extras from aur
   kewlfft.aur.aur:
