@@ -1,4 +1,9 @@
 ---
+- name: add dropbox signing key
+  when: mtype == 'personal'
+  gpg_key:
+    fpr: 1C61A2656FB57B7E4DE0F4C1FC918B335044912E
+
 - name: install sync apps
   when: mtype == 'personal'
   kewlfft.aur.aur:
