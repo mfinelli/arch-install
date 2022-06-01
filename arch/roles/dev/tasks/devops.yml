@@ -1,4 +1,14 @@
 ---
+- name: install cloud dependencies
+  when: mtype == 'personal'
+  become: true
+  pacman:
+    name:
+      - aws-cli
+      - python-magic
+      - google-cloud-sdk
+      - doctl
+
 - name: install devops tools
   when: mtype == 'personal'
   become: true
@@ -22,6 +32,7 @@
       - helm
       - helmfile
       - pluto
+      - popeye
       - helm-secrets
       - helm-diff
       - helm-gcs

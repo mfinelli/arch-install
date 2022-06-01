@@ -4,7 +4,6 @@
   kewlfft.aur.aur:
     name:
       - dropbox
-      - spideroak-one
 
 - name: add 1password signing key
   when: mtype == 'personal'

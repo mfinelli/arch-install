@@ -35,18 +35,11 @@
       - docker
       - docker-compose
 
-- name: install hadolint
-  when: mtype == 'personal'
-  kewlfft.aur.aur:
-    name:
-      - hadolint
-
 - name: install virtualbox
   when: mtype != 'media'
   become: true
   pacman:
     name:
-      - vagrant
       - virtualbox
       - virtualbox-host-modules-arch
       - virtualbox-guest-iso
@@ -93,7 +86,6 @@
   become: true
   pacman: name=neovim
 
-- include: php.yml
 - include: nodejs.yml
 - include: ruby.yml
 - include: cloud.yml

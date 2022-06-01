@@ -13,7 +13,5 @@
   pacman:
     name:
       - nodejs-n
-      - nodejs-autoprefixer
-      - nodejs-clean-css-cli
       - nodejs-pug-cli
       - nodejs-mjml
