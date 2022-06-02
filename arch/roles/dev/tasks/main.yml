@@ -76,6 +76,11 @@
   become: true
   community.general.pacman: name=redis
 
+- name: install postgresql
+  when: mtype == 'personal'
+  become: true
+  community.general.pacman: name=postgresql
+
 - name: install postfix
   when: mtype != 'media'
   become: true
