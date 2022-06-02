@@ -44,6 +44,7 @@
   pacman:
     name:
       - kubectx
+      - lens
 
 - name: install helm plugins
   when: mtype == 'personal'
