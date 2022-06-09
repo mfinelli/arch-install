@@ -7,4 +7,4 @@ collections:
   - name: kewlfft.aur
     version: 0.10.0
   - name: kubernetes.core
-    version: 2.3.0
+    version: 2.3.1
