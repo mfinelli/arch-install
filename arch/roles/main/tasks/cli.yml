@@ -55,6 +55,7 @@
   pacman:
     name:
       - moreutils
+      - ncdu
       - bat-extras
       - difftastic
       - dos2unix
