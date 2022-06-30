@@ -82,6 +82,15 @@
       - pass
       - pass-otp
 
+- name: add archuseriso signing key
+  when: mtype != 'media' and mtype != 'server'
+  gpg_key:
+    fpr: A5143BB56952B3189F49A175FAC4560863BEEC34
+
+- name: install archuseriso from aur
+  when: mtype != 'media' and mtype != 'server'
+  kewlfft.aur.aur: name=archuseriso
+
 - name: install tailscale
   when: mtype == 'personal' or mtype == 'media'
   become: true
