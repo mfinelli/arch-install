@@ -16,3 +16,9 @@ mounted) then run:
 sudo aui-mkinstall --encrypt --f2fs --username mario \
   ./out/aui-xfce-* /dev/sdX
 ```
+
+Reboot into the new system, connect to the internet, and change the hostname:
+
+```shell
+sudo hostnamectl hostname liveusb
+```
