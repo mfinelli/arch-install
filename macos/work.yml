@@ -16,7 +16,7 @@
         executable: /usr/local/bin/pip3
 
     - name: install helm plugins
-      community.kubernetes.helm_plugin:
+      kubernetes.core.helm_plugin:
         plugin_path: "{{ item }}"
       loop:
         - https://github.com/databus23/helm-diff.git
