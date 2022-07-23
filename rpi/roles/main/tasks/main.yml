@@ -52,7 +52,9 @@
       - libarchive-tools
       - lm-sensors
       - neofetch
+      - pcscd
       - ripgrep
+      - scdaemon
       - screen
       - sysstat
       - universal-ctags
