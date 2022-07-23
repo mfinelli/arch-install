@@ -24,14 +24,15 @@
     mode: 0644
     dest: /etc/apt/sources.list.d/raspi.list
 
+  # TODO: we should update_cache based on the above two templates
 - name: install firefox
-  ansible.builtin.apt: name=firefox-esr
+  ansible.builtin.apt: name=firefox-esr update_cache=true
 
 - name: ensure openssh is installed
   ansible.builtin.apt: name=openssh-server
 
 - name: ensure sshd is running and enabled
-  ansible.builtin.systemd: name=ssh.service enabled=yes state=started
+  ansible.builtin.systemd: name=ssh.service enabled=true state=started
 
 - name: copy sshd config
   ansible.builtin.copy:

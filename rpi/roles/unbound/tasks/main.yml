@@ -40,4 +40,4 @@
     - restart unbound
 
 - name: ensure unbound is started and enabled
-  ansible.builtin.systemd: name=unbound.service enabled=yes state=started
+  ansible.builtin.systemd: name=unbound.service enabled=true state=started
