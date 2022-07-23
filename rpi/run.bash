@@ -6,7 +6,7 @@ if [[ $# -ne 0 ]]; then
 fi
 
 hn="$(cat /etc/hostname)"
-if [[ $hn == testpi || $hn == parkpi ]]; then
+if [[ $hn == testpi || $hn == parkpi || $hn == raipi ]]; then
   fde=true
 else
   fde=false
