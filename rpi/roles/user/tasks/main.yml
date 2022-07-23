@@ -7,6 +7,7 @@
     key: |
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4MZX4N4c73onEGKP3x8DEo7mhd8ahqQEhydgM2hTHo mario
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOy1DGNkaHw4UiGX8H7L4ruWjWBYFSkOEvB1jqAt5rdz mario@iphone
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGLzoWaCMxwWMyepLYUu6FBbYZmDOaXPj+LQtWjdM8pW mario@ipad
     exclusive: true
 
 - name: ensure src directory
