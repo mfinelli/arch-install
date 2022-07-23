@@ -22,3 +22,9 @@ Reboot into the new system, connect to the internet, and change the hostname:
 ```shell
 sudo hostnamectl hostname liveusb
 ```
+
+Reboot, and then install the [dotfiles](https://github.com/mfinelli/dotfiles):
+
+```shell
+bash -c "$(curl -fsSL https://mfgo.link/dotfiles)"
+```
