@@ -45,5 +45,4 @@ jobs:
       - run: ansible-lint macos/personal.yml
       - run: ansible-lint macos/work.yml
       - run: ansible-lint rpi/rpi.yml
-      - run: ansible-lint rpi/user.yml
       - run: ansible-lint ubuntu/ubuntu.yml
