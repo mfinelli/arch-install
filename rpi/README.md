@@ -60,3 +60,7 @@ network VPN.
 
     **N.B.** you should update which hosts have the case fan in
     `roles/main/vars/main.yml`.
+
+11. Install [dotfiles](https://github.com/mfinelli/dotfiles) (which should be
+    done after connecting via SSH as the dotfiles repository uses the forwarded
+    keys to setup SSH)
