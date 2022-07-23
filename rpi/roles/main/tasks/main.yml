@@ -54,6 +54,7 @@
       - neofetch
       - ripgrep
       - screen
+      - sysstat
       - universal-ctags
       - vim
 
