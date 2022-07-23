@@ -14,6 +14,5 @@ fi
 
 ansible-galaxy install -r ../requirements.yml
 ansible-playbook --inventory ../localhost --extra-vars fde=$fde rpi.yml
-ansible-playbook --inventory ../localhost user.yml
 
 exit 0

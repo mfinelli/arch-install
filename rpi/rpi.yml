@@ -12,3 +12,6 @@
       tags: [all]
     - role: tailscale
       tags: [all]
+    - role: user
+      tags: [all]
+      become: false
