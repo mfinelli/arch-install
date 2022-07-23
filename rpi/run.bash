@@ -14,6 +14,7 @@ fi
 
 ansible-galaxy install -r ../requirements.yml
 ansible-playbook --inventory ../localhost \
-  --extra-vars fde=$fde --extra-vars whoami="$(whoami)" rpi.yml
+  --extra-vars fde=$fde --extra-vars whoami="$(whoami)" \
+  --extra-vars whoami_home="$HOME" rpi.yml
 
 exit 0

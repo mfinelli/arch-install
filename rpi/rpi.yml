@@ -14,4 +14,3 @@
       tags: [all]
     - role: user
       tags: [all]
-      become_user: "{{ whoami }}"

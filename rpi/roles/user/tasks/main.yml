@@ -1,7 +1,7 @@
 ---
 - name: add home ssh key
   ansible.posix.authorized_key:
-    user: "{{ ansible_user_id }}"
+    user: "{{ whoami }}"
     key: |
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4MZX4N4c73onEGKP3x8DEo7mhd8ahqQEhydgM2hTHo mario
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOy1DGNkaHw4UiGX8H7L4ruWjWBYFSkOEvB1jqAt5rdz mario@iphone
@@ -9,13 +9,16 @@
 
 - name: ensure src directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/src"
-    owner: "{{ ansible_user_id }}"
-    group: "{{ ansible_user_id }}"
+    path: "{{ whoami_home }}/{{ item }}"
+    owner: "{{ whoami }}"
+    group: "{{ whoami }}"
     mode: 0755
     state: directory
+  loop:
+    - src
+    - src/mfinelli
 
 - name: clone this repository for easy updates
   ansible.builtin.git:
     repo: https://github.com/mfinelli/arch-install.git
-    dest: "{{ ansible_user_dir }}/src/arch-install"
+    dest: "{{ whoami_home }}/src/mfinelli/arch-install"

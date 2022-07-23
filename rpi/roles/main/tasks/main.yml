@@ -53,6 +53,7 @@
       - neofetch
       - ripgrep
       - screen
+      - universal-ctags
       - vim
 
 - name: install backup applications
