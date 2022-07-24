@@ -28,4 +28,4 @@
 
 - name: enable hc-ping timer
   when: hcping_uuid_file.stat.exists
-  ansible.builtin.systemd: name=hc-ping.timer enabled=true
+  ansible.builtin.systemd: name=hc-ping.timer enabled=true state=started
