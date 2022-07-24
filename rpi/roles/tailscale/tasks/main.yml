@@ -13,7 +13,7 @@
   ansible.builtin.apt: name=tailscale
 
 - name: ensure tailscaled is running and enabled
-  ansible.builtin.systemd: name=tailscaled enabled=true state=started
+  ansible.builtin.systemd: name=tailscaled.service enabled=true state=started
 
 - name: enable IP forwarding for tailscale exit node status
   ansible.posix.sysctl:
