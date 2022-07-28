@@ -23,3 +23,4 @@
     name:
       - nodejs-lhci-cli
       - slack-desktop # slack-wayland doesn't work very well...
+      - apachedirectorystudio
