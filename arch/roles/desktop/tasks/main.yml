@@ -11,6 +11,7 @@
       - pipewire-pulse
       - wireplumber
       - pavucontrol
+      - easyeffects
 
 - name: enable network manager
   become: true
