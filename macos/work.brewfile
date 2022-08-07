@@ -74,3 +74,5 @@ cask "iterm2"
 cask "keepingyouawake"
 cask "vagrant"
 cask "virtualbox"
+
+# vim: ft=brewfile
