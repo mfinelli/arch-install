@@ -49,6 +49,7 @@
   become: true
   pacman:
     name:
+      - hugo
       - jpegoptim
       - optipng
       - shellcheck
