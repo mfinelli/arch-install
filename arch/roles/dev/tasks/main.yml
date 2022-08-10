@@ -90,7 +90,15 @@
 - name: install neovim
   when: mtype != 'media'
   become: true
-  pacman: name=neovim
+  community.general.pacman: name=neovim
+
+- name: install fastfoto stuff
+  when: type != 'media'
+  become: true
+  community.general.pacman:
+    name:
+      - perl-image-exiftool
+      - perl-archive-zip
 
 - include: nodejs.yml
 - include: ruby.yml
