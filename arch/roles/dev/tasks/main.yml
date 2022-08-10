@@ -2,12 +2,12 @@
 - name: install firefox developer edition
   when: mtype != 'media' and mtype != 'server'
   become: true
-  pacman: name=firefox-developer-edition
+  community.general.pacman: name=firefox-developer-edition
 
 - name: install main development packages
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - imagemagick
       - geckodriver
@@ -22,7 +22,7 @@
 - name: install latex packages
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - texlive-most
       - texlive-lang
@@ -30,7 +30,7 @@
 - name: install docker
   when: mtype != 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - docker
       - docker-compose
@@ -38,7 +38,7 @@
 - name: install virtualbox
   when: mtype != 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - virtualbox
       - virtualbox-host-modules-arch
@@ -47,7 +47,7 @@
 - name: install command line utilities
   when: mtype != 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - hugo
       - jpegoptim
@@ -58,7 +58,7 @@
 - name: install go
   when: mtype != 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - go
       - go-tools
@@ -66,7 +66,7 @@
 - name: install rust
   when: mtype != 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - rust
       - cargo-about
@@ -85,7 +85,7 @@
 - name: install postfix
   when: mtype != 'media'
   become: true
-  pacman: name=postfix
+  community.general.pacman: name=postfix
 
 - name: install neovim
   when: mtype != 'media'
