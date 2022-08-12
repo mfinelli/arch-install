@@ -39,3 +39,20 @@
   loop:
     - cups.service
     - avahi-daemon.service
+
+- name: enable scanning packages
+  when: mtype != 'media'
+  become: true
+  community.general.pacman:
+    name:
+      - gscan2pdf
+      - paperwork
+      - tesseract
+      - tesseract-data-eng
+      - tesseract-data-ita
+      - tesseract-data-spa
+      - tesseract-data-fra
+
+- name: install scanner driver
+  when: mtype != 'media'
+  kewlfft.aur.aur: name=brscan5
