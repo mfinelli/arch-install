@@ -93,7 +93,7 @@
   community.general.pacman: name=neovim
 
 - name: install fastfoto stuff
-  when: type != 'media'
+  when: mtype != 'media'
   become: true
   community.general.pacman:
     name:
