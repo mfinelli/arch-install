@@ -13,6 +13,7 @@
       - direnv
       - git-crypt
       - kustomize
+      - mariadb-clients
       - asdf-vm
       - python-pip # dependency of asdf-pyapp
       - tidy
