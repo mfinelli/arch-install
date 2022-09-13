@@ -107,7 +107,7 @@
 
     - name: install repo cleaner (https://rtyley.github.io/bfg-repo-cleaner/)
       ansible.builtin.get_url:
-        url: https://repo1.maven.org/maven2/com/madgag/bfg/{{ bfg_repo_cleaner_version }}/bfg-{{ bfg_repo_cleaner_version  }}.jar
+        url: https://repo1.maven.org/maven2/com/madgag/bfg/{{ bfg_repo_cleaner_version }}/bfg-{{ bfg_repo_cleaner_version }}.jar
         dest: /usr/local/share/java/bfg.jar
         mode: 0644
         owner: root
