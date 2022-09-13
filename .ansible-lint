@@ -1,6 +1,8 @@
 ---
 skip_list:
   - git-latest
+  - name[casing]
+  - name[play]
 
 warn_list:
   - no-handler
