@@ -30,8 +30,9 @@
   when: mtype == 'personal' or mtype == 'media'
   kewlfft.aur.aur:
     name:
+      - exact-audio-copy
       - foobar2000
-      # - mp3tag
+      - mp3tag
 
 - name: install tor browser bundle
   when: mtype == 'personal' or mtype == 'media'
