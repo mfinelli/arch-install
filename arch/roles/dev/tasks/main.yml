@@ -100,6 +100,13 @@
       - perl-image-exiftool
       - perl-archive-zip
 
+- name: install fastfoto stuff from aur
+  when: mtype != 'media'
+  kewlfft.aur.aur:
+    name:
+      - cobra-cli
+      - goose
+
 - include: nodejs.yml
 - include: ruby.yml
 - include: devops.yml
