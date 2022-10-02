@@ -104,6 +104,7 @@
   when: mtype != 'media'
   kewlfft.aur.aur:
     name:
+      - cloudflared
       - cobra-cli
       - goose
 
