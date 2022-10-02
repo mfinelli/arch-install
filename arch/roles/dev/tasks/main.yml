@@ -97,16 +97,16 @@
   become: true
   community.general.pacman:
     name:
-      - perl-image-exiftool
-      - perl-archive-zip
-
-- name: install fastfoto stuff from aur
-  when: mtype != 'media'
-  kewlfft.aur.aur:
-    name:
       - cloudflared
       - cobra-cli
       - goose
+      - perl-image-exiftool
+      - perl-archive-zip
+
+# - name: install fastfoto stuff from aur
+#   when: mtype != 'media'
+#   kewlfft.aur.aur:
+#     name:
 
 - include: nodejs.yml
 - include: ruby.yml
