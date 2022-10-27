@@ -92,6 +92,14 @@
   become: true
   community.general.pacman: name=neovim
 
+- name: install asciinema
+  when: mtype == 'personal'
+  become: true
+  community.general.pacman:
+    name:
+      - asciinema
+      - asciinema-agg
+
 - name: install fastfoto stuff
   when: mtype != 'media'
   become: true
