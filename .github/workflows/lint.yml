@@ -18,7 +18,7 @@ jobs:
           mkdir -p ~/.ansible/plugins/modules
           curl -o ~/.ansible/plugins/modules/gpg_key.py \
             https://raw.githubusercontent.com/netson/ansible-gpg-key/master/gpg_key.py
-      - uses: mfinelli/setup-shfmt@v1
+      - uses: mfinelli/setup-shfmt@v2
       - run: |
           shellcheck --version
           shellcheck finellictl
