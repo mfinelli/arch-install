@@ -49,6 +49,7 @@
   become: true
   community.general.pacman:
     name:
+      - cui
       - hugo
       - jpegoptim
       - optipng
