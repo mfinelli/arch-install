@@ -110,6 +110,7 @@
       - goose
       - perl-image-exiftool
       - perl-archive-zip
+      - sqlc
 
 # - name: install fastfoto stuff from aur
 #   when: mtype != 'media'
