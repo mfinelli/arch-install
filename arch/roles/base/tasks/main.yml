@@ -8,7 +8,8 @@
 
 - name: set timezone
   become: true
-  community.general.timezone: name={{ timezone }}
+  community.general.timezone:
+    name: "{{ timezone }}"
 
 - name: ensure baseline archlinux system
   become: true
@@ -77,14 +78,18 @@
   when:
     - mtype != 'server'
     - "'GenuineIntel' in ansible_processor"
-  community.general.pacman: name=intel-ucode
+  community.general.pacman:
+  name:
+    - intel-ucode
 
 - name: install amd microcode
   become: true
   when:
     - mtype != 'server'
     - "'AuthenticAMD' in ansible_processor"
-  community.general.pacman: name=amd-ucode
+  community.general.pacman:
+    name:
+      - amd-ucode
 
 - name: install mkinitcpio configuration
   become: true
@@ -112,14 +117,19 @@
     src: sudoer
     validate: 'visudo -cf %s'
 
-- include: pacman.yml
+- name: include pacman setup and configuration
+  ansible.builtin.include_tasks: pacman.yml
 
 - name: install ansible-gpg-key (from supermario repo)
   become: true
-  community.general.pacman: name=ansible-gpg-key-git
+  community.general.pacman:
+    name:
+      - ansible-gpg-key-git
 
 - name: install pikaur
-  kewlfft.aur.aur: name=pikaur
+  kewlfft.aur.aur:
+    name:
+      - pikaur
 
 - name: install networking tools
   become: true
@@ -138,7 +148,9 @@
 
 - name: install inetutils for `hostname`
   become: true
-  community.general.pacman: name=inetutils
+    community.general.pacman:
+      name:
+        - inetutils
 
 - name: install wireless regdom
   become: true
@@ -197,4 +209,5 @@
       - ansible-aur
     state: absent
 
-- include: finellictl.yml
+- name: install finellictl
+  ansible.builtin.include_tasks: finellictl.yml
