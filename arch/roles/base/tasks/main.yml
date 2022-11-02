@@ -148,9 +148,9 @@
 
 - name: install inetutils for `hostname`
   become: true
-    community.general.pacman:
-      name:
-        - inetutils
+  community.general.pacman:
+    name:
+      - inetutils
 
 - name: install wireless regdom
   become: true
