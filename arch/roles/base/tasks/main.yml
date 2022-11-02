@@ -79,8 +79,8 @@
     - mtype != 'server'
     - "'GenuineIntel' in ansible_processor"
   community.general.pacman:
-  name:
-    - intel-ucode
+    name:
+      - intel-ucode
 
 - name: install amd microcode
   become: true
