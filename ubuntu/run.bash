@@ -19,7 +19,9 @@ if command -v snap > /dev/null 2>&1; then
   ./snapd.bash
 fi
 
-ansible-galaxy install -r ../requirements.yml
+if ! ansible-galaxy install -r ../requirements.yml; then
+  ansible-galaxy install -f -r ../requirements.yml
+fi
 
 sudo echo -n
 ansible-playbook --inventory ../localhost --extra-vars mtype=$mtype ubuntu.yml
