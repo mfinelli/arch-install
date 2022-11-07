@@ -53,7 +53,8 @@
 
 - name: install gallery-dl
   when: mtype == 'personal' or mtype == 'media'
-  kewlfft.aur.aur: name=gallery-dl
+  become: true
+  community.general.pacman: name=gallery-dl
 
 - name: install other media dependencies
   when: mtype == 'personal' or mtype == 'media'
