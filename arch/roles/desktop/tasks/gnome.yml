@@ -30,6 +30,7 @@
       - gnome-shell-extension-no-overview
       - gnome-shell-extension-weather-in-the-clock-git
       - gnome-shell-extension-arc-menu
+      - gnome-shell-extension-emoji-selector-git
 
 - name: install systemd policy file for systemd gnome extension
   become: true
