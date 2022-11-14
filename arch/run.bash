@@ -71,6 +71,14 @@ if [[ -z $timezone ]]; then
   timezone=UTC
 fi
 
+# https://unix.stackexchange.com/a/589446
+# we only care about tpm 2.0 because systemd-boot doesn't support tpm 1.2
+if [[ -c /dev/tpmrm0 ]]; then
+  hastpm=true
+else
+  hastpm=false
+fi
+
 # prompt for sudo password right away
 sudo echo -n
 
