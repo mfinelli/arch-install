@@ -44,6 +44,38 @@
       - virtualbox-host-modules-arch
       - virtualbox-guest-iso
 
+# TODO: sudo usermod -aG libvirt mario
+- name: install virt-manager
+  when: mtype != 'media'
+  become: true
+  community.general.pacman:
+    name:
+      - virt-manager
+      - qemu-desktop
+      - libvirt
+      - edk2-ovmf
+      - dnsmasq
+
+- name: install libvirtd configuration
+  when: mtype != 'media'
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/libvirt/libvirtd.conf
+    owner: root
+    group: root
+    mode: 0644
+    src: libvirtd.conf
+
+- name: install libvirtd qemu configuration
+  when: mtype != 'media'
+  become: true
+  ansible.builtin.template:
+    dest: /etc/libvirt/qemu.conf
+    owner: root
+    group: root
+    mode: 0644
+    src: qemu.conf.j2
+
 - name: install command line utilities
   when: mtype != 'media'
   become: true
