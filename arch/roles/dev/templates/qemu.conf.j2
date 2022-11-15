@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 # Master configuration file for the QEMU driver.
 # All settings described here are optional - if omitted, sensible
 # defaults are used.
@@ -516,11 +517,11 @@
 #       user = "+0"     # Super user (uid=0)
 #       user = "100"    # A user named "100" or a user with uid=100
 #
-#user = "libvirt-qemu"
+user = "{{ whoami }}"
 
 # The group for QEMU processes run by the system instance. It can be
 # specified in a similar way to user.
-#group = "libvirt-qemu"
+group = "{{ whoami }}"
 
 # Whether libvirt should dynamically change file ownership
 # to match the configured user/group above. Defaults to 1.
@@ -968,3 +969,4 @@
 # "full"    -  both QEMU and its helper processes are placed into separate
 #              scheduling group
 #sched_core = "none"
+# vim: ft=conf.jinja2
