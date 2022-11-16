@@ -55,6 +55,7 @@
       - libvirt
       - edk2-ovmf
       - dnsmasq
+      - swtpm
 
 - name: install libvirtd configuration
   when: mtype != 'media'
