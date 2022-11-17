@@ -26,26 +26,12 @@ echo '[supermario]' >> /etc/pacman.conf
 echo 'Server = https://pkgs.finelli.dev/arch/$arch' >> /etc/pacman.conf
 pacman -Syyu
 
-lsblk
-read -rp "What's the install disk? (e.g., /dev/sda) " INSTALL_DISK
-
-if [[ ! -e $INSTALL_DISK ]]; then
-  echo >&2 "error: install disk $INSTALL_DISK doesn't exist"
-  exit 1
-fi
-
-if [[ $INSTALL_DISK == /dev/nvme* ]]; then
-  ROOT_INSTALL_DISK="${INSTALL_DISK}p3"
-else
-  ROOT_INSTALL_DISK="${INSTALL_DISK}3"
-fi
-
 # can't have a baby without a name
 read -rp "What's the new hostname? " NEW_HOSTNAME
 echo "$NEW_HOSTNAME" > /etc/hostname
 
-pacman -S grub efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs \
-  exfat-utils f2fs-tools os-prober lvm2 cryptsetup mdadm usbutils
+pacman -S efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs exfat-utils \
+  f2fs-tools os-prober lvm2 cryptsetup mdadm usbutils elfutils
 
 AMD=AuthenticAMD
 INTEL=GenuineIntel
@@ -55,19 +41,20 @@ elif [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == "$AMD" ]]; then
   pacman -S amd-ucode
 fi
 
-# awful, i know - basically we need to escape any /'s in the device name when
-# passing it into sed or we get an "unknown option to `s'" error
-CRYPTD="cryptdevice=$(echo "$ROOT_INSTALL_DISK" | sed 's/\//\\\//g'):crypt"
-sed -i "s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\"${CRYPTD}\"/" \
-  /etc/default/grub
+# construct the kernel parameters required for booting with lvm on luks
+# https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS
+# https://wiki.archlinux.org/title/Dm-crypt/System_configuration#Kernel_parameters
+LUKSDEVICE="$(blkid -s UUID -o value /dev/disk/by-partlabel/CRYPTROOT)"
+echo -n 'kernel_cmdline="rd.luks.name=' > /etc/dracut.conf.d/cmdline.conf
+echo -n "${LUKSDEVICE}=crypt rd.lvm.lv=crypt/root rd.lvm.lv=crypt/swap" \
+  > /etc/dracut.conf.d/cmdline.conf
+echo 'root=/dev/mapper/crypt-root rootfstype=btrfs rootflags=rw"' \
+  > /etc/dracut.conf.d/cmdline.conf
 
-# we need to run grub install _before_ we run mkconfig because mkconfig
-# expects a grub.cfg.new file which doesn't exist until then
-grub-install --target=x86_64-efi --efi-directory=/efi \
-  --bootloader-id="Arch Linux" --recheck
-grub-mkconfig -o /boot/grub/grub.cfg
-grub-install --target=x86_64-efi --efi-directory=/efi \
-  --bootloader-id="Arch Linux" --recheck
+# we need to pass an explicit kernel version because the installed kernel may
+# be different than the kernel that we booted with using the install medium
+dracut --uefi --kver "$(ls /usr/lib/modules/ | head -n1)"
+bootctl install
 
 # the rest of the system gets installed/configured using ansible
 pacman -S ansible git pyalpm ansible-gpg-key-git

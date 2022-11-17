@@ -52,7 +52,6 @@
   when: mtype != 'server'
   community.general.pacman:
     name:
-      - grub
       - efibootmgr
       - btrfs-progs
       - dosfstools
@@ -65,6 +64,7 @@
       - cryptsetup
       - mdadm
       - usbutils
+      - elfutils
 
 - name: install video and input drivers
   become: true
