@@ -99,10 +99,10 @@ echo -e "${BOLDGREEN}Beginning fileystem mount for pacstrap${ENDCOLOR}"
 
 # get everything ready
 swapon /dev/crypt/swap
-mount -o compress=lzo /dev/crypt/root /mnt
+mount -o compress=zstd /dev/crypt/root /mnt
 mkdir /mnt/{boot,efi,home}
 mount /dev/disk/by-partlabel/EFISYSTEM /mnt/efi
-mount -o compress=lzo /dev/crypt/home /mnt/home
+mount -o compress=zstd /dev/crypt/home /mnt/home
 echo -e "${CYAN}Mounted filesystems${ENDCOLOR}" && sleep 1
 
 echo -e "${CYAN}Setting known good mirror${ENDCOLOR}"
