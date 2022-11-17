@@ -36,6 +36,12 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk "$INSTALL_DISK"
       # default (start immediately after preceding partition)
       # default (extend partition to end of disk)
     8e00 # (Linux LVM)
+    c # change partition label
+    1 # first partition
+    EFISYSTEM #
+    c # change partition label
+    2 # second partition
+    CRYPTROOT #
     p # print the in-memory partition table
     w # write the partition table
     Y # confirm and we're done
@@ -43,16 +49,6 @@ EOF
 
 # let's check one more time that the disks are partitioned as expected
 gdisk -l "$INSTALL_DISK"
-
-if [[ $INSTALL_DISK == /dev/nvme* ]]; then
-  EFI_INSTALL_DISK="${INSTALL_DISK}p1"
-  BOOT_INSTALL_DISK="${INSTALL_DISK}p2"
-  ROOT_INSTALL_DISK="${INSTALL_DISK}p3"
-else
-  EFI_INSTALL_DISK="${INSTALL_DISK}1"
-  BOOT_INSTALL_DISK="${INSTALL_DISK}2"
-  ROOT_INSTALL_DISK="${INSTALL_DISK}3"
-fi
 
 if [[ no == $(prompt_yesno "Confirm partition table?") ]]; then
   exit 1
@@ -64,7 +60,7 @@ echo -e "${BOLDGREEN}Beginning disk encryption${ENDCOLOR}"
 # encrypt the main partition: AES256 (e.g. /dev/sda2)
 cryptsetup --type luks2 --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
   --iter-time 5000 --use-random --verify-passphrase luksFormat \
-  "${ROOT_INSTALL_DISK}"
+  /dev/disk/by-partlabel/CRYPTROOT
 
 echo -e "${CYAN}Disk encryption complete${ENDCOLOR}"
 echo -e "${BOLDGREEN}Beginning LVM setup${ENDCOLOR}"
@@ -74,7 +70,7 @@ read -rp "How many swap G? " SWAPG
 read -rp "How many root G? " ROOTG
 
 # do the LVM boogie
-cryptsetup luksOpen "${ROOT_INSTALL_DISK}" lvm
+cryptsetup luksOpen /dev/disk/by-partlabel/CRYPTROOT lvm
 pvcreate /dev/mapper/lvm
 vgcreate crypt /dev/mapper/lvm
 lvcreate -L "${SWAPG}G" crypt -n swap
@@ -82,15 +78,21 @@ lvcreate -L "${ROOTG}G" crypt -n root
 lvcreate -l 100%FREE crypt -n home
 
 echo -e "${CYAN}LVM setup complete, making filesystems${ENDCOLOR}"
+read -rp "Press enter to continue..." throwaway
 
 # make some filesystems
-mkfs.vfat -F32 "${EFI_INSTALL_DISK}"
-echo -e "${CYAN}Made FAT32 on ${EFI_INSTALL_DISK}${ENDCOLOR}" && sleep 1
+mkfs.vfat -F32 /dev/disk/by-partlabel/EFISYSTEM
+echo -e "${CYAN}Made FAT32 on /dev/disk/by-partlabel/EFISYSTEM${ENDCOLOR}"
+read -rp "Press enter to continue..." throwaway
 mkfs.btrfs /dev/mapper/crypt-root
+echo -e "${CYAN}Made BTRFS on /root${ENDCOLOR}"
+read -rp "Press enter to continue..." throwaway
 mkfs.btrfs /dev/mapper/crypt-home
-echo -e "${CYAN}Made BTRFS on /root and /home${ENDCOLOR}" && sleep 1
+echo -e "${CYAN}Made BTRFS on /home${ENDCOLOR}"
+read -rp "Press enter to continue..." throwaway
 mkswap /dev/mapper/crypt-swap
-echo -e "${CYAN}Made swap${ENDCOLOR}" && sleep 1
+echo -e "${CYAN}Made swap${ENDCOLOR}"
+read -rp "Press enter to continue..." throwaway
 
 echo -e "${CYAN}Filesystems complete${ENDCOLOR}"
 echo -e "${BOLDGREEN}Beginning fileystem mount for pacstrap${ENDCOLOR}"
@@ -99,7 +101,7 @@ echo -e "${BOLDGREEN}Beginning fileystem mount for pacstrap${ENDCOLOR}"
 swapon /dev/crypt/swap
 mount -o compress=lzo /dev/crypt/root /mnt
 mkdir /mnt/{boot,efi,home}
-mount "${EFI_INSTALL_DISK}" /mnt/efi
+mount /dev/disk/by-partlabel/EFISYSTEM /mnt/efi
 mount -o compress=lzo /dev/crypt/home /mnt/home
 echo -e "${CYAN}Mounted filesystems${ENDCOLOR}" && sleep 1
 
