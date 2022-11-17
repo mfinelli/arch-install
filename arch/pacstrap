@@ -115,7 +115,7 @@ echo -e "${CYAN}Setup for pacstrap done${ENDCOLOR}"
 echo -e "${BOLDGREEN}Pacstrapping system${ENDCOLOR}"
 
 # do the needful
-pacstrap -i /mnt base base-devel linux linux-firmware posix
+pacstrap -i /mnt base base-devel dracut linux linux-firmware posix
 echo -e "${CYAN}Pacstrap done, generating fstab${ENDCOLOR}"
 
 genfstab -U -p /mnt >> /mnt/etc/fstab

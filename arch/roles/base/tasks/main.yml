@@ -17,6 +17,7 @@
     name:
       - base
       - base-devel
+      - dracut
       - linux
       - linux-firmware
       - sof-firmware
