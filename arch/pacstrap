@@ -31,11 +31,6 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk "$INSTALL_DISK"
       # default (start at beginning of disk)
     512M # 512M efi boot partition
     ef00 # (EFI system type)
-    n # create new partion (boot directory)
-      # default (partition number 2)
-      # default (start immediately after preceding partition)
-    +1G # 1G boot partion
-    8300 # (Linux filesystem)
     n # create new partition (luks container)
       # default (partition number 2)
       # default (start immediately after preceding partition)
@@ -91,8 +86,6 @@ echo -e "${CYAN}LVM setup complete, making filesystems${ENDCOLOR}"
 # make some filesystems
 mkfs.vfat -F32 "${EFI_INSTALL_DISK}"
 echo -e "${CYAN}Made FAT32 on ${EFI_INSTALL_DISK}${ENDCOLOR}" && sleep 1
-mkfs.ext4 "${BOOT_INSTALL_DISK}"
-echo -e "${CYAN}Made EXT4 on ${BOOT_INSTALL_DISK}${ENDCOLOR}" && sleep 1
 mkfs.btrfs /dev/mapper/crypt-root
 mkfs.btrfs /dev/mapper/crypt-home
 echo -e "${CYAN}Made BTRFS on /root and /home${ENDCOLOR}" && sleep 1
@@ -107,7 +100,6 @@ swapon /dev/crypt/swap
 mount -o compress=lzo /dev/crypt/root /mnt
 mkdir /mnt/{boot,efi,home}
 mount "${EFI_INSTALL_DISK}" /mnt/efi
-mount "${BOOT_INSTALL_DISK}" /mnt/boot
 mount -o compress=lzo /dev/crypt/home /mnt/home
 echo -e "${CYAN}Mounted filesystems${ENDCOLOR}" && sleep 1
 
