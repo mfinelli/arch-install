@@ -57,6 +57,6 @@ dracut --uefi --kver "$(ls /usr/lib/modules/ | head -n1)"
 bootctl install
 
 # the rest of the system gets installed/configured using ansible
-pacman -S ansible git pyalpm ansible-gpg-key-git
+pacman -S ansible git pyalpm ansible-gpg-key-git vim
 
 exit 0
