@@ -92,21 +92,6 @@
     name:
       - amd-ucode
 
-- name: install mkinitcpio configuration
-  become: true
-  when: mtype != 'server'
-  ansible.builtin.copy:
-    dest: /etc/mkinitcpio.conf
-    owner: root
-    group: root
-    mode: 0644
-    src: mkinitcpio.conf
-  register: mkinitcpio_config
-
-- name: mkinitcpio
-  when: mkinitcpio_config.changed # noqa no-handler
-  become: true
-  ansible.builtin.command: mkinitcpio -p linux
 
 - name: ensure sudoer rule
   become: true
