@@ -46,10 +46,10 @@ fi
 # https://wiki.archlinux.org/title/Dm-crypt/System_configuration#Kernel_parameters
 LUKSDEVICE="$(blkid -s UUID -o value /dev/disk/by-partlabel/CRYPTROOT)"
 echo -n 'kernel_cmdline="rd.luks.name=' > /etc/dracut.conf.d/cmdline.conf
-echo -n "${LUKSDEVICE}=crypt rd.lvm.lv=crypt/root rd.lvm.lv=crypt/swap" \
-  > /etc/dracut.conf.d/cmdline.conf
+echo -n "${LUKSDEVICE}=crypt rd.lvm.lv=crypt/root rd.lvm.lv=crypt/swap " \
+  >> /etc/dracut.conf.d/cmdline.conf
 echo 'root=/dev/mapper/crypt-root rootfstype=btrfs rootflags=rw"' \
-  > /etc/dracut.conf.d/cmdline.conf
+  >> /etc/dracut.conf.d/cmdline.conf
 
 # we need to pass an explicit kernel version because the installed kernel may
 # be different than the kernel that we booted with using the install medium
