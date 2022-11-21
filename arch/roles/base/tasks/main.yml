@@ -18,6 +18,7 @@
       - base
       - base-devel
       - dracut
+      - dracut-hook-uefi
       - linux
       - linux-firmware
       - sof-firmware
