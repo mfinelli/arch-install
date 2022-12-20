@@ -11,12 +11,12 @@
       - dropbox
 
 - name: add 1password signing key
-  when: mtype == 'personal'
+  when: mtype != 'media' and mtype != 'server'
   gpg_key:
     fpr: 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
 
 - name: install password apps
-  when: mtype == 'personal'
+  when: mtype != 'media' and mtype != 'server'
   kewlfft.aur.aur:
     name:
       - 1password
