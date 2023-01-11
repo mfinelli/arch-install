@@ -18,6 +18,7 @@
       - asdf-vm
       - python-pip # dependency of asdf-pyapp
       - tidy
+      - yj
 
 - name: install required tools from aur
   when: mtype == 'work'
