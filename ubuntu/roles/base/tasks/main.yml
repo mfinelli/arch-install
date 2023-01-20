@@ -68,3 +68,12 @@
       - vim
       - whois
     update_cache: true
+
+# https://askubuntu.com/a/1246984
+- name: never install phased updates
+  ansible.builtin.copy:
+    src: phased-updates
+    dest: /etc/apt/apt.conf.d/99-Phased-Updates
+    owner: root
+    group: root
+    mode: 0644
