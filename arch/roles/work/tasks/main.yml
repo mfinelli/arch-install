@@ -17,6 +17,7 @@
       - mariadb-clients
       - asdf-vm
       - python-pip # dependency of asdf-pyapp
+      - python-kubernetes
       - tidy
       - yj
 
@@ -27,3 +28,4 @@
       - nodejs-lhci-cli
       - slack-desktop # slack-wayland doesn't work very well...
       - apachedirectorystudio
+      - python-onepasswordconnectsdk
