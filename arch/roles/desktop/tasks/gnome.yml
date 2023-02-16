@@ -47,6 +47,14 @@
 #       - gnome-shell-extension-openweather-git
 #       - gnome-shell-extension-appindicator-git
 
+- name: install firmware updater
+  become: true
+  community.general.pacman:
+    name:
+      - gnome-firmware
+      - fwupd
+      - dmidecode
+
 - name: enable gdm
   become: true
   ansible.builtin.systemd: name=gdm.service enabled=true
