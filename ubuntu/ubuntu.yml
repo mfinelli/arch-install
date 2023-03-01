@@ -30,3 +30,9 @@
     - name: install mullvad vpn
       when: mtype != 'server'
       ansible.builtin.apt: deb=https://mullvad.net/media/app/MullvadVPN-2023.1_amd64.deb
+
+    # discord also doesn't have an apt repository (and doesn't seem to be on
+    # the roadmap at all, so this is the best we can do for now)
+    - name: install discord
+      when: mtype != 'server'
+      ansible.builtin.apt: deb=https://discord.com/api/download?platform=linux&format=deb
