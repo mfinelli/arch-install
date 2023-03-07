@@ -1,6 +1,8 @@
 ---
-- name: update resolv.conf
+- name: Update resolv.conf
   ansible.builtin.command: resolvconf -u
 
-- name: restart unbound
-  ansible.builtin.systemd: name=unbound.service state=restarted
+- name: Restart unbound
+  ansible.builtin.systemd:
+    name: unbound.service
+    state: restarted

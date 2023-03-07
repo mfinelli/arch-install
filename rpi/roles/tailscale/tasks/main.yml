@@ -1,21 +1,25 @@
 ---
-- name: add the tailscale signing key
+- name: Add the tailscale signing key
   ansible.builtin.apt_key:
     url: https://pkgs.tailscale.com/stable/raspbian/{{ ansible_distribution_release }}.asc
 
-- name: add tailscale apt repository
+- name: Add tailscale apt repository
   ansible.builtin.apt_repository:
     repo: deb https://pkgs.tailscale.com/stable/raspbian {{ ansible_distribution_release }} main
     filename: tailscale
     update_cache: true
 
-- name: install tailscale
-  ansible.builtin.apt: name=tailscale
+- name: Install tailscale
+  ansible.builtin.apt:
+    name: tailscale
 
-- name: ensure tailscaled is running and enabled
-  ansible.builtin.systemd: name=tailscaled.service enabled=true state=started
+- name: Ensure tailscaled is running and enabled
+  ansible.builtin.systemd:
+    name: tailscaled.service
+    enabled: true
+    state: started
 
-- name: enable IP forwarding for tailscale exit node status
+- name: Enable IP forwarding for tailscale exit node status
   ansible.posix.sysctl:
     name: "{{ item }}"
     value: '1'

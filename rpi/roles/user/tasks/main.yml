@@ -1,5 +1,5 @@
 ---
-- name: add home ssh key
+- name: Add home ssh key
   become: true
   become_user: "{{ whoami }}"
   ansible.posix.authorized_key:
@@ -10,20 +10,20 @@
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGLzoWaCMxwWMyepLYUu6FBbYZmDOaXPj+LQtWjdM8pW mario@ipad
     exclusive: true
 
-- name: ensure src directory
+- name: Ensure src directory
   become: true
   become_user: "{{ whoami }}"
   ansible.builtin.file:
     path: "{{ whoami_home }}/{{ item }}"
     owner: "{{ whoami }}"
     group: "{{ whoami }}"
-    mode: 0755
+    mode: "0755"
     state: directory
   loop:
     - src
     - src/mfinelli
 
-- name: clone this repository for easy updates
+- name: Clone this repository for easy updates
   become: true
   become_user: "{{ whoami }}"
   ansible.builtin.git:

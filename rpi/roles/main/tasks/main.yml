@@ -1,51 +1,58 @@
 ---
-- name: ensure setup dependencies
+- name: Ensure setup dependencies
   ansible.builtin.apt:
     name:
       - ansible
       - git
 
-- name: install apt-transport-https
-  ansible.builtin.apt: name=apt-transport-https
+- name: Install apt-transport-https
+  ansible.builtin.apt:
+    name: apt-transport-https
 
-- name: install https sources list
+- name: Install https sources list
   ansible.builtin.template:
     src: sources.list.j2
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     dest: /etc/apt/sources.list
 
-- name: install https raspi sources list
+- name: Install https raspi sources list
   ansible.builtin.template:
     src: raspi.list.j2
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     dest: /etc/apt/sources.list.d/raspi.list
 
   # TODO: we should update_cache based on the above two templates
-- name: install firefox
-  ansible.builtin.apt: name=firefox-esr update_cache=true
+- name: Install firefox
+  ansible.builtin.apt:
+    name: firefox-esr
+    update_cache: true
 
-- name: ensure openssh is installed
-  ansible.builtin.apt: name=openssh-server
+- name: Ensure openssh is installed
+  ansible.builtin.apt:
+    name: openssh-server
 
-- name: ensure sshd is running and enabled
-  ansible.builtin.systemd: name=ssh.service enabled=true state=started
+- name: Ensure sshd is running and enabled
+  ansible.builtin.systemd:
+    name: ssh.service
+    enabled: true
+    state: started
 
-- name: copy sshd config
+- name: Copy sshd config
   ansible.builtin.copy:
     src: sshd_config
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     dest: /etc/ssh/sshd_config
     validate: /usr/sbin/sshd -tf %s
   notify:
-    - restart sshd
+    - Restart sshd
 
-- name: install other applications
+- name: Install other applications
   ansible.builtin.apt:
     name:
       - htop
@@ -60,10 +67,11 @@
       - universal-ctags
       - vim
 
-- name: install backup applications
+- name: Install backup applications
   ansible.builtin.apt:
     name:
       - borgbackup
       - rclone
 
-- include: boot.yml
+- name: Configure FDE and boot
+  ansible.builtin.include_tasks: boot.yml

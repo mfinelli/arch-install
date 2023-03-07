@@ -1,54 +1,57 @@
 ---
 # there might be a better way but this works pretty well
 # https://serverfault.com/q/881908
-- name: check if this host uses a keyfile
+- name: Check if this host uses a keyfile
   when: fde == 'true'
   tags: fde
   block:
-    - name: default keyfile to false
-      ansible.builtin.set_fact: crypttab_keyfile=false
+    - name: Default keyfile to false
+      ansible.builtin.set_fact:
+        crypttab_keyfile: false
 
-    - name: check if a keyfile exists in the root
-      ansible.builtin.stat: path=/root/cryptkey
+    - name: Check if a keyfile exists in the root
+      ansible.builtin.stat:
+        path: /root/cryptkey
       register: crypttab_cryptkey
 
-    - name: update keyfile setting
-      ansible.builtin.set_fact: crypttab_keyfile=true
+    - name: Update keyfile setting
+      ansible.builtin.set_fact:
+        crypttab_keyfile: true
       when: crypttab_cryptkey.stat.exists
 
-- name: install kernel boot config
+- name: Install kernel boot config
   ansible.builtin.template:
     dest: /boot/config.txt
     owner: root
     group: root
-    mode: 0755 # all rpi files in /boot are +x
+    mode: "0755" # all rpi files in /boot are +x
     src: config.txt.j2
   tags: fde
 
-- name: install kernel command line config
+- name: Install kernel command line config
   ansible.builtin.template:
     dest: /boot/cmdline.txt
     owner: root
     group: root
-    mode: 0755 # all rpi files in /boot are +x
+    mode: "0755" # all rpi files in /boot are +x
     src: cmdline.txt.j2
   tags: fde
 
-- name: install updated fstab
+- name: Install updated fstab
   ansible.builtin.template:
     dest: /etc/fstab
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     src: fstab.j2
   tags: fde
 
-- name: install updated crypttab
+- name: Install updated crypttab
   when: fde == 'true'
   ansible.builtin.template:
     dest: /etc/crypttab
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     src: crypttab.j2
   tags: fde
