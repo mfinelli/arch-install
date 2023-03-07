@@ -1,49 +1,49 @@
 ---
-- name: install kubectx
+- name: Install kubectx
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/kubectx
     dest: /usr/local/bin/kubectx
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
 
-- name: install kubens
+- name: Install kubens
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/kubens
     dest: /usr/local/bin/kubens
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
 
-- name: install kubectx bash completion
+- name: Install kubectx bash completion
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.bash
     dest: /etc/bash_completion.d/kubectx
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
 
-- name: install kubectx zsh completion
+- name: Install kubectx zsh completion
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.zsh
     dest: /usr/share/zsh/vendor-completions/_kubectx
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
 
-- name: install kubens bash completion
+- name: Install kubens bash completion
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubens.bash
     dest: /etc/bash_completion.d/kubens
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
 
-- name: install kubens zsh completion
+- name: Install kubens zsh completion
   become: true
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.zsh
     dest: /usr/share/zsh/vendor-completions/_kubens
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root

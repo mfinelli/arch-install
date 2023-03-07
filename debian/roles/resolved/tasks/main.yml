@@ -1,38 +1,41 @@
 ---
-- name: install NetworkManager configuration
+- name: Install NetworkManager configuration
   ansible.builtin.copy:
     src: NetworkManager.conf
     dest: /etc/NetworkManager/NetworkManager.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify:
-    - restart NetworkManager
+    - Restart NetworkManager
 
-- name: ensure systemd-resolved is running and enabled
-  ansible.builtin.systemd: name=systemd-resolved enabled=yes state=started
+- name: Ensure systemd-resolved is running and enabled
+  ansible.builtin.systemd:
+    name: systemd-resolved
+    enabled: true
+    state: started
 
-- name: symlink the systemd resolv.conf stub
+- name: Symlink the systemd resolv.conf stub
   ansible.builtin.file:
     src: /run/systemd/resolve/stub-resolv.conf
     dest: /etc/resolv.conf
     state: link
     force: true # overwrite existing non-symlink file
 
-- name: ensure resolved.conf.d directory
+- name: Ensure resolved.conf.d directory
   ansible.builtin.file:
     path: /etc/systemd/resolved.conf.d
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
     state: directory
 
-- name: copy custom systemd-resolved configuration
+- name: Copy custom systemd-resolved configuration
   ansible.builtin.copy:
     src: resolved.conf
     dest: /etc/systemd/resolved.conf.d/dns.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify:
-    - restart systemd-resolved
+    - Restart systemd-resolved

@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
+- name: Configure debian system
+  hosts: localhost
   connection: local
   vars:
     bfg_repo_cleaner_version: 1.14.0
@@ -12,7 +13,7 @@
     terraform_version: 1.0.6
 
   tasks:
-    - name: ensure manually installed dependencies
+    - name: Ensure manually installed dependencies
       ansible.builtin.apt:
         name:
           - ansible
@@ -21,7 +22,7 @@
           - sudo
         update_cache: true
 
-    - name: install other packages
+    - name: Install other packages
       ansible.builtin.apt:
         name:
           - ansible-lint
@@ -65,7 +66,7 @@
           - zsh-autosuggestions
           - zsh-syntax-highlighting
 
-    - name: install python dependencies
+    - name: Install python dependencies
       ansible.builtin.pip:
         name:
           - azure-identity
@@ -75,46 +76,53 @@
           - yapf
         executable: pip3
 
-    - name: install terraform
+    - name: Install terraform
       ansible.builtin.unarchive:
         src: https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip
         remote_src: true
         dest: /usr/local/bin
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
 
-    - name: install shfmt
+    - name: Install shfmt
       ansible.builtin.get_url:
         url: https://github.com/mvdan/sh/releases/download/v{{ shfmt_version }}/shfmt_v{{ shfmt_version }}_linux_amd64
         dest: /usr/local/bin/shfmt
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
 
-    - name: install sops
+    - name: Install sops
       ansible.builtin.get_url:
         url: https://github.com/mozilla/sops/releases/download/v{{ sops_version }}/sops-v{{ sops_version }}.linux
         dest: /usr/local/bin/sops
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
 
-    - name: ensure extra directories
-      ansible.builtin.file: path={{ item }} state=directory mode=0755 owner=root group=root
+    - name: Ensure extra directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+        owner: root
+        group: root
       loop:
         - /usr/local/share/java
 
-    - name: install repo cleaner (https://rtyley.github.io/bfg-repo-cleaner/)
+    - name: Install repo cleaner (https://rtyley.github.io/bfg-repo-cleaner/)
       ansible.builtin.get_url:
         url: https://repo1.maven.org/maven2/com/madgag/bfg/{{ bfg_repo_cleaner_version }}/bfg-{{ bfg_repo_cleaner_version }}.jar
         dest: /usr/local/share/java/bfg.jar
-        mode: 0644
+        mode: "0644"
         owner: root
         group: root
 
-    - name: ensure /etc/hosts entries
-      ansible.builtin.lineinfile: path=/etc/hosts line={{ item }}
+    - name: Ensure /etc/hosts entries
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        line: "{{ item }}"
       loop:
         - 10.247.40.10 gdx-ds-app1
         - 10.247.40.11 gdx-ds-hpc1
