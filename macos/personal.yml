@@ -1,7 +1,8 @@
 ---
-- hosts: localhost
+- name: Configure macOS
+  hosts: localhost
   tasks:
-    - name: install helm plugins
+    - name: Install helm plugins
       kubernetes.core.helm_plugin:
         plugin_path: "{{ item }}"
       loop:

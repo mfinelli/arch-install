@@ -1,12 +1,13 @@
 ---
-- hosts: localhost
+- name: Configure macOS
+  hosts: localhost
   tasks:
-    - name: get user's primary group
+    - name: Get user's primary group
       ansible.builtin.command: id -gn {{ ansible_user_id }}
       register: whoami_group
       changed_when: false
 
-    - name: install python packages
+    - name: Install python packages
       ansible.builtin.pip:
         name:
           - azure-identity
@@ -15,28 +16,28 @@
           - azure-storage-blob
         executable: /usr/local/bin/pip3
 
-    - name: install helm plugins
+    - name: Install helm plugins
       kubernetes.core.helm_plugin:
         plugin_path: "{{ item }}"
       loop:
         - https://github.com/databus23/helm-diff.git
         - https://github.com/jkroepke/helm-secrets.git
 
-    - name: ensure local bin directory
+    - name: Ensure local bin directory
       ansible.builtin.file:
         path: "{{ ansible_user_dir }}/bin"
         owner: "{{ ansible_user_id }}"
         group: "{{ whoami_group.stdout }}"
-        mode: 0755
+        mode: "0755"
         state: directory
 
-    - name: install pluto
+    - name: Install pluto
       ansible.builtin.unarchive:
-        src: https://github.com/FairwindsOps/pluto/releases/download/v4.0.5/pluto_4.0.5_darwin_amd64.tar.gz
+        src: https://github.com/FairwindsOps/pluto/releases/download/v5.15.1/pluto_5.15.1_darwin_amd64.tar.gz
         dest: "{{ ansible_user_dir }}/bin"
         remote_src: true
 
-    - name: cleanup extra pluto files
+    - name: Cleanup extra pluto files
       ansible.builtin.file:
         path: "{{ ansible_user_dir }}/bin/{{ item }}"
         state: absent
@@ -44,18 +45,18 @@
         - LICENSE
         - README.md
 
-    - name: create docker plugins directory
+    - name: Create docker plugins directory
       ansible.builtin.file:
         path: "{{ ansible_user_dir }}/{{ item }}"
         owner: "{{ ansible_user_id }}"
         group: "{{ whoami_group.stdout }}"
-        mode: 0755
+        mode: "0755"
         state: directory
       loop:
         - .docker
         - .docker/cli-plugins
 
-    - name: symlink docker-compose plugin
+    - name: Symlink docker-compose plugin
       ansible.builtin.file:
         src: /usr/local/opt/docker-compose/bin/docker-compose
         dest: "{{ ansible_user_dir }}/.docker/cli-plugins/docker-compose"
