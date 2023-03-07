@@ -1,10 +1,10 @@
 ---
-- name: add 1password signing key
+- name: Add 1password signing key
   ansible.builtin.apt_key:
     url: https://downloads.1password.com/linux/keys/1password.asc
     keyring: /usr/share/keyrings/1password-archive-keyring.gpg
 
-- name: add 1password repository
+- name: Add 1password repository
   ansible.builtin.apt_repository:
     repo: >
       deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg]
@@ -12,31 +12,32 @@
     filename: 1password
     update_cache: true
 
-- name: create debsig-verify policy directories
+- name: Create debsig-verify policy directories
   ansible.builtin.file:
     path: "{{ item }}"
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
     state: directory
   loop:
     - /etc/debsig/policies/AC2D62742012EA22
     - /usr/share/debsig/keyrings/AC2D62742012EA22
 
-- name: download debsig-verify policy
+- name: Download debsig-verify policy
   ansible.builtin.get_url:
     url: https://downloads.1password.com/linux/debian/debsig/1password.pol
     dest: /etc/debsig/policies/AC2D62742012EA22/1password.pol
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
-- name: add debsig-verify policy
+- name: Add debsig-verify policy
   ansible.builtin.command:
     cmd: >
       gpg --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
       /usr/share/keyrings/1password-archive-keyring.gpg
     creates: /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
 
-- name: install 1password
-  ansible.builtin.apt: name=1password
+- name: Install 1password
+  ansible.builtin.apt:
+    name: 1password

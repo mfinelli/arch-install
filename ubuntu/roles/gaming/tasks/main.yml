@@ -1,5 +1,5 @@
 ---
-- name: check if i386 is enabled
+- name: Check if i386 is enabled
   ansible.builtin.shell: >
     set -e -o pipefail;
     dpkg --print-foreign-architectures | grep i386
@@ -9,15 +9,18 @@
   changed_when: i386_enabled.rc == 1
   failed_when: i386_enabled.rc > 1
 
-- name: enable i386 architecture
+- name: Enable i386 architecture
   ansible.builtin.command: dpkg --add-architecture i386
   when: i386_enabled.rc == 1
+  register: i386_was_enabled
+  changed_when: i386_was_enabled.rc == 0
+  failed_when: i386_was_enabled.rc != 0
 
-- name: add steam repo key
+- name: Add steam repo key
   ansible.builtin.apt_key:
     url: https://repo.steampowered.com/steam/archive/stable/steam.gpg
 
-- name: add steam repository
+- name: Add steam repository
   ansible.builtin.apt_repository:
     repo: >
       deb [arch=amd64,i386]
@@ -25,7 +28,7 @@
     filename: steam
     update_cache: true
 
-- name: add steam source repository
+- name: Add steam source repository
   ansible.builtin.apt_repository:
     repo: >
       deb-src [arch=amd64,i386]
@@ -33,7 +36,7 @@
     filename: steam
     update_cache: true
 
-- name: install steam
+- name: Install steam
   ansible.builtin.apt:
     name:
       - libgl1-mesa-dri:amd64
@@ -43,12 +46,12 @@
       - steam-launcher
     update_cache: true
 
-- name: add winehq apt key
+- name: Add winehq apt key
   ansible.builtin.apt_key:
     url: https://dl.winehq.org/wine-builds/winehq.key
     keyring: /usr/share/keyrings/winehq-archive.gpg
 
-- name: add winehq repository
+- name: Add winehq repository
   ansible.builtin.apt_repository:
     repo: >
       deb [arch=amd64,i386 signed-by=/usr/share/keyrings/winehq-archive.gpg]
@@ -56,7 +59,7 @@
     filename: winehq
     update_cache: true
 
-- name: install wine
+- name: Install wine
   ansible.builtin.apt:
     name:
       # - winehq-stable
@@ -64,13 +67,13 @@
       - fonts-wine
     install_recommends: true
 
-- name: add lutris ppa signing key
+- name: Add lutris ppa signing key
   ansible.builtin.apt_key:
     keyserver: keyserver.ubuntu.com
     id: 82D96E430A1F1C0F0502747E37B90EDD4E3EFAE4
     keyring: /etc/apt/trusted.gpg.d/lutris-team-ubuntu-lutris.gpg
 
-- name: add lutris ppa
+- name: Add lutris ppa
   ansible.builtin.apt_repository:
     repo: >
       deb https://ppa.launchpadcontent.net/lutris-team/lutris/ubuntu
@@ -78,10 +81,11 @@
     filename: lutris
     update_cache: true
 
-- name: install lutris
-  ansible.builtin.apt: name=lutris
+- name: Install lutris
+  ansible.builtin.apt:
+    name: lutris
 
-- name: install lutris dependencies for origin
+- name: Install lutris dependencies for origin
   ansible.builtin.apt:
     name:
       - libgnutls30:i386
@@ -93,7 +97,7 @@
       - libfreetype6:i386
       - libdbus-1-3:i386
 
-- name: install virtualbox
+- name: Install virtualbox
   ansible.builtin.apt:
     name:
       - virtualbox

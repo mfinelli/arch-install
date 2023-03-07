@@ -1,23 +1,23 @@
 ---
-- name: ensure resolved.conf.d directory
+- name: Ensure resolved.conf.d directory
   ansible.builtin.file:
     path: /etc/systemd/resolved.conf.d
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
     state: directory
 
-- name: copy custom systemd-resolved configuration
+- name: Copy custom systemd-resolved configuration
   ansible.builtin.copy:
     src: resolved.conf
     dest: /etc/systemd/resolved.conf.d/dns.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify:
-    - restart systemd-resolved
+    - Restart systemd-resolved
 
-- name: ensure manual dependencies
+- name: Ensure manual dependencies
   ansible.builtin.apt:
     name:
       - ansible
@@ -25,30 +25,31 @@
       - git
     update_cache: true
 
-- name: install apt https transport
-  ansible.builtin.apt: name=apt-transport-https
+- name: Install apt https transport
+  ansible.builtin.apt:
+    name: apt-transport-https
 
 # - name: add supermario ppa
 #   ansible.builtin.apt_repository: repo=ppa:mfinelli/supermario
 
-- name: add supermario ppa
+- name: Add supermario ppa
   ansible.builtin.template:
     dest: /etc/apt/sources.list.d/supermario.list
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     src: supermario.list.j2
 
-- name: install new sources list
+- name: Install new sources list
   when: mtype != 'server'
   ansible.builtin.template:
     dest: /etc/apt/sources.list
     owner: root
     group: root
-    mode: 0664
+    mode: "0664"
     src: sources.list.j2
 
-- name: install base packages
+- name: Install base packages
   ansible.builtin.apt:
     name:
       - fd-find
@@ -70,10 +71,10 @@
     update_cache: true
 
 # https://askubuntu.com/a/1246984
-- name: never install phased updates
+- name: Never install phased updates
   ansible.builtin.copy:
     src: phased-updates
     dest: /etc/apt/apt.conf.d/99-Phased-Updates
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"

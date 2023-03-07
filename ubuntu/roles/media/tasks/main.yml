@@ -1,5 +1,5 @@
 ---
-- name: install media packages
+- name: Install media packages
   ansible.builtin.apt:
     name:
       - cksfv
@@ -13,13 +13,13 @@
       - yt-dlp
 
 # https://blogs.gnome.org/thaller/2016/08/26/mac-address-spoofing-in-networkmanager-1-4-0/
-- name: enable random mac addresses
+- name: Enable random mac addresses
   when: mtype == 'media'
   ansible.builtin.copy:
     src: mac-randomization.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     dest: /etc/NetworkManager/conf.d/30-mac-randomization.conf
   notify:
-    - restart network manager
+    - Restart network manager

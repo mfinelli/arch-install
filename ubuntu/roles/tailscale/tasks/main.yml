@@ -1,10 +1,10 @@
 ---
-- name: add tailscale signing key
+- name: Add tailscale signing key
   ansible.builtin.apt_key:
     url: https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release }}.gpg
     keyring: /usr/share/keyrings/tailscale-archive-keyring.gpg
 
-- name: add tailscale repository
+- name: Add tailscale repository
   ansible.builtin.apt_repository:
     repo: >
       deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg]
@@ -12,5 +12,6 @@
     filename: tailscale
     update_cache: true
 
-- name: install tailscale
-  ansible.builtin.apt: name=tailscale
+- name: Install tailscale
+  ansible.builtin.apt:
+    name: tailscale
