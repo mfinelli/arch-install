@@ -1,36 +1,37 @@
 ---
-- name: add dropbox signing key
+- name: Add dropbox signing key
   when: mtype == 'personal'
   gpg_key:
     fpr: 1C61A2656FB57B7E4DE0F4C1FC918B335044912E
 
-- name: install sync apps
+- name: Install sync apps
   when: mtype == 'personal'
   kewlfft.aur.aur:
     name:
       - dropbox
 
-- name: add 1password signing key
+- name: Add 1password signing key
   when: mtype != 'media' and mtype != 'server'
   gpg_key:
     fpr: 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
 
-- name: install password apps
+- name: Install password apps
   when: mtype != 'media' and mtype != 'server'
   kewlfft.aur.aur:
     name:
       - 1password
       - 1password-cli
 
-- name: install keepass
+- name: Install keepass
   when: mtype != 'server'
   become: true
-  pacman: name=keepass
+  community.general.pacman:
+    name: keepass
 
-- name: install yubikey tools
+- name: Install yubikey tools
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - pcsclite
       - ccid
@@ -39,10 +40,10 @@
       - yubikey-personalization
       - yubikey-personalization-gui
 
-- name: install libreoffice
+- name: Install libreoffice
   when: mtype != 'media' and mtype != 'server'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - libreoffice-fresh
       - libreoffice-fresh-en-gb
@@ -70,27 +71,27 @@
       - mythes-fr
       - mythes-it
 
-- name: install the gimp
+- name: Install the gimp
   when: mtype != 'media' and mtype != 'server'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - gimp
       - xsane-gimp
       - gimp-extras
 
-- name: install graphics extras
+- name: Install graphics extras
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - dcraw
       - inkscape
 
-- name: install chat programs
+- name: Install chat programs
   when: mtype != 'media' and mtype != 'server'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - pidgin
       - pidgin-otr
@@ -102,10 +103,10 @@
       - aspell-it
       - hexchat
 
-- name: install thunderbird
+- name: Install thunderbird
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - thunderbird
       - thunderbird-i18n-en-us
@@ -113,10 +114,10 @@
       - thunderbird-i18n-fr
       - thunderbird-i18n-it
 
-- name: install gnucash
+- name: Install gnucash
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - gnucash
       - gnucash-docs
@@ -125,7 +126,8 @@
       - perl-libwww
       - perl-lwp-protocol-https
 
-- name: install raspberry pi imager
+- name: Install raspberry pi imager
   when: mtype == 'personal'
   become: true
-  pacman: name=rpi-imager
+  community.general.pacman:
+    name: rpi-imager

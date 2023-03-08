@@ -1,7 +1,7 @@
 ---
-- name: install zsh
+- name: Install zsh
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - zsh
       - grml-zsh-config
@@ -10,23 +10,24 @@
       - zsh-completions
       - zsh-theme-powerlevel10k
 
-- name: install gitstatus
+- name: Install gitstatus
   become: true
-  pacman: name=gitstatus
+  community.general.pacman:
+    name: gitstatus
 
-- name: install terminal fonts
+- name: Install terminal fonts
   when: mtype != 'server'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - ttf-meslo-nerd-font-powerlevel10k
       - ttf-jetbrains-mono-nerd
       # - ttf-jetbrains-mono
       # - ttf-nerd-fonts-symbols-mono
 
-- name: install main cli apps
+- name: Install main cli apps
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - tmux
       - htop
@@ -49,10 +50,10 @@
       - vivid
       - zoxide
 
-- name: install secondary cli apps
+- name: Install secondary cli apps
   when: mtype != 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - moreutils
       - ncdu
@@ -65,33 +66,35 @@
       - pv
       - urlwatch
 
-- name: install shared secondary cli apps
+- name: Install shared secondary cli apps
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - cdrtools
       - unrar
 
-- name: install backup apps
+- name: Install backup apps
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - borg
       - rclone
       - pass
       - pass-otp
 
-- name: add archuseriso signing key
+- name: Add archuseriso signing key
   when: mtype != 'media' and mtype != 'server'
   gpg_key:
     fpr: A5143BB56952B3189F49A175FAC4560863BEEC34
 
-- name: install archuseriso from aur
+- name: Install archuseriso from aur
   when: mtype != 'media' and mtype != 'server'
-  kewlfft.aur.aur: name=archuseriso
+  kewlfft.aur.aur:
+    name: archuseriso
 
-- name: install tailscale
+- name: Install tailscale
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman: name=tailscale
+  community.general.pacman:
+    name: tailscale

@@ -1,32 +1,33 @@
 ---
-- name: install wine
+- name: Install wine
   when:
     - multilib == 'true'
     - mtype == 'personal' or mtype == 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - wine
       - wine-mono
       - wine-gecko
       - winetricks
 
-- name: install lib32 libraries
+- name: Install lib32 libraries
   when:
     - multilib == 'true'
     - mtype == 'personal' or mtype == 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - lib32-libpulse
       - lib32-alsa-plugins
 
-- name: install picard
+- name: Install picard
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman: name=picard
+  community.general.pacman:
+    name: picard
 
-- name: install other music applications
+- name: Install other music applications
   when: mtype == 'personal' or mtype == 'media'
   kewlfft.aur.aur:
     name:
@@ -34,42 +35,45 @@
       - foobar2000
       - mp3tag
 
-- name: install tor browser bundle
+- name: Install tor browser bundle
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman: name=tor-browser
+  community.general.pacman:
+    name: tor-browser
 
-- name: install google-chrome
+- name: Install google-chrome
   when: mtype != 'server'
-  kewlfft.aur.aur: name=google-chrome
+  kewlfft.aur.aur:
+    name: google-chrome
 
-- name: install youtube-dl
+- name: Install youtube-dl
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - youtube-dl
       - yt-dlp
 
-- name: install gallery-dl
+- name: Install gallery-dl
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  community.general.pacman: name=gallery-dl
+  community.general.pacman:
+    name: gallery-dl
 
-- name: install other media dependencies
+- name: Install other media dependencies
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - vlc
       - libdvdcss
       - libaacs
       - handbrake
 
-- name: install torrent client
+- name: Install torrent client
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - deluge
       - cksfv
