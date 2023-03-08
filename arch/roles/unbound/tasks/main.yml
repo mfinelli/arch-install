@@ -1,5 +1,5 @@
 ---
-- name: install unbound and dependencies
+- name: Install unbound and dependencies
   become: true
   community.general.pacman:
     name:
@@ -7,21 +7,21 @@
       - expat
       - openresolv
 
-- name: download initial root hints
+- name: Download initial root hints
   become: true
   ansible.builtin.get_url:
     url: https://www.internic.net/domain/named.cache
     dest: /etc/unbound/root.hints
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
 
-- name: copy resolveconf.conf
+- name: Copy resolveconf.conf
   become: true
   ansible.builtin.copy:
     src: resolvconf.conf
     dest: /etc/resolvconf.conf
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
 
@@ -37,7 +37,7 @@
   ansible.builtin.copy:
     src: unbound.conf
     dest: /etc/unbound/unbound.conf
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
 
@@ -46,7 +46,7 @@
   ansible.builtin.copy:
     src: root-hints.service
     dest: /etc/systemd/system/root-hints.service
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
 
@@ -55,7 +55,7 @@
   ansible.builtin.copy:
     src: root-hints.timer
     dest: /etc/systemd/system/root-hints.timer
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
 
@@ -65,14 +65,18 @@
   ansible.builtin.copy:
     src: rc-manager.conf
     dest: /etc/NetworkManager/conf.d/rc-manager.conf
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
 
-- name: enable root-hints timer
+- name: Enable root-hints timer
   become: true
-  ansible.builtin.systemd: name=root-hints.timer enabled=true
+  ansible.builtin.systemd:
+    name: root-hints.timer
+    enabled: true
 
-- name: enable unbound
+- name: Enable unbound
   become: true
-  ansible.builtin.systemd: name=unbound.service enabled=true
+  ansible.builtin.systemd:
+    name: unbound.service
+    enabled: true

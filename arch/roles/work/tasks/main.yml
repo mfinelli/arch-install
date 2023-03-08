@@ -1,18 +1,20 @@
 ---
-- name: install vpn client
+- name: Install vpn client
   when: mtype == 'work'
   become: true
-  pacman: name=networkmanager-fortisslvpn
+  community.general.pacman:
+    name: networkmanager-fortisslvpn
 
-- name: install zenity
+- name: Install zenity
   when: mtype == 'work'
   become: true
-  pacman: name=zenity
+  community.general.pacman:
+    name: zenity
 
-- name: install required tools
+- name: Install required tools
   when: mtype == 'work'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - cmctl # cert-manager cli
       - colordiff
@@ -26,7 +28,7 @@
       - tidy
       - yj
 
-- name: install required tools from aur
+- name: Install required tools from aur
   when: mtype == 'work'
   kewlfft.aur.aur:
     name:
