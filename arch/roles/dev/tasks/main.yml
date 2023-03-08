@@ -1,10 +1,11 @@
 ---
-- name: install firefox developer edition
+- name: Install firefox developer edition
   when: mtype != 'media' and mtype != 'server'
   become: true
-  community.general.pacman: name=firefox-developer-edition
+  community.general.pacman:
+    name: firefox-developer-edition
 
-- name: install main development packages
+- name: Install main development packages
   when: mtype == 'personal'
   become: true
   community.general.pacman:
@@ -12,14 +13,14 @@
       - imagemagick
       - geckodriver
 
-- name: download extra editors
+- name: Download extra editors
   when: mtype == 'personal'
   kewlfft.aur.aur:
     name:
       - sublime-text-4
       - rubymine
 
-- name: install latex packages
+- name: Install latex packages
   when: mtype == 'personal'
   become: true
   community.general.pacman:
@@ -27,7 +28,7 @@
       - texlive-most
       - texlive-lang
 
-- name: install docker
+- name: Install docker
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -35,7 +36,7 @@
       - docker
       - docker-compose
 
-- name: install virtualbox
+- name: Install virtualbox
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -45,7 +46,7 @@
       - virtualbox-guest-iso
 
 # TODO: sudo usermod -aG libvirt mario
-- name: install virt-manager
+- name: Install virt-manager
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -57,27 +58,27 @@
       - dnsmasq
       - swtpm
 
-- name: install libvirtd configuration
+- name: Install libvirtd configuration
   when: mtype != 'media'
   become: true
   ansible.builtin.copy:
     dest: /etc/libvirt/libvirtd.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     src: libvirtd.conf
 
-- name: install libvirtd qemu configuration
+- name: Install libvirtd qemu configuration
   when: mtype != 'media'
   become: true
   ansible.builtin.template:
     dest: /etc/libvirt/qemu.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     src: qemu.conf.j2
 
-- name: install command line utilities
+- name: Install command line utilities
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -89,7 +90,7 @@
       - shellcheck
       - shfmt
 
-- name: install go
+- name: Install go
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -97,7 +98,7 @@
       - go
       - go-tools
 
-- name: install rust
+- name: Install rust
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -106,27 +107,31 @@
       - cargo-about
       - cargo-outdated
 
-- name: install redis
+- name: Install redis
   when: mtype == 'personal'
   become: true
-  community.general.pacman: name=redis
+  community.general.pacman:
+    name: redis
 
-- name: install postgresql
+- name: Install postgresql
   when: mtype == 'personal'
   become: true
-  community.general.pacman: name=postgresql
+  community.general.pacman:
+    name: postgresql
 
-- name: install postfix
+- name: Install postfix
   when: mtype != 'media'
   become: true
-  community.general.pacman: name=postfix
+  community.general.pacman:
+    name: postfix
 
-- name: install neovim
+- name: Install neovim
   when: mtype != 'media'
   become: true
-  community.general.pacman: name=neovim
+  community.general.pacman:
+    name: neovim
 
-- name: install asciinema
+- name: Install asciinema
   when: mtype == 'personal'
   become: true
   community.general.pacman:
@@ -134,7 +139,7 @@
       - asciinema
       - asciinema-agg
 
-- name: install fastfoto stuff
+- name: Install fastfoto stuff
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -151,6 +156,11 @@
 #   kewlfft.aur.aur:
 #     name:
 
-- include: nodejs.yml
-- include: ruby.yml
-- include: devops.yml
+- name: Install nodejs and tools
+  ansible.builtin.include_tasks: nodejs.yml
+
+- name: Install ruby and tools
+  ansible.builtin.include_tasks: ruby.yml
+
+- name: Install devops tools
+  ansible.builtin.include_tasks: devops.yml
