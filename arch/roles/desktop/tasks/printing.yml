@@ -1,5 +1,5 @@
 ---
-- name: install printing packages
+- name: Install printing packages
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -17,14 +17,14 @@
       - hplip
       - splix
 
-- name: install drivers from aur
+- name: Install drivers from aur
   when: mtype != 'media'
   kewlfft.aur.aur:
     name:
       - epson-inkjet-printer-escpr
       - epson-inkjet-printer-escpr2
 
-- name: install network printing packages
+- name: Install network printing packages
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -32,15 +32,17 @@
       - avahi
       - samba
 
-- name: enable printing services
+- name: Enable printing services
   when: mtype != 'media'
   become: true
-  ansible.builtin.systemd: name={{ item }} enabled=true
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: true
   loop:
     - cups.service
     - avahi-daemon.service
 
-- name: enable scanning packages
+- name: Enable scanning packages
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -53,6 +55,7 @@
       - tesseract-data-spa
       - tesseract-data-fra
 
-- name: install scanner driver
+- name: Install scanner driver
   when: mtype != 'media'
-  kewlfft.aur.aur: name=brscan5
+  kewlfft.aur.aur:
+    name: brscan5

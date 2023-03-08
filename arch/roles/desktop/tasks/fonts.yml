@@ -1,7 +1,7 @@
 ---
-- name: install fonts
+- name: Install fonts
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - ttf-liberation
       - ttf-bitstream-vera
@@ -17,7 +17,7 @@
       - noto-fonts-extra
       - ttf-ubuntu-font-family
 
-- name: install fonts part two
+- name: Install fonts part two
   kewlfft.aur.aur:
     name:
       - ttf-symbola

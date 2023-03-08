@@ -1,12 +1,12 @@
 ---
-- name: install gnome
+- name: Install gnome
   become: true
   community.general.pacman:
     name:
       - gnome
       - gnome-extra
 
-- name: install gnome extras
+- name: Install gnome extras
   become: true
   community.general.pacman:
     name:
@@ -18,7 +18,7 @@
       - wl-clipboard
       - gnome-shell-extension-appindicator
 
-- name: install gnome extras from aur
+- name: Install gnome extras from aur
   kewlfft.aur.aur:
     name:
       - gnome-shell-extension-dash-to-dock
@@ -32,13 +32,13 @@
       - gnome-shell-extension-arc-menu
       - gnome-shell-extension-emoji-selector-git
 
-- name: install systemd policy file for systemd gnome extension
+- name: Install systemd policy file for systemd gnome extension
   become: true
   ansible.builtin.copy:
     dest: /etc/polkit-1/rules.d/10-service_status.rules
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     src: service.rules
 
 # - name: disabled extensions
@@ -47,7 +47,7 @@
 #       - gnome-shell-extension-openweather-git
 #       - gnome-shell-extension-appindicator-git
 
-- name: install firmware updater
+- name: Install firmware updater
   become: true
   community.general.pacman:
     name:
@@ -55,6 +55,8 @@
       - fwupd
       - dmidecode
 
-- name: enable gdm
+- name: Enable gdm
   become: true
-  ansible.builtin.systemd: name=gdm.service enabled=true
+  ansible.builtin.systemd:
+    name: gdm.service
+    enabled: true

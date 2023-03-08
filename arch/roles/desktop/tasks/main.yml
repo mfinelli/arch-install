@@ -1,5 +1,5 @@
 ---
-- name: install audio packages
+- name: Install audio packages
   become: true
   community.general.pacman:
     name:
@@ -13,19 +13,25 @@
       - pavucontrol
       - easyeffects
 
-- name: enable network manager
+- name: Enable network manager
   become: true
-  ansible.builtin.systemd: name=NetworkManager.service enabled=true
+  ansible.builtin.systemd:
+    name: NetworkManager.service
+    enabled: true
 
-- name: install keymapper
+- name: Install keymapper
   become: true
-  community.general.pacman: name=keymapper
+  community.general.pacman:
+    name: keymapper
 
-- name: enable keymapperd
+- name: Enable keymapperd
   become: true
-  ansible.builtin.systemd: name=keymapperd.service enabled=true state=started
+  ansible.builtin.systemd:
+    name: keymapperd.service
+    enabled: true
+    state: started
 
-- name: install bluetooth packages
+- name: Install bluetooth packages
   become: true
   community.general.pacman:
     name:
@@ -33,11 +39,13 @@
       - bluez-utils
       - blueman
 
-- name: enable bluetooth
+- name: Enable bluetooth
   become: true
-  ansible.builtin.systemd: name=bluetooth.service enabled=true
+  ansible.builtin.systemd:
+    name: bluetooth.service
+    enabled: true
 
-- name: install base packages
+- name: Install base packages
   become: true
   community.general.pacman:
     name:
@@ -48,16 +56,20 @@
       - firefox-i18n-it
       - openssh
 
-- include: gnome.yml
+- name: Install GNOME desktop environment
+  ansible.builtin.include_tasks: gnome.yml
   when: mtype != 'media'
 
-- include: xfce.yml
+- name: Install XFCE desktop environment
+  ansible.builtin.include_tasks: xfce.yml
   when: mtype == 'media'
 
-- include: printing.yml
+- name: Install printing packages
+  ansible.builtin.include_tasks: printing.yml
   when: mtype != 'media'
 
-- include: fonts.yml
+- name: Install fonts
+  ansible.builtin.include_tasks: fonts.yml
 
 # - name: install cursors
 #   when: mtype != 'server'
