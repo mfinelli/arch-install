@@ -3,43 +3,43 @@
   become: true
   community.general.pacman:
     name:
-      - ufw
       - sshguard
+      - ufw
 
 - name: Start and enable ufw
   become: true
   ansible.builtin.systemd:
+    enabled: true
     name: ufw.service
     state: started
-    enabled: true
 
 - name: Start and enable sshguard
   become: true
   ansible.builtin.systemd:
+    enabled: true
     name: sshguard.service
     state: started
-    enabled: true
 
 - name: Set default ufw policy to deny
   become: true
   community.general.ufw:
-    state: enabled
     policy: deny
+    state: enabled
 
 - name: Allow ssh traffic
   become: true
   community.general.ufw:
-    rule: allow
     port: 22
     proto: tcp
+    rule: allow
 
 - name: Install ufw before rules
   become: true
   ansible.builtin.copy:
     dest: /etc/ufw/{{ item }}.rules
-    owner: root
     group: root
     mode: "0640"
+    owner: root
     src: "{{ item }}.rules"
   loop:
     - before
@@ -51,9 +51,9 @@
   become: true
   ansible.builtin.copy:
     dest: /etc/ssh/sshd_config
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: sshd_config
   notify:
     - Restart sshd

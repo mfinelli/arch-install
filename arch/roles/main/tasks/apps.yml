@@ -33,9 +33,9 @@
   become: true
   community.general.pacman:
     name:
-      - pcsclite
       - ccid
       - hopenpgp-tools
+      - pcsclite
       - yubikey-manager
       - yubikey-personalization
       - yubikey-personalization-gui
@@ -45,11 +45,6 @@
   become: true
   community.general.pacman:
     name:
-      - libreoffice-fresh
-      - libreoffice-fresh-en-gb
-      - libreoffice-fresh-es
-      - libreoffice-fresh-fr
-      - libreoffice-fresh-it
       - hunspell
       - hunspell-en_au
       - hunspell-en_ca
@@ -65,6 +60,11 @@
       - hyphen-es
       - hyphen-fr
       - hyphen-it
+      - libreoffice-fresh
+      - libreoffice-fresh-en-gb
+      - libreoffice-fresh-es
+      - libreoffice-fresh-fr
+      - libreoffice-fresh-it
       - mythes
       - mythes-en
       - mythes-es
@@ -77,8 +77,8 @@
   community.general.pacman:
     name:
       - gimp
-      - xsane-gimp
       - gimp-extras
+      - xsane-gimp
 
 - name: Install graphics extras
   when: mtype == 'personal'
@@ -93,15 +93,15 @@
   become: true
   community.general.pacman:
     name:
-      - pidgin
-      - pidgin-otr
-      - purple-plugin-pack
       - aspell
       - aspell-en
       - aspell-es
       - aspell-fr
       - aspell-it
       - hexchat
+      - pidgin
+      - pidgin-otr
+      - purple-plugin-pack
 
 - name: Install thunderbird
   when: mtype == 'personal'
@@ -121,8 +121,8 @@
     name:
       - gnucash
       - gnucash-docs
-      - perl-finance-quote
       - perl-date-manip
+      - perl-finance-quote
       - perl-libwww
       - perl-lwp-protocol-https
 

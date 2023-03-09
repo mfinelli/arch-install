@@ -2,13 +2,13 @@
 - name: Restart sshd
   become: true
   ansible.builtin.systemd:
+    daemon_reload: true
     name: sshd.service
     state: restarted
-    daemon_reload: true
 
 - name: Restart ufw
   become: true
   ansible.builtin.systemd:
+    daemon_reload: true
     name: ufw.service
     state: restarted
-    daemon_reload: true

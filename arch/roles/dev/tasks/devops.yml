@@ -5,19 +5,19 @@
   community.general.pacman:
     name:
       - aws-cli
-      - python-magic
-      - google-cloud-sdk
       - doctl
+      - google-cloud-sdk
+      - python-magic
 
 - name: Install devops tools
   when: mtype == 'personal'
   become: true
   community.general.pacman:
     name:
-      - terraform
+      - newrelic-cli
       - packer
       - sops
-      - newrelic-cli
+      - terraform
 
 - name: Install kubectl
   when: mtype == 'personal' or mtype == 'work'
@@ -31,13 +31,13 @@
   community.general.pacman:
     name:
       - helm
-      - helmfile
-      - pluto
-      - popeye
-      - helm-secrets
       - helm-diff
       - helm-gcs
       - helm-s3
+      - helm-secrets
+      - helmfile
+      - pluto
+      - popeye
 
 - name: Install kubernetes tools pt. ii
   when: mtype == 'personal' or mtype == 'work'

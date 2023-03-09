@@ -3,9 +3,9 @@
   become: true
   ansible.builtin.copy:
     dest: /etc/systemd/resolved.conf
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: resolved.conf
 
 - name: Symlink systemd resolvd stub to /etc/resolv.conf
@@ -13,12 +13,12 @@
   when: mmode != 'setup' # don't run before first reboot
   ansible.builtin.file:
     dest: /etc/resolv.conf
+    force: true
     src: /run/systemd/resolve/stub-resolv.conf
     state: link
-    force: true
 
 - name: Enable systemd-resolved
   become: true
   ansible.builtin.systemd:
-    name: systemd-resolved.service
     enabled: true
+    name: systemd-resolved.service

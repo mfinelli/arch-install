@@ -3,21 +3,21 @@
   become: true
   community.general.pacman:
     name:
-      - alsa-utils
       - alsa-plugins
+      - alsa-utils
+      - easyeffects
+      - pavucontrol
       - pipewire
-      - pipewire-docs
       - pipewire-alsa
+      - pipewire-docs
       - pipewire-pulse
       - wireplumber
-      - pavucontrol
-      - easyeffects
 
 - name: Enable network manager
   become: true
   ansible.builtin.systemd:
-    name: NetworkManager.service
     enabled: true
+    name: NetworkManager.service
 
 - name: Install keymapper
   become: true
@@ -27,23 +27,23 @@
 - name: Enable keymapperd
   become: true
   ansible.builtin.systemd:
-    name: keymapperd.service
     enabled: true
+    name: keymapperd.service
     state: started
 
 - name: Install bluetooth packages
   become: true
   community.general.pacman:
     name:
+      - blueman
       - bluez
       - bluez-utils
-      - blueman
 
 - name: Enable bluetooth
   become: true
   ansible.builtin.systemd:
-    name: bluetooth.service
     enabled: true
+    name: bluetooth.service
 
 - name: Install base packages
   become: true

@@ -7,8 +7,8 @@
   community.general.pacman:
     name:
       - wine
-      - wine-mono
       - wine-gecko
+      - wine-mono
       - winetricks
 
 - name: Install lib32 libraries
@@ -18,8 +18,8 @@
   become: true
   community.general.pacman:
     name:
-      - lib32-libpulse
       - lib32-alsa-plugins
+      - lib32-libpulse
 
 - name: Install picard
   when: mtype == 'personal' or mtype == 'media'
@@ -65,15 +65,15 @@
   become: true
   community.general.pacman:
     name:
-      - vlc
-      - libdvdcss
-      - libaacs
       - handbrake
+      - libaacs
+      - libdvdcss
+      - vlc
 
 - name: Install torrent client
   when: mtype == 'personal' or mtype == 'media'
   become: true
   community.general.pacman:
     name:
-      - deluge
       - cksfv
+      - deluge

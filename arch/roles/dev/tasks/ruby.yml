@@ -5,16 +5,16 @@
   community.general.pacman:
     name:
       - ruby
+      - ruby-bundler
       - ruby-rake
       - ruby-rdoc
-      - ruby-bundler
 
 - name: Install ruby packages
   when: mtype == 'personal'
   become: true
   community.general.pacman:
     name:
+      - chruby
       - ruby-install
       - ruby-pry
       - ruby-rubocop
-      - chruby

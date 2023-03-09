@@ -3,11 +3,11 @@
   become: true
   community.general.pacman:
     name:
-      - zsh
       - grml-zsh-config
+      - zsh
       - zsh-autosuggestions
-      - zsh-syntax-highlighting
       - zsh-completions
+      - zsh-syntax-highlighting
       - zsh-theme-powerlevel10k
 
 - name: Install gitstatus
@@ -20,8 +20,8 @@
   become: true
   community.general.pacman:
     name:
-      - ttf-meslo-nerd-font-powerlevel10k
       - ttf-jetbrains-mono-nerd
+      - ttf-meslo-nerd-font-powerlevel10k
       # - ttf-jetbrains-mono
       # - ttf-nerd-fonts-symbols-mono
 
@@ -29,25 +29,25 @@
   become: true
   community.general.pacman:
     name:
-      - tmux
-      - htop
-      - pwgen
-      - ctags
-      - ripgrep
-      - the_silver_searcher
       - bat
+      - bind
+      - ctags
       - fd
       - fzf
       - go-yq
+      - htop
+      - jq
       - neofetch
-      - thefuck
-      - tldr
-      - bind
       - net-tools
       - p7zip
-      - whois
-      - jq
+      - pwgen
+      - ripgrep
+      - the_silver_searcher
+      - thefuck
+      - tldr
+      - tmux
       - vivid
+      - whois
       - zoxide
 
 - name: Install secondary cli apps
@@ -55,13 +55,13 @@
   become: true
   community.general.pacman:
     name:
-      - moreutils
-      - ncdu
       - bat-extras
       - difftastic
       - dos2unix
       - github-cli
       - glab
+      - moreutils
+      - ncdu
       - nmap
       - pv
       - urlwatch
@@ -79,9 +79,9 @@
   community.general.pacman:
     name:
       - borg
-      - rclone
       - pass
       - pass-otp
+      - rclone
 
 - name: Add archuseriso signing key
   when: mtype != 'media' and mtype != 'server'

@@ -3,27 +3,27 @@
   become: true
   community.general.pacman:
     name:
-      - unbound
       - expat
       - openresolv
+      - unbound
 
 - name: Download initial root hints
   become: true
   ansible.builtin.get_url:
-    url: https://www.internic.net/domain/named.cache
     dest: /etc/unbound/root.hints
+    group: root
     mode: "0644"
     owner: root
-    group: root
+    url: https://www.internic.net/domain/named.cache
 
 - name: Copy resolveconf.conf
   become: true
   ansible.builtin.copy:
-    src: resolvconf.conf
     dest: /etc/resolvconf.conf
+    group: root
     mode: "0644"
     owner: root
-    group: root
+    src: resolvconf.conf
 
 - name: Run resolvconf -u
   become: true
@@ -35,48 +35,48 @@
 - name: Install unbound configuration
   become: true
   ansible.builtin.copy:
-    src: unbound.conf
     dest: /etc/unbound/unbound.conf
+    group: root
     mode: "0644"
     owner: root
-    group: root
+    src: unbound.conf
 
 - name: Install root-hints service
   become: true
   ansible.builtin.copy:
-    src: root-hints.service
     dest: /etc/systemd/system/root-hints.service
+    group: root
     mode: "0644"
     owner: root
-    group: root
+    src: root-hints.service
 
 - name: Install root-hints timer
   become: true
   ansible.builtin.copy:
-    src: root-hints.timer
     dest: /etc/systemd/system/root-hints.timer
+    group: root
     mode: "0644"
     owner: root
-    group: root
+    src: root-hints.timer
 
 - name: Install network manager resolveconf manager config
   when: mtype != 'server'
   become: true
   ansible.builtin.copy:
-    src: rc-manager.conf
     dest: /etc/NetworkManager/conf.d/rc-manager.conf
+    group: root
     mode: "0644"
     owner: root
-    group: root
+    src: rc-manager.conf
 
 - name: Enable root-hints timer
   become: true
   ansible.builtin.systemd:
-    name: root-hints.timer
     enabled: true
+    name: root-hints.timer
 
 - name: Enable unbound
   become: true
   ansible.builtin.systemd:
-    name: unbound.service
     enabled: true
+    name: unbound.service

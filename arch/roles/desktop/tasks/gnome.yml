@@ -10,53 +10,53 @@
   become: true
   community.general.pacman:
     name:
-      - seahorse
-      - network-manager-applet
+      - gnome-shell-extension-appindicator
       - hddtemp # for freon extension
+      - network-manager-applet
+      - seahorse
+      - wl-clipboard
       - xdg-desktop-portal
       - xdg-desktop-portal-gnome
-      - wl-clipboard
-      - gnome-shell-extension-appindicator
 
 - name: Install gnome extras from aur
   kewlfft.aur.aur:
     name:
-      - gnome-shell-extension-dash-to-dock
+      - gnome-shell-extension-arc-menu
       - gnome-shell-extension-arch-update
       - gnome-shell-extension-bluetooth-quick-connect
-      - gnome-shell-extension-freon
-      - gnome-shell-extension-espresso-git
-      - gnome-shell-extension-systemd-manager
-      - gnome-shell-extension-no-overview
-      - gnome-shell-extension-weather-in-the-clock-git
-      - gnome-shell-extension-arc-menu
+      - gnome-shell-extension-dash-to-dock
       - gnome-shell-extension-emoji-selector-git
+      - gnome-shell-extension-espresso-git
+      - gnome-shell-extension-freon
+      - gnome-shell-extension-no-overview
+      - gnome-shell-extension-systemd-manager
+      - gnome-shell-extension-weather-in-the-clock-git
 
 - name: Install systemd policy file for systemd gnome extension
   become: true
   ansible.builtin.copy:
     dest: /etc/polkit-1/rules.d/10-service_status.rules
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: service.rules
 
 # - name: disabled extensions
 #   kewlfft.aur.aur:
 #     name:
-#       - gnome-shell-extension-openweather-git
 #       - gnome-shell-extension-appindicator-git
+#       - gnome-shell-extension-openweather-git
 
 - name: Install firmware updater
   become: true
   community.general.pacman:
     name:
-      - gnome-firmware
-      - fwupd
       - dmidecode
+      - fwupd
+      - gnome-firmware
 
 - name: Enable gdm
   become: true
   ansible.builtin.systemd:
-    name: gdm.service
     enabled: true
+    name: gdm.service

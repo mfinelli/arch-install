@@ -4,16 +4,16 @@
   become: true
   community.general.pacman:
     name:
-      - ghostscript
       - cups
       - cups-pdf
-      - gutenprint
       - foomatic-db
       - foomatic-db-engine
-      - foomatic-db-nonfree
       - foomatic-db-gutenprint-ppds
+      - foomatic-db-nonfree
       - foomatic-db-nonfree-ppds
       - foomatic-db-ppds
+      - ghostscript
+      - gutenprint
       - hplip
       - splix
 
@@ -39,8 +39,8 @@
     name: "{{ item }}"
     enabled: true
   loop:
-    - cups.service
     - avahi-daemon.service
+    - cups.service
 
 - name: Enable scanning packages
   when: mtype != 'media'
@@ -51,9 +51,9 @@
       - paperwork
       - tesseract
       - tesseract-data-eng
+      - tesseract-data-fra
       - tesseract-data-ita
       - tesseract-data-spa
-      - tesseract-data-fra
 
 - name: Install scanner driver
   when: mtype != 'media'

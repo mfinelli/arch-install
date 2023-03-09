@@ -16,15 +16,15 @@
   become: true
   community.general.pacman:
     name:
+      - asdf-vm
       - cmctl # cert-manager cli
       - colordiff
       - direnv
       - git-crypt
       - kustomize
       - mariadb-clients
-      - asdf-vm
-      - python-pip # dependency of asdf-pyapp
       - python-kubernetes
+      - python-pip # dependency of asdf-pyapp
       - tidy
       - yj
 
@@ -32,7 +32,7 @@
   when: mtype == 'work'
   kewlfft.aur.aur:
     name:
-      - nodejs-lhci-cli
-      - slack-desktop # slack-wayland doesn't work very well...
       - apachedirectorystudio
+      - nodejs-lhci-cli
       - python-onepasswordconnectsdk
+      - slack-desktop # slack-wayland doesn't work very well...

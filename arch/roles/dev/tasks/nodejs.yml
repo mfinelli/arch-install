@@ -12,6 +12,6 @@
   become: true
   community.general.pacman:
     name:
+      - nodejs-mjml
       - nodejs-n
       - nodejs-pug-cli
-      - nodejs-mjml

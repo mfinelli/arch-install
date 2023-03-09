@@ -10,23 +10,23 @@
   become: true
   community.general.pacman:
     name:
-      - imagemagick
       - geckodriver
+      - imagemagick
 
 - name: Download extra editors
   when: mtype == 'personal'
   kewlfft.aur.aur:
     name:
-      - sublime-text-4
       - rubymine
+      - sublime-text-4
 
 - name: Install latex packages
   when: mtype == 'personal'
   become: true
   community.general.pacman:
     name:
-      - texlive-most
       - texlive-lang
+      - texlive-most
 
 - name: Install docker
   when: mtype != 'media'
@@ -42,8 +42,8 @@
   community.general.pacman:
     name:
       - virtualbox
-      - virtualbox-host-modules-arch
       - virtualbox-guest-iso
+      - virtualbox-host-modules-arch
 
 # TODO: sudo usermod -aG libvirt mario
 - name: Install virt-manager
@@ -51,21 +51,21 @@
   become: true
   community.general.pacman:
     name:
-      - virt-manager
-      - qemu-desktop
-      - libvirt
-      - edk2-ovmf
       - dnsmasq
+      - edk2-ovmf
+      - libvirt
+      - qemu-desktop
       - swtpm
+      - virt-manager
 
 - name: Install libvirtd configuration
   when: mtype != 'media'
   become: true
   ansible.builtin.copy:
     dest: /etc/libvirt/libvirtd.conf
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: libvirtd.conf
 
 - name: Install libvirtd qemu configuration
@@ -73,9 +73,9 @@
   become: true
   ansible.builtin.template:
     dest: /etc/libvirt/qemu.conf
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: qemu.conf.j2
 
 - name: Install command line utilities
@@ -103,9 +103,9 @@
   become: true
   community.general.pacman:
     name:
-      - rust
       - cargo-about
       - cargo-outdated
+      - rust
 
 - name: Install redis
   when: mtype == 'personal'
@@ -147,8 +147,8 @@
       - cloudflared
       - cobra-cli
       - goose
-      - perl-image-exiftool
       - perl-archive-zip
+      - perl-image-exiftool
       - sqlc
 
 # - name: install fastfoto stuff from aur

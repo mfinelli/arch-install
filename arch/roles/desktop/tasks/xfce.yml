@@ -3,65 +3,65 @@
   become: true
   community.general.pacman:
     name:
-      - xorg-server
       - xorg-apps
+      - xorg-server
 
 - name: Install desktop environment (xfce)
   become: true
   community.general.pacman:
     name:
-      - xfce4
-      - xfce4-goodies
-      - lightdm
-      - lightdm-gtk-greeter
-      - network-manager-applet
       - accountsservice
-      - xdg-user-dirs
+      - gnome-keyring
       - gvfs
       - gvfs-afc
       - gvfs-mtp
-      - gnome-keyring
+      - lightdm
+      - lightdm-gtk-greeter
+      - network-manager-applet
       - seahorse
+      - xdg-user-dirs
+      - xfce4
+      - xfce4-goodies
 
 - name: Install lightdm configuration
   become: true
   ansible.builtin.template:
-    src: lightdm.conf.j2
     dest: /etc/lightdm/lightdm.conf
-    owner: root
     group: root
     mode: "0644"
+    owner: root
+    src: lightdm.conf.j2
 
 - name: Enable lightdm
   become: true
   ansible.builtin.systemd:
-    name: lightdm.service
     enabled: true
+    name: lightdm.service
 
 - name: Install xfce themes
   become: true
   community.general.pacman:
     name:
-      - xfce-theme-manager
       - elementary-icon-theme
+      - xfce-theme-manager
 
 - name: Install xfce themes
   kewlfft.aur.aur:
     name:
-      - xfce-theme-greybird
-      - shimmer-wallpapers
       - elementary-xfce-icons
+      - matcha-gtk-theme-git
       - paper-icon-theme-git
       - papirus-icon-theme-git
-      - matcha-gtk-theme-git
+      - shimmer-wallpapers
+      - xfce-theme-greybird
 
 - name: Install redshift
   become: true
   community.general.pacman:
     name:
-      - redshift
       - python-gobject
       - python-xdg
+      - redshift
 
 - name: Install pdf viewer
   become: true
