@@ -11,19 +11,19 @@
 
 - name: Install https sources list
   ansible.builtin.template:
-    src: sources.list.j2
-    owner: root
+    dest: /etc/apt/sources.list
     group: root
     mode: "0644"
-    dest: /etc/apt/sources.list
+    owner: root
+    src: sources.list.j2
 
 - name: Install https raspi sources list
   ansible.builtin.template:
-    src: raspi.list.j2
-    owner: root
+    dest: /etc/apt/sources.list.d/raspi.list
     group: root
     mode: "0644"
-    dest: /etc/apt/sources.list.d/raspi.list
+    owner: root
+    src: raspi.list.j2
 
   # TODO: we should update_cache based on the above two templates
 - name: Install firefox
@@ -37,17 +37,17 @@
 
 - name: Ensure sshd is running and enabled
   ansible.builtin.systemd:
-    name: ssh.service
     enabled: true
+    name: ssh.service
     state: started
 
 - name: Copy sshd config
   ansible.builtin.copy:
-    src: sshd_config
-    owner: root
+    dest: /etc/ssh/sshd_config
     group: root
     mode: "0644"
-    dest: /etc/ssh/sshd_config
+    owner: root
+    src: sshd_config
     validate: /usr/sbin/sshd -tf %s
   notify:
     - Restart sshd

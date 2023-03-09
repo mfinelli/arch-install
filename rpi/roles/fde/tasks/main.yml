@@ -13,9 +13,9 @@
 - name: Install kernel initramfs rebuild script
   ansible.builtin.copy:
     dest: /etc/kernel/postinst.d/initramfs-rebuild
-    owner: root
     group: root
     mode: "0755"
+    owner: root
     src: initramfs-rebuild.sh
   notify:
     - Rebuild initramfs
@@ -23,9 +23,9 @@
 - name: Install initramfs luks hooks script
   ansible.builtin.copy:
     dest: /etc/initramfs-tools/hooks/luks
-    owner: root
     group: root
     mode: "0755"
+    owner: root
     src: luks.sh
   notify:
     - Rebuild initramfs
@@ -33,9 +33,9 @@
 - name: Install initramfs modules list
   ansible.builtin.copy:
     dest: /etc/initramfs-tools/modules
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: modules
   notify:
     - Rebuild initramfs

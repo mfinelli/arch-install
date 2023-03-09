@@ -5,8 +5,8 @@
 
 - name: Add chrome apt repository
   ansible.builtin.apt_repository:
-    repo: deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main
     filename: google-chrome
+    repo: deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main
     update_cache: true
 
 - name: Install google chrome

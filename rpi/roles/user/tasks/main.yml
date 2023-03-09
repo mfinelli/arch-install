@@ -3,21 +3,21 @@
   become: true
   become_user: "{{ whoami }}"
   ansible.posix.authorized_key:
-    user: "{{ whoami }}"
+    exclusive: true
     key: |
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4MZX4N4c73onEGKP3x8DEo7mhd8ahqQEhydgM2hTHo mario
-      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOy1DGNkaHw4UiGX8H7L4ruWjWBYFSkOEvB1jqAt5rdz mario@iphone
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGLzoWaCMxwWMyepLYUu6FBbYZmDOaXPj+LQtWjdM8pW mario@ipad
-    exclusive: true
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOy1DGNkaHw4UiGX8H7L4ruWjWBYFSkOEvB1jqAt5rdz mario@iphone
+    user: "{{ whoami }}"
 
 - name: Ensure src directory
   become: true
   become_user: "{{ whoami }}"
   ansible.builtin.file:
-    path: "{{ whoami_home }}/{{ item }}"
-    owner: "{{ whoami }}"
     group: "{{ whoami }}"
     mode: "0755"
+    owner: "{{ whoami }}"
+    path: "{{ whoami_home }}/{{ item }}"
     state: directory
   loop:
     - src
@@ -27,5 +27,5 @@
   become: true
   become_user: "{{ whoami }}"
   ansible.builtin.git:
-    repo: https://github.com/mfinelli/arch-install.git
     dest: "{{ whoami_home }}/src/mfinelli/arch-install"
+    repo: https://github.com/mfinelli/arch-install.git

@@ -1,24 +1,24 @@
 ---
 - name: Add the mozillateam ppa signing key
   ansible.builtin.apt_key:
-    keyserver: keyserver.ubuntu.com
     id: 0AB215679C571D1C8325275B9BDB3D89CE49EC21
     keyring: /etc/apt/trusted.gpg.d/mozillateam-ubuntu-ppa.gpg
+    keyserver: keyserver.ubuntu.com
 
 - name: Add the mozillateam ppa
   ansible.builtin.template:
     dest: /etc/apt/sources.list.d/mozillateam.list
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: mozillateam.list.j2
 
 - name: Add firefox no-snap pin
   ansible.builtin.copy:
     dest: /etc/apt/preferences.d/firefox-no-snap
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: firefox-no-snap
 
 - name: Install firefox from mozillateam ppa
@@ -67,7 +67,7 @@
 - name: Install gdm dconf greeter
   ansible.builtin.copy:
     dest: /etc/gdm3/greeter.dconf-defaults
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: greeter.dconf-defaults

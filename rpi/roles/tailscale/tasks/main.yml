@@ -5,8 +5,8 @@
 
 - name: Add tailscale apt repository
   ansible.builtin.apt_repository:
-    repo: deb https://pkgs.tailscale.com/stable/raspbian {{ ansible_distribution_release }} main
     filename: tailscale
+    repo: deb https://pkgs.tailscale.com/stable/raspbian {{ ansible_distribution_release }} main
     update_cache: true
 
 - name: Install tailscale
@@ -15,16 +15,16 @@
 
 - name: Ensure tailscaled is running and enabled
   ansible.builtin.systemd:
-    name: tailscaled.service
     enabled: true
+    name: tailscaled.service
     state: started
 
 - name: Enable IP forwarding for tailscale exit node status
   ansible.posix.sysctl:
     name: "{{ item }}"
-    value: '1'
-    sysctl_set: true
     reload: true
+    sysctl_set: true
+    value: '1'
   loop:
     - net.ipv4.ip_forward
     - net.ipv6.conf.all.forwarding

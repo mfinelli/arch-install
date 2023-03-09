@@ -6,9 +6,9 @@
 - name: Install new resolvconf.conf
   ansible.builtin.copy:
     dest: /etc/resolvconf.conf
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: resolvconf.conf
   notify:
     - Update resolv.conf
@@ -23,9 +23,9 @@
 - name: Install main unbound configuration
   ansible.builtin.copy:
     dest: /etc/unbound/unbound.conf.d/unbound.conf
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: unbound.conf
   notify:
     - Restart unbound
@@ -33,15 +33,15 @@
 - name: Setup cloudflare as upstream resolver
   ansible.builtin.copy:
     dest: /etc/unbound/unbound.conf.d/cloudflare.conf
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: cloudflare.conf
   notify:
     - Restart unbound
 
 - name: Ensure unbound is started and enabled
   ansible.builtin.systemd:
-    name: unbound.service
     enabled: true
+    name: unbound.service
     state: started

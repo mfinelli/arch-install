@@ -1,25 +1,25 @@
 ---
 - name: Install kubectl
   ansible.builtin.get_url:
-    url: https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version }}/bin/linux/amd64/kubectl
     dest: /usr/local/bin/kubectl
+    group: root
     mode: "0755"
     owner: root
-    group: root
+    url: https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version }}/bin/linux/amd64/kubectl
   notify:
     - Install kubectl bash completion
     - Install kubectl zsh completion
 
 - name: Install helm
   ansible.builtin.unarchive:
-    src: https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz
-    remote_src: true
     dest: /usr/local/bin
-    mode: "0755"
-    owner: root
-    group: root
     extra_opts:
       - --strip-components=1
+    group: root
+    mode: "0755"
+    owner: root
+    remote_src: true
+    src: https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz
   notify:
     - Install helm bash completion
     - Install helm zsh completion
@@ -34,11 +34,11 @@
 
 - name: Install helmfile
   ansible.builtin.get_url:
-    url: https://github.com/roboll/helmfile/releases/download/v{{ helmfile_version }}/helmfile_linux_amd64
     dest: /usr/local/bin/helmfile
+    group: root
     mode: "0755"
     owner: root
-    group: root
+    url: https://github.com/roboll/helmfile/releases/download/v{{ helmfile_version }}/helmfile_linux_amd64
 
 - name: Install kubectx
   ansible.builtin.include_tasks: kubectx.yml

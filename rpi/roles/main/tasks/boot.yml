@@ -22,27 +22,27 @@
 - name: Install kernel boot config
   ansible.builtin.template:
     dest: /boot/config.txt
-    owner: root
     group: root
     mode: "0755" # all rpi files in /boot are +x
+    owner: root
     src: config.txt.j2
   tags: fde
 
 - name: Install kernel command line config
   ansible.builtin.template:
     dest: /boot/cmdline.txt
-    owner: root
     group: root
     mode: "0755" # all rpi files in /boot are +x
+    owner: root
     src: cmdline.txt.j2
   tags: fde
 
 - name: Install updated fstab
   ansible.builtin.template:
     dest: /etc/fstab
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: fstab.j2
   tags: fde
 
@@ -50,8 +50,8 @@
   when: fde == 'true'
   ansible.builtin.template:
     dest: /etc/crypttab
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: crypttab.j2
   tags: fde

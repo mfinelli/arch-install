@@ -26,9 +26,9 @@
       ansible.builtin.apt:
         name:
           - ansible-lint
-          - default-jre-headless
           - bat
           - bind9-dnsutils
+          - default-jre-headless
           - docker-compose
           - docker.io
           - fd-find
@@ -48,8 +48,8 @@
           - python3-pip
           - python3-setuptools
           - ripgrep
-          - rustc
           - rsync
+          - rustc
           - scdaemon
           - shellcheck
           - silversearcher-ag
@@ -60,75 +60,75 @@
           - vim
           - virtualenv
           - whois
-          - zoxide
           - xz-utils
+          - zoxide
           - zsh
           - zsh-autosuggestions
           - zsh-syntax-highlighting
 
     - name: Install python dependencies
       ansible.builtin.pip:
+        executable: pip3
         name:
           - azure-identity
           - azure-mgmt-compute
           - azure-mgmt-network
           - pipenv
           - yapf
-        executable: pip3
 
     - name: Install terraform
       ansible.builtin.unarchive:
-        src: https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip
-        remote_src: true
         dest: /usr/local/bin
+        group: root
         mode: "0755"
         owner: root
-        group: root
+        remote_src: true
+        src: https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip
 
     - name: Install shfmt
       ansible.builtin.get_url:
-        url: https://github.com/mvdan/sh/releases/download/v{{ shfmt_version }}/shfmt_v{{ shfmt_version }}_linux_amd64
         dest: /usr/local/bin/shfmt
+        group: root
         mode: "0755"
         owner: root
-        group: root
+        url: https://github.com/mvdan/sh/releases/download/v{{ shfmt_version }}/shfmt_v{{ shfmt_version }}_linux_amd64
 
     - name: Install sops
       ansible.builtin.get_url:
-        url: https://github.com/mozilla/sops/releases/download/v{{ sops_version }}/sops-v{{ sops_version }}.linux
         dest: /usr/local/bin/sops
+        group: root
         mode: "0755"
         owner: root
-        group: root
+        url: https://github.com/mozilla/sops/releases/download/v{{ sops_version }}/sops-v{{ sops_version }}.linux
 
     - name: Ensure extra directories
       ansible.builtin.file:
-        path: "{{ item }}"
-        state: directory
+        group: root
         mode: "0755"
         owner: root
-        group: root
+        path: "{{ item }}"
+        state: directory
       loop:
         - /usr/local/share/java
 
     - name: Install repo cleaner (https://rtyley.github.io/bfg-repo-cleaner/)
       ansible.builtin.get_url:
-        url: https://repo1.maven.org/maven2/com/madgag/bfg/{{ bfg_repo_cleaner_version }}/bfg-{{ bfg_repo_cleaner_version }}.jar
         dest: /usr/local/share/java/bfg.jar
+        group: root
         mode: "0644"
         owner: root
-        group: root
+        url: https://repo1.maven.org/maven2/com/madgag/bfg/{{ bfg_repo_cleaner_version }}/bfg-{{ bfg_repo_cleaner_version }}.jar
 
     - name: Ensure /etc/hosts entries
       ansible.builtin.lineinfile:
-        path: /etc/hosts
         line: "{{ item }}"
+        path: /etc/hosts
       loop:
         - 10.247.40.10 gdx-ds-app1
         - 10.247.40.11 gdx-ds-hpc1
+        - 10.247.40.12 gdx-ds-db1
         - 10.247.40.13 gdx-ds-node1
         - 10.247.40.14 gdx-ds-node2
-        - 10.247.40.12 gdx-ds-db1
         - 192.168.9.159 gdx-ds-vm01
 
   roles:

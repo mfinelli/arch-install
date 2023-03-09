@@ -2,8 +2,8 @@
 - name: Ensure mario is in the sudoers file
   ansible.builtin.copy:
     dest: /etc/sudoers.d/mario
-    owner: root
     group: root
     mode: "0440"
+    owner: root
     src: mario
     validate: 'visudo -cf %s'

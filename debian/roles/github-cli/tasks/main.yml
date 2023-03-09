@@ -1,13 +1,13 @@
 ---
 - name: Add github signing key
   ansible.builtin.apt_key:
-    keyserver: keyserver.ubuntu.com
     id: C99B11DEB97541F0
+    keyserver: keyserver.ubuntu.com
 
 - name: Add the github cli repo
   ansible.builtin.apt_repository:
-    repo: deb https://cli.github.com/packages {{ ansible_distribution_release }} main
     filename: github-cli
+    repo: deb https://cli.github.com/packages {{ ansible_distribution_release }} main
 
 - name: Install github-cli
   ansible.builtin.apt:

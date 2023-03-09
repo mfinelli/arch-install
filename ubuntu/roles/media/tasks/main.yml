@@ -16,10 +16,10 @@
 - name: Enable random mac addresses
   when: mtype == 'media'
   ansible.builtin.copy:
-    src: mac-randomization.conf
-    owner: root
+    dest: /etc/NetworkManager/conf.d/30-mac-randomization.conf
     group: root
     mode: "0644"
-    dest: /etc/NetworkManager/conf.d/30-mac-randomization.conf
+    owner: root
+    src: mac-randomization.conf
   notify:
     - Restart network manager

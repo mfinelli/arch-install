@@ -1,19 +1,19 @@
 ---
 - name: Create dropbpx install directory
   ansible.builtin.file:
-    path: /opt/dropbox-{{ dropbox_version }}
-    owner: root
     group: root
     mode: "0755"
+    owner: root
+    path: /opt/dropbox-{{ dropbox_version }}
     state: directory
 
 - name: Download dropbox client
   ansible.builtin.unarchive:
-    src: https://clientupdates.dropboxstatic.com/dbx-releng/client/dropbox-lnx.x86_64-{{ dropbox_version }}.tar.gz
-    remote_src: true
-    owner: root
-    group: root
     dest: /opt/dropbox-{{ dropbox_version }}
+    group: root
+    owner: root
+    remote_src: true
+    src: https://clientupdates.dropboxstatic.com/dbx-releng/client/dropbox-lnx.x86_64-{{ dropbox_version }}.tar.gz
 
 - name: Symlink dropbox to /usr/bin
   ansible.builtin.file:
@@ -23,16 +23,16 @@
 
 - name: Add dropbox icon
   ansible.builtin.get_url:
-    url: https://aur.archlinux.org/cgit/aur.git/plain/DropboxGlyph_Blue.svg?h=dropbox
     dest: /usr/share/pixmaps/dropbox.svg
+    group: root
     mode: "0644"
     owner: root
-    group: root
+    url: https://aur.archlinux.org/cgit/aur.git/plain/DropboxGlyph_Blue.svg?h=dropbox
 
 - name: Install dropbox desktop entry
   ansible.builtin.copy:
-    src: dropbox.desktop
-    owner: root
+    dest: /usr/share/applications/dropbox.desktop
     group: root
     mode: "0644"
-    dest: /usr/share/applications/dropbox.desktop
+    owner: root
+    src: dropbox.desktop

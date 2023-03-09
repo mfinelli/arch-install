@@ -1,49 +1,49 @@
 ---
 - name: Install kubectx
   ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/kubectx
     dest: /usr/local/bin/kubectx
+    group: root
     mode: "0755"
     owner: root
-    group: root
+    url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/kubectx
 
 - name: Install kubens
   ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/kubens
     dest: /usr/local/bin/kubens
+    group: root
     mode: "0755"
     owner: root
-    group: root
+    url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/kubens
 
 - name: Install kubectx bash completion
   ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.bash
     dest: /etc/bash_completion.d/kubectx
+    group: root
     mode: "0644"
     owner: root
-    group: root
+    url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.bash
 
 - name: Install kubectx zsh completion
   ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.zsh
     dest: /usr/share/zsh/vendor-completions/_kubectx
+    group: root
     mode: "0644"
     owner: root
-    group: root
+    url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.zsh
 
 - name: Install kubens bash completion
   ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubens.bash
     dest: /etc/bash_completion.d/kubens
+    group: root
     mode: "0644"
     owner: root
-    group: root
+    url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubens.bash
 
 - name: Install kubens zsh completion
   become: true
   ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.zsh
     dest: /usr/share/zsh/vendor-completions/_kubens
+    group: root
     mode: "0644"
     owner: root
-    group: root
+    url: https://raw.githubusercontent.com/ahmetb/kubectx/v{{ kubectx_version }}/completion/kubectx.zsh

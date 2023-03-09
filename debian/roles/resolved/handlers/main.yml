@@ -1,12 +1,12 @@
 ---
 - name: Restart systemd-resolved
   ansible.builtin.systemd:
+    daemon_reload: true
     name: systemd-resolved
     state: restarted
-    daemon_reload: true
 
 - name: Restart NetworkManager
   ansible.builtin.systemd:
+    daemon_reload: true
     name: NetworkManager
     state: restarted
-    daemon_reload: true

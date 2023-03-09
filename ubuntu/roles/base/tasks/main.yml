@@ -1,19 +1,19 @@
 ---
 - name: Ensure resolved.conf.d directory
   ansible.builtin.file:
-    path: /etc/systemd/resolved.conf.d
-    owner: root
     group: root
     mode: "0755"
+    owner: root
+    path: /etc/systemd/resolved.conf.d
     state: directory
 
 - name: Copy custom systemd-resolved configuration
   ansible.builtin.copy:
-    src: resolved.conf
     dest: /etc/systemd/resolved.conf.d/dns.conf
-    owner: root
     group: root
     mode: "0644"
+    owner: root
+    src: resolved.conf
   notify:
     - Restart systemd-resolved
 
@@ -35,18 +35,18 @@
 - name: Add supermario ppa
   ansible.builtin.template:
     dest: /etc/apt/sources.list.d/supermario.list
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: supermario.list.j2
 
 - name: Install new sources list
   when: mtype != 'server'
   ansible.builtin.template:
     dest: /etc/apt/sources.list
-    owner: root
     group: root
     mode: "0664"
+    owner: root
     src: sources.list.j2
 
 - name: Install base packages
@@ -73,8 +73,8 @@
 # https://askubuntu.com/a/1246984
 - name: Never install phased updates
   ansible.builtin.copy:
-    src: phased-updates
     dest: /etc/apt/apt.conf.d/99-Phased-Updates
-    owner: root
     group: root
     mode: "0644"
+    owner: root
+    src: phased-updates

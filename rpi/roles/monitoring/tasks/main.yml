@@ -14,23 +14,23 @@
   when: hcping_uuid_file.stat.exists
   ansible.builtin.template:
     dest: /etc/systemd/system/hc-ping.service
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: hc-ping.service.j2
 
 - name: Create hc-ping timer
   when: hcping_uuid_file.stat.exists
   ansible.builtin.copy:
     dest: /etc/systemd/system/hc-ping.timer
-    owner: root
     group: root
     mode: "0644"
+    owner: root
     src: hc-ping.timer
 
 - name: Enable hc-ping timer
   when: hcping_uuid_file.stat.exists
   ansible.builtin.systemd:
-    name: hc-ping.timer
     enabled: true
+    name: hc-ping.timer
     state: started

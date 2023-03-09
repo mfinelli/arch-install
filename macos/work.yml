@@ -25,17 +25,17 @@
 
     - name: Ensure local bin directory
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/bin"
-        owner: "{{ ansible_user_id }}"
         group: "{{ whoami_group.stdout }}"
         mode: "0755"
+        owner: "{{ ansible_user_id }}"
+        path: "{{ ansible_user_dir }}/bin"
         state: directory
 
     - name: Install pluto
       ansible.builtin.unarchive:
-        src: https://github.com/FairwindsOps/pluto/releases/download/v5.15.1/pluto_5.15.1_darwin_amd64.tar.gz
         dest: "{{ ansible_user_dir }}/bin"
         remote_src: true
+        src: https://github.com/FairwindsOps/pluto/releases/download/v5.15.1/pluto_5.15.1_darwin_amd64.tar.gz
 
     - name: Cleanup extra pluto files
       ansible.builtin.file:
@@ -47,10 +47,10 @@
 
     - name: Create docker plugins directory
       ansible.builtin.file:
-        path: "{{ ansible_user_dir }}/{{ item }}"
-        owner: "{{ ansible_user_id }}"
         group: "{{ whoami_group.stdout }}"
         mode: "0755"
+        owner: "{{ ansible_user_id }}"
+        path: "{{ ansible_user_dir }}/{{ item }}"
         state: directory
       loop:
         - .docker
@@ -58,6 +58,6 @@
 
     - name: Symlink docker-compose plugin
       ansible.builtin.file:
-        src: /usr/local/opt/docker-compose/bin/docker-compose
         dest: "{{ ansible_user_dir }}/.docker/cli-plugins/docker-compose"
+        src: /usr/local/opt/docker-compose/bin/docker-compose
         state: link
