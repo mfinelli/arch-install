@@ -19,6 +19,7 @@ jobs:
           curl -o ~/.ansible/plugins/modules/gpg_key.py \
             https://raw.githubusercontent.com/netson/ansible-gpg-key/master/gpg_key.py
       - uses: mfinelli/setup-shfmt@v2
+      - run: npm install -g prettier
       - name: Run shellcheck
         run: |
           shellcheck --version
@@ -43,6 +44,10 @@ jobs:
           shfmt -s -i 2 -ci -sr -d ubuntu/go
           find . -name '*.bash' | xargs shfmt -s -i 2 -ci -sr -d
           find . -name '*.sh' | xargs shfmt -s -i 2 -ci -sr -d
+      - name: Run prettier
+        run: |
+          prettier --version
+          find . -name '*.yaml' -o -name '*.yml' | xargs prettier -c
       - name: Run yamllint
         run: |
           yamllint --version
