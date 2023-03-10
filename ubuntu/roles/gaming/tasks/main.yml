@@ -56,7 +56,8 @@
     filename: winehq
     repo: >
       deb [arch=amd64,i386 signed-by=/usr/share/keyrings/winehq-archive.gpg]
-      https://dl.winehq.org/wine-builds/ubuntu {{ ansible_distribution_release }} main
+      https://dl.winehq.org/wine-builds/ubuntu
+      {{ ansible_distribution_release }} main
     update_cache: true
 
 - name: Install wine

@@ -35,7 +35,8 @@
       ansible.builtin.unarchive:
         dest: "{{ ansible_user_dir }}/bin"
         remote_src: true
-        src: https://github.com/FairwindsOps/pluto/releases/download/v5.15.1/pluto_5.15.1_darwin_amd64.tar.gz
+        src: "https://github.com/FairwindsOps/pluto/releases/download/\
+          v5.15.1/pluto_5.15.1_darwin_amd64.tar.gz"
 
     - name: Cleanup extra pluto files
       ansible.builtin.file:

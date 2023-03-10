@@ -3,7 +3,8 @@
   ansible.builtin.apt_key:
     keyring: /usr/share/keyrings/meganz-archive-keyring.gpg
     # url: https://mega.nz/keys/MEGA_signing.key
-    url: https://mega.nz/linux/repo/xUbuntu_{{ ansible_distribution_version }}/Release.key
+    url: "https://mega.nz/linux/repo/\
+      xUbuntu_{{ ansible_distribution_version }}/Release.key"
 
 - name: Add mega apt repository
   ansible.builtin.apt_repository:

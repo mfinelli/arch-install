@@ -13,12 +13,14 @@
     group: root
     owner: root
     remote_src: true
-    src: https://clientupdates.dropboxstatic.com/dbx-releng/client/dropbox-lnx.x86_64-{{ dropbox_version }}.tar.gz
+    src: "https://clientupdates.dropboxstatic.com/dbx-releng/client/\
+      dropbox-lnx.x86_64-{{ dropbox_version }}.tar.gz"
 
 - name: Symlink dropbox to /usr/bin
   ansible.builtin.file:
     dest: /usr/bin/dropbox
-    src: /opt/dropbox-{{ dropbox_version }}/.dropbox-dist/dropbox-lnx.x86_64-{{ dropbox_version }}/dropbox
+    src: "/opt/dropbox-{{ dropbox_version }}/.dropbox-dist/\
+      dropbox-lnx.x86_64-{{ dropbox_version }}/dropbox"
     state: link
 
 - name: Add dropbox icon
@@ -27,7 +29,8 @@
     group: root
     mode: "0644"
     owner: root
-    url: https://aur.archlinux.org/cgit/aur.git/plain/DropboxGlyph_Blue.svg?h=dropbox
+    url: "https://aur.archlinux.org/cgit/aur.git/plain/\
+      DropboxGlyph_Blue.svg?h=dropbox"
 
 - name: Install dropbox desktop entry
   ansible.builtin.copy:

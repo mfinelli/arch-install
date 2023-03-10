@@ -25,7 +25,7 @@
     owner: root
     src: raspi.list.j2
 
-  # TODO: we should update_cache based on the above two templates
+# TODO: we should update_cache based on the above two templates
 - name: Install firefox
   ansible.builtin.apt:
     name: firefox-esr

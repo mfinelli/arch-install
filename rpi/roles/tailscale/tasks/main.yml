@@ -1,12 +1,15 @@
 ---
 - name: Add the tailscale signing key
   ansible.builtin.apt_key:
-    url: https://pkgs.tailscale.com/stable/raspbian/{{ ansible_distribution_release }}.asc
+    url: "https://pkgs.tailscale.com/stable/raspbian/\
+      {{ ansible_distribution_release }}.asc"
 
 - name: Add tailscale apt repository
   ansible.builtin.apt_repository:
     filename: tailscale
-    repo: deb https://pkgs.tailscale.com/stable/raspbian {{ ansible_distribution_release }} main
+    repo: >
+      deb https://pkgs.tailscale.com/stable/raspbian
+      {{ ansible_distribution_release }} main
     update_cache: true
 
 - name: Install tailscale
@@ -24,7 +27,7 @@
     name: "{{ item }}"
     reload: true
     sysctl_set: true
-    value: '1'
+    value: "1"
   loop:
     - net.ipv4.ip_forward
     - net.ipv6.conf.all.forwarding
