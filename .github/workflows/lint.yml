@@ -1,6 +1,6 @@
 ---
 name: Lint
-on: push
+on: push # yamllint disable-line rule:truthy
 
 jobs:
   main:
@@ -19,7 +19,8 @@ jobs:
           curl -o ~/.ansible/plugins/modules/gpg_key.py \
             https://raw.githubusercontent.com/netson/ansible-gpg-key/master/gpg_key.py
       - uses: mfinelli/setup-shfmt@v2
-      - run: |
+      - name: Run shellcheck
+        run: |
           shellcheck --version
           shellcheck finellictl
           shellcheck arch/bootstrap arch/go arch/init arch/pacstrap \
@@ -30,7 +31,9 @@ jobs:
           shellcheck ubuntu/go
           find . -name '*.bash' | xargs shellcheck
           find . -name '*.sh' | xargs shellcheck
-      - run: |
+      - name: Run shfmt
+        run: |
+          shfmt --version
           shfmt -s -i 2 -ci -sr -d finellictl
           shfmt -s -i 2 -ci -sr -d arch/bootstrap arch/go arch/init \
             arch/pacstrap arch/server
@@ -40,9 +43,15 @@ jobs:
           shfmt -s -i 2 -ci -sr -d ubuntu/go
           find . -name '*.bash' | xargs shfmt -s -i 2 -ci -sr -d
           find . -name '*.sh' | xargs shfmt -s -i 2 -ci -sr -d
-      - run: ansible-lint arch/arch.yml
-      - run: ansible-lint debian/debian.yml
-      - run: ansible-lint macos/personal.yml
-      - run: ansible-lint macos/work.yml
-      - run: ansible-lint rpi/rpi.yml
-      - run: ansible-lint ubuntu/ubuntu.yml
+      - name: Run yamllint
+        run: |
+          yamllint --version
+          find . -name '*.yaml' -o -name '*.yml' | xargs yamllint -f github
+      - name: Run ansible-lint
+        run: |
+          ansible-lint --version
+          ansible-lint arch/arch.yml
+          ansible-lint macos/personal.yml
+          ansible-lint macos/work.yml
+          ansible-lint rpi/rpi.yml
+          ansible-lint ubuntu/ubuntu.yml
