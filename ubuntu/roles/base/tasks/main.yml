@@ -78,3 +78,11 @@
     mode: "0644"
     owner: root
     src: phased-updates
+
+- name: Uninstall ubuntu reporting programs
+  ansible.builtin.apt:
+    name:
+      - apport
+      - ubuntu-report
+      - whoopsie
+    state: absent
