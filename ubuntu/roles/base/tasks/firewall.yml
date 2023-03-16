@@ -1,0 +1,26 @@
+---
+- name: Install ufw
+  ansible.builtin.apt:
+    name: ufw
+
+- name: Ensure ufw is started and enabled
+  ansible.builtin.systemd:
+    enabled: true
+    name: ufw.service
+    state: started
+
+- name: Enable ufw with default settings
+  community.general.ufw:
+    logging: "on"
+    state: enabled
+
+- name: Deny all inbound traffic
+  community.general.ufw:
+    default: deny
+    direction: in
+    log: true
+
+- name: Allow all outbound traffic
+  community.general.ufw:
+    default: allow
+    direction: out

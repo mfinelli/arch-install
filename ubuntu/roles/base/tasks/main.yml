@@ -84,3 +84,6 @@
       - ubuntu-report
       - whoopsie
     state: absent
+
+- name: Enable simple firewall
+  ansible.builtin.include_tasks: firewall.yml
