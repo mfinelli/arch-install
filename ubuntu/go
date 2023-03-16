@@ -13,7 +13,6 @@
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y apt-transport-https
 
 sudo add-apt-repository -y ppa:mfinelli/supermario
 sudo apt update

@@ -25,12 +25,10 @@
       - git
     update_cache: true
 
-- name: Install apt https transport
+- name: Uninstall apt https transport
   ansible.builtin.apt:
     name: apt-transport-https
-
-# - name: add supermario ppa
-#   ansible.builtin.apt_repository: repo=ppa:mfinelli/supermario
+    state: absent
 
 - name: Add supermario ppa
   ansible.builtin.template:

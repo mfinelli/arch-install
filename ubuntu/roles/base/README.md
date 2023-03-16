@@ -16,8 +16,8 @@ file and manage it using `ansible.builtin.template`.
 
 ## https repositories
 
-This role also installs `apt-transport-https` and switches all of the mirrors
-to use HTTPS (using `mirrors.kernel.org`).
+This role switches all of the mirrors to use HTTPS (using
+`mirrors.kernel.org`).
 
 ## dns over tls
 
