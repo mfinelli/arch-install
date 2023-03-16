@@ -1,6 +1,7 @@
 ---
 - name: Add the tailscale signing key
   ansible.builtin.apt_key:
+    keyring: /usr/share/keyrings/tailscale-archive-keyring.gpg
     url: "https://pkgs.tailscale.com/stable/raspbian/\
       {{ ansible_distribution_release }}.asc"
 
@@ -8,7 +9,8 @@
   ansible.builtin.apt_repository:
     filename: tailscale
     repo: >
-      deb https://pkgs.tailscale.com/stable/raspbian
+      deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg]
+      https://pkgs.tailscale.com/stable/raspbian
       {{ ansible_distribution_release }} main
     update_cache: true
 
