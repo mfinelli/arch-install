@@ -30,16 +30,20 @@
   ansible.builtin.apt:
     name:
       - caffeine
-      - docker-compose
-      - docker.io
       - fonts-firacode
       - fonts-powerline
       - gnome-shell-extensions
+      - podman
+      - podman-docker
       - tmux
       - zoxide
 
-# - name: disable docker from startup
-#   ansible.builtin.systemd: name=docker.service enabled=no
+- name: Uninstall docker
+  ansible.builtin.apt:
+    name:
+      - docker-compose
+      - docker.io
+    state: absent
 
 - name: Install yubikey dependencies
   ansible.builtin.apt:
