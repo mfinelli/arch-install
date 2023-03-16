@@ -32,5 +32,6 @@ Updates the GDM configuration to require username input to enhance security.
 ## ufw
 
 Installs and enables [ufw](https://launchpad.net/ufw) that denies all incoming
-traffic and allows all outgoing traffic. Other roles can expand on these
-defaults as necessary (e.g., `tailscale`).
+traffic (except port `22` from the local network) and allows all outgoing
+traffic. Other roles can expand on these defaults as necessary (e.g.,
+`tailscale`).

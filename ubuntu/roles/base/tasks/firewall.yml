@@ -24,3 +24,13 @@
   community.general.ufw:
     default: allow
     direction: out
+
+- name: Allow SSH from the local network
+  community.general.ufw:
+    direction: in
+    log: true
+    port: "22"
+    proto: tcp
+    rule: allow
+    src: "{{ ansible_default_ipv4['network'] }}/\
+      {{ ansible_default_ipv4['prefix'] }}"
