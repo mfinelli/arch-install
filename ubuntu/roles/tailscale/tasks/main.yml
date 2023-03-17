@@ -20,7 +20,7 @@
 
 - name: Allow incoming requests to the tailscale interface
   community.general.ufw:
-    direction: incoming
+    direction: in
     interface: tailscale0
     rule: allow
 

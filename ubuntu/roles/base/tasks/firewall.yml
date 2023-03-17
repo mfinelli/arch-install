@@ -27,7 +27,7 @@
 
 - name: Allow SSH from the local network
   community.general.ufw:
-    direction: incoming
+    direction: in
     log: true
     port: "22"
     proto: tcp
