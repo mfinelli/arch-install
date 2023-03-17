@@ -33,3 +33,21 @@
   loop:
     - net.ipv4.ip_forward
     - net.ipv6.conf.all.forwarding
+
+- name: Allow incoming requests to the tailscale interface
+  community.general.ufw:
+    direction: in
+    interface: tailscale0
+    rule: allow
+
+- name: Allow port 41641
+  community.general.ufw:
+    port: "41641"
+    proto: udp
+    rule: allow
+
+- name: Allow port 3478
+  community.general.ufw:
+    port: "3478"
+    proto: udp
+    rule: allow

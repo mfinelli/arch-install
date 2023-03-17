@@ -1,0 +1,36 @@
+---
+- name: Install ufw
+  ansible.builtin.apt:
+    name: ufw
+
+- name: Ensure ufw is started and enabled
+  ansible.builtin.systemd:
+    enabled: true
+    name: ufw.service
+    state: started
+
+- name: Enable default ufw rules
+  community.general.ufw:
+    logging: "on"
+    state: enabled
+
+- name: Deny all inbound traffic
+  community.general.ufw:
+    default: deny
+    direction: in
+    log: true
+
+- name: Allow all outbound traffic
+  community.general.ufw:
+    default: allow
+    direction: out
+
+- name: Allow SSH from the local network
+  community.general.ufw:
+    direction: in
+    log: true
+    port: "22"
+    proto: tcp
+    rule: allow
+    src: "{{ ansible_default_ipv4['network'] }}/\
+      {{ ansible_default_ipv4['prefix'] }}"

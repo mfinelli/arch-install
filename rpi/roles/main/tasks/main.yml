@@ -76,3 +76,6 @@
 
 - name: Configure FDE and boot
   ansible.builtin.include_tasks: boot.yml
+
+- name: Configure basic firewall
+  ansible.builtin.include_tasks: firewall.yml
