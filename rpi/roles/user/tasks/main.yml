@@ -61,14 +61,14 @@
     repo: https://github.com/mfinelli/arch-install.git
 
 - name: Delete default pi user
-  when: "{{ whoami }} != 'pi'"
+  when: whoami != 'pi'
   ansible.builtin.user:
     name: pi
     remove: true
     state: absent
 
 - name: Delete pi sudo rule
-  when: "{{ whoami }} != 'pi'"
+  when: whoami != 'pi'
   ansible.builtin.file:
     path: /etc/sudoers.d/010_pi-nopasswd
     state: absent
