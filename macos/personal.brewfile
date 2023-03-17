@@ -1,9 +1,7 @@
 tap "homebrew/bundle"
-tap "homebrew/cask"
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
-tap "homebrew/core"
 tap "homebrew/services"
 brew "agg"
 brew "ansible"
@@ -29,6 +27,7 @@ brew "glab"
 brew "gnu-sed"
 brew "gnu-tar"
 brew "go"
+brew "gofumpt"
 brew "goose"
 brew "grep"
 brew "helm"
@@ -110,7 +109,9 @@ cask "thunderbird"
 cask "viscosity"
 cask "vlc"
 mas "1Password 7", id: 1333542190
-mas "Affinity Designer", id: 824171161
+mas "Affinity Designer 2", id: 1616831348
+mas "Affinity Photo 2", id: 1616822987
+mas "Affinity Publisher 2", id: 1606941598
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
