@@ -17,17 +17,17 @@
 - name: Deny all inbound traffic
   community.general.ufw:
     default: deny
-    direction: in
+    direction: incoming
     log: true
 
 - name: Allow all outbound traffic
   community.general.ufw:
     default: allow
-    direction: out
+    direction: outgoing
 
 - name: Allow SSH from the local network
   community.general.ufw:
-    direction: in
+    direction: incoming
     log: true
     port: "22"
     proto: tcp
