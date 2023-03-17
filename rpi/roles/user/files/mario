@@ -1,0 +1,2 @@
+mario ALL=(ALL) NOPASSWD: ALL
+# vim: ft=sudoers

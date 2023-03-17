@@ -1,7 +1,35 @@
 ---
+- name: Create mario user
+  ansible.builtin.user:
+    groups:
+      - adm
+      - audio
+      - cdrom
+      - dialout
+      - games
+      - gpio
+      - i2c
+      - input
+      - lpadmin
+      - netdev
+      - plugdev
+      - render
+      - spi
+      - sudo
+      - users
+      - video
+    name: mario
+
+- name: Add sudo rule for mario
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/010_mario-nopasswd
+    group: root
+    mode: "0440"
+    owner: root
+    src: mario
+    validate: "visudo -cf %s"
+
 - name: Add home ssh key
-  become: true
-  become_user: "{{ whoami }}"
   ansible.posix.authorized_key:
     exclusive: true
     # yamllint disable rule:line-length
@@ -10,16 +38,16 @@
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGLzoWaCMxwWMyepLYUu6FBbYZmDOaXPj+LQtWjdM8pW mario@ipad
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOy1DGNkaHw4UiGX8H7L4ruWjWBYFSkOEvB1jqAt5rdz mario@iphone
     # yamllint enable rule:line-length
-    user: "{{ whoami }}"
+    user: mario
 
 - name: Ensure src directory
   become: true
-  become_user: "{{ whoami }}"
+  become_user: mario
   ansible.builtin.file:
-    group: "{{ whoami }}"
+    group: mario
     mode: "0755"
-    owner: "{{ whoami }}"
-    path: "{{ whoami_home }}/{{ item }}"
+    owner: mario
+    path: home/mario/{{ item }}
     state: directory
   loop:
     - src
@@ -27,7 +55,20 @@
 
 - name: Clone this repository for easy updates
   become: true
-  become_user: "{{ whoami }}"
+  become_user: mario
   ansible.builtin.git:
-    dest: "{{ whoami_home }}/src/mfinelli/arch-install"
+    dest: home/mario/src/mfinelli/arch-install
     repo: https://github.com/mfinelli/arch-install.git
+
+- name: Delete default pi user
+  when: "{{ whoami }} != 'pi'"
+  ansible.builtin.user:
+    name: pi
+    remove: true
+    state: absent
+
+- name: Delete pi sudo rule
+  when: "{{ whoami }} != 'pi'"
+  ansible.builtin.file:
+    path: /etc/sudoers.d/010_pi-nopasswd
+    state: absent
