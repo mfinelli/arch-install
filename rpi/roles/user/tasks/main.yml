@@ -47,7 +47,7 @@
     group: mario
     mode: "0755"
     owner: mario
-    path: home/mario/{{ item }}
+    path: /home/mario/{{ item }}
     state: directory
   loop:
     - src
@@ -57,7 +57,7 @@
   become: true
   become_user: mario
   ansible.builtin.git:
-    dest: home/mario/src/mfinelli/arch-install
+    dest: /home/mario/src/mfinelli/arch-install
     repo: https://github.com/mfinelli/arch-install.git
 
 - name: Delete default pi user
