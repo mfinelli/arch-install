@@ -5,9 +5,10 @@
       - ansible
       - git
 
-- name: Install apt-transport-https
+- name: Uninstall apt-transport-https
   ansible.builtin.apt:
     name: apt-transport-https
+    state: absent
 
 - name: Install https sources list
   ansible.builtin.template:
