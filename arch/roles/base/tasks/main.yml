@@ -14,6 +14,9 @@
   ansible.builtin.set_fact:
     cryptroot_uuid: "{{ cryptroot_blkit.stdout }}"
 
+- name: install finellictl
+  ansible.builtin.include_tasks: finellictl.yml
+
 - name: use systemd for ntp
   become: true
   ansible.builtin.command: timedatectl set-ntp true
@@ -247,6 +250,3 @@
       - xf86-video-amdgpu
       - ansible-aur
     state: absent
-
-- name: install finellictl
-  ansible.builtin.include_tasks: finellictl.yml
