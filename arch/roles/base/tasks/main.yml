@@ -47,6 +47,42 @@
     group: root
     mode: 0644
     src: cmdline.conf.j2
+  notify:
+    - run dracut
+
+- name: add imagemagick for bootsplash conversion
+  become: true
+  community.general.pacman: name=imagemagick
+
+- name: download boot splash image source
+  become: true
+  ansible.builtin.get_url:
+    url: https://sources.archlinux.org/other/artwork/archlinux-logo-white-90dpi.png
+    dest: /etc/finelli/archlinux-logo-white-90dpi.png
+    owner: root
+    group: root
+    mode: 0644
+  register: bootsplash_source
+
+- name: convert boot splash to bmp
+  become: true
+  when: bootsplash_source.changed
+  ansible.builtin.command: >
+    magick /etc/finelli/archlinux-logo-white-90dpi.png
+    -background black -flatten /etc/finelli/archlinux-logo-white-90dpi.bmp
+  args:
+    creates: /etc/finelli/archlinux-logo-white-90dpi.bmp
+
+- name: install main custom dracut config
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/dracut.conf.d/custom.conf
+    owner: root
+    group: root
+    mode: 0644
+    src: dracut.conf
+  notify:
+    - run dracut
 
 - name: install locale.gen
   become: true
