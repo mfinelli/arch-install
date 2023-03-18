@@ -104,6 +104,7 @@ mkdir /mnt/{efi,home}
 mount /dev/disk/by-partlabel/EFISYSTEM /mnt/efi
 mount -o compress=zstd /dev/crypt/home /mnt/home
 echo -e "${CYAN}Mounted filesystems${ENDCOLOR}" && sleep 1
+read -rp "Press enter to continue..." throwaway
 
 echo -e "${CYAN}Setting known good mirror${ENDCOLOR}"
 # use a known good mirror - we'll generate a new mirrorlist on the new system
@@ -113,6 +114,7 @@ echo "$MIRROR" > /etc/pacman.d/mirrorlist
 echo -e "${CYAN}Setup for pacstrap done${ENDCOLOR}"
 
 echo -e "${BOLDGREEN}Pacstrapping system${ENDCOLOR}"
+read -rp "Press enter to continue..." throwaway
 
 # do the needful
 pacstrap -i /mnt base base-devel dracut linux linux-firmware posix
