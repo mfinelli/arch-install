@@ -54,24 +54,13 @@
   become: true
   community.general.pacman: name=imagemagick
 
-- name: download boot splash image source
+- name: copy bootsplash
   become: true
-  ansible.builtin.get_url:
-    url: https://sources.archlinux.org/other/artwork/archlinux-logo-white-90dpi.png
-    dest: /etc/finelli/archlinux-logo-white-90dpi.png
-    owner: root
-    group: root
-    mode: 0644
-  register: bootsplash_source
-
-- name: convert boot splash to bmp
-  become: true
-  when: bootsplash_source.changed
   ansible.builtin.command: >
-    magick /etc/finelli/archlinux-logo-white-90dpi.png
-    -background black -flatten /etc/finelli/archlinux-logo-white-90dpi.bmp
+    magick {{ playbook_dir }}/roles/base/files/bootsplash.png
+    -background black -flatten /etc/finelli/bootsplash.bmp
   args:
-    creates: /etc/finelli/archlinux-logo-white-90dpi.bmp
+    creates: /etc/finelli/bootsplash.bmp
 
 - name: install main custom dracut config
   become: true
