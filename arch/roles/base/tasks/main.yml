@@ -42,6 +42,13 @@
       - sof-firmware
       - posix
 
+# iptables is a dependency of systemd (part of base)
+- name: replace iptables with iptables-nft
+  become: true
+  community.general.pacman:
+    name:
+      - iptables-nft
+
 - name: install dracut kernel command line config
   become: true
   ansible.builtin.template:
