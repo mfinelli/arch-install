@@ -89,23 +89,25 @@ if [[ $1 == setup ]]; then
 
   # now we can run the main setup
   ansible-playbook \
-    --extra-vars whoami="$(whoami)" \
-    --extra-vars multilib=true \
+    --extra-vars hastpm=$hastpm \
     --extra-vars mmode=$mmode \
     --extra-vars mtype=$mtype \
-    --extra-vars wireless_regdom=$wirelessregdom \
-    --extra-vars timezone=$timezone \
+    --extra-vars multilib=true \
     --extra-vars system_lang=$syslang \
+    --extra-vars timezone=$timezone \
+    --extra-vars whoami="$(whoami)" \
+    --extra-vars wireless_regdom=$wirelessregdom \
     arch.yml --tags setup
 else
   ansible-playbook \
-    --extra-vars whoami="$(whoami)" \
-    --extra-vars multilib=true \
+    --extra-vars hastpm=$hastpm \
     --extra-vars mmode=post \
     --extra-vars mtype=$mtype \
-    --extra-vars wireless_regdom=$wirelessregdom \
-    --extra-vars timezone=$timezone \
+    --extra-vars multilib=true \
     --extra-vars system_lang=$syslang \
+    --extra-vars timezone=$timezone \
+    --extra-vars whoami="$(whoami)" \
+    --extra-vars wireless_regdom=$wirelessregdom \
     arch.yml
 fi
 
