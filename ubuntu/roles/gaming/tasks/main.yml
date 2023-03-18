@@ -18,6 +18,7 @@
 
 - name: Add steam repo key
   ansible.builtin.apt_key:
+    state: present
     url: https://repo.steampowered.com/steam/archive/stable/steam.gpg
 
 - name: Add steam repository
@@ -44,11 +45,12 @@
       - libgl1-mesa-glx:amd64
       - libgl1-mesa-glx:i386
       - steam-launcher
-    update_cache: true
+    state: present
 
 - name: Add winehq apt key
   ansible.builtin.apt_key:
     keyring: /usr/share/keyrings/winehq-archive.gpg
+    state: present
     url: https://dl.winehq.org/wine-builds/winehq.key
 
 - name: Add winehq repository
@@ -67,12 +69,14 @@
       - fonts-wine
       # - winehq-stable
       - winehq-staging
+    state: present
 
 - name: Add lutris ppa signing key
   ansible.builtin.apt_key:
     id: 82D96E430A1F1C0F0502747E37B90EDD4E3EFAE4
     keyring: /etc/apt/trusted.gpg.d/lutris-team-ubuntu-lutris.gpg
     keyserver: keyserver.ubuntu.com
+    state: present
 
 - name: Add lutris ppa
   ansible.builtin.apt_repository:
@@ -85,6 +89,7 @@
 - name: Install lutris
   ansible.builtin.apt:
     name: lutris
+    state: present
 
 - name: Install lutris dependencies for origin
   ansible.builtin.apt:
@@ -97,9 +102,11 @@
       - libldap-dev:i386 # libldap-2.4-2:i386
       - libsdl2-2.0-0:i386
       - libxml2:i386
+    state: present
 
 - name: Install virtualbox
   ansible.builtin.apt:
     name:
       - virtualbox
       - virtualbox-guest-additions-iso
+    state: present

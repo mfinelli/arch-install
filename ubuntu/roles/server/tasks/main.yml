@@ -3,11 +3,13 @@
   ansible.builtin.apt:
     name:
       - screen
+    state: present
 
 - name: Ensure mario user
   ansible.builtin.user:
     name: mario
     shell: /bin/bash
+    state: present
 
 - name: Add cloud dev ssh key
   ansible.posix.authorized_key:
@@ -17,6 +19,7 @@
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII4kUwwZEPUHbx17N3VOVXPmQoRF9u+gkWj2nnvtYt2h mario
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOy1DGNkaHw4UiGX8H7L4ruWjWBYFSkOEvB1jqAt5rdz mario@iphone
     # yamllint enable rule:line-length
+    state: present
     user: mario
 
 - name: Ensure mario sudo rule

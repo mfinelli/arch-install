@@ -2,6 +2,7 @@
 - name: Add tailscale signing key
   ansible.builtin.apt_key:
     keyring: /usr/share/keyrings/tailscale-archive-keyring.gpg
+    state: present
     url: "https://pkgs.tailscale.com/stable/ubuntu/\
       {{ ansible_distribution_release }}.gpg"
 
@@ -17,6 +18,7 @@
 - name: Install tailscale
   ansible.builtin.apt:
     name: tailscale
+    state: present
 
 - name: Allow incoming requests to the tailscale interface
   community.general.ufw:

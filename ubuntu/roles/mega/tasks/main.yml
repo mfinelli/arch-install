@@ -2,6 +2,7 @@
 - name: Add mega signing key
   ansible.builtin.apt_key:
     keyring: /usr/share/keyrings/meganz-archive-keyring.gpg
+    state: present
     # url: https://mega.nz/keys/MEGA_signing.key
     url: "https://mega.nz/linux/repo/\
       xUbuntu_{{ ansible_distribution_version }}/Release.key"
@@ -17,3 +18,4 @@
 - name: Install megasync
   ansible.builtin.apt:
     name: megasync
+    state: present

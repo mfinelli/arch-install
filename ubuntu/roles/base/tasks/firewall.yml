@@ -2,6 +2,7 @@
 - name: Install ufw
   ansible.builtin.apt:
     name: ufw
+    state: present
 
 - name: Ensure ufw is started and enabled
   ansible.builtin.systemd:

@@ -2,6 +2,7 @@
 - name: Add 1password signing key
   ansible.builtin.apt_key:
     keyring: /usr/share/keyrings/1password-archive-keyring.gpg
+    state: present
     url: https://downloads.1password.com/linux/keys/1password.asc
 
 - name: Add 1password repository
@@ -43,3 +44,4 @@
 - name: Install 1password
   ansible.builtin.apt:
     name: 1password
+    state: present

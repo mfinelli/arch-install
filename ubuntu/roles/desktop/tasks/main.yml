@@ -1,18 +1,4 @@
 ---
-- name: Add the mozillateam ppa signing key
-  ansible.builtin.apt_key:
-    id: 0AB215679C571D1C8325275B9BDB3D89CE49EC21
-    keyring: /etc/apt/trusted.gpg.d/mozillateam-ubuntu-ppa.gpg
-    keyserver: keyserver.ubuntu.com
-
-- name: Add the mozillateam ppa
-  ansible.builtin.template:
-    dest: /etc/apt/sources.list.d/mozillateam.list
-    group: root
-    mode: "0644"
-    owner: root
-    src: mozillateam.list.j2
-
 - name: Add firefox no-snap pin
   ansible.builtin.copy:
     dest: /etc/apt/preferences.d/firefox-no-snap
@@ -21,10 +7,26 @@
     owner: root
     src: firefox-no-snap
 
+- name: Add the mozillateam ppa signing key
+  ansible.builtin.apt_key:
+    id: 0AB215679C571D1C8325275B9BDB3D89CE49EC21
+    keyring: /etc/apt/trusted.gpg.d/mozillateam-ubuntu-ppa.gpg
+    keyserver: keyserver.ubuntu.com
+    state: present
+
+- name: Add the mozillateam ppa
+  ansible.builtin.apt_repository:
+    filename: mozillateam
+    repo: >
+      deb https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu
+      {{ ansible_distribution_release }} main
+    state: present
+    update_cache: true
+
 - name: Install firefox from mozillateam ppa
   ansible.builtin.apt:
     name: firefox
-    update_cache: true
+    state: present
 
 - name: Install desktop packages
   ansible.builtin.apt:
@@ -37,6 +39,7 @@
       - podman-docker
       - tmux
       - zoxide
+    state: present
 
 - name: Uninstall docker
   ansible.builtin.apt:
@@ -50,6 +53,7 @@
     name:
       - pcscd
       - scdaemon
+    state: present
 
 - name: Install backup programs
   ansible.builtin.apt:
@@ -61,12 +65,13 @@
       - pass
       - pass-extension-otp
       - rclone
+    state: present
 
 - name: Install packages from my ppa
   ansible.builtin.apt:
     name:
       - fonts-ubuntu-mono-nerd-font
-    update_cache: true
+    state: present
 
 - name: Install gdm dconf greeter
   ansible.builtin.copy:
