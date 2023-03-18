@@ -1,17 +1,17 @@
 ---
-- name: Install server packages
+- name: Installing screen
   ansible.builtin.apt:
     name:
       - screen
     state: present
 
-- name: Ensure mario user
+- name: Creating the "mario" user
   ansible.builtin.user:
     name: mario
     shell: /bin/bash
     state: present
 
-- name: Add cloud dev ssh key
+- name: Configuring SSH keys for "mario"
   ansible.posix.authorized_key:
     exclusive: true
     # yamllint disable rule:line-length
@@ -22,7 +22,7 @@
     state: present
     user: mario
 
-- name: Ensure mario sudo rule
+- name: Adding sudo rule for "mario"
   ansible.builtin.copy:
     dest: /etc/sudoers.d/mario
     group: root

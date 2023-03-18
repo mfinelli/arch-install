@@ -1,12 +1,12 @@
 ---
-- name: Add tailscale signing key
+- name: Adding the Tailscale signing key
   ansible.builtin.apt_key:
     keyring: /usr/share/keyrings/tailscale-archive-keyring.gpg
     state: present
     url: "https://pkgs.tailscale.com/stable/ubuntu/\
       {{ ansible_distribution_release }}.gpg"
 
-- name: Add tailscale repository
+- name: Adding the Tailscale repository
   ansible.builtin.apt_repository:
     filename: tailscale
     repo: >
@@ -15,24 +15,24 @@
       {{ ansible_distribution_release }} main
     update_cache: true
 
-- name: Install tailscale
+- name: Installing Tailscale
   ansible.builtin.apt:
     name: tailscale
     state: present
 
-- name: Allow incoming requests to the tailscale interface
+- name: Adding firewall rule to allow incoming traffic to Tailscale interface
   community.general.ufw:
     direction: in
     interface: tailscale0
     rule: allow
 
-- name: Allow port 41641
+- name: Adding firewall rule to allow UDP traffic on port 41641
   community.general.ufw:
     port: "41641"
     proto: udp
     rule: allow
 
-- name: Allow port 3478
+- name: Adding firewall rule to allow UDP traffic on port 3478
   community.general.ufw:
     port: "3478"
     proto: udp

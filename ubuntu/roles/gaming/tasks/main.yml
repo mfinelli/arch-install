@@ -1,5 +1,5 @@
 ---
-- name: Check if i386 is enabled
+- name: Checking if the i386 architecture is enabled
   ansible.builtin.shell: >
     set -e -o pipefail;
     dpkg --print-foreign-architectures | grep i386
@@ -9,19 +9,19 @@
   changed_when: i386_enabled.rc == 1
   failed_when: i386_enabled.rc > 1
 
-- name: Enable i386 architecture
+- name: Enabling the i386 architecture
   ansible.builtin.command: dpkg --add-architecture i386
   when: i386_enabled.rc == 1
   register: i386_was_enabled
   changed_when: i386_was_enabled.rc == 0
   failed_when: i386_was_enabled.rc != 0
 
-- name: Add steam repo key
+- name: Adding the Steam repository key
   ansible.builtin.apt_key:
     state: present
     url: https://repo.steampowered.com/steam/archive/stable/steam.gpg
 
-- name: Add steam repository
+- name: Adding the Steam repository
   ansible.builtin.apt_repository:
     filename: steam
     repo: >
@@ -29,7 +29,7 @@
       https://repo.steampowered.com/steam/ stable steam
     update_cache: true
 
-- name: Add steam source repository
+- name: Adding the Steam (source) repository
   ansible.builtin.apt_repository:
     filename: steam
     repo: >
@@ -37,7 +37,7 @@
       https://repo.steampowered.com/steam/ stable steam
     update_cache: true
 
-- name: Install steam
+- name: Installing Steam
   ansible.builtin.apt:
     name:
       - libgl1-mesa-dri:amd64
@@ -47,13 +47,13 @@
       - steam-launcher
     state: present
 
-- name: Add winehq apt key
+- name: Adding the WineHQ signing key
   ansible.builtin.apt_key:
     keyring: /usr/share/keyrings/winehq-archive.gpg
     state: present
     url: https://dl.winehq.org/wine-builds/winehq.key
 
-- name: Add winehq repository
+- name: Adding the WineHQ repository
   ansible.builtin.apt_repository:
     filename: winehq
     repo: >
@@ -62,7 +62,7 @@
       {{ ansible_distribution_release }} main
     update_cache: true
 
-- name: Install wine
+- name: Installing wine
   ansible.builtin.apt:
     install_recommends: true
     name:
@@ -71,14 +71,14 @@
       - winehq-staging
     state: present
 
-- name: Add lutris ppa signing key
+- name: Adding the Lutris PPA signing key
   ansible.builtin.apt_key:
     id: 82D96E430A1F1C0F0502747E37B90EDD4E3EFAE4
     keyring: /etc/apt/trusted.gpg.d/lutris-team-ubuntu-lutris.gpg
     keyserver: keyserver.ubuntu.com
     state: present
 
-- name: Add lutris ppa
+- name: Adding the Lutris PPA repository
   ansible.builtin.apt_repository:
     filename: lutris
     repo: >
@@ -86,12 +86,12 @@
       {{ ansible_distribution_release }} main
     update_cache: true
 
-- name: Install lutris
+- name: Installing Lutris
   ansible.builtin.apt:
     name: lutris
     state: present
 
-- name: Install lutris dependencies for origin
+- name: Installing Lutris dependencies for running EA Origin
   ansible.builtin.apt:
     name:
       - libasound2-plugins:i386
@@ -104,7 +104,7 @@
       - libxml2:i386
     state: present
 
-- name: Install virtualbox
+- name: Installing Virtualbox
   ansible.builtin.apt:
     name:
       - virtualbox

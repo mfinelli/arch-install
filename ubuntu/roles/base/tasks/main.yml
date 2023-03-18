@@ -1,5 +1,5 @@
 ---
-- name: Ensure resolved.conf.d directory
+- name: Creating systemd-resolved configuration directory
   ansible.builtin.file:
     group: root
     mode: "0755"
@@ -7,7 +7,7 @@
     path: /etc/systemd/resolved.conf.d
     state: directory
 
-- name: Copy custom systemd-resolved configuration
+- name: Copying custom systemd-resolved configuration
   ansible.builtin.copy:
     dest: /etc/systemd/resolved.conf.d/dns.conf
     group: root
@@ -17,7 +17,7 @@
   notify:
     - Restart systemd-resolved
 
-- name: Ensure manual dependencies
+- name: Installing manually installed packages
   ansible.builtin.apt:
     name:
       - ansible
@@ -26,18 +26,18 @@
     state: present
     update_cache: true
 
-- name: Install ansible dependencies
+- name: Installing ansible dependencies
   ansible.builtin.apt:
     name:
       - python3-apt
     state: present
 
-- name: Uninstall apt https transport
+- name: Uninstalling apt-transport-https
   ansible.builtin.apt:
     name: apt-transport-https
     state: absent
 
-- name: Add supermario ppa
+- name: Adding "supermario" PPA
   ansible.builtin.template:
     dest: /etc/apt/sources.list.d/supermario.list
     group: root
@@ -46,7 +46,7 @@
     src: supermario.list.j2
   register: supermario_ppa
 
-- name: Install new sources list
+- name: Copying HTTPS-enabled sources.list
   when: mtype != 'server'
   ansible.builtin.template:
     dest: /etc/apt/sources.list
@@ -56,7 +56,7 @@
     src: sources.list.j2
   register: sources_list
 
-- name: Install base packages
+- name: Installing base packages
   ansible.builtin.apt:
     name:
       - fd-find
@@ -79,7 +79,7 @@
     update_cache: "{{ supermario_ppa.changed or sources_list.changed }}"
 
 # https://askubuntu.com/a/1246984
-- name: Never install phased updates
+- name: Disabling phased updates
   ansible.builtin.copy:
     dest: /etc/apt/apt.conf.d/99-Phased-Updates
     group: root
@@ -87,7 +87,7 @@
     owner: root
     src: phased-updates
 
-- name: Uninstall ubuntu reporting programs
+- name: Uninstalling ubuntu reporting programs
   ansible.builtin.apt:
     name:
       - apport
@@ -95,5 +95,5 @@
       - whoopsie
     state: absent
 
-- name: Enable simple firewall
+- name: Enabling simple stateful firewall
   ansible.builtin.include_tasks: firewall.yml

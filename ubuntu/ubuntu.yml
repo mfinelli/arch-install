@@ -1,5 +1,5 @@
 ---
-- name: Configure ubuntu system
+- name: Configuring Ubuntu system
   hosts: localhost
   connection: local
   become: true
@@ -28,14 +28,14 @@
     # mullvad doesn't seem to have an apt repository right now, so I'm keeping
     # this here to make it easier to update
     # https://github.com/mullvad/mullvadvpn-app/issues/3049
-    - name: Install mullvad vpn
+    - name: Installing Mullvad VPN
       when: mtype != 'server'
       ansible.builtin.apt:
         deb: https://mullvad.net/media/app/MullvadVPN-2023.2_amd64.deb
 
     # discord also doesn't have an apt repository (and doesn't seem to be on
     # the roadmap at all, so this is the best we can do for now)
-    - name: Install discord
+    - name: Installing Discord
       when: mtype != 'server'
       ansible.builtin.apt:
         # curl -sI \
