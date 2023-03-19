@@ -15,6 +15,17 @@
   ansible.builtin.set_fact:
     cryptroot_uuid: "{{ cryptroot_blkid.stdout }}"
 
+- name: Detecting installed kernel package
+  ansible.builtin.shell: >-
+    basename "$(find /usr/lib/modules/* -prune -print | head -n 1)"
+  register: installed_kernel_shell
+  changed_when: false
+  failed_when: installed_kernel_shell.rc != 0
+
+- name: Setting installed kernel package as fact
+  ansible.builtin.set_fact:
+    installed_kernel: "{{ installed_kernel_shell.stdout }}"
+
 - name: Installing finellictl
   ansible.builtin.include_tasks: finellictl.yml
 

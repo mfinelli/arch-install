@@ -1,7 +1,7 @@
 ---
 - name: Run dracut
   become: true
-  ansible.builtin.command: dracut --uefi --force
+  ansible.builtin.command: dracut --uefi --force --kver {{ installed_kernel }}
 
 - name: Restart systemd-resolved
   become: true
