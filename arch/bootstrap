@@ -1,15 +1,35 @@
 #!/bin/bash
 
-set -ex
+set -e
+
+# https://dev.to/ifenna__/adding-colors-to-bash-scripts-48g4
+ENDCOLOR="\e[0m"
+CYAN="\e[36m"
+BOLDGREEN="\e[1;32m"
+BOLDMAGENTA="\e[1;35m"
+BOLDRED="\e[1;31m"
+
+# https://stackoverflow.com/a/17695543
+function prompt_yesno() {
+  read -rp "$1 "
+  case $(echo "$REPLY" | tr '[:upper:]' '[:lower:]') in
+    y | yes) echo "yes" ;;
+    *) echo "no" ;;
+  esac
+}
+
+echo -e "${BOLDGREEN}Beginning system bootstrap${ENDCOLOR}"
 
 # default timezone to UTC
 hwclock --systohc --utc
 timedatectl set-timezone UTC
+echo -e "${CYAN}Set hardware clock${ENDCOLOR}"
 
 # Set default language to US english
 sed -i "/#en_US.UTF-8 UTF-8/cen_US.UTF-8 UTF-8" /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
+echo -e "${CYAN}Set system language${ENDCOLOR}"
 
 # use a known good mirror for initial package installation - we'll generate a
 # new mirrorlist shortly
@@ -24,22 +44,47 @@ pacman-key --lsign-key C3CD75B002978A8468CA7B1F6C3ADDDE36FDA306
 echo '[supermario]' >> /etc/pacman.conf
 # shellcheck disable=SC2016
 echo 'Server = https://pkgs.finelli.dev/arch/$arch' >> /etc/pacman.conf
-pacman -Syyu
+echo -e "${CYAN}Added supermario repository${ENDCOLOR}"
+
+while :; do
+  if pacman -Syyu; then
+    break
+  else
+    echo -e "${BOLDRED}Synchronizing repositories failed!${ENDCOLOR}"
+    if [[ "no" == $(prompt_yesno "Retry?") ]]; then
+      exit 1
+    fi
+  fi
+done
 
 # can't have a baby without a name
 read -rp "What's the new hostname? " NEW_HOSTNAME
 echo "$NEW_HOSTNAME" > /etc/hostname
-
-pacman -S efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs exfat-utils \
-  f2fs-tools os-prober lvm2 cryptsetup mdadm usbutils elfutils
+echo -e "${CYAN}Set hostname: ${NEW_HOSTNAME}${ENDCOLOR}"
+read -rp "Press enter to continue..." _
 
 AMD=AuthenticAMD
 INTEL=GenuineIntel
 if [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == "$INTEL" ]]; then
-  pacman -S intel-ucode
+  microcode=intel-ucode
 elif [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == "$AMD" ]]; then
-  pacman -S amd-ucode
+  microcode=amd-ucode
+else
+  microcode=""
 fi
+
+while :; do
+  if pacman -S efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs \
+    exfat-utils f2fs-tools os-prober lvm2 cryptsetup mdadm usbutils \
+    elfutils $microcode; then
+    break
+  else
+    echo -e "${BOLDRED}Installing boot packages failed!${ENDCOLOR}"
+    if [[ "no" == $(prompt_yesno "Retry?") ]]; then
+      exit 1
+    fi
+  fi
+done
 
 # construct the kernel parameters required for booting with lvm on luks
 # https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS
@@ -50,6 +95,7 @@ echo -n "${LUKSDEVICE}=crypt rd.lvm.lv=crypt/root rd.lvm.lv=crypt/swap " \
   >> /etc/dracut.conf.d/cmdline.conf
 echo 'root=/dev/mapper/crypt-root rootfstype=btrfs rootflags=rw"' \
   >> /etc/dracut.conf.d/cmdline.conf
+echo -e "${CYAN}Configured dracut${ENDCOLOR}"
 
 # we need to pass an explicit kernel version because the installed kernel may
 # be different than the kernel that we booted with using the install medium
@@ -57,8 +103,20 @@ echo 'root=/dev/mapper/crypt-root rootfstype=btrfs rootflags=rw"' \
 kver="$(find /usr/lib/modules/* -prune -print | head -n 1)"
 dracut --uefi --kver "$(basename "$kver")"
 bootctl install
+echo -e "${CYAN}Installed bootloader${ENDCOLOR}"
 
-# the rest of the system gets installed/configured using ansible
-pacman -S ansible git pyalpm ansible-gpg-key-git vim
+while :; do
+  # the rest of the system gets installed/configured using ansible
+  if pacman -S ansible git pyalpm ansible-gpg-key-git vim; then
+    break
+  else
+    echo -e "${BOLDRED}Installing ansible packages failed!${ENDCOLOR}"
+    if [[ "no" == $(prompt_yesno "Retry?") ]]; then
+      exit 1
+    fi
+  fi
+done
+
+echo -e "${BOLDMAGENTA}arch-install/bootstrap complete${ENDCOLOR}"
 
 exit 0
