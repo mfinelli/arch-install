@@ -88,7 +88,7 @@ if [[ $1 == setup ]]; then
   mmode=setup
 
   # now we can run the main setup
-  ansible-playbook \
+  ansible-playbook --inventory ../localhost \
     --extra-vars hastpm=$hastpm \
     --extra-vars mmode=$mmode \
     --extra-vars mtype=$mtype \
@@ -99,7 +99,7 @@ if [[ $1 == setup ]]; then
     --extra-vars wireless_regdom=$wirelessregdom \
     arch.yml --tags setup
 else
-  ansible-playbook \
+  ansible-playbook --inventory ../localhost \
     --extra-vars hastpm=$hastpm \
     --extra-vars mmode=post \
     --extra-vars mtype=$mtype \
