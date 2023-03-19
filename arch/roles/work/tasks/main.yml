@@ -24,7 +24,6 @@
       - kustomize
       - mariadb-clients
       - python-kubernetes
-      - python-pip # dependency of asdf-pyapp
       - tidy
       - yj
 
