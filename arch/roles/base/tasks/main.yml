@@ -67,6 +67,15 @@
     name: tpm2-tools
     state: present
 
+- name: Install plymouth
+  become: true
+  community.general.pacman:
+    name:
+      - plymouth-git
+      # - plymouth-theme-...
+  notify:
+    - Run dracut
+
 - name: Copying dracut kernel commandline configuration
   become: true
   ansible.builtin.template:

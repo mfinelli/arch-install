@@ -1,1 +1,1 @@
-kernel_cmdline="rd.luks.name={{ cryptroot_uuid }}=crypt rd.lvm.lv=crypt/root rd.lvm.lv=crypt/swap root=/dev/mapper/crypt-root rootfstype=btrfs rootflags=rw"
+kernel_cmdline="rd.luks.name={{ cryptroot_uuid }}=crypt rd.lvm.lv=crypt/root rd.lvm.lv=crypt/swap root=/dev/mapper/crypt-root rootfstype=btrfs rootflags=rw quiet splash vt.global_cursor_default=0 systemd.gpt_auto=0 rd.systemd.gpt_auto=0"
