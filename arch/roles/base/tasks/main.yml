@@ -53,6 +53,13 @@
     name: iptables-nft
     state: present
 
+- name: Installing tpm tools
+  become: true
+  when: hastpm == 'true'
+  community.general.pacman:
+    name: tpm2-tools
+    state: present
+
 - name: Copying dracut kernel commandline configuration
   become: true
   ansible.builtin.template:
