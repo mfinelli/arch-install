@@ -1,5 +1,5 @@
 ---
-- name: Install resolved configuration
+- name: Copying systemd-resolved configuration
   become: true
   ansible.builtin.copy:
     dest: /etc/systemd/resolved.conf
@@ -8,7 +8,7 @@
     owner: root
     src: resolved.conf
 
-- name: Symlink systemd resolvd stub to /etc/resolv.conf
+- name: Linking systemd-resolved stub resolver to /etc/resolv.conf
   become: true
   when: mmode != 'setup' # don't run before first reboot
   ansible.builtin.file:
@@ -17,7 +17,7 @@
     src: /run/systemd/resolve/stub-resolv.conf
     state: link
 
-- name: Enable systemd-resolved
+- name: Enabling systemd-resolved
   become: true
   ansible.builtin.systemd:
     enabled: true

@@ -1,5 +1,5 @@
 ---
-- name: Install zsh
+- name: Installing zsh
   become: true
   community.general.pacman:
     name:
@@ -9,13 +9,15 @@
       - zsh-completions
       - zsh-syntax-highlighting
       - zsh-theme-powerlevel10k
+    state: present
 
-- name: Install gitstatus
+- name: Installing gitstatus
   become: true
   community.general.pacman:
     name: gitstatus
+    state: present
 
-- name: Install terminal fonts
+- name: Installing terminal fonts
   when: mtype != 'server'
   become: true
   community.general.pacman:
@@ -24,8 +26,9 @@
       - ttf-meslo-nerd-font-powerlevel10k
       # - ttf-jetbrains-mono
       # - ttf-nerd-fonts-symbols-mono
+    state: present
 
-- name: Install main cli apps
+- name: Installing main CLI programs
   become: true
   community.general.pacman:
     name:
@@ -49,8 +52,9 @@
       - vivid
       - whois
       - zoxide
+    state: present
 
-- name: Install secondary cli apps
+- name: Installing secondary CLI programs
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -65,16 +69,18 @@
       - nmap
       - pv
       - urlwatch
+    state: present
 
-- name: Install shared secondary cli apps
+- name: Installing shared secondary CLI programs
   when: mtype == 'personal' or mtype == 'media'
   become: true
   community.general.pacman:
     name:
       - cdrtools
       - unrar
+    state: present
 
-- name: Install backup apps
+- name: Installing backup programs
   become: true
   community.general.pacman:
     name:
@@ -82,19 +88,11 @@
       - pass
       - pass-otp
       - rclone
+    state: present
 
-- name: Add archuseriso signing key
-  when: mtype != 'media' and mtype != 'server'
-  gpg_key:
-    fpr: A5143BB56952B3189F49A175FAC4560863BEEC34
-
-- name: Install archuseriso from aur
-  when: mtype != 'media' and mtype != 'server'
-  kewlfft.aur.aur:
-    name: archuseriso
-
-- name: Install tailscale
+- name: Installing Tailscale
   when: mtype == 'personal' or mtype == 'media'
   become: true
   community.general.pacman:
     name: tailscale
+    state: present

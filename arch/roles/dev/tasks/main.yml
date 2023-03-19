@@ -1,42 +1,38 @@
 ---
-- name: Install firefox developer edition
+- name: Installing Firefox Developer Edition
   when: mtype != 'media' and mtype != 'server'
   become: true
   community.general.pacman:
     name: firefox-developer-edition
+    state: present
 
-- name: Install main development packages
+- name: Installing geckodriver
   when: mtype == 'personal'
   become: true
   community.general.pacman:
-    name:
-      - geckodriver
-      - imagemagick
+    name: geckodriver
+    state: present
 
-- name: Download extra editors
-  when: mtype == 'personal'
-  kewlfft.aur.aur:
-    name:
-      - rubymine
-      - sublime-text-4
-
-- name: Install latex packages
+- name: Installing LaTeX packages
   when: mtype == 'personal'
   become: true
   community.general.pacman:
     name:
       - texlive-lang
       - texlive-most
+    state: present
 
-- name: Install docker
+# TODO: switch to podman
+- name: Installing docker
   when: mtype != 'media'
   become: true
   community.general.pacman:
     name:
       - docker
       - docker-compose
+    state: present
 
-- name: Install virtualbox
+- name: Installing Virtualbox
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -44,9 +40,9 @@
       - virtualbox
       - virtualbox-guest-iso
       - virtualbox-host-modules-arch
+    state: present
 
-# TODO: sudo usermod -aG libvirt mario
-- name: Install virt-manager
+- name: Installing virt-manager
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -57,8 +53,16 @@
       - qemu-desktop
       - swtpm
       - virt-manager
+    state: present
 
-- name: Install libvirtd configuration
+- name: Adding {{ whoami }} to libvirt group
+  become: true
+  ansible.builtin.user:
+    append: true
+    groups: libvirt
+    user: "{{ whoami }}"
+
+- name: Copying libvirtd configuration
   when: mtype != 'media'
   become: true
   ansible.builtin.copy:
@@ -68,7 +72,7 @@
     owner: root
     src: libvirtd.conf
 
-- name: Install libvirtd qemu configuration
+- name: Copying libvirtd QEMU configuration
   when: mtype != 'media'
   become: true
   ansible.builtin.template:
@@ -78,7 +82,7 @@
     owner: root
     src: qemu.conf.j2
 
-- name: Install command line utilities
+- name: Installing main commandline utilities
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -90,16 +94,18 @@
       - prettier
       - shellcheck
       - shfmt
+    state: present
 
-- name: Install go
+- name: Installing go
   when: mtype != 'media'
   become: true
   community.general.pacman:
     name:
       - go
       - go-tools
+    state: present
 
-- name: Install rust
+- name: Installing rust
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -107,41 +113,47 @@
       - cargo-about
       - cargo-outdated
       - rust
+    state: present
 
-- name: Install redis
+- name: Installing redis
   when: mtype == 'personal'
   become: true
   community.general.pacman:
     name: redis
+    state: present
 
-- name: Install postgresql
+- name: Installing PostgreSQL
   when: mtype == 'personal'
   become: true
   community.general.pacman:
     name: postgresql
+    state: present
 
-- name: Install postfix
+- name: Installing postfix
   when: mtype != 'media'
   become: true
   community.general.pacman:
     name: postfix
+    state: present
 
-- name: Install neovim
+- name: Installing neovim
   when: mtype != 'media'
   become: true
   community.general.pacman:
     name: neovim
+    state: present
 
-- name: Install asciinema
+- name: Installing asciinema
   when: mtype == 'personal'
   become: true
   community.general.pacman:
     name:
       - asciinema
       - asciinema-agg
+    state: present
 
-- name: Install fastfoto stuff
-  when: mtype != 'media'
+- name: Installing fastfoto dependencies
+  when: mtype == 'personal'
   become: true
   community.general.pacman:
     name:
@@ -151,17 +163,13 @@
       - perl-archive-zip
       - perl-image-exiftool
       - sqlc
+    state: present
 
-# - name: install fastfoto stuff from aur
-#   when: mtype != 'media'
-#   kewlfft.aur.aur:
-#     name:
-
-- name: Install nodejs and tools
+- name: Installing nodejs and tools
   ansible.builtin.include_tasks: nodejs.yml
 
-- name: Install ruby and tools
+- name: Installing ruby and tools
   ansible.builtin.include_tasks: ruby.yml
 
-- name: Install devops tools
+- name: Installing devops tools
   ansible.builtin.include_tasks: devops.yml

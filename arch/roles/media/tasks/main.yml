@@ -1,5 +1,5 @@
 ---
-- name: Install wine
+- name: Installing Wine
   when:
     - multilib == 'true'
     - mtype == 'personal' or mtype == 'media'
@@ -10,8 +10,9 @@
       - wine-gecko
       - wine-mono
       - winetricks
+    state: present
 
-- name: Install lib32 libraries
+- name: Installing lib32 libraries for Wine
   when:
     - multilib == 'true'
     - mtype == 'personal' or mtype == 'media'
@@ -20,47 +21,54 @@
     name:
       - lib32-alsa-plugins
       - lib32-libpulse
+    state: present
 
-- name: Install picard
+- name: Installing picard
   when: mtype == 'personal' or mtype == 'media'
   become: true
   community.general.pacman:
     name: picard
+    state: present
 
-- name: Install other music applications
+- name: Installing Wine-based music applications
   when: mtype == 'personal' or mtype == 'media'
   kewlfft.aur.aur:
     name:
       - exact-audio-copy
       - foobar2000
       - mp3tag
+    state: present
 
-- name: Install tor browser bundle
+- name: Installing the Tor Browser bundle
   when: mtype == 'personal' or mtype == 'media'
   become: true
   community.general.pacman:
     name: tor-browser
+    state: present
 
-- name: Install google-chrome
+- name: Installing Google Chrome
   when: mtype != 'server'
   kewlfft.aur.aur:
     name: google-chrome
+    state: present
 
-- name: Install youtube-dl
+- name: Installing yt-dlp
   when: mtype == 'personal' or mtype == 'media'
   become: true
   community.general.pacman:
     name:
       - youtube-dl
       - yt-dlp
+    state: present
 
-- name: Install gallery-dl
+- name: Installing gallery-dl
   when: mtype == 'personal' or mtype == 'media'
   become: true
   community.general.pacman:
     name: gallery-dl
+    state: present
 
-- name: Install other media dependencies
+- name: Installing other media applications
   when: mtype == 'personal' or mtype == 'media'
   become: true
   community.general.pacman:
@@ -69,11 +77,13 @@
       - libaacs
       - libdvdcss
       - vlc
+    state: present
 
-- name: Install torrent client
+- name: Installing a torrent client
   when: mtype == 'personal' or mtype == 'media'
   become: true
   community.general.pacman:
     name:
       - cksfv
       - deluge
+    state: present

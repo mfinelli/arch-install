@@ -1,5 +1,5 @@
 ---
-- name: Install fonts
+- name: Installing fonts
   become: true
   community.general.pacman:
     name:
@@ -16,9 +16,11 @@
       - ttf-dejavu
       - ttf-liberation
       - ttf-ubuntu-font-family
+    state: present
 
-- name: Install fonts part two
+- name: Installing fonts from the AUR
   kewlfft.aur.aur:
     name:
       # - ttf-google-fonts-git
       - ttf-symbola
+    state: present

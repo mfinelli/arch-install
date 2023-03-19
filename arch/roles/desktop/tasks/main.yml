@@ -1,5 +1,5 @@
 ---
-- name: Install audio packages
+- name: Installing audio packages
   become: true
   community.general.pacman:
     name:
@@ -12,40 +12,43 @@
       - pipewire-docs
       - pipewire-pulse
       - wireplumber
+    state: present
 
-- name: Enable network manager
+- name: Enabling Network Manager service
   become: true
   ansible.builtin.systemd:
     enabled: true
     name: NetworkManager.service
 
-- name: Install keymapper
+- name: Installing keymapper
   become: true
   community.general.pacman:
     name: keymapper
+    state: present
 
-- name: Enable keymapperd
+- name: Enabling keymapperd service
   become: true
   ansible.builtin.systemd:
     enabled: true
     name: keymapperd.service
     state: started
 
-- name: Install bluetooth packages
+- name: Installing bluetooth packages
   become: true
   community.general.pacman:
     name:
       - blueman
       - bluez
       - bluez-utils
+    state: present
 
-- name: Enable bluetooth
+- name: Enabling bluetooth
   become: true
   ansible.builtin.systemd:
     enabled: true
     name: bluetooth.service
 
-- name: Install base packages
+- name: Installing baseline desktop packages
   become: true
   community.general.pacman:
     name:
@@ -55,22 +58,19 @@
       - firefox-i18n-fr
       - firefox-i18n-it
       - openssh
+    state: present
 
-- name: Install GNOME desktop environment
+- name: Installing GNOME desktop environment
   ansible.builtin.include_tasks: gnome.yml
   when: mtype != 'media'
 
-- name: Install XFCE desktop environment
+- name: Installing XFCE desktop environment
   ansible.builtin.include_tasks: xfce.yml
   when: mtype == 'media'
 
-- name: Install printing packages
+- name: Installing printing packages
   ansible.builtin.include_tasks: printing.yml
   when: mtype != 'media'
 
-- name: Install fonts
+- name: Installing fonts
   ansible.builtin.include_tasks: fonts.yml
-
-# - name: install cursors
-#   when: mtype != 'server'
-#   kewlfft.aur.aur: name=xcursor-openzone

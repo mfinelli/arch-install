@@ -1,12 +1,13 @@
 ---
-- name: Install xorg
+- name: Installing Xorg
   become: true
   community.general.pacman:
     name:
       - xorg-apps
       - xorg-server
+    state: present
 
-- name: Install desktop environment (xfce)
+- name: Installing main XFCE packages
   become: true
   community.general.pacman:
     name:
@@ -22,8 +23,9 @@
       - xdg-user-dirs
       - xfce4
       - xfce4-goodies
+    state: present
 
-- name: Install lightdm configuration
+- name: Copying LightDM configuration
   become: true
   ansible.builtin.template:
     dest: /etc/lightdm/lightdm.conf
@@ -32,20 +34,21 @@
     owner: root
     src: lightdm.conf.j2
 
-- name: Enable lightdm
+- name: Enabling LightDM service
   become: true
   ansible.builtin.systemd:
     enabled: true
     name: lightdm.service
 
-- name: Install xfce themes
+- name: Installing XFCE themes
   become: true
   community.general.pacman:
     name:
       - elementary-icon-theme
       - xfce-theme-manager
+    state: present
 
-- name: Install xfce themes
+- name: Installing XFCE themes from the AUR
   kewlfft.aur.aur:
     name:
       - elementary-xfce-icons
@@ -54,26 +57,31 @@
       - papirus-icon-theme-git
       - shimmer-wallpapers
       - xfce-theme-greybird
+    state: present
 
-- name: Install redshift
+- name: Installing redshift
   become: true
   community.general.pacman:
     name:
       - python-gobject
       - python-xdg
       - redshift
+    state: present
 
-- name: Install pdf viewer
+- name: Installing a PDF viewer
   become: true
   community.general.pacman:
     name: evince
+    state: present
 
-- name: Install archive tools
+- name: Installing archive tools
   become: true
   community.general.pacman:
     name: file-roller
+    state: present
 
-- name: Install xterm
+- name: Installing xterm
   become: true
   community.general.pacman:
     name: xterm
+    state: present

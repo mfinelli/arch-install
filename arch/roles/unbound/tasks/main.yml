@@ -1,5 +1,5 @@
 ---
-- name: Install unbound and dependencies
+- name: Installing unbound and dependencies
   become: true
   community.general.pacman:
     name:
@@ -7,7 +7,7 @@
       - openresolv
       - unbound
 
-- name: Download initial root hints
+- name: Downloading initial root hints
   become: true
   ansible.builtin.get_url:
     dest: /etc/unbound/root.hints
@@ -16,7 +16,7 @@
     owner: root
     url: https://www.internic.net/domain/named.cache
 
-- name: Copy resolveconf.conf
+- name: Copying "/etc/resolveconf.conf"
   become: true
   ansible.builtin.copy:
     dest: /etc/resolvconf.conf
@@ -25,14 +25,14 @@
     owner: root
     src: resolvconf.conf
 
-- name: Run resolvconf -u
+- name: Running `resolvconf -u`
   become: true
   ansible.builtin.command: resolvconf -u
   register: resolvconf_updated
   changed_when: resolvconf_updated.rc == 0
   failed_when: resolvconf_updated.rc != 0
 
-- name: Install unbound configuration
+- name: Copying unbound configuration
   become: true
   ansible.builtin.copy:
     dest: /etc/unbound/unbound.conf
@@ -41,7 +41,7 @@
     owner: root
     src: unbound.conf
 
-- name: Install root-hints service
+- name: Installing root-hints service
   become: true
   ansible.builtin.copy:
     dest: /etc/systemd/system/root-hints.service
@@ -50,7 +50,7 @@
     owner: root
     src: root-hints.service
 
-- name: Install root-hints timer
+- name: Installing root-hints timer
   become: true
   ansible.builtin.copy:
     dest: /etc/systemd/system/root-hints.timer
@@ -59,7 +59,7 @@
     owner: root
     src: root-hints.timer
 
-- name: Install network manager resolveconf manager config
+- name: Copying Network Manager resolvconf manager configuration
   when: mtype != 'server'
   become: true
   ansible.builtin.copy:
@@ -69,13 +69,13 @@
     owner: root
     src: rc-manager.conf
 
-- name: Enable root-hints timer
+- name: Enabling root-hints timer
   become: true
   ansible.builtin.systemd:
     enabled: true
     name: root-hints.timer
 
-- name: Enable unbound
+- name: Enabling unbound service
   become: true
   ansible.builtin.systemd:
     enabled: true

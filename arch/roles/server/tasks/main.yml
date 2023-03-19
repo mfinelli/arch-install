@@ -1,39 +1,40 @@
 ---
-- name: Install firewall software
+- name: Installing firewall packages
   become: true
   community.general.pacman:
     name:
       - sshguard
       - ufw
+    state: present
 
-- name: Start and enable ufw
+- name: Enabling "ufw" service
   become: true
   ansible.builtin.systemd:
     enabled: true
     name: ufw.service
     state: started
 
-- name: Start and enable sshguard
+- name: Enabling sshguard service
   become: true
   ansible.builtin.systemd:
     enabled: true
     name: sshguard.service
     state: started
 
-- name: Set default ufw policy to deny
+- name: Setting the default ufw policy to deny
   become: true
   community.general.ufw:
     policy: deny
     state: enabled
 
-- name: Allow ssh traffic
+- name: Adding ufw rule to allow SSH traffic
   become: true
   community.general.ufw:
     port: 22
     proto: tcp
     rule: allow
 
-- name: Install ufw before rules
+- name: Copying ufw "before" rules # enables sshguard
   become: true
   ansible.builtin.copy:
     dest: /etc/ufw/{{ item }}.rules
@@ -47,7 +48,7 @@
   notify:
     - Restart ufw
 
-- name: Install sshd_config
+- name: Copying sshd configuration
   become: true
   ansible.builtin.copy:
     dest: /etc/ssh/sshd_config
@@ -55,11 +56,12 @@
     mode: "0644"
     owner: root
     src: sshd_config
+    validate: sshd -tf %s
   notify:
     - Restart sshd
 
-- name: Install server software
+- name: Installing screen
   become: true
   community.general.pacman:
-    name:
-      - screen
+    name: screen
+    state: present

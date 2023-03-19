@@ -1,13 +1,14 @@
 ---
-- name: Install nodejs
+- name: Installing nodejs
   when: mtype == 'personal'
   become: true
   community.general.pacman:
     name:
       - nodejs
       - npm
+    state: present
 
-- name: Install nodejs packages
+- name: Installing nodejs packages
   when: mtype == 'personal'
   become: true
   community.general.pacman:
@@ -15,3 +16,4 @@
       - nodejs-mjml
       - nodejs-n
       - nodejs-pug-cli
+    state: present
