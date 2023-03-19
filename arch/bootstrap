@@ -53,7 +53,9 @@ echo 'root=/dev/mapper/crypt-root rootfstype=btrfs rootflags=rw"' \
 
 # we need to pass an explicit kernel version because the installed kernel may
 # be different than the kernel that we booted with using the install medium
-dracut --uefi --kver "$(ls /usr/lib/modules/ | head -n1)"
+# dracut --uefi --kver "$(ls /usr/lib/modules/ | head -n1)"
+kver="$(find /usr/lib/modules/* -prune -print | head -n 1)"
+dracut --uefi --kver "$(basename "$kver")"
 bootctl install
 
 # the rest of the system gets installed/configured using ansible
