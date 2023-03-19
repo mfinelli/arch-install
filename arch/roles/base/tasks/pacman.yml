@@ -1,72 +1,86 @@
 ---
-- name: install makepkg configuration
+- name: Copying makepkg configuration
   become: true
   ansible.builtin.template:
-    src: makepkg.conf.j2
     dest: /etc/makepkg.conf
-    owner: root
     group: root
-    mode: 0644
+    mode: "0644"
+    owner: root
+    src: makepkg.conf.j2
 
-- name: install pacman configuration
+- name: Copying pacman configuration
   become: true
   ansible.builtin.template:
-    src: pacman.conf.j2
     dest: /etc/pacman.conf
-    owner: root
     group: root
-    mode: 0644
+    mode: "0644"
+    owner: root
+    src: pacman.conf.j2
   register: pacman_config
 
-- name: add supermario key to keyring and locally sign it
+- name: Adding "supermario" key to pacman keyring and signing it locally
   become: true
   community.general.pacman_key:
     id: C3CD75B002978A8468CA7B1F6C3ADDDE36FDA306
+    state: present
     url: https://finelli.pub/36FDA306.asc
   register: supermario_key
 
-- name: run pacman -Syyu because the repositories changed
+- name: Running `pacman -Syyu` # (because the repositories changed)
   when: supermario_key.changed or pacman_config.changed # noqa no-handler
   become: true
-  community.general.pacman: update_cache=true upgrade=true force=true
+  community.general.pacman:
+    force: true
+    update_cache: true
+    upgrade: true
 
-- name: install extra pacman-related packages
+- name: Installing extra pacman-related packages
   become: true
   community.general.pacman:
     name:
-      - expac
       - asp
+      - aurpublish
       - devtools
+      - expac
       - namcap
       - pacman-contrib
       - pacutils
       - pkgfile
-      - aurpublish
+    state: present
 
-- name: install reflector
+- name: Installing reflector
   become: true
-  community.general.pacman: name=reflector
+  community.general.pacman:
+    name: reflector
+    state: present
 
-- name: install reflector config
+- name: Copying reflector configuration
   become: true
   ansible.builtin.copy:
-    src: reflector.conf
     dest: /etc/xdg/reflector/reflector.conf
-    owner: root
     group: root
-    mode: 0644
+    mode: "0644"
+    owner: root
+    src: reflector.conf
   register: reflector_config
 
-- name: enable reflector timer
+- name: Enabling reflector cron
   become: true
-  ansible.builtin.systemd: name=reflector.timer enabled=true
+  ansible.builtin.systemd:
+    enabled: true
+    name: reflector.timer
 
-- name: run reflector on-demand
+- name: Running reflector on-demand
   when: mmode != 'setup' and reflector_config.changed
   become: true
-  ansible.builtin.systemd: name=reflector.service state=started
+  ansible.builtin.systemd:
+    name: reflector.service
+    state: started
 
-- name: run pacman -Syyu because the mirrorlist changed
+- name: Running `pacman -Syyu` # because the mirrorlist changed
   when: reflector_config.changed # noqa no-handler
   become: true
-  community.general.pacman: update_cache=true upgrade=true force=true
+  community.general.pacman:
+    force: true
+    update_cache: true
+    upgrade: true
