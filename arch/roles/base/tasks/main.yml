@@ -164,7 +164,9 @@
     state: present
 
 - name: Enabling the systemd-boot updater
-  when: mtype != 'server'
+  when:
+    - mmode != 'setup'
+    - mtype != 'server'
   ansible.builtin.systemd:
     enabled: true
     name: systemd-boot-update.service
