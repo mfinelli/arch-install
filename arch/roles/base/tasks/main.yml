@@ -247,6 +247,20 @@
       - pyalpm
     state: present
 
+- name: Installing optional ansible dependencies
+  become: true
+  community.general.pacman:
+    name:
+      - python-argcomplete
+      - python-dnspython
+      - python-jmespath
+      - python-keyring
+      - python-ldap
+      - python-pip
+      - python-pyopenssl
+      - python-systemd
+    state: present
+
 - name: Install "everywhere" packages
   become: true
   community.general.pacman:
