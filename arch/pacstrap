@@ -117,7 +117,6 @@ echo -e "${CYAN}Setup for pacstrap done${ENDCOLOR}"
 echo -e "${BOLDGREEN}Pacstrapping system${ENDCOLOR}"
 read -rp "Press enter to continue..." _
 
-set +e
 while :; do
   # do the needful
   if pacstrap -i /mnt base base-devel dracut linux linux-firmware posix; then
@@ -129,7 +128,6 @@ while :; do
     fi
   fi
 done
-set -e
 
 echo -e "${CYAN}Pacstrap done, generating fstab${ENDCOLOR}"
 genfstab -U -p /mnt >> /mnt/etc/fstab
