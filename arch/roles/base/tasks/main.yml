@@ -181,7 +181,7 @@
     mode: "0440"
     owner: root
     src: sudoer
-    validate: "visudo -cf %s"
+    validate: visudo -cf %s
 
 - name: Configuring makepkg and pacman
   ansible.builtin.include_tasks: pacman.yml
