@@ -1,12 +1,13 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 # https://dev.to/ifenna__/adding-colors-to-bash-scripts-48g4
 ENDCOLOR="\e[0m"
 CYAN="\e[36m"
 BOLDGREEN="\e[1;32m"
 BOLDMAGENTA="\e[1;35m"
+BOLDRED="\e[1;31m"
 
 # https://stackoverflow.com/a/17695543
 function prompt_yesno() {
@@ -116,10 +117,21 @@ echo -e "${CYAN}Setup for pacstrap done${ENDCOLOR}"
 echo -e "${BOLDGREEN}Pacstrapping system${ENDCOLOR}"
 read -rp "Press enter to continue..." _
 
-# do the needful
-pacstrap -i /mnt base base-devel dracut linux linux-firmware posix
-echo -e "${CYAN}Pacstrap done, generating fstab${ENDCOLOR}"
+set +x
+while :; do
+  # do the needful
+  if pacstrap -i /mnt base base-devel dracut linux linux-firmware posix; then
+    break
+  else
+    echo -e "${BOLDRED}Pacstrap failed!${ENDCOLOR}"
+    if [[ "no" == $(prompt_yesno "Retry?") ]]; then
+      exit 1
+    fi
+  fi
+done
+set -x
 
+echo -e "${CYAN}Pacstrap done, generating fstab${ENDCOLOR}"
 genfstab -U -p /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
 
