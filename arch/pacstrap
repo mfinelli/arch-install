@@ -78,21 +78,21 @@ lvcreate -L "${ROOTG}G" crypt -n root
 lvcreate -l 100%FREE crypt -n home
 
 echo -e "${CYAN}LVM setup complete, making filesystems${ENDCOLOR}"
-read -rp "Press enter to continue..." throwaway
+read -rp "Press enter to continue..." _
 
 # make some filesystems
 mkfs.vfat -F32 /dev/disk/by-partlabel/EFISYSTEM
 echo -e "${CYAN}Made FAT32 on /dev/disk/by-partlabel/EFISYSTEM${ENDCOLOR}"
-read -rp "Press enter to continue..." throwaway
+read -rp "Press enter to continue..." _
 mkfs.btrfs /dev/mapper/crypt-root
 echo -e "${CYAN}Made BTRFS on /root${ENDCOLOR}"
-read -rp "Press enter to continue..." throwaway
+read -rp "Press enter to continue..." _
 mkfs.btrfs /dev/mapper/crypt-home
 echo -e "${CYAN}Made BTRFS on /home${ENDCOLOR}"
-read -rp "Press enter to continue..." throwaway
+read -rp "Press enter to continue..." _
 mkswap /dev/mapper/crypt-swap
 echo -e "${CYAN}Made swap${ENDCOLOR}"
-read -rp "Press enter to continue..." throwaway
+read -rp "Press enter to continue..." _
 
 echo -e "${CYAN}Filesystems complete${ENDCOLOR}"
 echo -e "${BOLDGREEN}Beginning fileystem mount for pacstrap${ENDCOLOR}"
@@ -104,7 +104,7 @@ mkdir /mnt/{efi,home}
 mount -o nodev,noexec,nosuid /dev/disk/by-partlabel/EFISYSTEM /mnt/efi
 mount -o compress=zstd /dev/crypt/home /mnt/home
 echo -e "${CYAN}Mounted filesystems${ENDCOLOR}" && sleep 1
-read -rp "Press enter to continue..." throwaway
+read -rp "Press enter to continue..." _
 
 echo -e "${CYAN}Setting known good mirror${ENDCOLOR}"
 # use a known good mirror - we'll generate a new mirrorlist on the new system
@@ -114,7 +114,7 @@ echo "$MIRROR" > /etc/pacman.d/mirrorlist
 echo -e "${CYAN}Setup for pacstrap done${ENDCOLOR}"
 
 echo -e "${BOLDGREEN}Pacstrapping system${ENDCOLOR}"
-read -rp "Press enter to continue..." throwaway
+read -rp "Press enter to continue..." _
 
 # do the needful
 pacstrap -i /mnt base base-devel dracut linux linux-firmware posix
