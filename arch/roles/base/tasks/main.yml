@@ -13,7 +13,7 @@
 
 - name: Setting CRYPTROOT UUID as fact
   ansible.builtin.set_fact:
-    cryptroot_uuid: "{{ cryptroot_blkit.stdout }}"
+    cryptroot_uuid: "{{ cryptroot_blkid.stdout }}"
 
 - name: Installing finellictl
   ansible.builtin.include_tasks: finellictl.yml
