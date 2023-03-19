@@ -22,7 +22,7 @@ echo -e "${BOLDGREEN}Beginning system bootstrap${ENDCOLOR}"
 
 # default timezone to UTC
 hwclock --systohc --utc
-timedatectl set-timezone UTC
+# timedatectl set-timezone UTC
 echo -e "${CYAN}Set hardware clock${ENDCOLOR}"
 
 # Set default language to US english
