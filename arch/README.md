@@ -68,7 +68,7 @@ a USB flash drive.
    bash -c "$(curl -fsSL https://mfgo.link/arch-bootstrap)"
    ```
 
-8. Set `root` password, create user and add sudo rule:
+8. Set `root` password and create normal user:
 
    ```shell
    passwd
@@ -78,9 +78,7 @@ a USB flash drive.
    useradd -m -s /bin/bash mario
    chfn mario
    passwd mario
-   groupadd --system -g 27 -U mario sudo # use gid 27 like they do in debian
-   echo "%sudo ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/gsudo
-   chmod 0440 /etc/sudoers.d/gsudo
+   usermod -a -G sudo mario
    ```
 
 9. Switch user and run ansible

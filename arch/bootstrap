@@ -105,6 +105,14 @@ dracut --uefi --kver "$(basename "$kver")"
 bootctl install
 echo -e "${CYAN}Installed bootloader${ENDCOLOR}"
 
+# we use GID 27 for sudo, which is what they use in debian
+if ! getent group 27; then
+  groupadd --system -g 27 sudo
+fi
+echo "%sudo ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/gsudo
+chmod 0440 /etc/sudoers.d/gsudo
+echo -e "${CYAN}Configured sudo${ENDCOLOR}"
+
 while :; do
   # the rest of the system gets installed/configured using ansible
   if pacman -S ansible git pyalpm ansible-gpg-key-git vim; then
