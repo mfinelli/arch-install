@@ -20,10 +20,10 @@ function prompt_yesno() {
 echo -e "${BOLDGREEN}Beginning disk partitioning${ENDCOLOR}"
 
 lsblk
-read -rp "Which disk to install? " INSTALL_DISK
+read -rp "Which disk to install? /dev/" INSTALL_DISK
 
 # https://superuser.com/a/984637
-sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk "$INSTALL_DISK"
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk "/dev/$INSTALL_DISK"
     o # create a new, empty GPT partition table with protected MBR
     Y # confirm above
     n # create new partition (efi boot partition)
@@ -48,7 +48,7 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk "$INSTALL_DISK"
 EOF
 
 # let's check one more time that the disks are partitioned as expected
-gdisk -l "$INSTALL_DISK"
+gdisk -l "/dev/$INSTALL_DISK"
 
 if [[ no == $(prompt_yesno "Confirm partition table?") ]]; then
   exit 1
