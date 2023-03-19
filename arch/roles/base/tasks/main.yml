@@ -28,6 +28,7 @@
 
 - name: Setting system timezone
   become: true
+  when: mmode != 'setup'
   community.general.timezone:
     name: "{{ timezone }}"
 
