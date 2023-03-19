@@ -16,12 +16,12 @@
 
 - name: Copying systemd-resolved configuration
   become: true
-  ansible.builtin.copy:
+  ansible.builtin.template:
     dest: /etc/systemd/resolved.conf.d/90-finelli.conf
     group: root
     mode: "0644"
     owner: root
-    src: resolved.conf
+    src: resolved.conf.j2
   notify:
     - Restart systemd-resolved
 
