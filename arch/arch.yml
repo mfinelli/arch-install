@@ -1,6 +1,8 @@
 ---
 - name: Configuring Archlinux system
   hosts: localhost
+  connection: local
+
   roles:
     - role: base
       tags: [all, setup]
