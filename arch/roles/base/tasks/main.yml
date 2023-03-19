@@ -18,13 +18,8 @@
 - name: Installing finellictl
   ansible.builtin.include_tasks: finellictl.yml
 
-- name: Enabling NTP with systemd
-  become: true
-  when: mmode != 'setup'
-  ansible.builtin.command: timedatectl set-ntp true
-  register: timedatectl_setntp
-  changed_when: timedatectl_setntp.rc == 0
-  failed_when: timedatectl_setntp.rc != 0
+- name: Configuring systemd services
+  ansible.builtin.include_tasks: systemd.yml
 
 - name: Setting system timezone
   become: true

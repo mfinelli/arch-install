@@ -6,12 +6,6 @@
   roles:
     - role: base
       tags: [all, setup]
-    - role: unbound
-      when: mtype != 'work'
-      tags: [all, setup]
-    - role: resolvd
-      when: mtype == 'work'
-      tags: [all, setup]
     - role: desktop
       tags: [all]
       when: mtype != 'server'

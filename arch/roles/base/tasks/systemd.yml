@@ -1,12 +1,29 @@
 ---
+- name: Enabling systemd-timesyncd service
+  become: true
+  ansible.builtin.systemd:
+    enabled: true
+    name: systemd-timesyncd.service
+
+- name: Creating systemd-resolved configuration directory
+  become: true
+  ansible.builtin.file:
+    group: root
+    mode: "0755"
+    owner: root
+    path: /etc/systemd/resolved.conf.d
+    state: directory
+
 - name: Copying systemd-resolved configuration
   become: true
   ansible.builtin.copy:
-    dest: /etc/systemd/resolved.conf
+    dest: /etc/systemd/resolved.conf.d/90-finelli.conf
     group: root
     mode: "0644"
     owner: root
     src: resolved.conf
+  notify:
+    - Restart systemd-resolved
 
 - name: Linking systemd-resolved stub resolver to /etc/resolv.conf
   become: true

@@ -2,3 +2,10 @@
 - name: Run dracut
   become: true
   ansible.builtin.command: dracut --uefi --force
+
+- name: Restart systemd-resolved
+  become: true
+  when: mmode != 'setup'
+  ansible.builtin.systemd:
+    name: systemd-resolved.server
+    state: restarted
