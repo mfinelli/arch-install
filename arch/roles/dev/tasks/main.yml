@@ -55,7 +55,7 @@
       - virt-manager
     state: present
 
-- name: Adding {{ whoami }} to libvirt group
+- name: Adding mario to libvirt group
   become: true
   ansible.builtin.user:
     append: true

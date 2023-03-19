@@ -17,6 +17,7 @@
 
 - name: Detecting installed kernel package
   ansible.builtin.shell: >-
+    set -e -o pipefail;
     basename "$(find /usr/lib/modules/* -prune -print | head -n 1)"
   register: installed_kernel_shell
   changed_when: false

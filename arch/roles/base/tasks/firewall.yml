@@ -30,6 +30,11 @@
     default: allow
     direction: outgoing
 
+- name: Setting local network as fact
+  ansible.builtin.set_fact:
+    local_network: "{{ ansible_default_ipv4['network'] }}/\
+      {{ ansible_default_ipv4['prefix'] }}"
+
 - name: Adding ufw rule to allow SSH from the local network
   become: true
   community.general.ufw:
@@ -38,15 +43,13 @@
     port: "22"
     proto: tcp
     rule: allow
-    src: "{{ ansible_default_ipv4['network'] }}/\
-      {{ ansible_default_ipv4['prefix'] }}"
+    src: "{{ local_network }}"
 
 - name: Adding ufw rule to block outgoing local network traffic
   become: true
   when: mtype == 'work'
   community.general.ufw:
-    dest: "{{ ansible_default_ipv4['network'] }}/\
-      {{ ansible_default_ipv4['prefix'] }}"
+    dest: "{{ local_network }}"
     direction: out
     log: true
     rule: deny
@@ -63,8 +66,8 @@
   become: true
   when:
     - mtype == 'work'
-    - lastlan.stdout != "{{ ansible_default_ipv4['network'] }}/\
-                         {{ ansible_default_ipv4['prefix'] }}"
+    - lastlan.stdout != ""
+    - lastlan.stdout != local_network
   community.general.ufw:
     delete: true
     dest: "{{ lastlan.stdout }}"
