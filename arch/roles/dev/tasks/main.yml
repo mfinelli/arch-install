@@ -87,6 +87,7 @@
       - hugo
       - jpegoptim
       - optipng
+      - prettier
       - shellcheck
       - shfmt
 
