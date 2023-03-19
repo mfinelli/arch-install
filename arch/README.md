@@ -96,7 +96,7 @@ a USB flash drive.
     exit
     umount -R /mnt
     swapoff /dev/crypt/swap
-    reboot
+    systemctl reboot
     ```
 
 11. If necessary, make the keymap change permanent
