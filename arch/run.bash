@@ -79,7 +79,7 @@ else
   hastpm=false
 fi
 
-ansible-galaxy install -U -r ../requirements.yml
+ansible-galaxy collections install -U -r ../requirements.yml
 
 # prompt for sudo password right away
 sudo echo -n
