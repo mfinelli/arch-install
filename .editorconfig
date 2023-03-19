@@ -2,29 +2,23 @@ root = true
 
 [*]
 charset = utf-8
-indent_style = space
-indent_size = 2
 end_of_line = lf
+indent_size = 2
+indent_style = spaces
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[crypttab.j2]
-indent_style = tabs
-indent_size = 8
-
 [cloudflare.conf]
-indent_style = tabs
 indent_size = 8
+indent_style = tabs
 
-[*.{fact,py}]
-indent_size = 4
+[crypttab.j2]
+indent_size = 8
+indent_style = tabs
 
 [service.rules]
 indent_size = 4
 
 [{unbound.conf,sshd_config}]
-indent_style = tabs
 indent_size = 8
-
-[utc.reg]
-end_of_line = crlf
+indent_style = tabs
