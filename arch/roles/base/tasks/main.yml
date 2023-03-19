@@ -304,3 +304,6 @@
       - pidgin-otr
       - purple-plugin-pack
     state: absent
+
+- name: Configure a simple firewall
+  ansible.builtin.include_tasks: firewall.yml
