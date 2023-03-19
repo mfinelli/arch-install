@@ -76,7 +76,7 @@ fi
 while :; do
   if pacman -S efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs \
     exfat-utils f2fs-tools os-prober lvm2 cryptsetup mdadm usbutils \
-    elfutils $microcode; then
+    elfutils iptables-nft $microcode; then
     break
   else
     echo -e "${BOLDRED}Installing boot packages failed!${ENDCOLOR}"
