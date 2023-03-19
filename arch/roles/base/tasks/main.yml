@@ -60,7 +60,7 @@
     owner: root
     src: cmdline.conf.j2
   notify:
-    - run dracut
+    - Run dracut
 
 - name: Installing imagemagick # for bootsplash conversion
   become: true
@@ -85,7 +85,7 @@
     owner: root
     src: dracut.conf
   notify:
-    - run dracut
+    - Run dracut
 
 - name: Copying "/etc/locale.gen"
   become: true

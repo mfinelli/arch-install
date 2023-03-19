@@ -1,0 +1,4 @@
+---
+- name: Run dracut
+  become: true
+  ansible.builtin.command: dracut --uefi
