@@ -14,7 +14,9 @@
       - gnome-shell-extension-appindicator
       - hddtemp # for freon extension
       - network-manager-applet
+      - power-profiles-daemon
       - seahorse
+      - system-config-printer
       - wl-clipboard
       - xdg-desktop-portal
       - xdg-desktop-portal-gnome
