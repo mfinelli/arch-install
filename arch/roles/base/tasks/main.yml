@@ -20,6 +20,7 @@
 
 - name: Enabling NTP with systemd
   become: true
+  when: mmode != 'setup'
   ansible.builtin.command: timedatectl set-ntp true
   register: timedatectl_setntp
   changed_when: timedatectl_setntp.rc == 0
