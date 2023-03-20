@@ -67,12 +67,23 @@
     name: tpm2-tools
     state: present
 
-- name: Install plymouth
+- name: Installing plymouth
   become: true
   community.general.pacman:
     name:
       - plymouth-git
       # - plymouth-theme-...
+  notify:
+    - Run dracut
+
+- name: Copying plymouth configuration
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/plymouth/plymouthd.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: plymouthd.conf
   notify:
     - Run dracut
 
@@ -326,5 +337,5 @@
       - purple-plugin-pack
     state: absent
 
-- name: Configure a simple firewall
+- name: Configuring a simple firewall
   ansible.builtin.include_tasks: firewall.yml
