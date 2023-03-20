@@ -3,7 +3,6 @@
   become: true
   community.general.pacman:
     name:
-      # - ttf-caladea
       - gnu-free-fonts
       - libertinus-font
       - noto-fonts
@@ -12,6 +11,7 @@
       - otf-fira-mono
       - otf-fira-sans
       - ttf-bitstream-vera
+      - ttf-caladea
       - ttf-carlito
       - ttf-dejavu
       - ttf-liberation
