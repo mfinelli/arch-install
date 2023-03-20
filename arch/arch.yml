@@ -18,6 +18,3 @@
     - role: work
       tags: [all]
       when: mtype == 'work'
-    - role: server
-      tags: [all]
-      when: mtype == 'server'

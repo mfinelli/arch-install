@@ -60,7 +60,6 @@
     src: root-hints.timer
 
 - name: Copying Network Manager resolvconf manager configuration
-  when: mtype != 'server'
   become: true
   ansible.builtin.copy:
     dest: /etc/NetworkManager/conf.d/rc-manager.conf

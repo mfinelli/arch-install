@@ -11,12 +11,12 @@
     state: present
 
 - name: Adding 1Password signing key
-  when: mtype != 'media' and mtype != 'server'
+  when: mtype != 'media'
   gpg_key:
     fpr: 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
 
 - name: Installing 1Password
-  when: mtype != 'media' and mtype != 'server'
+  when: mtype != 'media'
   kewlfft.aur.aur:
     name:
       - 1password
@@ -24,7 +24,6 @@
     state: present
 
 - name: Installing KeePassXC
-  when: mtype != 'server'
   become: true
   community.general.pacman:
     name: keepassxc
@@ -44,7 +43,7 @@
     state: present
 
 - name: Installing LibreOffice
-  when: mtype != 'media' and mtype != 'server'
+  when: mtype != 'media'
   become: true
   community.general.pacman:
     name:
@@ -76,7 +75,7 @@
     state: present
 
 - name: Installing the GIMP
-  when: mtype != 'media' and mtype != 'server'
+  when: mtype != 'media'
   become: true
   community.general.pacman:
     name:
@@ -86,7 +85,7 @@
     state: present
 
 - name: Installing hexchat
-  when: mtype != 'media' and mtype != 'server'
+  when: mtype != 'media'
   become: true
   community.general.pacman:
     name: hexchat

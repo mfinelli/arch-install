@@ -2,9 +2,7 @@
 
 Automation for Arch Linux installations.
 
-## desktop / media installations
-
-### manual steps
+## installation instructions
 
 1. Download the install [image](https://www.archlinux.org/download/) and
 [prepare](https://wiki.archlinux.org/index.php/USB_flash_installation_medium)
@@ -136,51 +134,3 @@ a USB flash drive.
     ```shell
     chsh -s /bin/zsh
     ```
-
-## server installations
-
-### manual steps
-
-1. SSH (as root) to the server
-
-   ```shell
-   ssh root@cdev.finelli.dev
-   ```
-
-2. Create user and sudo rules
-
-   ```shell
-   useradd -m -s /bin/bash mario
-   getent group 27 # ensure gid 27 doesn't already exist
-   groupadd --system -g 27 -U mario sudo
-   echo "%sudo ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/gsudo
-   chmod 0440 /etc/sudoers.d/gsudo
-   ```
-
-3. Copy root authorized ssh keys to user
-
-   ```shell
-   mkdir /home/mario/.ssh
-   chmod 0700 /home/mario/.ssh
-   cat /root/.ssh/authorized_keys > /home/mario/.ssh/authorized_keys
-   chmod 0600 /home/mario/.ssh/authorized_keys
-   chown -R mario:mario /home/mario/.ssh
-   ```
-
-4. Switch user and do the needful
-
-   ```shell
-   su mario -
-   cd ~
-   bash -c "$(curl -fsSL https://mfgo.link/arch-server)"
-   ```
-
-5. Reboot if the kernel updated during the previous step and then reconnect
-   and continue:
-
-   ```shell
-   bash -c "$(curl -fsSL https://mfgo.link/arch-setup)"
-   bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
-   ```
-
-6. Reboot

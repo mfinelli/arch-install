@@ -47,7 +47,6 @@
     state: present
 
 - name: Installing Google Chrome
-  when: mtype != 'server'
   kewlfft.aur.aur:
     name: google-chrome
     state: present

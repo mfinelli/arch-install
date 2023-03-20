@@ -1,6 +1,6 @@
 ---
 - name: Installing Firefox Developer Edition
-  when: mtype != 'media' and mtype != 'server'
+  when: mtype != 'media'
   become: true
   community.general.pacman:
     name: firefox-developer-edition

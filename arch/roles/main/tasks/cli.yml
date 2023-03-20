@@ -18,7 +18,6 @@
     state: present
 
 - name: Installing terminal fonts
-  when: mtype != 'server'
   become: true
   community.general.pacman:
     name:
@@ -45,6 +44,7 @@
       - p7zip
       - pwgen
       - ripgrep
+      - screen
       - the_silver_searcher
       - thefuck
       - tldr

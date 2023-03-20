@@ -34,8 +34,6 @@ array_contains() {
 # shellcheck disable=SC2034
 PERSONAL_MACHINES=(stig)
 # shellcheck disable=SC2034
-SERVER_MACHINES=(cdev.finelli.dev)
-# shellcheck disable=SC2034
 WORK_MACHINES=(easy CLIFMI706)
 # shellcheck disable=SC2034
 MEDIA_MACHINES=()
@@ -43,8 +41,6 @@ MEDIA_MACHINES=()
 hn="$(cat /etc/hostname)"
 if array_contains PERSONAL_MACHINES "$hn"; then
   mtype=personal
-elif array_contains SERVER_MACHINES "$hn"; then
-  mtype=server
 elif array_contains WORK_MACHINES "$hn"; then
   mtype=work
 else

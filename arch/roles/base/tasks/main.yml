@@ -152,7 +152,6 @@
 
 - name: Installing bootstrap packages
   become: true
-  when: mtype != 'server'
   community.general.pacman:
     name:
       - btrfs-progs
@@ -172,7 +171,6 @@
 
 - name: Installing video and input drivers
   become: true
-  when: mtype != 'server'
   community.general.pacman:
     name:
       - mesa
@@ -181,26 +179,20 @@
 
 - name: Installing Intel microcode
   become: true
-  when:
-    - mtype != 'server'
-    - "'GenuineIntel' in ansible_processor"
+  when: 'GenuineIntel' in ansible_processor
   community.general.pacman:
     name: intel-ucode
     state: present
 
 - name: Installing AMD microcode
   become: true
-  when:
-    - mtype != 'server'
-    - "'AuthenticAMD' in ansible_processor"
+  when: 'AuthenticAMD' in ansible_processor
   community.general.pacman:
     name: amd-ucode
     state: present
 
 - name: Enabling the systemd-boot updater
-  when:
-    - mmode != 'setup'
-    - mtype != 'server'
+  when: mmode != 'setup'
   ansible.builtin.systemd:
     enabled: true
     name: systemd-boot-update.service
@@ -231,7 +223,6 @@
 
 - name: Installing networking tools
   become: true
-  when: mtype != 'server'
   community.general.pacman:
     name:
       - dialog
@@ -253,7 +244,6 @@
 
 - name: Copying wireless-regdom configuration
   become: true
-  when: mtype != 'server'
   ansible.builtin.template:
     dest: /etc/conf.d/wireless-regdom
     group: root
