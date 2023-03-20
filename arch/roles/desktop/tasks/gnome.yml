@@ -12,6 +12,9 @@
   community.general.pacman:
     name:
       - gnome-shell-extension-appindicator
+      - gnome-shell-extension-arc-menu
+      - gnome-shell-extension-arch-update
+      - gnome-shell-extension-dash-to-dock
       - hddtemp # for freon extension
       - network-manager-applet
       - power-profiles-daemon
@@ -25,10 +28,7 @@
 - name: Installing GNOME extras from the AUR
   kewlfft.aur.aur:
     name:
-      - gnome-shell-extension-arc-menu
-      - gnome-shell-extension-arch-update
       - gnome-shell-extension-bluetooth-quick-connect
-      - gnome-shell-extension-dash-to-dock
       - gnome-shell-extension-emoji-selector-git
       - gnome-shell-extension-espresso-git
       - gnome-shell-extension-freon
