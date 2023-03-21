@@ -100,6 +100,7 @@ read -rp "Press enter to continue..." _
 pstart=$SECONDS
 
 while :; do
+  # shellcheck disable=SC2086
   if pacman -S efibootmgr btrfs-progs dosfstools ntfs-3g e2fsprogs \
     exfat-utils f2fs-tools os-prober lvm2 cryptsetup mdadm usbutils \
     elfutils iptables-nft $microcode; then
