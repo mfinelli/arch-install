@@ -60,8 +60,8 @@ echo -e "${BOLDGREEN}Beginning disk encryption${ENDCOLOR}"
 
 # encrypt the main partition: AES256 (e.g. /dev/sda2)
 cryptsetup --type luks2 --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
-  --iter-time 5000 --use-random --verify-passphrase luksFormat \
-  /dev/disk/by-partlabel/CRYPTROOT
+  --pbkdf argon2id --iter-time 5000 --use-random --verify-passphrase \
+  luksFormat /dev/disk/by-partlabel/CRYPTROOT
 
 echo -e "${CYAN}Disk encryption complete${ENDCOLOR}"
 echo -e "${BOLDGREEN}Beginning LVM setup${ENDCOLOR}"
