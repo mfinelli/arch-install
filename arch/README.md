@@ -115,21 +115,29 @@ a USB flash drive.
     sudo nmcli --ask dev wifi connect SSID(network name)
     ```
 
-12. Run the post-first reboot portion of the setup
+12. Set any `finellictl` configurations
+
+    ```shell
+    finellictl language en_US # default
+    finellictl timezone America/New_York # default: UTC
+    finellictl wregdom US # default
+    ```
+
+13. Run the post-first reboot portion of the setup
 
     ```shell
     bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
     ```
 
-13. Reboot
+14. Reboot
 
     ```shell
     sudo reboot
     ```
 
-14. Install [dotfiles](https://github.com/mfinelli/dotfiles)
+15. Install [dotfiles](https://github.com/mfinelli/dotfiles)
 
-15. Set default shell to zsh
+16. Set default shell to zsh
 
     ```shell
     chsh -s /bin/zsh
