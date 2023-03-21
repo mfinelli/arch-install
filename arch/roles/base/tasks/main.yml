@@ -179,14 +179,14 @@
 
 - name: Installing Intel microcode
   become: true
-  when: 'GenuineIntel' in ansible_processor
+  when: "'GenuineIntel' in ansible_processor"
   community.general.pacman:
     name: intel-ucode
     state: present
 
 - name: Installing AMD microcode
   become: true
-  when: 'AuthenticAMD' in ansible_processor
+  when: "'AuthenticAMD' in ansible_processor"
   community.general.pacman:
     name: amd-ucode
     state: present
