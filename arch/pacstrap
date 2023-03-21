@@ -161,6 +161,6 @@ if [[ "no" == $(prompt_yesno "Confirm fstab?") ]]; then
 fi
 
 echo -e "${BOLDMAGENTA}ARCH-INSTALL/PACSTRAP COMPLETE${ENDCOLOR}"
-echo "Total time: $((SECONDS - scriptstart))"
+echo "Total time: $((SECONDS - scriptstart)) seconds"
 
 exit 0

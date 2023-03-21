@@ -169,6 +169,6 @@ done
 ptime=$((SECONDS - pstart))
 echo -e "${CYAN}Installing ansible done. (in $ptime seconds)${ENDCOLOR}"
 echo -e "${BOLDMAGENTA}ARCH-INSTALL/BOOTSTRAP COMPLETE${ENDCOLOR}"
-echo "Total time: $((SECONDS - scriptstart))"
+echo "Total time: $((SECONDS - scriptstart)) seconds"
 
 exit 0
