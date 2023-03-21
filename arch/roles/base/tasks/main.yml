@@ -197,6 +197,21 @@
     enabled: true
     name: systemd-boot-update.service
 
+- name: Creating "sudo" group
+  become: true
+  ansible.builtin.group:
+    gid: 27 # like in debian
+    name: sudo
+    state: present
+    system: true
+
+- name: Adding mario to sudo group
+  become: true
+  ansible.builtin.user:
+    append: true
+    groups: sudo
+    user: "{{ whoami }}"
+
 - name: Copying sudo configuration
   become: true
   ansible.builtin.copy:
