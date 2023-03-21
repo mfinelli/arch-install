@@ -2,6 +2,8 @@
 
 set -e
 
+scriptstart=$SECONDS
+
 # https://dev.to/ifenna__/adding-colors-to-bash-scripts-48g4
 ENDCOLOR="\e[0m"
 CYAN="\e[36m"
@@ -18,10 +20,14 @@ function prompt_yesno() {
   esac
 }
 
-echo -e "${BOLDGREEN}Beginning disk partitioning${ENDCOLOR}"
+echo -e "${BOLDMAGENTA}ARCH-INSTALL/PACSTRAP STARTING${ENDCOLOR}"
+echo -e "${BOLDGREEN}Beginning disk partitioning...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
 
 lsblk
 read -rp "Which disk to install? /dev/" INSTALL_DISK
+
+pstart=$SECONDS
 
 # https://superuser.com/a/984637
 sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk "/dev/$INSTALL_DISK"
@@ -48,6 +54,8 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk "/dev/$INSTALL_DISK"
     Y # confirm and we're done
 EOF
 
+ptime=$((SECONDS - pstart))
+
 # let's check one more time that the disks are partitioned as expected
 gdisk -l "/dev/$INSTALL_DISK"
 
@@ -55,8 +63,10 @@ if [[ no == $(prompt_yesno "Confirm partition table?") ]]; then
   exit 1
 fi
 
-echo -e "${CYAN}Disk partitioning complete${ENDCOLOR}"
-echo -e "${BOLDGREEN}Beginning disk encryption${ENDCOLOR}"
+echo -e "${CYAN}Disk partitioning complete. (in $ptime seconds)${ENDCOLOR}"
+echo -e "${BOLDGREEN}Beginning disk encryption...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+pstart=$SECONDS
 
 # encrypt the main partition: AES256 (e.g. /dev/sda2)
 cryptsetup --type luks2 --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
@@ -64,12 +74,15 @@ cryptsetup --type luks2 --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
   --integrity hmac-sha256 --use-random --verify-passphrase \
   luksFormat /dev/disk/by-partlabel/CRYPTROOT
 
-echo -e "${CYAN}Disk encryption complete${ENDCOLOR}"
-echo -e "${BOLDGREEN}Beginning LVM setup${ENDCOLOR}"
+ptime=$((SECONDS - pstart))
+echo -e "${CYAN}Disk encryption complete. (in $ptime seconds)${ENDCOLOR}"
+echo -e "${BOLDGREEN}Beginning LVM setup...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
 
 # get some much needed info
 read -rp "How many swap G? " SWAPG
 read -rp "How many root G? " ROOTG
+pstart=$SECONDS
 
 # do the LVM boogie
 cryptsetup luksOpen /dev/disk/by-partlabel/CRYPTROOT lvm
@@ -79,25 +92,28 @@ lvcreate -L "${SWAPG}G" crypt -n swap
 lvcreate -L "${ROOTG}G" crypt -n root
 lvcreate -l 100%FREE crypt -n home
 
-echo -e "${CYAN}LVM setup complete, making filesystems${ENDCOLOR}"
+ptime=$((SECONDS - pstart))
+echo -e "${CYAN}LVM setup complete. (in $ptime seconds)${ENDCOLOR}"
+echo -e "${BOLDGREEN}Making filesystems...${ENDCOLOR}"
 read -rp "Press enter to continue..." _
 
 # make some filesystems
 mkfs.vfat -F32 /dev/disk/by-partlabel/EFISYSTEM
-echo -e "${CYAN}Made FAT32 on /dev/disk/by-partlabel/EFISYSTEM${ENDCOLOR}"
+echo -e "${CYAN}Made FAT32 on /dev/disk/by-partlabel/EFISYSTEM.${ENDCOLOR}"
 read -rp "Press enter to continue..." _
 mkfs.btrfs /dev/mapper/crypt-root
-echo -e "${CYAN}Made BTRFS on /root${ENDCOLOR}"
+echo -e "${CYAN}Made BTRFS on /root.${ENDCOLOR}"
 read -rp "Press enter to continue..." _
 mkfs.btrfs /dev/mapper/crypt-home
-echo -e "${CYAN}Made BTRFS on /home${ENDCOLOR}"
+echo -e "${CYAN}Made BTRFS on /home.${ENDCOLOR}"
 read -rp "Press enter to continue..." _
 mkswap /dev/mapper/crypt-swap
-echo -e "${CYAN}Made swap${ENDCOLOR}"
+echo -e "${CYAN}Made swap.${ENDCOLOR}"
 read -rp "Press enter to continue..." _
 
-echo -e "${CYAN}Filesystems complete${ENDCOLOR}"
-echo -e "${BOLDGREEN}Beginning fileystem mount for pacstrap${ENDCOLOR}"
+echo -e "${CYAN}Finished making filesystems.${ENDCOLOR}"
+echo -e "${BOLDGREEN}Mounting filesystems for pacstrap...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
 
 # get everything ready
 swapon /dev/crypt/swap
@@ -105,18 +121,20 @@ mount -o compress=zstd /dev/crypt/root /mnt
 mkdir /mnt/{efi,home}
 mount -o nodev,noexec,nosuid /dev/disk/by-partlabel/EFISYSTEM /mnt/efi
 mount -o compress=zstd /dev/crypt/home /mnt/home
-echo -e "${CYAN}Mounted filesystems${ENDCOLOR}" && sleep 1
+
+echo -e "${CYAN}Mounted filesystems.${ENDCOLOR}"
+echo -e "${BOLDGREEN}Setting known good mirror...${ENDCOLOR}"
 read -rp "Press enter to continue..." _
 
-echo -e "${CYAN}Setting known good mirror${ENDCOLOR}"
 # use a known good mirror - we'll generate a new mirrorlist on the new system
 # shellcheck disable=SC2016
 MIRROR='Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch'
 echo "$MIRROR" > /etc/pacman.d/mirrorlist
-echo -e "${CYAN}Setup for pacstrap done${ENDCOLOR}"
 
-echo -e "${BOLDGREEN}Pacstrapping system${ENDCOLOR}"
+echo -e "${CYAN}Set mirror.${ENDCOLOR}"
+echo -e "${BOLDGREEN}Pacstrapping system...${ENDCOLOR}"
 read -rp "Press enter to continue..." _
+pstart=$SECONDS
 
 while :; do
   # do the needful
@@ -130,7 +148,11 @@ while :; do
   fi
 done
 
-echo -e "${CYAN}Pacstrap done, generating fstab${ENDCOLOR}"
+ptime=$((SECONDS - pstart))
+echo -e "${CYAN}Pacstrap done. (in $ptime seconds)${ENDCOLOR}"
+echo -e "${BOLDGREEN}Generating fstab...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+
 genfstab -U -p /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
 
@@ -138,6 +160,7 @@ if [[ "no" == $(prompt_yesno "Confirm fstab?") ]]; then
   exit 1
 fi
 
-echo -e "${BOLDMAGENTA}arch-install/pacstrap complete${ENDCOLOR}"
+echo -e "${BOLDMAGENTA}ARCH-INSTALL/PACSTRAP COMPLETE${ENDCOLOR}"
+echo "Total time: $((SECONDS - scriptstart))"
 
 exit 0
