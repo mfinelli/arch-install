@@ -82,29 +82,23 @@ sudo echo -n
 
 if [[ $1 == setup ]]; then
   mmode=setup
-
-  # now we can run the main setup
-  ansible-playbook --inventory ../localhost \
-    --extra-vars hastpm=$hastpm \
-    --extra-vars mmode=$mmode \
-    --extra-vars mtype=$mtype \
-    --extra-vars multilib=true \
-    --extra-vars system_lang=$syslang \
-    --extra-vars timezone=$timezone \
-    --extra-vars whoami="$(whoami)" \
-    --extra-vars wireless_regdom=$wirelessregdom \
-    arch.yml --tags setup
+  tags="--tags setup"
 else
-  ansible-playbook --inventory ../localhost \
-    --extra-vars hastpm=$hastpm \
-    --extra-vars mmode=post \
-    --extra-vars mtype=$mtype \
-    --extra-vars multilib=true \
-    --extra-vars system_lang=$syslang \
-    --extra-vars timezone=$timezone \
-    --extra-vars whoami="$(whoami)" \
-    --extra-vars wireless_regdom=$wirelessregdom \
-    arch.yml
+  mmode=post
+  tags=""
 fi
+
+# do the needful
+# shellcheck disable=SC2086
+ansible-playbook --inventory ../localhost \
+  --extra-vars hastpm=$hastpm \
+  --extra-vars mmode=$mmode \
+  --extra-vars mtype=$mtype \
+  --extra-vars multilib=true \
+  --extra-vars system_lang="$syslang" \
+  --extra-vars timezone="$timezone" \
+  --extra-vars whoami="$(whoami)" \
+  --extra-vars wireless_regdom="$wirelessregdom" \
+  arch.yml $tags
 
 exit 0
