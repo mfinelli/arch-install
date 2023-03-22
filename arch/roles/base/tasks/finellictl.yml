@@ -1,27 +1,27 @@
 ---
-- name: install finellictl
+- name: Installing finellictl
   become: true
   ansible.builtin.copy:
     dest: /usr/bin/finellictl
-    owner: root
     group: root
-    mode: 0755
+    mode: "0755"
+    owner: root
     src: finellictl
 
-- name: create configuration directory
+- name: Creating finelli configuration directory
   become: true
   ansible.builtin.file:
-    path: /etc/finelli
-    owner: root
     group: root
-    mode: 0755
+    mode: "0755"
+    owner: root
+    path: /etc/finelli
     state: directory
 
-- name: install configuration file
+- name: Copying finellictl configuration
   become: true
   ansible.builtin.template:
     dest: /etc/finelli/arch-install.yml
-    owner: root
     group: root
-    mode: 0644
+    mode: "0644"
+    owner: root
     src: arch-install.yml.j2

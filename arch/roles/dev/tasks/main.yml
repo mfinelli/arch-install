@@ -1,50 +1,88 @@
 ---
-- name: install firefox developer edition
-  when: mtype != 'media' and mtype != 'server'
+- name: Installing Firefox Developer Edition
+  when: mtype != 'media'
   become: true
-  community.general.pacman: name=firefox-developer-edition
+  community.general.pacman:
+    name: firefox-developer-edition
+    state: present
 
-- name: install main development packages
+- name: Installing geckodriver
+  when: mtype == 'personal'
+  become: true
+  community.general.pacman:
+    name: geckodriver
+    state: present
+
+- name: Installing LaTeX packages
   when: mtype == 'personal'
   become: true
   community.general.pacman:
     name:
-      - imagemagick
-      - geckodriver
-
-- name: download extra editors
-  when: mtype == 'personal'
-  kewlfft.aur.aur:
-    name:
-      - sublime-text-4
-      - rubymine
-
-- name: install latex packages
-  when: mtype == 'personal'
-  become: true
-  community.general.pacman:
-    name:
-      - texlive-most
       - texlive-lang
+      - texlive-most
+    state: present
 
-- name: install docker
+# TODO: switch to podman
+- name: Installing docker
   when: mtype != 'media'
   become: true
   community.general.pacman:
     name:
       - docker
       - docker-compose
+    state: present
 
-- name: install virtualbox
+- name: Installing Virtualbox
   when: mtype != 'media'
   become: true
   community.general.pacman:
     name:
       - virtualbox
-      - virtualbox-host-modules-arch
       - virtualbox-guest-iso
+      - virtualbox-host-modules-arch
+    state: present
 
-- name: install command line utilities
+- name: Installing virt-manager
+  when: mtype != 'media'
+  become: true
+  community.general.pacman:
+    name:
+      - dnsmasq
+      - edk2-ovmf
+      - libvirt
+      - qemu-desktop
+      - swtpm
+      - virt-manager
+    state: present
+
+- name: Adding mario to libvirt group
+  become: true
+  ansible.builtin.user:
+    append: true
+    groups: libvirt
+    user: "{{ whoami }}"
+
+- name: Copying libvirtd configuration
+  when: mtype != 'media'
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/libvirt/libvirtd.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: libvirtd.conf
+
+- name: Copying libvirtd QEMU configuration
+  when: mtype != 'media'
+  become: true
+  ansible.builtin.template:
+    dest: /etc/libvirt/qemu.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: qemu.conf.j2
+
+- name: Installing main commandline utilities
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -53,10 +91,12 @@
       - hugo
       - jpegoptim
       - optipng
+      - prettier
       - shellcheck
       - shfmt
+    state: present
 
-- name: install go
+- name: Installing go
   when: mtype != 'media'
   become: true
   community.general.pacman:
@@ -64,61 +104,73 @@
       - go
       - go-tools
       - staticcheck
+    state: present
 
-- name: install rust
+- name: Installing rust
   when: mtype != 'media'
   become: true
   community.general.pacman:
     name:
-      - rust
       - cargo-about
       - cargo-outdated
+      - rust
+    state: present
 
-- name: install redis
+- name: Installing redis
   when: mtype == 'personal'
   become: true
-  community.general.pacman: name=redis
+  community.general.pacman:
+    name: redis
+    state: present
 
-- name: install postgresql
+- name: Installing PostgreSQL
   when: mtype == 'personal'
   become: true
-  community.general.pacman: name=postgresql
+  community.general.pacman:
+    name: postgresql
+    state: present
 
-- name: install postfix
+- name: Installing postfix
   when: mtype != 'media'
   become: true
-  community.general.pacman: name=postfix
+  community.general.pacman:
+    name: postfix
+    state: present
 
-- name: install neovim
+- name: Installing neovim
   when: mtype != 'media'
   become: true
-  community.general.pacman: name=neovim
+  community.general.pacman:
+    name: neovim
+    state: present
 
-- name: install asciinema
+- name: Installing asciinema
   when: mtype == 'personal'
   become: true
   community.general.pacman:
     name:
       - asciinema
       - asciinema-agg
+    state: present
 
-- name: install fastfoto stuff
-  when: mtype != 'media'
+- name: Installing fastfoto dependencies
+  when: mtype == 'personal'
   become: true
   community.general.pacman:
     name:
       - cloudflared
       - cobra-cli
       - goose
-      - perl-image-exiftool
       - perl-archive-zip
+      - perl-image-exiftool
       - sqlc
+    state: present
 
-# - name: install fastfoto stuff from aur
-#   when: mtype != 'media'
-#   kewlfft.aur.aur:
-#     name:
+- name: Installing nodejs and tools
+  ansible.builtin.include_tasks: nodejs.yml
 
-- include: nodejs.yml
-- include: ruby.yml
-- include: devops.yml
+- name: Installing ruby and tools
+  ansible.builtin.include_tasks: ruby.yml
+
+- name: Installing devops tools
+  ansible.builtin.include_tasks: devops.yml

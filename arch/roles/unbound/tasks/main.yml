@@ -1,78 +1,81 @@
 ---
-- name: install unbound and dependencies
+- name: Installing unbound and dependencies
   become: true
   community.general.pacman:
     name:
-      - unbound
       - expat
       - openresolv
+      - unbound
 
-- name: download initial root hints
+- name: Downloading initial root hints
   become: true
   ansible.builtin.get_url:
-    url: https://www.internic.net/domain/named.cache
     dest: /etc/unbound/root.hints
-    mode: 0644
-    owner: root
     group: root
+    mode: "0644"
+    owner: root
+    url: https://www.internic.net/domain/named.cache
 
-- name: copy resolveconf.conf
+- name: Copying "/etc/resolveconf.conf"
   become: true
   ansible.builtin.copy:
-    src: resolvconf.conf
     dest: /etc/resolvconf.conf
-    mode: 0644
-    owner: root
     group: root
+    mode: "0644"
+    owner: root
+    src: resolvconf.conf
 
-- name: Run resolvconf -u
+- name: Running `resolvconf -u`
   become: true
   ansible.builtin.command: resolvconf -u
   register: resolvconf_updated
   changed_when: resolvconf_updated.rc == 0
   failed_when: resolvconf_updated.rc != 0
 
-- name: Install unbound configuration
+- name: Copying unbound configuration
   become: true
   ansible.builtin.copy:
-    src: unbound.conf
     dest: /etc/unbound/unbound.conf
-    mode: 0644
-    owner: root
     group: root
+    mode: "0644"
+    owner: root
+    src: unbound.conf
 
-- name: Install root-hints service
+- name: Installing root-hints service
   become: true
   ansible.builtin.copy:
-    src: root-hints.service
     dest: /etc/systemd/system/root-hints.service
-    mode: 0644
-    owner: root
     group: root
+    mode: "0644"
+    owner: root
+    src: root-hints.service
 
-- name: Install root-hints timer
+- name: Installing root-hints timer
   become: true
   ansible.builtin.copy:
-    src: root-hints.timer
     dest: /etc/systemd/system/root-hints.timer
-    mode: 0644
-    owner: root
     group: root
+    mode: "0644"
+    owner: root
+    src: root-hints.timer
 
-- name: Install network manager resolveconf manager config
-  when: mtype != 'server'
+- name: Copying Network Manager resolvconf manager configuration
   become: true
   ansible.builtin.copy:
-    src: rc-manager.conf
     dest: /etc/NetworkManager/conf.d/rc-manager.conf
-    mode: 0644
-    owner: root
     group: root
+    mode: "0644"
+    owner: root
+    src: rc-manager.conf
 
-- name: enable root-hints timer
+- name: Enabling root-hints timer
   become: true
-  ansible.builtin.systemd: name=root-hints.timer enabled=true
+  ansible.builtin.systemd:
+    enabled: true
+    name: root-hints.timer
 
-- name: enable unbound
+- name: Enabling unbound service
   become: true
-  ansible.builtin.systemd: name=unbound.service enabled=true
+  ansible.builtin.systemd:
+    enabled: true
+    name: unbound.service

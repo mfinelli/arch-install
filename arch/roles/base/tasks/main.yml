@@ -1,213 +1,346 @@
 ---
-- name: use systemd for ntp
+# all of the information we need is available in ansible_devices fact, but
+# there are nasty nested lists and dictionaries to pull the information out
+# with a nasty json_query, and just asking the blkid with the disk
+# by-partlabel is much simpler and easier to understand
+- name: Getting root volume disk UUID
   become: true
-  ansible.builtin.command: timedatectl set-ntp true
-  register: timedatectl_setntp
-  changed_when: timedatectl_setntp.rc == 0
-  failed_when: timedatectl_setntp.rc != 0
+  ansible.builtin.command: >-
+    blkid -s UUID -o value /dev/disk/by-partlabel/CRYPTROOT
+  register: cryptroot_blkid
+  changed_when: false
+  failed_when: cryptroot_blkid.rc != 0
 
-- name: set timezone
+- name: Setting CRYPTROOT UUID as fact
+  ansible.builtin.set_fact:
+    cryptroot_uuid: "{{ cryptroot_blkid.stdout }}"
+
+- name: Detecting installed kernel package
+  ansible.builtin.shell: >-
+    set -e -o pipefail;
+    basename "$(find /usr/lib/modules/* -prune -print | head -n 1)"
+  register: installed_kernel_shell
+  changed_when: false
+  failed_when: installed_kernel_shell.rc != 0
+
+- name: Setting installed kernel package as fact
+  ansible.builtin.set_fact:
+    installed_kernel: "{{ installed_kernel_shell.stdout }}"
+
+- name: Installing finellictl
+  ansible.builtin.include_tasks: finellictl.yml
+
+- name: Configuring systemd services
+  ansible.builtin.include_tasks: systemd.yml
+
+- name: Setting system timezone
   become: true
+  when: mmode != 'setup'
   community.general.timezone:
     name: "{{ timezone }}"
 
-- name: ensure baseline archlinux system
+- name: Installing baseline Archlinux system
   become: true
   community.general.pacman:
     name:
       - base
       - base-devel
+      - dracut
+      - dracut-hook-uefi
       - linux
       - linux-firmware
-      - sof-firmware
       - posix
+      - sof-firmware
+    state: present
 
-- name: install locale.gen
+# iptables is a dependency of systemd (part of base)
+- name: Replacing "iptables" with "iptables-nft"
+  become: true
+  community.general.pacman:
+    name: iptables-nft
+    state: present
+
+- name: Installing tpm tools
+  become: true
+  when: hastpm == 'true'
+  community.general.pacman:
+    name: tpm2-tools
+    state: present
+
+- name: Installing plymouth
+  become: true
+  community.general.pacman:
+    name:
+      - plymouth-git
+      # - plymouth-theme-...
+  notify:
+    - Run dracut
+
+- name: Copying plymouth configuration
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/plymouth/plymouthd.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: plymouthd.conf
+  notify:
+    - Run dracut
+
+- name: Copying dracut kernel commandline configuration
+  become: true
+  ansible.builtin.template:
+    dest: /etc/dracut.conf.d/cmdline.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: cmdline.conf.j2
+  notify:
+    - Run dracut
+
+- name: Installing imagemagick # for bootsplash conversion
+  become: true
+  community.general.pacman:
+    name: imagemagick
+    state: present
+
+- name: Copying (and converting) bootsplash image
+  become: true
+  ansible.builtin.command: >
+    magick {{ playbook_dir }}/roles/base/files/bootsplash.png
+    -background black -flatten /etc/finelli/bootsplash.bmp
+  args:
+    creates: /etc/finelli/bootsplash.bmp
+
+- name: Copying custom dracut configuration
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/dracut.conf.d/custom.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: dracut.conf
+  notify:
+    - Run dracut
+
+- name: Copying "/etc/locale.gen"
   become: true
   ansible.builtin.copy:
     dest: /etc/locale.gen
-    owner: root
     group: root
-    mode: 0644
+    mode: "0644"
+    owner: root
     src: locale.gen
   register: locales_list
 
-- name: locale-gen
+- name: Running `locale-gen`
   when: locales_list.changed # noqa no-handler
   become: true
   ansible.builtin.command: locale-gen
+  register: localegen
+  changed_when: localegen.rc == 0
+  failed_when: localegen.rc != 0
 
-- name: install locale.conf
+- name: Copying "/etc/locale.conf"
   become: true
   ansible.builtin.template:
     dest: /etc/locale.conf
-    owner: root
     group: root
-    mode: 0644
+    mode: "0644"
+    owner: root
     src: locale.conf.j2
 
-- name: install bootstrap packages
+- name: Installing bootstrap packages
   become: true
-  when: mtype != 'server'
   community.general.pacman:
     name:
-      - grub
-      - efibootmgr
       - btrfs-progs
+      - cryptsetup
       - dosfstools
-      - ntfs-3g
       - e2fsprogs
+      - efibootmgr
+      - elfutils
       - exfat-utils
       - f2fs-tools
-      - os-prober
       - lvm2
-      - cryptsetup
       - mdadm
+      - ntfs-3g
+      - os-prober
       - usbutils
+    state: present
 
-- name: install video and input drivers
+- name: Installing video and input drivers
   become: true
-  when: mtype != 'server'
   community.general.pacman:
     name:
       - mesa
       - xf86-input-libinput
+    state: present
 
-- name: install intel microcode
+- name: Installing Intel microcode
   become: true
-  when:
-    - mtype != 'server'
-    - "'GenuineIntel' in ansible_processor"
+  when: "'GenuineIntel' in ansible_processor"
   community.general.pacman:
-    name:
-      - intel-ucode
+    name: intel-ucode
+    state: present
 
-- name: install amd microcode
+- name: Installing AMD microcode
   become: true
-  when:
-    - mtype != 'server'
-    - "'AuthenticAMD' in ansible_processor"
+  when: "'AuthenticAMD' in ansible_processor"
   community.general.pacman:
-    name:
-      - amd-ucode
+    name: amd-ucode
+    state: present
 
-- name: install mkinitcpio configuration
+- name: Enabling the systemd-boot updater
+  when: mmode != 'setup'
+  ansible.builtin.systemd:
+    enabled: true
+    name: systemd-boot-update.service
+
+- name: Creating "sudo" group
   become: true
-  when: mtype != 'server'
-  ansible.builtin.copy:
-    dest: /etc/mkinitcpio.conf
-    owner: root
-    group: root
-    mode: 0644
-    src: mkinitcpio.conf
-  register: mkinitcpio_config
+  ansible.builtin.group:
+    gid: 27 # like in debian
+    name: sudo
+    state: present
+    system: true
 
-- name: mkinitcpio
-  when: mkinitcpio_config.changed # noqa no-handler
+- name: Adding mario to sudo group
   become: true
-  ansible.builtin.command: mkinitcpio -p linux
+  ansible.builtin.user:
+    append: true
+    groups: sudo
+    user: "{{ whoami }}"
 
-- name: ensure sudoer rule
+- name: Copying sudo configuration
   become: true
   ansible.builtin.copy:
     dest: /etc/sudoers.d/gsudo
-    owner: root
     group: root
-    mode: 0440
+    mode: "0440"
+    owner: root
     src: sudoer
-    validate: 'visudo -cf %s'
+    validate: visudo -cf %s
 
-- name: include pacman setup and configuration
+- name: Configuring makepkg and pacman
   ansible.builtin.include_tasks: pacman.yml
 
-- name: install ansible-gpg-key (from supermario repo)
+- name: Installing ansible-gpg-key (from supermario repo)
   become: true
   community.general.pacman:
-    name:
-      - ansible-gpg-key-git
+    name: ansible-gpg-key-git
+    state: present
 
-- name: install pikaur
+- name: Installing pikaur
   kewlfft.aur.aur:
-    name:
-      - pikaur
+    name: pikaur
+    state: present
 
-- name: install networking tools
+- name: Installing networking tools
   become: true
-  when: mtype != 'server'
   community.general.pacman:
     name:
+      - dialog
+      - easy-rsa
       - iw
       - iwd
-      - dialog
-      - wpa_supplicant
-      - easy-rsa
+      - netctl
       - networkmanager
       - networkmanager-openvpn
       - wireless-regdb
-      - netctl
+      - wpa_supplicant
+    state: present
 
-- name: install inetutils for `hostname`
+- name: Installing inetutils # for `hostname`
   become: true
   community.general.pacman:
-    name:
-      - inetutils
+    name: inetutils
+    state: present
 
-- name: install wireless regdom
+- name: Copying wireless-regdom configuration
   become: true
-  when: mtype != 'server'
   ansible.builtin.template:
     dest: /etc/conf.d/wireless-regdom
-    owner: root
     group: root
-    mode: 0644
+    mode: "0644"
+    owner: root
     src: wireless-regdom.j2
 
-- name: install old base group packages
+- name: Installing packages from old "base" group
   become: true
   community.general.pacman:
     name:
+      - bash-completion
       - logrotate
       - man-db
+      - man-pages
       - nano
       - perl
       - s-nail
       - texinfo
       - vi
-      - man-pages
-      - bash-completion
+    state: present
 
-- name: install ansible and dependencies
+- name: Installing ansible and dependencies
   become: true
   community.general.pacman:
     name:
       - ansible
       - git
       - pyalpm
+    state: present
 
-- name: install everywhere packages
+- name: Installing optional ansible dependencies
   become: true
   community.general.pacman:
     name:
+      - python-argcomplete
+      - python-dnspython
+      - python-jmespath
+      - python-keyring
+      - python-ldap
+      - python-pip
+      - python-pyopenssl
+      - python-systemd
+    state: present
+
+- name: Install "everywhere" packages
+  become: true
+  community.general.pacman:
+    name:
+      - lynx
+      - rsync
       - vim
       - vim-spell-en
       - vim-spell-es
       - vim-spell-fr
       - vim-spell-it
-      - lynx
-      - rsync
       - wget
+    state: present
 
-- name: uninstall old packages
+- name: Uninstalling packages
   become: true
   community.general.pacman:
     name:
-      - python-py-cpuinfo
-      - xf86-video-vesa
-      - xf86-video-intel
-      - xf86-video-ati
-      - xf86-video-amdgpu
       - ansible-aur
+      - archuseriso
+      - epson-inkjet-printer-escpr
+      - epson-inkjet-printer-escpr2
+      - keepass
+      - python-py-cpuinfo
+      - xf86-video-amdgpu
+      - xf86-video-ati
+      - xf86-video-intel
+      - xf86-video-vesa
+      - aspell
+      - aspell-en
+      - aspell-es
+      - aspell-fr
+      - aspell-it
+      - pidgin
+      - pidgin-otr
+      - purple-plugin-pack
     state: absent
 
-- name: install finellictl
-  ansible.builtin.include_tasks: finellictl.yml
+- name: Configuring a simple firewall
+  ansible.builtin.include_tasks: firewall.yml

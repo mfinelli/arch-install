@@ -1,52 +1,62 @@
 ---
-- name: install gnome
+- name: Installing GNOME
   become: true
   community.general.pacman:
     name:
       - gnome
       - gnome-extra
+    state: present
 
-- name: install gnome extras
+- name: Installing GNOME extras
   become: true
   community.general.pacman:
     name:
-      - seahorse
-      - network-manager-applet
+      - gnome-shell-extension-appindicator
+      - gnome-shell-extension-arc-menu
+      - gnome-shell-extension-arch-update
+      - gnome-shell-extension-dash-to-dock
       - hddtemp # for freon extension
+      - network-manager-applet
+      - power-profiles-daemon
+      - seahorse
+      - system-config-printer
+      - wl-clipboard
       - xdg-desktop-portal
       - xdg-desktop-portal-gnome
-      - wl-clipboard
-      - gnome-shell-extension-appindicator
+    state: present
 
-- name: install gnome extras from aur
+- name: Installing GNOME extras from the AUR
   kewlfft.aur.aur:
     name:
-      - gnome-shell-extension-dash-to-dock
-      - gnome-shell-extension-arch-update
       - gnome-shell-extension-bluetooth-quick-connect
-      - gnome-shell-extension-freon
-      - gnome-shell-extension-espresso-git
-      - gnome-shell-extension-systemd-manager
-      - gnome-shell-extension-no-overview
-      - gnome-shell-extension-weather-in-the-clock-git
-      - gnome-shell-extension-arc-menu
       - gnome-shell-extension-emoji-selector-git
+      - gnome-shell-extension-espresso-git
+      - gnome-shell-extension-freon
+      - gnome-shell-extension-no-overview
+      - gnome-shell-extension-systemd-manager
+      - gnome-shell-extension-weather-in-the-clock-git
+    state: present
 
-- name: install systemd policy file for systemd gnome extension
+- name: Copying systemd policy for the systemd GNOME extension
   become: true
   ansible.builtin.copy:
     dest: /etc/polkit-1/rules.d/10-service_status.rules
-    owner: root
     group: root
-    mode: 0644
+    mode: "0644"
+    owner: root
     src: service.rules
 
-# - name: disabled extensions
-#   kewlfft.aur.aur:
-#     name:
-#       - gnome-shell-extension-openweather-git
-#       - gnome-shell-extension-appindicator-git
-
-- name: enable gdm
+- name: Installing firmware updater
   become: true
-  ansible.builtin.systemd: name=gdm.service enabled=true
+  community.general.pacman:
+    name:
+      - dmidecode
+      - fwupd
+      - gnome-firmware
+    state: present
+
+- name: Enabling GDM
+  become: true
+  ansible.builtin.systemd:
+    enabled: true
+    name: gdm.service

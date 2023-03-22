@@ -1,97 +1,98 @@
 ---
-- name: install zsh
+- name: Installing zsh
   become: true
-  pacman:
+  community.general.pacman:
     name:
-      - zsh
       - grml-zsh-config
+      - zsh
       - zsh-autosuggestions
-      - zsh-syntax-highlighting
       - zsh-completions
+      - zsh-syntax-highlighting
       - zsh-theme-powerlevel10k
+    state: present
 
-- name: install gitstatus
+- name: Installing gitstatus
   become: true
-  pacman: name=gitstatus
+  community.general.pacman:
+    name: gitstatus
+    state: present
 
-- name: install terminal fonts
-  when: mtype != 'server'
+- name: Installing terminal fonts
   become: true
-  pacman:
+  community.general.pacman:
     name:
+      - ttf-jetbrains-mono-nerd
       - ttf-meslo-nerd-font-powerlevel10k
-      - nerd-fonts-jetbrains-mono
       # - ttf-jetbrains-mono
       # - ttf-nerd-fonts-symbols-mono
+    state: present
 
-- name: install main cli apps
+- name: Installing main CLI programs
   become: true
-  pacman:
+  community.general.pacman:
     name:
-      - tmux
-      - htop
-      - pwgen
-      - ctags
-      - ripgrep
-      - the_silver_searcher
       - bat
+      - bind
+      - ctags
       - fd
       - fzf
       - go-yq
+      - htop
+      - jq
       - neofetch
-      - thefuck
-      - tldr
-      - bind
       - net-tools
       - p7zip
-      - whois
-      - jq
+      - pwgen
+      - ripgrep
+      - screen
+      - the_silver_searcher
+      - thefuck
+      - tldr
+      - tmux
       - vivid
+      - whois
       - zoxide
+    state: present
 
-- name: install secondary cli apps
+- name: Installing secondary CLI programs
   when: mtype != 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
-      - moreutils
-      - ncdu
       - bat-extras
       - difftastic
       - dos2unix
       - github-cli
       - glab
+      - moreutils
+      - ncdu
       - nmap
       - pv
       - urlwatch
+    state: present
 
-- name: install shared secondary cli apps
+- name: Installing shared secondary CLI programs
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - cdrtools
       - unrar
+    state: present
 
-- name: install backup apps
+- name: Installing backup programs
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - borg
-      - rclone
       - pass
       - pass-otp
+      - rclone
+    state: present
 
-- name: add archuseriso signing key
-  when: mtype != 'media' and mtype != 'server'
-  gpg_key:
-    fpr: A5143BB56952B3189F49A175FAC4560863BEEC34
-
-- name: install archuseriso from aur
-  when: mtype != 'media' and mtype != 'server'
-  kewlfft.aur.aur: name=archuseriso
-
-- name: install tailscale
+- name: Installing Tailscale
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman: name=tailscale
+  community.general.pacman:
+    name: tailscale
+    state: present

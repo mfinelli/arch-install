@@ -2,9 +2,7 @@
 
 Automation for Arch Linux installations.
 
-## desktop / media installations
-
-### manual steps
+## installation instructions
 
 1. Download the install [image](https://www.archlinux.org/download/) and
 [prepare](https://wiki.archlinux.org/index.php/USB_flash_installation_medium)
@@ -68,7 +66,7 @@ a USB flash drive.
    bash -c "$(curl -fsSL https://mfgo.link/arch-bootstrap)"
    ```
 
-8. Set `root` password, create user and add sudo rule:
+8. Set `root` password and create normal user:
 
    ```shell
    passwd
@@ -78,9 +76,7 @@ a USB flash drive.
    useradd -m -s /bin/bash mario
    chfn mario
    passwd mario
-   groupadd --system -g 27 -U mario sudo # use gid 27 like they do in debian
-   echo "%sudo ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/gsudo
-   chmod 0440 /etc/sudoers.d/gsudo
+   usermod -a -G sudo mario
    ```
 
 9. Switch user and run ansible
@@ -98,7 +94,7 @@ a USB flash drive.
     exit
     umount -R /mnt
     swapoff /dev/crypt/swap
-    reboot
+    systemctl reboot
     ```
 
 11. If necessary, make the keymap change permanent
@@ -119,70 +115,30 @@ a USB flash drive.
     sudo nmcli --ask dev wifi connect SSID(network name)
     ```
 
-12. Run the post-first reboot portion of the setup
+12. Set any `finellictl` configurations
+
+    ```shell
+    finellictl language en_US # default
+    finellictl timezone America/New_York # default: UTC
+    finellictl wregdom US # default
+    ```
+
+13. Run the post-first reboot portion of the setup
 
     ```shell
     bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
     ```
 
-13. Reboot
+14. Reboot
 
     ```shell
     sudo reboot
     ```
 
-14. Install [dotfiles](https://github.com/mfinelli/dotfiles)
+15. Install [dotfiles](https://github.com/mfinelli/dotfiles)
 
-15. Set default shell to zsh
+16. Set default shell to zsh
 
     ```shell
     chsh -s /bin/zsh
     ```
-
-## server installations
-
-### manual steps
-
-1. SSH (as root) to the server
-
-   ```shell
-   ssh root@cdev.finelli.dev
-   ```
-
-2. Create user and sudo rules
-
-   ```shell
-   useradd -m -s /bin/bash mario
-   getent group 27 # ensure gid 27 doesn't already exist
-   groupadd --system -g 27 -U mario sudo
-   echo "%sudo ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/gsudo
-   chmod 0440 /etc/sudoers.d/gsudo
-   ```
-
-3. Copy root authorized ssh keys to user
-
-   ```shell
-   mkdir /home/mario/.ssh
-   chmod 0700 /home/mario/.ssh
-   cat /root/.ssh/authorized_keys > /home/mario/.ssh/authorized_keys
-   chmod 0600 /home/mario/.ssh/authorized_keys
-   chown -R mario:mario /home/mario/.ssh
-   ```
-
-4. Switch user and do the needful
-
-   ```shell
-   su mario -
-   cd ~
-   bash -c "$(curl -fsSL https://mfgo.link/arch-server)"
-   ```
-
-5. Reboot if the kernel updated during the previous step and then reconnect
-   and continue:
-
-   ```shell
-   bash -c "$(curl -fsSL https://mfgo.link/arch-setup)"
-   bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
-   ```
-
-6. Reboot

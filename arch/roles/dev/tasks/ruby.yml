@@ -1,20 +1,19 @@
 ---
-- name: install ruby
+- name: Installing ruby
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - ruby
-      - ruby-rake
-      - ruby-rdoc
       - ruby-bundler
+    state: present
 
-- name: install ruby packages
+- name: Installing ruby packages
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
+      - chruby
       - ruby-install
       - ruby-pry
-      - ruby-rubocop
-      - chruby
+    state: present

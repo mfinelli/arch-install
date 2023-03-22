@@ -1,15 +1,21 @@
 ---
-- name: install ansible-extras
+- name: Installing ansible tools
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - ansible-lint
       - python-passlib
       - sshpass
       - yapf
+    state: present
 
-- name: install downgrade
-  kewlfft.aur.aur: name=downgrade
+- name: Installing downgrade
+  kewlfft.aur.aur:
+    name: downgrade
+    state: present
 
-- include: apps.yml
-- include: cli.yml
+- name: Installing desktop applications
+  ansible.builtin.include_tasks: apps.yml
+
+- name: Installing CLI programs
+  ansible.builtin.include_tasks: cli.yml

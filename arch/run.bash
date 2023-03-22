@@ -34,8 +34,6 @@ array_contains() {
 # shellcheck disable=SC2034
 PERSONAL_MACHINES=(stig)
 # shellcheck disable=SC2034
-SERVER_MACHINES=(cdev.finelli.dev)
-# shellcheck disable=SC2034
 WORK_MACHINES=(easy CLIFMI706)
 # shellcheck disable=SC2034
 MEDIA_MACHINES=()
@@ -43,8 +41,6 @@ MEDIA_MACHINES=()
 hn="$(cat /etc/hostname)"
 if array_contains PERSONAL_MACHINES "$hn"; then
   mtype=personal
-elif array_contains SERVER_MACHINES "$hn"; then
-  mtype=server
 elif array_contains WORK_MACHINES "$hn"; then
   mtype=work
 else
@@ -79,32 +75,30 @@ else
   hastpm=false
 fi
 
+ansible-galaxy collection install -U -r ../requirements.yml
+
 # prompt for sudo password right away
 sudo echo -n
 
-ansible-galaxy install -r ../requirements.yml
-
 if [[ $1 == setup ]]; then
   mmode=setup
-
-  # now we can run the main setup
-  ansible-playbook \
-    --extra-vars multilib=true \
-    --extra-vars mmode=$mmode \
-    --extra-vars mtype=$mtype \
-    --extra-vars wireless_regdom=$wirelessregdom \
-    --extra-vars timezone=$timezone \
-    --extra-vars system_lang=$syslang \
-    arch.yml --tags setup
+  tags="--tags setup"
 else
-  ansible-playbook \
-    --extra-vars multilib=true \
-    --extra-vars mmode=post \
-    --extra-vars mtype=$mtype \
-    --extra-vars wireless_regdom=$wirelessregdom \
-    --extra-vars timezone=$timezone \
-    --extra-vars system_lang=$syslang \
-    arch.yml
+  mmode=post
+  tags=""
 fi
+
+# do the needful
+# shellcheck disable=SC2086
+ansible-playbook --inventory ../localhost \
+  --extra-vars hastpm=$hastpm \
+  --extra-vars mmode=$mmode \
+  --extra-vars mtype=$mtype \
+  --extra-vars multilib=true \
+  --extra-vars system_lang="$syslang" \
+  --extra-vars timezone="$timezone" \
+  --extra-vars whoami="$(whoami)" \
+  --extra-vars wireless_regdom="$wirelessregdom" \
+  arch.yml $tags
 
 exit 0

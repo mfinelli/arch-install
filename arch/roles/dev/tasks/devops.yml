@@ -1,52 +1,57 @@
 ---
-- name: install cloud dependencies
+- name: Installing cloud commandline tools
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - aws-cli
-      - python-magic
-      - google-cloud-sdk
       - doctl
+      - google-cloud-sdk
+      - python-magic
+    state: present
 
-- name: install devops tools
+- name: Installing main devops tools
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
-      - terraform
-      - packer
-      - sops
       - newrelic-cli
+      - sops
+      - terraform
+    state: present
 
-- name: install kubectl
+- name: Installing kubectl
   when: mtype == 'personal' or mtype == 'work'
   become: true
-  pacman: name=kubectl
+  community.general.pacman:
+    name: kubectl
+    state: present
 
-- name: install kubernetes tools
+- name: Installing kubernetes tools
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - helm
-      - helmfile
-      - pluto
-      - popeye
-      - helm-secrets
       - helm-diff
       - helm-gcs
       - helm-s3
+      - helm-secrets
+      - helmfile
+      - pluto
+      - popeye
+    state: present
 
-- name: install kubernetes tools pt. ii
+- name: Installing kubernetes tools (part two)
   when: mtype == 'personal' or mtype == 'work'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - kubectx
       - lens
+    state: present
 
-- name: install helm plugins
+- name: Installing helm plugins
   when: mtype == 'personal'
   kubernetes.core.helm_plugin:
     plugin_path: /usr/lib/helm/plugins/{{ item }}

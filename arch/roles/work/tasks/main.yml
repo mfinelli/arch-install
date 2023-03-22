@@ -1,27 +1,41 @@
 ---
-- name: install vpn client
+- name: Installing VPN client
   when: mtype == 'work'
   become: true
-  pacman: name=networkmanager-fortisslvpn
+  community.general.pacman:
+    name: networkmanager-fortisslvpn
+    state: present
 
-- name: install required tools
+- name: Installing zenity
   when: mtype == 'work'
   become: true
-  pacman:
+  community.general.pacman:
+    name: zenity
+    state: present
+
+- name: Installing required software
+  when: mtype == 'work'
+  become: true
+  community.general.pacman:
     name:
+      - apachedirectorystudio
+      - asdf-vm
+      - cmctl # cert-manager cli
       - colordiff
       - direnv
       - git-crypt
       - kustomize
       - mariadb-clients
-      - asdf-vm
-      - python-pip # dependency of asdf-pyapp
+      - nodejs-lhci-cli
+      - python-kubernetes
       - tidy
+      - yj
+    state: present
 
-- name: install required tools from aur
+- name: Installing required software from the AUR
   when: mtype == 'work'
   kewlfft.aur.aur:
     name:
-      - nodejs-lhci-cli
+      - python-onepasswordconnectsdk
       - slack-desktop # slack-wayland doesn't work very well...
-      - apachedirectorystudio
+    state: present

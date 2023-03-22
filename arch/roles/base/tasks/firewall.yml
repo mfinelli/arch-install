@@ -1,0 +1,85 @@
+---
+- name: Installing ufw
+  become: true
+  community.general.pacman:
+    name: ufw
+    state: present
+
+- name: Enabling ufw service
+  become: true
+  ansible.builtin.systemd:
+    enabled: true
+    name: ufw.service
+
+- name: Enabling ufw with default rules
+  become: true
+  community.general.ufw:
+    logging: "on"
+    state: enabled
+
+- name: Adding ufw rule to deny all incoming traffic
+  become: true
+  community.general.ufw:
+    default: deny
+    direction: incoming
+    log: true
+
+- name: Adding ufw rule to allow all outgoing traffic
+  become: true
+  community.general.ufw:
+    default: allow
+    direction: outgoing
+
+- name: Setting local network as fact
+  ansible.builtin.set_fact:
+    local_network: "{{ ansible_default_ipv4['network'] }}/\
+      {{ ansible_default_ipv4['prefix'] }}"
+
+- name: Adding ufw rule to allow SSH from the local network
+  become: true
+  community.general.ufw:
+    direction: in
+    log: true
+    port: "22"
+    proto: tcp
+    rule: allow
+    src: "{{ local_network }}"
+
+- name: Adding ufw rule to block outgoing local network traffic
+  become: true
+  when: mtype == 'work'
+  community.general.ufw:
+    dest: "{{ local_network }}"
+    direction: out
+    log: true
+    rule: deny
+
+- name: Getting last local network
+  become: true
+  when: mtype == 'work'
+  ansible.builtin.command: cat /etc/finelli/lastlan.txt
+  register: lastlan
+  changed_when: false
+  failed_when: false
+
+- name: Removing ufw rule to block outgoing traffic to previous local network
+  become: true
+  when:
+    - mtype == 'work'
+    - lastlan.stdout != ""
+    - lastlan.stdout != local_network
+  community.general.ufw:
+    delete: true
+    dest: "{{ lastlan.stdout }}"
+    direction: out
+    log: true
+    rule: deny
+
+- name: Writing out current local network
+  become: true
+  ansible.builtin.template:
+    dest: /etc/finelli/lastlan.txt
+    group: root
+    mode: "0644"
+    owner: root
+    src: lastlan.txt.j2

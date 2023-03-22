@@ -1,24 +1,26 @@
 ---
-- name: install fonts
+- name: Installing fonts
   become: true
-  pacman:
+  community.general.pacman:
     name:
-      - ttf-liberation
-      - ttf-bitstream-vera
       - gnu-free-fonts
-      - ttf-carlito
-      # - ttf-caladea
-      - ttf-dejavu
       - libertinus-font
-      - otf-fira-sans
-      - otf-fira-mono
       - noto-fonts
       - noto-fonts-emoji
       - noto-fonts-extra
+      - otf-fira-mono
+      - otf-fira-sans
+      - ttf-bitstream-vera
+      - ttf-caladea
+      - ttf-carlito
+      - ttf-dejavu
+      - ttf-liberation
       - ttf-ubuntu-font-family
+    state: present
 
-- name: install fonts part two
+- name: Installing fonts from the AUR
   kewlfft.aur.aur:
     name:
-      - ttf-symbola
       # - ttf-google-fonts-git
+      - ttf-symbola
+    state: present

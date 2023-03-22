@@ -1,74 +1,87 @@
 ---
-- name: install xorg
+- name: Installing Xorg
   become: true
   community.general.pacman:
     name:
-      - xorg-server
       - xorg-apps
+      - xorg-server
+    state: present
 
-- name: install desktop environment (xfce)
+- name: Installing main XFCE packages
   become: true
   community.general.pacman:
     name:
-      - xfce4
-      - xfce4-goodies
-      - lightdm
-      - lightdm-gtk-greeter
-      - network-manager-applet
       - accountsservice
-      - xdg-user-dirs
+      - gnome-keyring
       - gvfs
       - gvfs-afc
       - gvfs-mtp
-      - gnome-keyring
+      - lightdm
+      - lightdm-gtk-greeter
+      - network-manager-applet
       - seahorse
+      - xdg-user-dirs
+      - xfce4
+      - xfce4-goodies
+    state: present
 
-- name: install lightdm configuration
+- name: Copying LightDM configuration
   become: true
   ansible.builtin.template:
-    src: lightdm.conf.j2
     dest: /etc/lightdm/lightdm.conf
-    owner: root
     group: root
-    mode: 0644
+    mode: "0644"
+    owner: root
+    src: lightdm.conf.j2
 
-- name: enable lightdm
+- name: Enabling LightDM service
   become: true
-  ansible.builtin.systemd: name=lightdm.service enabled=true
+  ansible.builtin.systemd:
+    enabled: true
+    name: lightdm.service
 
-- name: install xfce themes
+- name: Installing XFCE themes
   become: true
   community.general.pacman:
     name:
-      - xfce-theme-manager
       - elementary-icon-theme
+      - xfce-theme-manager
+    state: present
 
-- name: install xfce themes
+- name: Installing XFCE themes from the AUR
   kewlfft.aur.aur:
     name:
-      - xfce-theme-greybird
-      - shimmer-wallpapers
       - elementary-xfce-icons
+      - matcha-gtk-theme-git
       - paper-icon-theme-git
       - papirus-icon-theme-git
-      - matcha-gtk-theme-git
+      - shimmer-wallpapers
+      - xfce-theme-greybird
+    state: present
 
-- name: install redshift
+- name: Installing redshift
   become: true
   community.general.pacman:
     name:
-      - redshift
       - python-gobject
       - python-xdg
+      - redshift
+    state: present
 
-- name: install pdf viewer
+- name: Installing a PDF viewer
   become: true
-  community.general.pacman: name=evince
+  community.general.pacman:
+    name: evince
+    state: present
 
-- name: install archive tools
+- name: Installing archive tools
   become: true
-  community.general.pacman: name=file-roller
+  community.general.pacman:
+    name: file-roller
+    state: present
 
-- name: install xterm
+- name: Installing xterm
   become: true
-  community.general.pacman: name=xterm
+  community.general.pacman:
+    name: xterm
+    state: present

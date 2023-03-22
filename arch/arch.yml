@@ -1,13 +1,10 @@
 ---
-- hosts: localhost
+- name: Configuring Archlinux system
+  hosts: localhost
+  connection: local
+
   roles:
     - role: base
-      tags: [all, setup]
-    - role: unbound
-      when: mtype != 'work'
-      tags: [all, setup]
-    - role: resolvd
-      when: mtype == 'work'
       tags: [all, setup]
     - role: desktop
       tags: [all]
@@ -21,6 +18,3 @@
     - role: work
       tags: [all]
       when: mtype == 'work'
-    - role: server
-      tags: [all]
-      when: mtype == 'server'

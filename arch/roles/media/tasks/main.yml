@@ -1,75 +1,88 @@
 ---
-- name: install wine
+- name: Installing Wine
   when:
     - multilib == 'true'
     - mtype == 'personal' or mtype == 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - wine
-      - wine-mono
       - wine-gecko
+      - wine-mono
       - winetricks
+    state: present
 
-- name: install lib32 libraries
+- name: Installing lib32 libraries for Wine
   when:
     - multilib == 'true'
     - mtype == 'personal' or mtype == 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
-      - lib32-libpulse
       - lib32-alsa-plugins
+      - lib32-libpulse
+    state: present
 
-- name: install picard
+- name: Installing picard
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman: name=picard
+  community.general.pacman:
+    name: picard
+    state: present
 
-- name: install other music applications
+- name: Installing Wine-based music applications
   when: mtype == 'personal' or mtype == 'media'
   kewlfft.aur.aur:
     name:
       - exact-audio-copy
       - foobar2000
       - mp3tag
+    state: present
 
-- name: install tor browser bundle
+- name: Installing the Tor Browser bundle
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman: name=tor-browser
+  community.general.pacman:
+    name: tor-browser
+    state: present
 
-- name: install google-chrome
-  when: mtype != 'server'
-  kewlfft.aur.aur: name=google-chrome
+- name: Installing Google Chrome
+  kewlfft.aur.aur:
+    name: google-chrome
+    state: present
 
-- name: install youtube-dl
+- name: Installing yt-dlp
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - youtube-dl
       - yt-dlp
+    state: present
 
-- name: install gallery-dl
+- name: Installing gallery-dl
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  community.general.pacman: name=gallery-dl
+  community.general.pacman:
+    name: gallery-dl
+    state: present
 
-- name: install other media dependencies
+- name: Installing other media applications
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
-      - vlc
-      - libdvdcss
-      - libaacs
       - handbrake
+      - libaacs
+      - libdvdcss
+      - vlc
+    state: present
 
-- name: install torrent client
+- name: Installing a torrent client
   when: mtype == 'personal' or mtype == 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
-      - deluge
       - cksfv
+      - deluge
+    state: present

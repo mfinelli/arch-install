@@ -1,43 +1,54 @@
 ---
-- name: install audio packages
+- name: Installing audio packages
   become: true
   community.general.pacman:
     name:
-      - alsa-utils
       - alsa-plugins
+      - alsa-utils
+      - easyeffects
+      - pavucontrol
       - pipewire
-      - pipewire-docs
       - pipewire-alsa
+      - pipewire-docs
       - pipewire-pulse
       - wireplumber
-      - pavucontrol
-      - easyeffects
+    state: present
 
-- name: enable network manager
+- name: Enabling Network Manager service
   become: true
-  ansible.builtin.systemd: name=NetworkManager.service enabled=true
+  ansible.builtin.systemd:
+    enabled: true
+    name: NetworkManager.service
 
-- name: install keymapper
+- name: Installing keymapper
   become: true
-  community.general.pacman: name=keymapper
+  community.general.pacman:
+    name: keymapper
+    state: present
 
-- name: enable keymapperd
+- name: Enabling keymapperd service
   become: true
-  ansible.builtin.systemd: name=keymapperd.service enabled=true state=started
+  ansible.builtin.systemd:
+    enabled: true
+    name: keymapperd.service
+    state: started
 
-- name: install bluetooth packages
+- name: Installing bluetooth packages
   become: true
   community.general.pacman:
     name:
+      - blueman
       - bluez
       - bluez-utils
-      - blueman
+    state: present
 
-- name: enable bluetooth
+- name: Enabling bluetooth
   become: true
-  ansible.builtin.systemd: name=bluetooth.service enabled=true
+  ansible.builtin.systemd:
+    enabled: true
+    name: bluetooth.service
 
-- name: install base packages
+- name: Installing baseline desktop packages
   become: true
   community.general.pacman:
     name:
@@ -47,18 +58,19 @@
       - firefox-i18n-fr
       - firefox-i18n-it
       - openssh
+    state: present
 
-- include: gnome.yml
+- name: Installing GNOME desktop environment
+  ansible.builtin.include_tasks: gnome.yml
   when: mtype != 'media'
 
-- include: xfce.yml
+- name: Installing XFCE desktop environment
+  ansible.builtin.include_tasks: xfce.yml
   when: mtype == 'media'
 
-- include: printing.yml
+- name: Installing printing packages
+  ansible.builtin.include_tasks: printing.yml
   when: mtype != 'media'
 
-- include: fonts.yml
-
-# - name: install cursors
-#   when: mtype != 'server'
-#   kewlfft.aur.aur: name=xcursor-openzone
+- name: Installing fonts
+  ansible.builtin.include_tasks: fonts.yml

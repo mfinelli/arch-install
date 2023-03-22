@@ -1,54 +1,52 @@
 ---
-- name: add dropbox signing key
+- name: Adding Dropbox signing key
   when: mtype == 'personal'
   gpg_key:
     fpr: 1C61A2656FB57B7E4DE0F4C1FC918B335044912E
 
-- name: install sync apps
+- name: Installing Dropbox
   when: mtype == 'personal'
   kewlfft.aur.aur:
-    name:
-      - dropbox
+    name: dropbox
+    state: present
 
-- name: add 1password signing key
-  when: mtype == 'personal'
+- name: Adding 1Password signing key
+  when: mtype != 'media'
   gpg_key:
     fpr: 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
 
-- name: install password apps
-  when: mtype == 'personal'
+- name: Installing 1Password
+  when: mtype != 'media'
   kewlfft.aur.aur:
     name:
       - 1password
       - 1password-cli
+    state: present
 
-- name: install keepass
-  when: mtype != 'server'
+- name: Installing KeePassXC
   become: true
-  pacman: name=keepass
+  community.general.pacman:
+    name: keepassxc
+    state: present
 
-- name: install yubikey tools
+- name: Installing YubiKey tools
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
-      - pcsclite
       - ccid
       - hopenpgp-tools
+      - pcsclite
       - yubikey-manager
       - yubikey-personalization
       - yubikey-personalization-gui
+    state: present
 
-- name: install libreoffice
-  when: mtype != 'media' and mtype != 'server'
+- name: Installing LibreOffice
+  when: mtype != 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
-      - libreoffice-fresh
-      - libreoffice-fresh-en-gb
-      - libreoffice-fresh-es
-      - libreoffice-fresh-fr
-      - libreoffice-fresh-it
       - hunspell
       - hunspell-en_au
       - hunspell-en_ca
@@ -64,68 +62,63 @@
       - hyphen-es
       - hyphen-fr
       - hyphen-it
+      - libreoffice-fresh
+      - libreoffice-fresh-en-gb
+      - libreoffice-fresh-es
+      - libreoffice-fresh-fr
+      - libreoffice-fresh-it
       - mythes
       - mythes-en
       - mythes-es
       - mythes-fr
       - mythes-it
+    state: present
 
-- name: install the gimp
-  when: mtype != 'media' and mtype != 'server'
+- name: Installing the GIMP
+  when: mtype != 'media'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - gimp
-      - xsane-gimp
       - gimp-extras
+      - xsane-gimp
+    state: present
 
-- name: install graphics extras
+- name: Installing hexchat
+  when: mtype != 'media'
+  become: true
+  community.general.pacman:
+    name: hexchat
+    state: present
+
+- name: Installing Thunderbird
   when: mtype == 'personal'
   become: true
-  pacman:
-    name:
-      - dcraw
-      - inkscape
-
-- name: install chat programs
-  when: mtype != 'media' and mtype != 'server'
-  become: true
-  pacman:
-    name:
-      - pidgin
-      - pidgin-otr
-      - purple-plugin-pack
-      - aspell
-      - aspell-en
-      - aspell-es
-      - aspell-fr
-      - aspell-it
-      - hexchat
-
-- name: install thunderbird
-  when: mtype == 'personal'
-  become: true
-  pacman:
+  community.general.pacman:
     name:
       - thunderbird
       - thunderbird-i18n-en-us
       - thunderbird-i18n-es-es
       - thunderbird-i18n-fr
       - thunderbird-i18n-it
+    state: present
 
-- name: install gnucash
+- name: Installing GnuCash
   when: mtype == 'personal'
   become: true
-  pacman:
+  community.general.pacman:
     name:
       - gnucash
       - gnucash-docs
-      - perl-finance-quote
       - perl-date-manip
+      - perl-finance-quote
       - perl-libwww
       - perl-lwp-protocol-https
+    state: present
 
-- name: install raspberry pi imager
+- name: Installing RaspberryPi Imager
   when: mtype == 'personal'
   become: true
-  pacman: name=rpi-imager
+  community.general.pacman:
+    name: rpi-imager
+    state: present
