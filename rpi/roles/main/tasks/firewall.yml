@@ -24,7 +24,6 @@
   community.general.ufw:
     default: allow
     direction: outgoing
-
 # TODO: reenable with bookworm release
 # - name: Allow SSH from the local network
 #   community.general.ufw:
