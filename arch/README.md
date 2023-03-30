@@ -104,9 +104,8 @@ a USB flash drive.
     sudo localectl set-keymap --no-convert it
     ```
 
-11. Reconnect to the internet. In a virtual machine it is enough to just
-    start `NetworkManager.service`. Otherwise, you will need to enable it
-    _and_ connect with `nmcli`.
+11. Reconnect to the internet. In a virtual machine you should already be
+    connected. Otherwise connect using the `nmcli`:
 
     ```shell
     nmcli dev status

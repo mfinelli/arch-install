@@ -14,12 +14,6 @@
       - wireplumber
     state: present
 
-- name: Enabling Network Manager service
-  become: true
-  ansible.builtin.systemd:
-    enabled: true
-    name: NetworkManager.service
-
 - name: Installing keymapper
   become: true
   community.general.pacman:
