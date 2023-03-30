@@ -27,6 +27,7 @@
       - kustomize
       - mariadb-clients
       - nodejs-lhci-cli
+      - openldap
       - python-kubernetes
       - tidy
       - yj
