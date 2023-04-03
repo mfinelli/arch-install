@@ -71,7 +71,7 @@
   become: true
   community.general.pacman:
     name:
-      - plymouth-git
+      - plymouth
       # - plymouth-theme-...
   notify:
     - Run dracut
