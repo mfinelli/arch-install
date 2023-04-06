@@ -31,7 +31,7 @@
     - name: Installing Mullvad VPN
       when: mtype != 'server'
       ansible.builtin.apt:
-        deb: https://mullvad.net/media/app/MullvadVPN-2023.2_amd64.deb
+        deb: https://mullvad.net/media/app/MullvadVPN-2023.3_amd64.deb
 
     # discord also doesn't have an apt repository (and doesn't seem to be on
     # the roadmap at all, so this is the best we can do for now)
