@@ -6,7 +6,7 @@
     name:
       - aws-cli
       - doctl
-      - google-cloud-sdk
+      - google-cloud-cli
       - python-magic
     state: present
 
