@@ -1,9 +1,10 @@
 ---
-- name: Install unbound
+- name: Installing unbound
   ansible.builtin.apt:
     name: unbound
+    state: present
 
-- name: Install new resolvconf.conf
+- name: Copying new resolvconf.conf
   ansible.builtin.copy:
     dest: /etc/resolvconf.conf
     group: root
@@ -13,14 +14,14 @@
   notify:
     - Update resolv.conf
 
-- name: Ensure resolvconf forward zone is absent
+- name: Removing resolvconf forward zone
   ansible.builtin.file:
     path: /etc/unbound/unbound.conf.d/resolvconf_resolvers.conf
     state: absent
   notify:
     - Restart unbound
 
-- name: Install main unbound configuration
+- name: Copying main unbound configuration
   ansible.builtin.copy:
     dest: /etc/unbound/unbound.conf.d/unbound.conf
     group: root
@@ -30,7 +31,7 @@
   notify:
     - Restart unbound
 
-- name: Setup cloudflare as upstream resolver
+- name: Copying cloudflare resolver configuration
   ansible.builtin.copy:
     dest: /etc/unbound/unbound.conf.d/cloudflare.conf
     group: root
@@ -40,7 +41,7 @@
   notify:
     - Restart unbound
 
-- name: Ensure unbound is started and enabled
+- name: Starting and enabling unbound service
   ansible.builtin.systemd:
     enabled: true
     name: unbound.service
