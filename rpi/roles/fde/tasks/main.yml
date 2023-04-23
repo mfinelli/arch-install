@@ -1,16 +1,18 @@
 ---
-- name: Install full disk encryption dependencies
+- name: Installing full disk encryption dependencies
   ansible.builtin.apt:
     name:
       - busybox
       - cryptsetup
       - initramfs-tools
+    state: present
 
-- name: Install gparted for formatting USB drives
+- name: Installing "gparted" for formatting USB drives
   ansible.builtin.apt:
     name: gparted
+    state: present
 
-- name: Install kernel initramfs rebuild script
+- name: Copying kernel initramfs rebuild script
   ansible.builtin.copy:
     dest: /etc/kernel/postinst.d/initramfs-rebuild
     group: root
@@ -20,7 +22,7 @@
   notify:
     - Rebuild initramfs
 
-- name: Install initramfs luks hooks script
+- name: Copying initramfs luks hooks script
   ansible.builtin.copy:
     dest: /etc/initramfs-tools/hooks/luks
     group: root
@@ -30,7 +32,7 @@
   notify:
     - Rebuild initramfs
 
-- name: Install initramfs modules list
+- name: Copying initramfs modules list
   ansible.builtin.copy:
     dest: /etc/initramfs-tools/modules
     group: root
