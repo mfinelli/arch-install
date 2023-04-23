@@ -1,31 +1,32 @@
 ---
-- name: Install ufw
+- name: Installing ufw
   ansible.builtin.apt:
     name: ufw
+    state: present
 
-- name: Ensure ufw is started and enabled
+- name: Starting and enabling ufw service
   ansible.builtin.systemd:
     enabled: true
     name: ufw.service
     state: started
 
-- name: Enable default ufw rules
+- name: Enabling ufw with default rules
   community.general.ufw:
     logging: "on"
     state: enabled
 
-- name: Deny all inbound traffic
+- name: Adding ufw rule to deny all incoming traffic
   community.general.ufw:
     default: deny
     direction: incoming
     log: true
 
-- name: Allow all outbound traffic
+- name: Adding ufw rule to allow all outgoing traffic
   community.general.ufw:
     default: allow
     direction: outgoing
 # TODO: reenable with bookworm release
-# - name: Allow SSH from the local network
+# - name: Adding ufw rule to allow SSH from the local network
 #   community.general.ufw:
 #     direction: in
 #     log: true

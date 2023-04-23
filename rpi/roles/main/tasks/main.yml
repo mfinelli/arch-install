@@ -4,6 +4,7 @@
     name:
       - ansible
       - git
+    state: present
 
 - name: Uninstalling apt-transport-https
   ansible.builtin.apt:
@@ -81,12 +82,14 @@
       - sysstat
       - universal-ctags
       - vim
+    state: present
 
 - name: Installing backup applications
   ansible.builtin.apt:
     name:
       - borgbackup
       - rclone
+    state: present
 
 - name: Configuring FDE and boot
   ansible.builtin.include_tasks: boot.yml

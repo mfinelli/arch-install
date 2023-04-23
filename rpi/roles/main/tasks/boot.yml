@@ -1,25 +1,25 @@
 ---
 # there might be a better way but this works pretty well
 # https://serverfault.com/q/881908
-- name: Check if this host uses a keyfile
+- name: Checking if this host uses a keyfile
   when: fde == 'true'
   tags: fde
   block:
-    - name: Default keyfile to false
+    - name: Setting keyfile default to false
       ansible.builtin.set_fact:
         crypttab_keyfile: false
 
-    - name: Check if a keyfile exists in the root
+    - name: Checking if a keyfile exists under root
       ansible.builtin.stat:
         path: /root/cryptkey
       register: crypttab_cryptkey
 
-    - name: Update keyfile setting
+    - name: Updating keyfile setting
       ansible.builtin.set_fact:
         crypttab_keyfile: true
       when: crypttab_cryptkey.stat.exists
 
-- name: Install kernel boot config
+- name: Copying kernel boot configuration
   ansible.builtin.template:
     dest: /boot/config.txt
     group: root
@@ -28,7 +28,7 @@
     src: config.txt.j2
   tags: fde
 
-- name: Install kernel command line config
+- name: Copying kernel command line configuration
   ansible.builtin.template:
     dest: /boot/cmdline.txt
     group: root
@@ -37,7 +37,7 @@
     src: cmdline.txt.j2
   tags: fde
 
-- name: Install updated fstab
+- name: Copying updated fstab
   ansible.builtin.template:
     dest: /etc/fstab
     group: root
@@ -46,7 +46,7 @@
     src: fstab.j2
   tags: fde
 
-- name: Install updated crypttab
+- name: Copying updated crypttab
   when: fde == 'true'
   ansible.builtin.template:
     dest: /etc/crypttab
