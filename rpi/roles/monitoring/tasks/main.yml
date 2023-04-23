@@ -1,16 +1,16 @@
 ---
-- name: Check if hc-ping uuid has been set
+- name: Checking if hc-ping uuid has been set
   ansible.builtin.stat:
     path: /root/hc-ping-uuid.txt
   register: hcping_uuid_file
 
-- name: Fetch hc-ping uuid
+- name: Fetching hc-ping uuid
   ansible.builtin.slurp:
     src: /root/hc-ping-uuid.txt
   when: hcping_uuid_file.stat.exists
   register: hcping_uuid
 
-- name: Create hc-ping service
+- name: Copying hc-ping service unit
   when: hcping_uuid_file.stat.exists
   ansible.builtin.template:
     dest: /etc/systemd/system/hc-ping.service
@@ -19,7 +19,7 @@
     owner: root
     src: hc-ping.service.j2
 
-- name: Create hc-ping timer
+- name: Copying hc-ping timer unit
   when: hcping_uuid_file.stat.exists
   ansible.builtin.copy:
     dest: /etc/systemd/system/hc-ping.timer
@@ -28,7 +28,7 @@
     owner: root
     src: hc-ping.timer
 
-- name: Enable hc-ping timer
+- name: Enabling hc-ping timer unit
   when: hcping_uuid_file.stat.exists
   ansible.builtin.systemd:
     enabled: true
