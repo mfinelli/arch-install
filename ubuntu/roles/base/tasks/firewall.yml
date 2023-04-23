@@ -25,7 +25,6 @@
   community.general.ufw:
     default: allow
     direction: outgoing
-
 # - name: Adding ufw rule to allow SSH from the local network
 #   community.general.ufw:
 #     direction: in
