@@ -11,8 +11,6 @@
       tags: [all]
     - role: monitoring
       tags: [all]
-    - role: unbound
-      tags: [all]
     - role: tailscale
       tags: [all]
     - role: user

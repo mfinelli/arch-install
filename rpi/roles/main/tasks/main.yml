@@ -1,16 +1,16 @@
 ---
-- name: Ensure setup dependencies
+- name: Installing bootstrap packages
   ansible.builtin.apt:
     name:
       - ansible
       - git
 
-- name: Uninstall apt-transport-https
+- name: Uninstalling apt-transport-https
   ansible.builtin.apt:
     name: apt-transport-https
     state: absent
 
-- name: Install https sources list
+- name: Copying https-enabled sources list
   ansible.builtin.template:
     dest: /etc/apt/sources.list
     group: root
@@ -18,7 +18,7 @@
     owner: root
     src: sources.list.j2
 
-- name: Install https raspi sources list
+- name: Copying https-enabled raspi sources list
   ansible.builtin.template:
     dest: /etc/apt/sources.list.d/raspi.list
     group: root
@@ -26,23 +26,37 @@
     owner: root
     src: raspi.list.j2
 
-# TODO: we should update_cache based on the above two templates
-- name: Install firefox
-  ansible.builtin.apt:
-    name: firefox-esr
-    update_cache: true
+- name: Creating systemd-resolved configuration directory
+  ansible.builtin.file:
+    group: root
+    mode: "0755"
+    owner: root
+    path: /etc/systemd/resolved.conf.d
+    state: directory
 
-- name: Ensure openssh is installed
+- name: Copying custom systemd-resolved configuration
+  ansible.builtin.copy:
+    dest: /etc/systemd/resolved.conf.d/dns.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: resolved.conf
+  notify:
+    - Restart systemd-resolved
+
+# TODO: we should update_cache based on the above two templates
+- name: Installing openssh
   ansible.builtin.apt:
     name: openssh-server
+    update_cache: true
 
-- name: Ensure sshd is running and enabled
+- name: Enabling sshd service
   ansible.builtin.systemd:
     enabled: true
     name: ssh.service
     state: started
 
-- name: Copy sshd config
+- name: Copying sshd configuration
   ansible.builtin.copy:
     dest: /etc/ssh/sshd_config
     group: root
@@ -53,7 +67,7 @@
   notify:
     - Restart sshd
 
-- name: Install other applications
+- name: Installing main applications
   ansible.builtin.apt:
     name:
       - htop
@@ -68,14 +82,14 @@
       - universal-ctags
       - vim
 
-- name: Install backup applications
+- name: Installing backup applications
   ansible.builtin.apt:
     name:
       - borgbackup
       - rclone
 
-- name: Configure FDE and boot
+- name: Configuring FDE and boot
   ansible.builtin.include_tasks: boot.yml
 
-- name: Configure basic firewall
+- name: Configuring basic firewall
   ansible.builtin.include_tasks: firewall.yml
