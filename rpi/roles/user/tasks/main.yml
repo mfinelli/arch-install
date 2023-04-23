@@ -1,5 +1,5 @@
 ---
-- name: Create mario user
+- name: Creating "mario" user
   ansible.builtin.user:
     groups:
       - adm
@@ -20,7 +20,7 @@
       - video
     name: mario
 
-- name: Add sudo rule for mario
+- name: Copying sudo rule for mario
   ansible.builtin.copy:
     dest: /etc/sudoers.d/010_mario-nopasswd
     group: root
@@ -29,7 +29,7 @@
     src: mario
     validate: "visudo -cf %s"
 
-- name: Add home ssh key
+- name: Adding SSH authorized keys for mario
   ansible.posix.authorized_key:
     exclusive: true
     # yamllint disable rule:line-length
@@ -40,7 +40,7 @@
     # yamllint enable rule:line-length
     user: mario
 
-- name: Ensure src directory
+- name: Creating "src" directory
   become: true
   become_user: mario
   ansible.builtin.file:
@@ -53,21 +53,21 @@
     - src
     - src/mfinelli
 
-- name: Clone this repository for easy updates
+- name: Cloning this repository for easier updates
   become: true
   become_user: mario
   ansible.builtin.git:
     dest: /home/mario/src/mfinelli/arch-install
     repo: https://github.com/mfinelli/arch-install.git
 
-- name: Delete default pi user
+- name: Removing the default "pi" user
   when: whoami != 'pi'
   ansible.builtin.user:
     name: pi
     remove: true
     state: absent
 
-- name: Delete pi sudo rule
+- name: Removing the default pi user sudo rule
   when: whoami != 'pi'
   ansible.builtin.file:
     path: /etc/sudoers.d/010_pi-nopasswd
