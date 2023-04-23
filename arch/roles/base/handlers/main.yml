@@ -2,6 +2,9 @@
 - name: Run dracut
   become: true
   ansible.builtin.command: dracut --uefi --force --kver {{ installed_kernel }}
+  register: ran_dracut
+  changed_when: ran_dracut.rc == 0
+  failed_when: ran_dracut.rc != 0
 
 - name: Restart systemd-resolved
   become: true

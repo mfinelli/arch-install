@@ -1,6 +1,9 @@
 ---
 - name: Update resolv.conf
   ansible.builtin.command: resolvconf -u
+  register: updated_resolvconf
+  changed_when: updated_resolvconf.rc == 0
+  failed_when: updated_resolvconf != 0
 
 - name: Restart unbound
   ansible.builtin.systemd:
