@@ -64,6 +64,7 @@
       - dos2unix
       - github-cli
       - glab
+      - miller
       - moreutils
       - ncdu
       - nmap

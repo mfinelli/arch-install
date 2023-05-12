@@ -64,6 +64,7 @@
       - htop
       - jq
       - libarchive-tools
+      - miller
       - moreutils
       - neofetch
       - pv
