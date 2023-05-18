@@ -6,8 +6,14 @@
     name:
       - aws-cli
       - doctl
-      - google-cloud-cli
       - python-magic
+    state: present
+
+- name: Installing google-cloud-cli
+  when: mtype == 'personal' or mtype == 'work'
+  become: true
+  community.general.pacman:
+    name: google-cloud-cli
     state: present
 
 - name: Installing main devops tools
