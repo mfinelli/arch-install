@@ -7,11 +7,6 @@
       - initramfs-tools
     state: present
 
-- name: Installing "gparted" for formatting USB drives
-  ansible.builtin.apt:
-    name: gparted
-    state: present
-
 - name: Copying kernel initramfs rebuild script
   ansible.builtin.copy:
     dest: /etc/kernel/postinst.d/initramfs-rebuild
