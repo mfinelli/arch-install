@@ -13,10 +13,11 @@ network VPN.
    - Set the Wi-Fi network, password, and country
    - Set the timezone and keyboard layout
 
-2. After booting, follow the normal setup steps using the graphical
-   interface. (Skip applying updates when asked)
+2. After booting, follow the normal setup steps. Create a user `mario` when
+   prompted with a desired password.
 
-3. Reboot
+3. Let the initial, internal bootstrap process finish and then login with the
+   new user.
 
 4. Apply any available updates:
 
