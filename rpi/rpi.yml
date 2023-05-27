@@ -6,12 +6,7 @@
 
   roles:
     - role: fde
-      tags: [all, fde]
     - role: main
-      tags: [all]
     - role: monitoring
-      tags: [all]
     - role: tailscale
-      tags: [all]
-    # - role: user
-    #   tags: [all]
+    - role: user

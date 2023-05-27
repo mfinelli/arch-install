@@ -1,34 +1,4 @@
 ---
-- name: Creating "mario" user
-  ansible.builtin.user:
-    groups:
-      - adm
-      - audio
-      - cdrom
-      - dialout
-      - games
-      - gpio
-      - i2c
-      - input
-      - lpadmin
-      - netdev
-      - plugdev
-      - render
-      - spi
-      - sudo
-      - users
-      - video
-    name: mario
-
-- name: Copying sudo rule for mario
-  ansible.builtin.copy:
-    dest: /etc/sudoers.d/010_mario-nopasswd
-    group: root
-    mode: "0440"
-    owner: root
-    src: mario
-    validate: "visudo -cf %s"
-
 - name: Adding SSH authorized keys for mario
   ansible.posix.authorized_key:
     exclusive: true
@@ -38,16 +8,16 @@
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGLzoWaCMxwWMyepLYUu6FBbYZmDOaXPj+LQtWjdM8pW mario@ipad
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOy1DGNkaHw4UiGX8H7L4ruWjWBYFSkOEvB1jqAt5rdz mario@iphone
     # yamllint enable rule:line-length
-    user: mario
+    user: "{{ whoami }}"
 
 - name: Creating "src" directory
   become: true
-  become_user: mario
+  become_user: "{{ whoami }}"
   ansible.builtin.file:
-    group: mario
+    group: "{{ whoami }}"
     mode: "0755"
-    owner: mario
-    path: /home/mario/{{ item }}
+    owner: "{{ whoami }}"
+    path: /home/{{ whoami }}/{{ item }}
     state: directory
   loop:
     - src
@@ -55,20 +25,7 @@
 
 - name: Cloning this repository for easier updates
   become: true
-  become_user: mario
+  become_user: "{{ whoami }}"
   ansible.builtin.git:
-    dest: /home/mario/src/mfinelli/arch-install
+    dest: /home/{{ whoami }}/src/mfinelli/arch-install
     repo: https://github.com/mfinelli/arch-install.git
-
-- name: Removing the default "pi" user
-  when: whoami != 'pi'
-  ansible.builtin.user:
-    name: pi
-    remove: true
-    state: absent
-
-- name: Removing the default pi user sudo rule
-  when: whoami != 'pi'
-  ansible.builtin.file:
-    path: /etc/sudoers.d/010_pi-nopasswd
-    state: absent
