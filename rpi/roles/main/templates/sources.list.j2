@@ -1,5 +1,7 @@
-# deb http://raspbian.raspberrypi.org/raspbian/ {{ ansible_distribution_release }} main contrib non-free rpi
-deb https://mirror.umd.edu/raspbian/raspbian/ {{ ansible_distribution_release }} main contrib non-free rpi
-# Uncomment line below then 'apt-get update' to enable 'apt-get source'
-# deb-src http://raspbian.raspberrypi.org/raspbian/ bullseye main contrib non-free rpi
+# {{ ansible_managed }}
+
+deb https://mirrors.kernel.org/debian/ {{ ansible_distribution_release }} main contrib non-free
+deb https://security.debian.org/debian-security {{ ansible_distribution_release }}-security main contrib non-free
+deb https://mirrors.kernel.org/debian/ {{ ansible_distribution_release }}-updates main contrib non-free
+
 # vim: ft=debsources.jinja2
