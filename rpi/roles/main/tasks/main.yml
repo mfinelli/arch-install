@@ -45,6 +45,11 @@
   notify:
     - Restart systemd-resolved
 
+- name: Enabling systemd-resolved
+  ansible.builtin.systemd:
+    name: systemd-resolved.service
+    enabled: true
+
 # TODO: we should update_cache based on the above two templates
 - name: Installing openssh
   ansible.builtin.apt:
