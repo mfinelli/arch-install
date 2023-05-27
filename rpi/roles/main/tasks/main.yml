@@ -57,8 +57,15 @@
 
 - name: Enabling systemd-resolved
   ansible.builtin.systemd:
-    name: systemd-resolved.service
     enabled: true
+    name: systemd-resolved.service
+    state: started
+
+- name: Linking systemd-resolved stub resolver
+  ansible.builtin.file:
+    dest: /etc/resolv.conf
+    force: true
+    src: /run/systemd/resolve/stub-resolv.conf
 
 # TODO: we should update_cache based on the above two templates
 - name: Installing openssh
