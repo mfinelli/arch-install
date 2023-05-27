@@ -26,7 +26,7 @@ jobs:
           shellcheck finellictl
           shellcheck arch/bootstrap arch/go arch/init arch/pacstrap
           shellcheck macos/go
-          shellcheck rpi/fde rpi/go
+          shellcheck rpi/go
           shellcheck ubuntu/go
           find . -name '*.bash' | xargs shellcheck
           find . -name '*.sh' | xargs shellcheck
@@ -37,7 +37,7 @@ jobs:
           shfmt -s -i 2 -ci -sr -d arch/bootstrap arch/go arch/init \
             arch/pacstrap
           shfmt -s -i 2 -ci -sr -d macos/go
-          shfmt -s -i 2 -ci -sr -d rpi/fde rpi/go
+          shfmt -s -i 2 -ci -sr -d rpi/go
           shfmt -s -i 2 -ci -sr -d ubuntu/go
           find . -name '*.bash' | xargs shfmt -s -i 2 -ci -sr -d
           find . -name '*.sh' | xargs shfmt -s -i 2 -ci -sr -d
