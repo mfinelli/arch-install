@@ -37,35 +37,31 @@ network VPN.
 
 6. Reboot
 
-7. Log back in with the default `pi` user (the default password if not
-   changed during the setup step is "raspberry").
-
-8. If you want to enable full disk encryption follow the steps in the
+7. If you want to enable full disk encryption ensure the hostname is enabled
+   in `run.bash`. After the reboot, follow the instructions in the
    [readme](https://github.com/mfinelli/arch-install/blob/master/rpi/roles/fde/README.md)
    for the `fde` role.
 
-   Make sure to edit which hostnames are enabled in `run.bash`.
-
-9. Open a terminal and run:
+8. Open a terminal and run:
 
    ```shell
    bash -c "$(curl -LfSs https://mfgo.link/rpi)"
    ```
 
-10. If you have installed the case fan you can adjust it so that it only turns
-    on if it reaches a certain temperature (default 80 degrees Celsius):
+9. If you have installed the case fan you can adjust it so that it only turns
+   on if it reaches a certain temperature (default 80 degrees Celsius):
 
-    ```shell
-    sudo raspi-config
-    ```
+   ```shell
+   sudo raspi-config
+   ```
 
-    Performance Options > Fan > Enable Fan Temperature Control > (Fan is
-    connected to GPIO control `14`) > At what temperature should the fan turn
-    on: `70`
+   Performance Options > Fan > Enable Fan Temperature Control > (Fan is
+   connected to GPIO control `14`) > At what temperature should the fan turn
+   on: `70`
 
-    **N.B.** you should update which hosts have the case fan in
-    `roles/main/vars/main.yml`.
+   **N.B.** you should update which hosts have the case fan in
+   `roles/main/vars/main.yml`.
 
-11. Install [dotfiles](https://github.com/mfinelli/dotfiles) (which should be
+10. Install [dotfiles](https://github.com/mfinelli/dotfiles) (which should be
     done after connecting via SSH as the dotfiles repository uses the forwarded
     keys to setup SSH)

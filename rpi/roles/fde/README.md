@@ -10,21 +10,16 @@ Enables full-disk encryption.
 
 ## steps
 
-1. Run the initial setup via ansible:
+1. After running the initial ansible setup reboot, wait for the boot failure,
+   and to be dropped into the initramfs shell.
 
-   ```shell
-   bash -c "$(curl -LfSs https://mfgo.link/rpi-fde)"
-   ```
-
-2. Reboot, wait for boot failure and the initramfs shell
-
-3. Ensure that the proper cryptsetup modules have been loaded:
+2. Ensure that the proper cryptsetup modules have been loaded:
 
    ```shell
    cryptsetup benchmark -c xchacha20,aes-adiantum-plain64
    ```
 
-4. Check the main root filesystem and then shrink it for copy:
+3. Check the main root filesystem and then shrink it for copy:
 
    ```shell
    e2fsck -f /dev/mmcblk0p2
@@ -44,13 +39,13 @@ Enables full-disk encryption.
    time dd bs=4k count=XXXXX if=/dev/mmcblk0p2 | sha1sum
    ```
 
-5. Insert the temporary USB drive and check it's device (probably `/dev/sda`):
+4. Insert the temporary USB drive and check it's device (probably `/dev/sda`):
 
    ```shell
    fdisk -l /dev/sda
    ```
 
-6. Copy the old filesystem to the USB device (overwriting any existing data)
+5. Copy the old filesystem to the USB device (overwriting any existing data)
    and then ensure the previously computed checksum matches:
 
    ```shell
@@ -58,11 +53,11 @@ Enables full-disk encryption.
    time dd bs=4k count=XXXXX if=/dev/sda | sha1sum
    ```
 
-7. Encrypt and then open the root filesystem
+8. Encrypt and then open the root filesystem
 
    ```shell
    cryptsetup --type luks2 --cipher xchacha20,aes-adiantum-plain64 \
-     --hash sha256 --iter-time 5000 --key-size 256 --pbkdf argon2i \
+     --hash sha256 --iter-time 5000 --key-size 256 --pbkdf argon2id \
      luksFormat /dev/mmcblk0p2
    ```
 
@@ -70,23 +65,23 @@ Enables full-disk encryption.
    cryptsetup luksOpen /dev/mmcblk0p2 crypt
    ```
 
-8. Copy back the saved filesystem and verify its checksum:
+9. Copy back the saved filesystem and verify its checksum:
 
    ```shell
    time dd bs=4k count=XXXXX if=/dev/sda of=/dev/mapper/crypt
    time dd bs=4k count=XXXXX if=/dev/mapper/crypt | sha1sum
    ```
 
-9. Run a filesystem check and then expand the filesystem:
+10. Run a filesystem check and then expand the filesystem:
 
-   ```shell
-   e2fsck -f /dev/mapper/crypt
-   resize2fs -f /dev/mapper/crypt
-   ```
+    ```shell
+    e2fsck -f /dev/mapper/crypt
+    resize2fs -f /dev/mapper/crypt
+    ```
 
-10. Remove the USB drive and then reboot
+11. Remove the USB drive and then reboot
 
-11. After the reboot from the initramfs shell mount the luks volume to
+12. After the reboot from the initramfs shell mount the luks volume to
     continue booting
 
     ```shell
@@ -94,15 +89,15 @@ Enables full-disk encryption.
     exit
     ```
 
-12. Rebuild the initramfs one more time for the password prompt to appear at
+13. Rebuild the initramfs one more time for the password prompt to appear at
     boot time:
 
     ```shell
     sudo CRYPTSETUP=y mkinitramfs -o /tmp/initramfs.gz
-    sudo cp /tmp/initramfs.gz /boot/initramfs.gz
+    sudo mv /tmp/initramfs.gz /boot/initramfs.gz
     ```
 
-13. Reboot and continue with the rest of the installation.
+14. Reboot and continue with the rest of the installation.
 
 ## keyfiles
 
@@ -111,11 +106,8 @@ you can additionally follow these instructions.
 
 1. If you're going to reuse the USB drive that you used to temporarily store
    the root filesystem during encryption you'll need to reformat it. It can
-   easily be done with `gparted`, by selecting the device (probably `/dev/sda`),
-   formatting it as "cleared", creating a new partition table (Device -> Create
-   Partition Table -> `msdos` type), and then creating a new `fat32` partition.
-   Give the filesystem a label (e.g., `CRYPTKEY`) so that we can use it in the
-   `crypttab` later.
+   easily be done with `fdisk`, Be sure to give the filesystem a label
+   `CRYPTKEY` so that the `crypttab` works correctly.
 
    You may also want to wipe the data from the drive before using it, which
    can be accomplished like so:
@@ -134,9 +126,32 @@ you can additionally follow these instructions.
       sudo dd bs=512 count=30629376 if=/dev/urandom of=/dev/sda status=progress
       ```
 
-2. Ensure that the drive is plugged in and mounted.
+   3. Partition the disk with `fdisk`:
 
-3. Create the keyfile, we initially create it in `/root` so that we have a
+      ```shell
+      sudo fdisk /dev/sda
+      ```
+
+   4. Delete any existing partitions (if you didn't overwrite the disk
+      earlier) and then create a new partition (`n` and then `p` for primary)
+      and let it take the entire disk (defaults for start and stop sectors).
+      Print the partition table with `p` and if everything looks good then
+      write the partition table and quit with `w`.
+
+   5. Create a new FAT32 filesystem
+
+      ```shell
+      sudo mkfs.vfat -F32 -n CRYPTKEY /dev/sda1
+      ```
+
+   6. Mount the new filesystem:
+
+      ```shell
+      sudo mkdir -p /media/root/usb
+      sudo mount /dev/sda1 /media/root/usb
+      ```
+
+2. Create the keyfile, we initially create it in `/root` so that we have a
    backup in case we need to create a new USB drive we can just use the normal
    luks password to decrypt and then copy the keyfile to a new device.
 
@@ -146,28 +161,34 @@ you can additionally follow these instructions.
    sudo cp /root/cryptkey /media/pi/CRYPTKEY/key
    ```
 
-4. Add the new keyfile to the luks header:
+3. Add the new keyfile to the luks header:
 
    ```shell
    sudo cryptsetup luksAddKey /dev/mmcblk0p2 /root/cryptkey
    ```
 
-5. Re-run the FDE setup script so that the `crypttab` template detects the new
+4. Re-run the FDE setup script so that the `crypttab` template detects the new
    keyfile and makes the necessary changes.
 
    ```shell
-   bash -c "$(curl -LfSs https://mfgo.link/rpi-fde)"
+   bash -c "$(curl -LfSs https://mfgo.link/rpi)"
    ```
 
-6. Update the initramfs one more time so that the `passdev` script gets
+5. Update the initramfs one more time so that the `passdev` script gets
    included.
 
    ```shell
    sudo CRYPTSETUP=y mkinitramfs -o /tmp/initramfs.gz
-   sudo cp /tmp/initramfs.gz /boot/initramfs.gz
+   sudo mv /tmp/initramfs.gz /boot/initramfs.gz
    ```
 
-7. Reboot
+6. Reboot
+
+7. Remove the temporary mount directory that we created
+
+   ```shell
+   sudo rm -rf /media/root
+   ```
 
 ## todo
 
