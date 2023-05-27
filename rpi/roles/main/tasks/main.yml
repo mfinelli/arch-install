@@ -27,6 +27,16 @@
     owner: root
     src: raspi.list.j2
 
+- name: Copying locale.gen
+  ansible.builtin.copy:
+    dest: /etc/locale.gen
+    group: root
+    mode: "0644"
+    owner: root
+    src: locale.gen
+  notify:
+    - Regenerate locales
+
 - name: Creating systemd-resolved configuration directory
   ansible.builtin.file:
     group: root
