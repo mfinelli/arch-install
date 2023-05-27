@@ -66,6 +66,7 @@
     dest: /etc/resolv.conf
     force: true
     src: /run/systemd/resolve/stub-resolv.conf
+    state: link
 
 # TODO: we should update_cache based on the above two templates
 - name: Installing openssh
