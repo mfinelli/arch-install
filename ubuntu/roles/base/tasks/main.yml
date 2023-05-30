@@ -59,6 +59,7 @@
 - name: Installing base packages
   ansible.builtin.apt:
     name:
+      - bat
       - fd-find
       - fzf
       - htop
