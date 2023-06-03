@@ -97,7 +97,8 @@ Enables full-disk encryption.
     sudo mv /tmp/initramfs.gz /boot/initramfs.gz
     ```
 
-12. Reboot and continue with the rest of the installation.
+12. If you're going to enable a keyfile follow the directions below, otherwise
+    reboot one more time and you're done.
 
 ## keyfiles
 
@@ -135,8 +136,9 @@ you can additionally follow these instructions.
    4. Delete any existing partitions (if you didn't overwrite the disk
       earlier) and then create a new partition (`n` and then `p` for primary)
       and let it take the entire disk (defaults for start and stop sectors).
-      Print the partition table with `p` and if everything looks good then
-      write the partition table and quit with `w`.
+      Optionally set the partition type (`t`) to `W95 FAT32` (`0b`). Print the
+      partition table with `p` and if everything looks good then write the
+      partition table and quit with `w`.
 
    5. Create a new FAT32 filesystem
 
@@ -158,7 +160,7 @@ you can additionally follow these instructions.
    ```shell
    sudo dd if=/dev/random of=/root/cryptkey bs=1024 count=4
    sudo chmod 0400 /root/cryptkey
-   sudo cp /root/cryptkey /media/pi/CRYPTKEY/key
+   sudo cp /root/cryptkey /media/root/usb/key
    ```
 
 3. Add the new keyfile to the luks header:
@@ -198,5 +200,6 @@ you can additionally follow these instructions.
 
 - When a keyfile is configured if it fails to mount or load it does not prompt
   for a password, but instead loops failure several times and then drops into
-  the initramfs shell where you need to manually `cryptsetup luksopen
-  /dev/mmcblk0p2 crypt` and then `exit` to successfully continue to boot.
+  the initramfs shell where you need to manually unlock the luks device and then
+  quit the shell to proceed: `cryptsetup luksopen /dev/mmcblk0p2 crypt` and
+  then `exit` to successfully continue to boot.

@@ -37,19 +37,21 @@ network VPN.
 
 6. Reboot
 
-7. If you want to enable full disk encryption ensure the hostname is enabled
-   in `run.bash`. After the reboot, follow the instructions in the
-   [readme](https://github.com/mfinelli/arch-install/blob/master/rpi/roles/fde/README.md)
-   for the `fde` role.
-
-8. Open a terminal and run:
+7. Open a terminal and run:
 
    ```shell
    bash -c "$(curl -LfSs https://mfgo.link/rpi)"
    ```
 
+8. If you want to enable full disk encryption ensure the hostname is enabled
+   in `run.bash`. After the reboot, follow the instructions in the
+   [readme](https://github.com/mfinelli/arch-install/blob/master/rpi/roles/fde/README.md)
+   for the `fde` role.
+
 9. If you have installed the case fan you can adjust it so that it only turns
-   on if it reaches a certain temperature (default 80 degrees Celsius):
+   on if it reaches a certain temperature (default 80 degrees Celsius). This
+   is not necessary if you add the host to the `fan_enabled_hosts` variable in
+   the `main` role:
 
    ```shell
    sudo raspi-config
