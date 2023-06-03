@@ -5,16 +5,16 @@
     dpkg --print-foreign-architectures | grep i386
   args:
     executable: /bin/bash
-  register: i386_enabled
-  changed_when: i386_enabled.rc == 1
-  failed_when: i386_enabled.rc > 1
+  register: gaming_i386_enabled
+  changed_when: gaming_i386_enabled.rc == 1
+  failed_when: gaming_i386_enabled.rc > 1
 
 - name: Enabling the i386 architecture
   ansible.builtin.command: dpkg --add-architecture i386
-  when: i386_enabled.rc == 1
-  register: i386_was_enabled
-  changed_when: i386_was_enabled.rc == 0
-  failed_when: i386_was_enabled.rc != 0
+  when: gaming_i386_enabled.rc == 1
+  register: gaming_i386_was_enabled
+  changed_when: gaming_i386_was_enabled.rc == 0
+  failed_when: gaming_i386_was_enabled.rc != 0
 
 - name: Adding the Steam repository key
   ansible.builtin.apt_key:

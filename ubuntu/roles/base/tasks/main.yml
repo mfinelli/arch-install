@@ -44,7 +44,7 @@
     mode: "0644"
     owner: root
     src: supermario.list.j2
-  register: supermario_ppa
+  register: base_supermario_ppa
 
 - name: Copying HTTPS-enabled sources.list
   when: mtype != 'server'
@@ -54,7 +54,7 @@
     mode: "0664"
     owner: root
     src: sources.list.j2
-  register: sources_list
+  register: base_sources
 
 - name: Installing base packages
   ansible.builtin.apt:
@@ -78,7 +78,7 @@
       - vim
       - whois
     state: present
-    update_cache: "{{ supermario_ppa.changed or sources_list.changed }}"
+    update_cache: "{{ base_supermario_ppa.changed or base_sources.changed }}"
 
 # https://askubuntu.com/a/1246984
 - name: Disabling phased updates
