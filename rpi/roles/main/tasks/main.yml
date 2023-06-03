@@ -18,6 +18,7 @@
     mode: "0644"
     owner: root
     src: sources.list.j2
+  register: main_sources_list
 
 - name: Copying https-enabled raspi sources list
   ansible.builtin.template:
@@ -26,6 +27,7 @@
     mode: "0644"
     owner: root
     src: raspi.list.j2
+  register: main_rpi_list
 
 - name: Copying locale.gen
   ansible.builtin.copy:
@@ -68,11 +70,10 @@
     src: /run/systemd/resolve/stub-resolv.conf
     state: link
 
-# TODO: we should update_cache based on the above two templates
 - name: Installing openssh
   ansible.builtin.apt:
     name: openssh-server
-    update_cache: true
+    update_cache: "{{ main_sources_list.changed or main_rpi_list.changed }}"
 
 - name: Enabling sshd service
   ansible.builtin.systemd:

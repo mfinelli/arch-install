@@ -11,3 +11,6 @@
 
 - name: Regenerate locales
   ansible.builtin.command: locale-gen
+  register: main_localegen
+  changed_when: main_localegen.rc == 0
+  failed_when: main_localegen.rc != 0

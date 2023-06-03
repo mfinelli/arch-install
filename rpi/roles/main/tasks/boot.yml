@@ -7,17 +7,17 @@
   block:
     - name: Setting keyfile default to false
       ansible.builtin.set_fact:
-        crypttab_keyfile: false
+        main_crypttab_keyfile: false
 
     - name: Checking if a keyfile exists under root
       ansible.builtin.stat:
         path: /root/cryptkey
-      register: crypttab_cryptkey
+      register: main_crypttab_cryptkey
 
     - name: Updating keyfile setting
       ansible.builtin.set_fact:
-        crypttab_keyfile: true
-      when: crypttab_cryptkey.stat.exists
+        main_crypttab_keyfile: true
+      when: main_crypttab_cryptkey.stat.exists
 
 - name: Copying kernel boot configuration
   ansible.builtin.template:
