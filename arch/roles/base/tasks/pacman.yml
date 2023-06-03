@@ -16,7 +16,7 @@
     mode: "0644"
     owner: root
     src: pacman.conf.j2
-  register: pacman_config
+  register: base_pacman_config
 
 - name: Adding "supermario" key to pacman keyring and signing it locally
   become: true
@@ -24,10 +24,10 @@
     id: C3CD75B002978A8468CA7B1F6C3ADDDE36FDA306
     state: present
     url: https://finelli.pub/36FDA306.asc
-  register: supermario_key
+  register: base_supermario_key
 
-- name: Running `pacman -Syyu` # (because the repositories changed)
-  when: supermario_key.changed or pacman_config.changed # noqa no-handler
+- name: Running `pacman -Syyu` # (the repositories changed) # noqa no-handler
+  when: base_supermario_key.changed or base_pacman_config.changed
   become: true
   community.general.pacman:
     force: true
@@ -62,7 +62,7 @@
     mode: "0644"
     owner: root
     src: reflector.conf
-  register: reflector_config
+  register: base_reflector_config
 
 - name: Enabling reflector cron
   become: true
@@ -71,14 +71,14 @@
     name: reflector.timer
 
 - name: Running reflector on-demand
-  when: mmode != 'setup' and reflector_config.changed
+  when: mmode != 'setup' and base_reflector_config.changed
   become: true
   ansible.builtin.systemd:
     name: reflector.service
     state: started
 
 - name: Running `pacman -Syyu` # because the mirrorlist changed
-  when: reflector_config.changed # noqa no-handler
+  when: base_reflector_config.changed # noqa no-handler
   become: true
   community.general.pacman:
     force: true

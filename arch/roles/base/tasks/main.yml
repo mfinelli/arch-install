@@ -7,25 +7,25 @@
   become: true
   ansible.builtin.command: >-
     blkid -s UUID -o value /dev/disk/by-partlabel/CRYPTROOT
-  register: cryptroot_blkid
+  register: base_cryptroot_blkid
   changed_when: false
-  failed_when: cryptroot_blkid.rc != 0
+  failed_when: base_cryptroot_blkid.rc != 0
 
 - name: Setting CRYPTROOT UUID as fact
   ansible.builtin.set_fact:
-    cryptroot_uuid: "{{ cryptroot_blkid.stdout }}"
+    base_cryptroot_uuid: "{{ base_cryptroot_blkid.stdout }}"
 
 - name: Detecting installed kernel package
   ansible.builtin.shell: >-
     set -e -o pipefail;
     basename "$(find /usr/lib/modules/* -prune -print | head -n 1)"
-  register: installed_kernel_shell
+  register: base_installed_kernel_shell
   changed_when: false
-  failed_when: installed_kernel_shell.rc != 0
+  failed_when: base_installed_kernel_shell.rc != 0
 
 - name: Setting installed kernel package as fact
   ansible.builtin.set_fact:
-    installed_kernel: "{{ installed_kernel_shell.stdout }}"
+    base_installed_kernel: "{{ base_installed_kernel_shell.stdout }}"
 
 - name: Installing finellictl
   ansible.builtin.include_tasks: finellictl.yml
@@ -131,15 +131,15 @@
     mode: "0644"
     owner: root
     src: locale.gen
-  register: locales_list
+  register: base_locales_list
 
 - name: Running `locale-gen`
-  when: locales_list.changed # noqa no-handler
+  when: base_locales_list.changed # noqa no-handler
   become: true
   ansible.builtin.command: locale-gen
-  register: localegen
-  changed_when: localegen.rc == 0
-  failed_when: localegen.rc != 0
+  register: base_localegen
+  changed_when: base_localegen.rc == 0
+  failed_when: base_localegen.rc != 0
 
 - name: Copying "/etc/locale.conf"
   become: true
