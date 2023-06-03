@@ -1,5 +1,5 @@
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/curl -fsS -m 10 --retry 5 -o /dev/null \
-  https://hc-ping.com/{{ hcping_uuid['content'] | b64decode | trim }}
+  https://hc-ping.com/{{ monitoring_hcping_uuid['content'] | b64decode | trim }}
 # vim: ft=systemd.jinja2
