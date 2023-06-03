@@ -1,4 +1,12 @@
 ---
+- name: Creating root /media directory
+  ansible.builtin.file:
+    group: root
+    mode: "0755"
+    owner: root
+    path: /media
+    state: directory
+
 - name: Installing full disk encryption dependencies
   ansible.builtin.apt:
     name:
