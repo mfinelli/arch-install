@@ -45,6 +45,7 @@ jobs:
         run: |
           prettier --version
           find . -name '*.yaml' -o -name '*.yml' | xargs prettier -c
+          find . -name '*.md' | xargs prettier -c
       - name: Run yamllint
         run: |
           yamllint --version

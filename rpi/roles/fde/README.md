@@ -53,7 +53,7 @@ Enables full-disk encryption.
    time dd bs=4k count=XXXXX if=/dev/sda | sha1sum
    ```
 
-8. Encrypt and then open the root filesystem
+6. Encrypt and then open the root filesystem
 
    ```shell
    cryptsetup --type luks2 --cipher xchacha20,aes-adiantum-plain64 \
@@ -65,23 +65,23 @@ Enables full-disk encryption.
    cryptsetup luksOpen /dev/mmcblk0p2 crypt
    ```
 
-9. Copy back the saved filesystem and verify its checksum:
+7. Copy back the saved filesystem and verify its checksum:
 
    ```shell
    time dd bs=4k count=XXXXX if=/dev/sda of=/dev/mapper/crypt
    time dd bs=4k count=XXXXX if=/dev/mapper/crypt | sha1sum
    ```
 
-10. Run a filesystem check and then expand the filesystem:
+8. Run a filesystem check and then expand the filesystem:
 
-    ```shell
-    e2fsck -f /dev/mapper/crypt
-    resize2fs -f /dev/mapper/crypt
-    ```
+   ```shell
+   e2fsck -f /dev/mapper/crypt
+   resize2fs -f /dev/mapper/crypt
+   ```
 
-11. Remove the USB drive and then reboot
+9. Remove the USB drive and then reboot
 
-12. After the reboot from the initramfs shell mount the luks volume to
+10. After the reboot from the initramfs shell mount the luks volume to
     continue booting
 
     ```shell
@@ -89,7 +89,7 @@ Enables full-disk encryption.
     exit
     ```
 
-13. Rebuild the initramfs one more time for the password prompt to appear at
+11. Rebuild the initramfs one more time for the password prompt to appear at
     boot time:
 
     ```shell
@@ -97,7 +97,7 @@ Enables full-disk encryption.
     sudo mv /tmp/initramfs.gz /boot/initramfs.gz
     ```
 
-14. Reboot and continue with the rest of the installation.
+12. Reboot and continue with the rest of the installation.
 
 ## keyfiles
 

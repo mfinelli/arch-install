@@ -5,8 +5,8 @@ Automation for Arch Linux installations.
 ## installation instructions
 
 1. Download the install [image](https://www.archlinux.org/download/) and
-[prepare](https://wiki.archlinux.org/index.php/USB_flash_installation_medium)
-a USB flash drive.
+   [prepare](https://wiki.archlinux.org/index.php/USB_flash_installation_medium)
+   a USB flash drive.
 
 2. If necessary, change the keymap: e.g.,
 
@@ -104,7 +104,7 @@ a USB flash drive.
     sudo localectl set-keymap --no-convert it
     ```
 
-11. Reconnect to the internet. In a virtual machine you should already be
+12. Reconnect to the internet. In a virtual machine you should already be
     connected. Otherwise connect using the `nmcli`:
 
     ```shell
@@ -114,7 +114,7 @@ a USB flash drive.
     sudo nmcli --ask dev wifi connect SSID(network name)
     ```
 
-12. Set any `finellictl` configurations
+13. Set any `finellictl` configurations
 
     ```shell
     finellictl language en_US # default
@@ -122,21 +122,21 @@ a USB flash drive.
     finellictl wregdom US # default
     ```
 
-13. Run the post-first reboot portion of the setup
+14. Run the post-first reboot portion of the setup
 
     ```shell
     bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
     ```
 
-14. Reboot
+15. Reboot
 
     ```shell
     sudo reboot
     ```
 
-15. Install [dotfiles](https://github.com/mfinelli/dotfiles)
+16. Install [dotfiles](https://github.com/mfinelli/dotfiles)
 
-16. Set default shell to zsh
+17. Set default shell to zsh
 
     ```shell
     chsh -s /bin/zsh
