@@ -16,6 +16,13 @@
     name: google-cloud-cli
     state: present
 
+- name: Installing cloud commandline tools from AUR
+  when: mtype == 'personal'
+  kewlfft.aur.aur:
+    name:
+      - flyctl
+    state: present
+
 - name: Installing main devops tools
   when: mtype == 'personal'
   become: true
