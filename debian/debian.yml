@@ -4,6 +4,9 @@
   connection: local
   become: true
 
+  roles:
+    - role: chrome
+
   tasks:
     # mullvad doesn't seem to have an apt repository right now, so I'm keeping
     # this here to make it easier to update
