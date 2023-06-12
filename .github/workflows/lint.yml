@@ -25,6 +25,7 @@ jobs:
           shellcheck --version
           shellcheck finellictl
           shellcheck arch/bootstrap arch/go arch/init arch/pacstrap
+          shellcheck debian/go
           shellcheck macos/go
           shellcheck rpi/go
           shellcheck ubuntu/go
@@ -36,6 +37,7 @@ jobs:
           shfmt -s -i 2 -ci -sr -d finellictl
           shfmt -s -i 2 -ci -sr -d arch/bootstrap arch/go arch/init \
             arch/pacstrap
+          shfmt -s -i 2 -ci -sr -d debian/go
           shfmt -s -i 2 -ci -sr -d macos/go
           shfmt -s -i 2 -ci -sr -d rpi/go
           shfmt -s -i 2 -ci -sr -d ubuntu/go
@@ -54,6 +56,7 @@ jobs:
         run: |
           ansible-lint --version
           ansible-lint arch/arch.yml
+          ansible-lint debian/debian.yml
           ansible-lint macos/personal.yml
           ansible-lint macos/work.yml
           ansible-lint rpi/rpi.yml

@@ -1,0 +1,20 @@
+---
+- name: Configuring Debian system
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    # mullvad doesn't seem to have an apt repository right now, so I'm keeping
+    # this here to make it easier to update
+    # https://github.com/mullvad/mullvadvpn-app/issues/3049
+    - name: Installing Mullvad VPN
+      ansible.builtin.apt:
+        deb: https://mullvad.net/media/app/MullvadVPN-2023.3_amd64.deb
+
+    - name: Installing Discord
+      ansible.builtin.apt:
+        # curl -sI \
+        #   'https://discord.com/api/download?platform=linux&format=deb' | \
+        # grep -i location
+        deb: https://dl.discordapp.net/apps/linux/0.0.25/discord-0.0.25.deb
