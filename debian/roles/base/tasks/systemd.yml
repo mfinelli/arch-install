@@ -27,11 +27,3 @@
     name: systemd-resolved.service
     state: started
     enabled: true
-
-  # TODO: this may not be necessary anymore with bookworm release
-- name: Linking systemd-resolved stub resolver
-  ansible.builtin.file:
-    dest: /etc/resolv.conf
-    force: true
-    src: /run/systemd/resolve/stub-resolv.conf
-    state: link
