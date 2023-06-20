@@ -1,0 +1,37 @@
+---
+- name: Installing systemd-resolved
+  ansible.builtin.apt:
+    name: systemd-resolved
+    state: present
+
+- name: Creating systemd-resolved configuration directory
+  ansible.builtin.file:
+    group: root
+    mode: "0755"
+    owner: root
+    path: /etc/systemd/resolved.conf.d
+    state: directory
+
+- name: Copying custom systemd-resolved configuration
+  ansible.builtin.copy:
+    dest: /etc/systemd/resolved.conf.d/dns.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: resolved.conf
+  notify:
+    - Restart systemd-resolved
+
+- name: Enabling systemd-resolved
+  ansible.builtin.systemd:
+    name: systemd-resolved.service
+    state: started
+    enabled: true
+
+  # TODO: this may not be necessary anymore with bookworm release
+- name: Linking systemd-resolved stub resolver
+  ansible.builtin.file:
+    dest: /etc/resolv.conf
+    force: true
+    src: /run/systemd/resolve/stub-resolv.conf
+    state: link

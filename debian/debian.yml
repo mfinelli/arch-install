@@ -5,6 +5,7 @@
   become: true
 
   roles:
+    - role: base
     - role: chrome
 
   tasks:
