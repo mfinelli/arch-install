@@ -1,6 +1,7 @@
 ---
 # TODO: we should detect if the case fan is installed
 fan_enabled_hosts:
+  - homepi
   - parkpi
   - raipi
 
