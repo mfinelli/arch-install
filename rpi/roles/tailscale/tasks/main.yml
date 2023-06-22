@@ -26,6 +26,7 @@
     state: started
 
 - name: Enabling IP forwarding to allow tailscale exit node status
+  when: tailscale_exit_node == "true"
   ansible.posix.sysctl:
     name: "{{ item }}"
     reload: true
