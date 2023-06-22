@@ -37,6 +37,7 @@
   when: mtype == 'work'
   kewlfft.aur.aur:
     name:
+      - google-cloud-cli-gke-gcloud-auth-plugin
       - python-onepasswordconnectsdk
       - slack-desktop # slack-wayland doesn't work very well...
     state: present
