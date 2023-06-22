@@ -19,7 +19,7 @@
   community.general.pacman:
     name:
       - texlive-lang
-      - texlive-most
+      - texlive-meta
     state: present
 
 # TODO: switch to podman
