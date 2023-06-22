@@ -38,6 +38,7 @@
   kewlfft.aur.aur:
     name:
       - google-cloud-cli-gke-gcloud-auth-plugin
+      - python-google-cloud-compute
       - python-onepasswordconnectsdk
       - slack-desktop # slack-wayland doesn't work very well...
     state: present
