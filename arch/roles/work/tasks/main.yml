@@ -29,6 +29,7 @@
       - nodejs-lhci-cli
       - openldap
       - python-kubernetes
+      - terraform-docs
       - tidy
       - yj
     state: present
