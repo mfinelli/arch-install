@@ -11,6 +11,7 @@
   become: true
   community.general.pacman:
     name:
+      - aisleriot
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-arc-menu
       - gnome-shell-extension-arch-update
