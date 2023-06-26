@@ -103,6 +103,7 @@
     name:
       - go
       - go-tools
+      - gopls
       - staticcheck
     state: present
 
