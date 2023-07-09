@@ -14,7 +14,7 @@
     # https://github.com/mullvad/mullvadvpn-app/issues/3049
     - name: Installing Mullvad VPN
       ansible.builtin.apt:
-        deb: https://mullvad.net/media/app/MullvadVPN-2023.3_amd64.deb
+        deb: https://mullvad.net/media/app/MullvadVPN-2023.4_amd64.deb
 
     - name: Installing Discord
       ansible.builtin.apt:
