@@ -73,3 +73,11 @@
     - gcs
     - s3
     - secrets
+
+- name: Installing Remmina
+  when: mtype == 'personal' or mtype == 'work'
+  become: true
+  community.general.pacman:
+    name:
+      - remmina
+    state: present

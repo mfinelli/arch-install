@@ -115,6 +115,7 @@
       - cargo-about
       - cargo-outdated
       - rust
+      - rust-analyzer
     state: present
 
 - name: Installing redis
@@ -143,6 +144,15 @@
   become: true
   community.general.pacman:
     name: neovim
+    state: present
+
+- name: Installing language servers
+  when: type != 'media'
+  become: true
+  community.general.pacman:
+    name:
+      - ansible-language-server
+      - bash-language-server
     state: present
 
 - name: Installing asciinema
