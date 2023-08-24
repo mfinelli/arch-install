@@ -68,6 +68,7 @@
       - miller
       - moreutils
       - neofetch
+      - nnn
       - pv
       - pwgen
       - ripgrep

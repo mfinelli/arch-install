@@ -99,6 +99,7 @@
       - libarchive-tools
       - lm-sensors
       - neofetch
+      - nnn
       - pcscd
       - ripgrep
       - scdaemon

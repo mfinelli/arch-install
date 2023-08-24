@@ -41,6 +41,7 @@
       - jq
       - neofetch
       - net-tools
+      - nnn
       - p7zip
       - pwgen
       - ripgrep
