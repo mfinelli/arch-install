@@ -60,6 +60,19 @@
       - yt-dlp
     state: present
 
+- name: Installing yt-dlp optional dependencies
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  community.general.pacman:
+    name:
+      - python-brotli
+      - python-brotlicffi
+      - python-mutagen
+      - python-pycryptodomex
+      - python-secretstorage
+      - python-websockets
+      - python-xattr
+
 - name: Installing gallery-dl
   when: mtype == 'personal' or mtype == 'media'
   become: true
