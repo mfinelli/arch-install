@@ -18,6 +18,8 @@
       when: mtype != 'server'
     - role: mega
       when: mtype != 'server'
+    - role: mullvadvpn
+      when: mtype != 'server'
     - role: onepassword
       when: mtype != 'server'
     - role: server
@@ -25,20 +27,12 @@
     - role: tailscale
 
   tasks:
-    # mullvad doesn't seem to have an apt repository right now, so I'm keeping
-    # this here to make it easier to update
-    # https://github.com/mullvad/mullvadvpn-app/issues/3049
-    - name: Installing Mullvad VPN
-      when: mtype != 'server'
-      ansible.builtin.apt:
-        deb: https://mullvad.net/media/app/MullvadVPN-2023.4_amd64.deb
-
-    # discord also doesn't have an apt repository (and doesn't seem to be on
-    # the roadmap at all, so this is the best we can do for now)
+    # discord doesn't have an apt repository (and doesn't seem to be on the
+    # roadmap at all, so this is the best we can do for now)
     - name: Installing Discord
       when: mtype != 'server'
       ansible.builtin.apt:
         # curl -sI \
         #   'https://discord.com/api/download?platform=linux&format=deb' | \
         # grep -i location
-        deb: https://dl.discordapp.net/apps/linux/0.0.25/discord-0.0.25.deb
+        deb: https://dl.discordapp.net/apps/linux/0.0.38/discord-0.0.38.deb
