@@ -1,0 +1,21 @@
+---
+- name: Adding the MEGA repository signing key
+  ansible.builtin.apt_key:
+    keyring: /usr/share/keyrings/meganz-archive-keyring.gpg
+    state: present
+    # url: https://mega.nz/keys/MEGA_signing.key
+    url: "https://mega.nz/linux/repo/\
+      Debian_{{ ansible_distribution_version }}/Release.key"
+
+- name: Adding the MEGA repository
+  ansible.builtin.apt_repository:
+    filename: megasync
+    repo: >
+      deb [signed-by=/usr/share/keyrings/meganz-archive-keyring.gpg]
+      https://mega.nz/linux/repo/Debian_{{ ansible_distribution_version }}/ ./
+    update_cache: true
+
+- name: Installing MEGASync
+  ansible.builtin.apt:
+    name: megasync
+    state: present
