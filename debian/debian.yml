@@ -11,20 +11,14 @@
     - role: gaming
     - role: media
     - role: mega
+    - role: mullvadvpn
     - role: onepassword
     - role: tailscale
 
   tasks:
-    # mullvad doesn't seem to have an apt repository right now, so I'm keeping
-    # this here to make it easier to update
-    # https://github.com/mullvad/mullvadvpn-app/issues/3049
-    - name: Installing Mullvad VPN
-      ansible.builtin.apt:
-        deb: https://mullvad.net/media/app/MullvadVPN-2023.4_amd64.deb
-
     - name: Installing Discord
       ansible.builtin.apt:
         # curl -sI \
         #   'https://discord.com/api/download?platform=linux&format=deb' | \
         # grep -i location
-        deb: https://dl.discordapp.net/apps/linux/0.0.25/discord-0.0.25.deb
+        deb: https://dl.discordapp.net/apps/linux/0.0.38/discord-0.0.38.deb
