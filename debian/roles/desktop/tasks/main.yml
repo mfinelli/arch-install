@@ -5,6 +5,7 @@
       - caffeine
       - fonts-firacode
       - fonts-powerline
+      - gnome-shell-extension-manager
       - gnome-shell-extensions
       - podman
       - podman-docker
@@ -17,9 +18,13 @@
     name:
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-arc-menu
+      - gnome-shell-extension-bluetooth-quick-connect
       - gnome-shell-extension-caffeine
       - gnome-shell-extension-dashtodock
+      - gnome-shell-extension-freon
+      - gnome-shell-extension-gamemode
       - gnome-shell-extension-weather
+      - gnome-shell-extensions-extra
 
 - name: Installing yubikey dependencies
   ansible.builtin.apt:

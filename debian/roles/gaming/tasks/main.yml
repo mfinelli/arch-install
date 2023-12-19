@@ -32,3 +32,8 @@
   ansible.builtin.apt:
     name: dolphin-emu
     state: present
+
+
+- name: Installing other stuff
+  ansible.builtin.apt:
+    name: gamemode
