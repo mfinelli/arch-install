@@ -1,0 +1,9 @@
+---
+- name: Copying HTTPS-enabled sources.list
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list
+    group: root
+    mode: "0664"
+    owner: root
+    src: sources.list.j2
+  register: base_sources

@@ -1,0 +1,27 @@
+---
+- name: Installing ufw
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+
+- name: Starting and enabling ufw service
+  ansible.builtin.systemd:
+    enabled: true
+    name: ufw.service
+    state: started
+
+- name: Enabling ufw with default rules
+  community.general.ufw:
+    logging: "on"
+    state: enabled
+
+- name: Adding ufw rule to deny all incoming traffic
+  community.general.ufw:
+    default: deny
+    direction: incoming
+    log: true
+
+- name: Adding ufw rule to allow all outgoing traffic
+  community.general.ufw:
+    default: allow
+    direction: outgoing

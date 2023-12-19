@@ -7,6 +7,12 @@
   roles:
     - role: base
     - role: chrome
+    - role: desktop
+    - role: gaming
+    - role: media
+    - role: mega
+    - role: onepassword
+    - role: tailscale
 
   tasks:
     # mullvad doesn't seem to have an apt repository right now, so I'm keeping

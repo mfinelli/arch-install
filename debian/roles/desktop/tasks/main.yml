@@ -1,0 +1,41 @@
+---
+- name: Installing desktop packages
+  ansible.builtin.apt:
+    name:
+      - caffeine
+      - fonts-firacode
+      - fonts-powerline
+      - gnome-shell-extensions
+      - podman
+      - podman-docker
+      - tmux
+      - zoxide
+    state: present
+
+- name: Installing GNOME extensions
+  ansible.builtin.apt:
+    name:
+      - gnome-shell-extension-appindicator
+      - gnome-shell-extension-arc-menu
+      - gnome-shell-extension-caffeine
+      - gnome-shell-extension-dashtodock
+      - gnome-shell-extension-weather
+
+- name: Installing yubikey dependencies
+  ansible.builtin.apt:
+    name:
+      - pcscd
+      - scdaemon
+    state: present
+
+- name: Installing backup programs
+  ansible.builtin.apt:
+    name:
+      - awscli
+      - borgbackup
+      - p7zip-full
+      - p7zip-rar
+      - pass
+      - pass-extension-otp
+      - rclone
+    state: present
