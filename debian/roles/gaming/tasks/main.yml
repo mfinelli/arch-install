@@ -29,6 +29,7 @@
   ansible.builtin.apt:
     name:
       - virtualbox
+      - virtualbox-guest-additions-iso
     state: present
 
 - name: Installing Dolphin
