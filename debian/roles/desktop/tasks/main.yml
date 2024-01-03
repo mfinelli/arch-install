@@ -1,4 +1,21 @@
 ---
+- name: Installing plymouth and themes
+  ansible.builtin.apt:
+    name:
+      - plymouth
+      - plymouth-themes
+    state: present
+
+- name: Updating grub configuration
+  ansible.builtin.copy:
+    dest: /etc/default/grub
+    group: root
+    mode: "0644"
+    owner: root
+    src: grub
+  notify:
+    - Run update-grub2
+
 - name: Installing fwupd
   ansible.builtin.apt:
     name: fwupd-signed
