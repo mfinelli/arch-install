@@ -16,24 +16,29 @@
   changed_when: gaming_i386_was_enabled.rc == 0
   failed_when: gaming_i386_was_enabled.rc != 0
 
-- name: Installing Steam
-  ansible.builtin.include_tasks: steam.yml
-
 - name: Installing Wine
   ansible.builtin.include_tasks: wine.yml
+
+- name: Installing Steam
+  ansible.builtin.include_tasks: steam.yml
 
 - name: Installing Lutris
   ansible.builtin.include_tasks: lutris.yml
 
 - name: Installing Virtualbox
-  ansible.builtin.include_tasks: virtualbox.yml
+  ansible.builtin.apt:
+    name:
+      - virtualbox
+    state: present
 
 - name: Installing Dolphin
   ansible.builtin.apt:
     name: dolphin-emu
     state: present
 
-
-- name: Installing other stuff
+- name: Installing other gaming stuff
   ansible.builtin.apt:
-    name: gamemode
+    name:
+      - gamemode
+      - vkbasalt
+    state: present

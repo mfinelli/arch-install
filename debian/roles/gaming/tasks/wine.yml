@@ -1,0 +1,25 @@
+---
+- name: Adding the WineHQ signing key
+  ansible.builtin.apt_key:
+    keyring: /usr/share/keyrings/winehq-archive-keyring.gpg
+    state: present
+    url: https://dl.winehq.org/wine-builds/winehq.key
+
+- name: Adding the WineHQ repository
+  ansible.builtin.apt_repository:
+    filename: winehq
+    repo: >
+      deb [arch=amd64,i386
+      signed-by=/usr/share/keyrings/winehq-archive-keyring.gpg]
+      https://dl.winehq.org/wine-builds/debian
+      {{ ansible_distribution_release }} main
+    update_cache: true
+
+- name: Installing wine
+  ansible.builtin.apt:
+    install_recommends: true
+    name:
+      - fonts-wine
+      # - winehq-stable
+      - winehq-staging
+    state: present
