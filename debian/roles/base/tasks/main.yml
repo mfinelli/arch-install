@@ -42,7 +42,6 @@
       - universal-ctags
       - urlwatch
       - vim
-      - vivid
       - whois
     state: present
 

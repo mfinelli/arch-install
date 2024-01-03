@@ -7,3 +7,18 @@
     owner: root
     src: sources.list.j2
   register: base_sources
+
+- name: Installing Fast Track keyring
+  ansible.builtin.apt:
+    name: fasttrack-archive-keyring
+    state: present
+    update_cache: "{{ base_sources.changed }}"
+
+- name: Adding Fast Track repository
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/fasttrack.list
+    group: root
+    mode: "0664"
+    owner: root
+    src: fasttrack.list.j2
+  register: fasttrack_sources

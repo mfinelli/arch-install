@@ -1,4 +1,9 @@
 ---
+- name: Installing fwupd
+  ansible.builtin.apt:
+    name: fwupd-signed
+    state: present
+
 - name: Installing desktop packages
   ansible.builtin.apt:
     name:
@@ -7,9 +12,15 @@
       - fonts-powerline
       - gnome-shell-extension-manager
       - gnome-shell-extensions
+    state: present
+
+- name: Installing desktop CLI software
+  ansible.builtin.apt:
+    name:
       - podman
       - podman-docker
       - tmux
+      - vivid
       - zoxide
     state: present
 
@@ -41,6 +52,6 @@
       - p7zip-full
       - p7zip-rar
       - pass
-      - pass-extension-otp
+      - pass-otp
       - rclone
     state: present
