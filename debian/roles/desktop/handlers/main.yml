@@ -1,0 +1,6 @@
+---
+- name: Run update-grub2
+  ansible.builtin.command: update-grub2
+  register: ran_updategrub
+  changed_when: ran_updategrub.rc == 0
+  failed_when: ran_updategrub.rc != 0

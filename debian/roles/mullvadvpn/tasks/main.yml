@@ -1,0 +1,21 @@
+---
+- name: Adding Mullvad VPN apt signing key
+  ansible.builtin.apt_key:
+    keyring: /usr/share/keyrings/mullvad-archive-keyring.gpg
+    state: present
+    url: https://repository.mullvad.net/deb/mullvad-keyring.asc
+
+- name: Adding the Mullvad VPN apt repository
+  ansible.builtin.apt_repository:
+    filename: mullvad
+    repo: >
+      deb [arch=amd64
+      signed-by=/usr/share/keyrings/mullvad-archive-keyring.gpg]
+      https://repository.mullvad.net/deb/stable
+      {{ ansible_distribution_version }} main
+    update_cache: true
+
+- name: Installing Mullvad VPN
+  ansible.builtin.apt:
+    name: mullvad-vpn
+    state: present

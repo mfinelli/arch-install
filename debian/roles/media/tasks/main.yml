@@ -1,0 +1,13 @@
+---
+- name: Installing media packages
+  ansible.builtin.apt:
+    name:
+      - cksfv
+      - gallery-dl
+      - keepassxc
+      - sabnzbdplus
+      - torbrowser-launcher
+      - transmission
+      - vlc
+      - yt-dlp
+    state: present

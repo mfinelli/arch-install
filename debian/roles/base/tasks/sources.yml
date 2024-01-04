@@ -1,0 +1,40 @@
+---
+- name: Copying HTTPS-enabled sources.list
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list
+    group: root
+    mode: "0664"
+    owner: root
+    src: sources.list.j2
+  register: base_sources
+
+- name: Installing Fast Track keyring
+  ansible.builtin.apt:
+    name: fasttrack-archive-keyring
+    state: present
+    update_cache: "{{ base_sources.changed }}"
+
+- name: Adding Fast Track repository
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/fasttrack.list
+    group: root
+    mode: "0664"
+    owner: root
+    src: fasttrack.list.j2
+  register: fasttrack_sources
+
+- name: Adding supermario repository signing key
+  ansible.builtin.apt_key:
+    keyring: /usr/share/keyrings/supermario-archive-keyring.gpg
+    state: present
+    url: "{{ base_supermario_repo_host }}\
+      Debian_{{ ansible_distribution_version }}/Release.key"
+
+- name: Adding supermario repository
+  ansible.builtin.apt_repository:
+    filename: supermario
+    repo: >
+      deb [signed-by=/usr/share/keyrings/supermario-archive-keyring.gpg]
+      {{ base_supermario_repo_host }}Debian_{{ ansible_distribution_version }}/
+      /
+    update_cache: true

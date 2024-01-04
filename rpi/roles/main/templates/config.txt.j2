@@ -81,8 +81,8 @@ otg_mode=1
 arm_boost=1
 
 [all]
-{% if ansible_hostname in fan_enabled_hosts %}
-dtoverlay=gpio-fan,gpiopin=14,temp={{ fan_enable_at_degrees_celsius }}000
+{% if ansible_hostname in main_fan_enabled_hosts %}
+dtoverlay=gpio-fan,gpiopin=14,temp={{ main_fan_enable_at_degrees_celsius }}000
 {% endif %}
 {% if fde == 'true' %}
 initramfs initramfs.gz followkernel

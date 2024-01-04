@@ -1,3 +1,49 @@
 ---
 - name: Configuring systemd
   ansible.builtin.include_tasks: systemd.yml
+
+- name: Enabling HTTPS-enabled sources.list
+  ansible.builtin.include_tasks: sources.yml
+
+- name: Installing manually installed packages
+  ansible.builtin.apt:
+    name:
+      - ansible
+      - curl
+      - git
+    state: present
+    update_cache: true
+
+- name: Installing ansible dependencies
+  ansible.builtin.apt:
+    name:
+      - python3-apt
+    state: present
+
+- name: Installing base packages
+  ansible.builtin.apt:
+    name:
+      - bat
+      - fd-find
+      - fq
+      - fzf
+      - htop
+      - jq
+      - libarchive-tools
+      - miller
+      - moreutils
+      - neofetch
+      - pv
+      - pwgen
+      - ripgrep
+      - screen
+      - silversearcher-ag
+      - thefuck
+      - universal-ctags
+      - urlwatch
+      - vim
+      - whois
+    state: present
+
+- name: Enabling simple, stateful firewall
+  ansible.builtin.include_tasks: firewall.yml

@@ -1,7 +1,7 @@
 # {{ ansible_managed }}
 # <target name>	<source device>	<key file>	<options>
 {% if main_crypttab_keyfile %}
-crypt	/dev/mmcblk0p2	/dev/disk/by-label/CRYPTKEY:/key:{{ cryptkey_timeout_seconds }}	luks,keyscript=/lib/cryptsetup/scripts/passdev
+crypt	/dev/mmcblk0p2	/dev/disk/by-label/CRYPTKEY:/key:{{ main_cryptkey_timeout_seconds }}	luks,keyscript=/lib/cryptsetup/scripts/passdev
 {% else %}
 crypt	/dev/mmcblk0p2	none	luks
 {% endif %}

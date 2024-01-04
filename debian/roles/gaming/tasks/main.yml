@@ -1,0 +1,45 @@
+---
+- name: Checking if the i386 architecture is enabled
+  ansible.builtin.shell: >
+    set -e -o pipefail;
+    dpkg --print-foreign-architectures | grep i386
+  args:
+    executable: /bin/bash
+  register: gaming_i386_enabled
+  changed_when: gaming_i386_enabled.rc == 1
+  failed_when: gaming_i386_enabled.rc > 1
+
+- name: Enabling the i386 architecture
+  ansible.builtin.command: dpkg --add-architecture i386
+  when: gaming_i386_enabled.rc == 1
+  register: gaming_i386_was_enabled
+  changed_when: gaming_i386_was_enabled.rc == 0
+  failed_when: gaming_i386_was_enabled.rc != 0
+
+- name: Installing Wine
+  ansible.builtin.include_tasks: wine.yml
+
+- name: Installing Steam
+  ansible.builtin.include_tasks: steam.yml
+
+- name: Installing Lutris
+  ansible.builtin.include_tasks: lutris.yml
+
+- name: Installing Virtualbox
+  ansible.builtin.apt:
+    name:
+      - virtualbox
+      - virtualbox-guest-additions-iso
+    state: present
+
+- name: Installing Dolphin
+  ansible.builtin.apt:
+    name: dolphin-emu
+    state: present
+
+- name: Installing other gaming stuff
+  ansible.builtin.apt:
+    name:
+      - gamemode
+      - vkbasalt
+    state: present
