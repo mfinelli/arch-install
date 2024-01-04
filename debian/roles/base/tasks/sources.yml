@@ -22,3 +22,19 @@
     owner: root
     src: fasttrack.list.j2
   register: fasttrack_sources
+
+- name: Adding supermario repository signing key
+  ansible.builtin.apt_key:
+    keyring: /usr/share/keyrings/supermario-archive-keyring.gpg
+    state: present
+    url: "{{ base_supermario_repo_host }}\
+      Debian_{{ ansible_distribution_version }}/Release.key"
+
+- name: Adding supermario repository
+  ansible.builtin.apt_repository:
+    filename: supermario
+    repo: >
+      deb [signed-by=/usr/share/keyrings/supermario-archive-keyring.gpg]
+      {{ base_supermario_repo_host }}Debian_{{ ansible_distribution_version }}/
+      /
+    update_cache: true

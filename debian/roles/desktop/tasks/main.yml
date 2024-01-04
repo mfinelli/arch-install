@@ -3,6 +3,7 @@
   ansible.builtin.apt:
     name:
       - plymouth
+      - plymouth-theme-debian-logo
       - plymouth-themes
     state: present
 
@@ -26,9 +27,11 @@
     name:
       - caffeine
       - fonts-firacode
+      - fonts-firamono-nerd-font
       - fonts-powerline
       - gnome-shell-extension-manager
       - gnome-shell-extensions
+      - houmain-keymapper
     state: present
 
 - name: Installing desktop CLI software
