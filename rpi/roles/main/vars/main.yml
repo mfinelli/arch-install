@@ -1,10 +1,10 @@
 ---
 # TODO: we should detect if the case fan is installed
-fan_enabled_hosts:
+main_fan_enabled_hosts:
   - homepi
   - parkpi
   - raipi
 
-fan_enable_at_degrees_celsius: 70
+main_fan_enable_at_degrees_celsius: 70
 
-cryptkey_timeout_seconds: 20
+main_cryptkey_timeout_seconds: 20
