@@ -12,7 +12,7 @@
       deb [arch=amd64
       signed-by=/usr/share/keyrings/mullvad-archive-keyring.gpg]
       https://repository.mullvad.net/deb/stable
-      {{ ansible_distribution_version }} main
+      {{ ansible_distribution_major_version }} main
     update_cache: true
 
 - name: Installing Mullvad VPN
