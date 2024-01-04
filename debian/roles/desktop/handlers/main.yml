@@ -4,3 +4,10 @@
   register: ran_updategrub
   changed_when: ran_updategrub.rc == 0
   failed_when: ran_updategrub.rc != 0
+
+# taken from: /usr/sbin/plymouth-set-default-theme
+- name: Rebuild initramfs with plymouth
+  ansible.builtin.command: /usr/libexec/plymouth/plymouth-update-initrd
+  register: rebuilt_initramfs
+  changed_when: rebuilt_initramfs.rc == 0
+  failed_when: rebuilt_initramfs.rc != 0

@@ -17,6 +17,16 @@
   notify:
     - Run update-grub2
 
+- name: Installing plymouth configuration
+  ansible.builtin.copy:
+    dest: /etc/plymouth/plymouthd.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: plymouthd.conf
+  notify:
+    - Rebuild initramfs with plymouth
+
 - name: Installing fwupd
   ansible.builtin.apt:
     name: fwupd-signed
