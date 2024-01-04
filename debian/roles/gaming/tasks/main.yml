@@ -41,5 +41,6 @@
   ansible.builtin.apt:
     name:
       - gamemode
+      - mangohud
       - vkbasalt
     state: present
