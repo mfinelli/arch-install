@@ -21,4 +21,4 @@
         # curl -sI \
         #   'https://discord.com/api/download?platform=linux&format=deb' | \
         # grep -i location
-        deb: https://dl.discordapp.net/apps/linux/0.0.38/discord-0.0.38.deb
+        deb: https://dl.discordapp.net/apps/linux/0.0.39/discord-0.0.39.deb
