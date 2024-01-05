@@ -6,11 +6,6 @@
       - git
     state: present
 
-- name: Uninstalling apt-transport-https
-  ansible.builtin.apt:
-    name: apt-transport-https
-    state: absent
-
 - name: Copying https-enabled sources list
   ansible.builtin.template:
     dest: /etc/apt/sources.list
@@ -39,6 +34,11 @@
   notify:
     - Regenerate locales
 
+- name: Installing systemd-resolved
+  ansible.builtin.apt:
+    name: systemd-resolved
+    state: present
+
 - name: Creating systemd-resolved configuration directory
   ansible.builtin.file:
     group: root
@@ -62,13 +62,6 @@
     enabled: true
     name: systemd-resolved.service
     state: started
-
-- name: Linking systemd-resolved stub resolver
-  ansible.builtin.file:
-    dest: /etc/resolv.conf
-    force: true
-    src: /run/systemd/resolve/stub-resolv.conf
-    state: link
 
 - name: Installing openssh
   ansible.builtin.apt:
