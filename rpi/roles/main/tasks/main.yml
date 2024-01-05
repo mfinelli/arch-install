@@ -38,6 +38,7 @@
   ansible.builtin.apt:
     name: systemd-resolved
     state: present
+    update_cache: "{{ main_sources_list.changed or main_rpi_list.changed }}"
 
 - name: Creating systemd-resolved configuration directory
   ansible.builtin.file:
@@ -66,7 +67,7 @@
 - name: Installing openssh
   ansible.builtin.apt:
     name: openssh-server
-    update_cache: "{{ main_sources_list.changed or main_rpi_list.changed }}"
+    state: present
 
 - name: Enabling sshd service
   ansible.builtin.systemd:
