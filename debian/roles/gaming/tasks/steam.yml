@@ -1,25 +1,23 @@
 ---
 - name: Adding the Steam repository key
   ansible.builtin.apt_key:
-    keyring: /usr/share/keyrings/steam-archive-keyring.gpg
+    keyring: /usr/share/keyrings/steam.gpg
     state: present
     url: https://repo.steampowered.com/steam/archive/stable/steam.gpg
 
 - name: Adding the Steam repository
   ansible.builtin.apt_repository:
-    filename: steam
+    filename: steam-stable
     repo: >
-      deb [arch=amd64,i386
-      signed-by=/usr/share/keyrings/steam-archive-keyring.gpg]
+      deb [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg]
       https://repo.steampowered.com/steam/ stable steam
     update_cache: true
 
 - name: Adding the Steam (source) repository
   ansible.builtin.apt_repository:
-    filename: steam
+    filename: steam-stable
     repo: >
-      deb-src [arch=amd64,i386
-      signed-by=/usr/share/keyrings/steam-archive-keyring.gpg]
+      deb-src [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg]
       https://repo.steampowered.com/steam/ stable steam
     update_cache: true
 
