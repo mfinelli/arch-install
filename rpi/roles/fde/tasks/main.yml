@@ -12,18 +12,9 @@
     name:
       - busybox
       - cryptsetup
+      - cryptsetup-initramfs
       - initramfs-tools
     state: present
-
-- name: Copying kernel initramfs rebuild script
-  ansible.builtin.copy:
-    dest: /etc/kernel/postinst.d/initramfs-rebuild
-    group: root
-    mode: "0755"
-    owner: root
-    src: initramfs-rebuild.sh
-  notify:
-    - Rebuild initramfs
 
 - name: Copying initramfs luks hooks script
   ansible.builtin.copy:

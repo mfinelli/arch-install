@@ -1,6 +1,6 @@
 ---
 - name: Rebuild initramfs
-  ansible.builtin.command: /usr/sbin/mkinitramfs -o /boot/initramfs.gz
+  ansible.builtin.command: /usr/sbin/update-initramfs -u -k all
   register: rebuilt_initramfs
   changed_when: rebuilt_initramfs.rc == 0
   failed_when: rebuilt_initramfs.rc != 0

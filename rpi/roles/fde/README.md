@@ -7,6 +7,7 @@ Enables full-disk encryption.
 - https://robpol86.com/raspberry_pi_luks.html
 - https://rr-developer.github.io/LUKS-on-Raspberry-Pi/
 - https://blog.fidelramos.net/software/unlock-luks-usb-drive
+- https://github.com/jwren0/raspi-4b-encrypted-ssh
 
 ## steps
 
