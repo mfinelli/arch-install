@@ -27,6 +27,9 @@
   notify:
     - Rebuild initramfs with plymouth
 
+- name: Flushing handlers
+  ansible.builtin.meta: flush_handlers
+
 - name: Installing fwupd
   ansible.builtin.apt:
     name: fwupd-signed
