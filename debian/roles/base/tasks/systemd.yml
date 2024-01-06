@@ -27,3 +27,6 @@
     name: systemd-resolved.service
     state: started
     enabled: true
+
+- name: Flushing handlers
+  ansible.builtin.meta: flush_handlers
