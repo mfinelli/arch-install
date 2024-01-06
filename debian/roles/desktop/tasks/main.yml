@@ -62,6 +62,7 @@
       - gnome-shell-extension-bluetooth-quick-connect
       - gnome-shell-extension-caffeine
       - gnome-shell-extension-dashtodock
+      - gnome-shell-extension-debian-updates-indicator
       - gnome-shell-extension-freon
       - gnome-shell-extension-gamemode
       - gnome-shell-extension-weather
