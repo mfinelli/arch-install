@@ -96,6 +96,14 @@
       - shfmt
     state: present
 
+- name: Installing secondary commandline utilities
+  when: mtype != 'media'
+  become: true
+  community.general.pacman:
+    name:
+      - iprange
+    state: present
+
 - name: Installing go
   when: mtype != 'media'
   become: true

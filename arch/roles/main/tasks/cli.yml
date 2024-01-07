@@ -80,6 +80,7 @@
   community.general.pacman:
     name:
       - cdrtools
+      - potrace
       - unrar
     state: present
 
