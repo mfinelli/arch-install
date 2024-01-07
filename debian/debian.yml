@@ -14,6 +14,7 @@
     - role: mullvadvpn
     - role: onepassword
     - role: tailscale
+    - role: waydroid
 
   tasks:
     - name: Installing Discord
