@@ -25,3 +25,10 @@ bash -c "$(curl -fsSL https://mfgo.link/debian)"
 **N.B.** there is not a dedicated role for [Discord](https://discord.com) at
 this time because they do not provide an apt repository, just single `.deb`
 packages, so updates need to be performed manually in `debian.yml` directly.
+
+## todo
+
+- `opensnitch` will need to wait for trixie because `opensnitch-ebpf-modules`
+  didn't make bookworm.
+- consider `clamav`
+- test drive: https://github.com/albertlauncher/albert
