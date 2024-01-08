@@ -58,6 +58,7 @@
 - name: Installing backup programs
   ansible.builtin.apt:
     name:
+      - age
       - awscli
       - borgbackup
       - p7zip-full

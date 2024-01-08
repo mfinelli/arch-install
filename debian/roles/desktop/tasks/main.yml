@@ -42,6 +42,7 @@
       - fonts-firacode
       - fonts-firamono-nerd-font
       - fonts-powerline
+      - fonts-ubuntu
       - gnome-shell-extension-manager
       - gnome-shell-extensions
       - houmain-keymapper
@@ -83,6 +84,7 @@
 - name: Installing backup programs
   ansible.builtin.apt:
     name:
+      - age
       - awscli
       - borgbackup
       - p7zip-full

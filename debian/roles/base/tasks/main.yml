@@ -33,6 +33,7 @@
       - miller
       - moreutils
       - neofetch
+      - nvtop
       - pv
       - pwgen
       - ripgrep

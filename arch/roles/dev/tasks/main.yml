@@ -28,6 +28,7 @@
   become: true
   community.general.pacman:
     name:
+      - dive
       - docker
       - docker-compose
     state: present

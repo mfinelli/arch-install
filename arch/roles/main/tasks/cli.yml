@@ -33,6 +33,7 @@
     name:
       - bat
       - bind
+      - broot
       - ctags
       - fd
       - fzf
@@ -42,6 +43,7 @@
       - neofetch
       - net-tools
       - nnn
+      - nvtop
       - p7zip
       - pwgen
       - ripgrep
@@ -61,6 +63,7 @@
   community.general.pacman:
     name:
       - bat-extras
+      - cloc
       - difftastic
       - dos2unix
       - fq
@@ -88,6 +91,7 @@
   become: true
   community.general.pacman:
     name:
+      - age
       - borg
       - pass
       - pass-otp
