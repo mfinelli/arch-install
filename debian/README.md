@@ -10,6 +10,8 @@ Automation for debian gaming installation. Using the `netinst` ISO, select:
 - standard system utilities
 - Install the GRUB bootloader to the primary drive
 
+## post-install instructions
+
 ```shell
 sudo apt update && sudo apt upgrade
 ```
