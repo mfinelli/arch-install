@@ -45,6 +45,7 @@
       - gnome-shell-extension-manager
       - gnome-shell-extensions
       - houmain-keymapper
+      - piper
       - thunderbird
     state: present
 

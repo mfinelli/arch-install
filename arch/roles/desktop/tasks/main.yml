@@ -54,6 +54,12 @@
       - openssh
     state: present
 
+- name: Installing piper
+  become: true
+  community.general.pacman:
+    name: piper
+    state: present
+
 - name: Installing GNOME desktop environment
   ansible.builtin.include_tasks: gnome.yml
   when: mtype != 'media'
