@@ -42,6 +42,12 @@
     enabled: true
     name: bluetooth.service
 
+- name: Installing openrgb
+  become: true
+  community.general.pacman:
+    name: openrgb
+    state: present
+
 - name: Installing baseline desktop packages
   become: true
   community.general.pacman:

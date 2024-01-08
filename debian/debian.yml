@@ -23,3 +23,9 @@
         #   'https://discord.com/api/download?platform=linux&format=deb' | \
         # grep -i location
         deb: https://dl.discordapp.net/apps/linux/0.0.39/discord-0.0.39.deb
+
+    - name: Installing OpenRGB
+      ansible.builtin.apt:
+        # https://gitlab.com/CalcProgrammer1/OpenRGB/-/releases
+        deb: "https://openrgb.org/releases/\
+          release_0.9/openrgb_0.9_amd64_bookworm_b5f46e3.deb"
