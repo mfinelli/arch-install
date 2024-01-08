@@ -71,6 +71,7 @@
       - gnome-shell-extension-espresso
       - gnome-shell-extension-freon
       - gnome-shell-extension-gamemode
+      - gnome-shell-extension-nightthemeswitcher
       - gnome-shell-extension-weather
       - gnome-shell-extensions-extra
 
