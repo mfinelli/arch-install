@@ -16,6 +16,7 @@
       - gnome-shell-extension-arc-menu
       - gnome-shell-extension-arch-update
       - gnome-shell-extension-dash-to-dock
+      - gnome-shell-extension-nightthemeswitcher
       - hddtemp # for freon extension
       - network-manager-applet
       - power-profiles-daemon
@@ -31,11 +32,11 @@
     name:
       - gnome-shell-extension-bluetooth-quick-connect
       - gnome-shell-extension-emoji-selector-git
-      - gnome-shell-extension-espresso-git
+      - gnome-shell-extension-espresso
       - gnome-shell-extension-freon
       - gnome-shell-extension-no-overview
+      - gnome-shell-extension-openweather
       - gnome-shell-extension-systemd-manager
-      - gnome-shell-extension-weather-in-the-clock-git
     state: present
 
 - name: Copying systemd policy for the systemd GNOME extension
