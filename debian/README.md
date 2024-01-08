@@ -32,3 +32,6 @@ packages, so updates need to be performed manually in `debian.yml` directly.
   didn't make bookworm.
 - consider `clamav`
 - test drive: https://github.com/albertlauncher/albert
+- `gdm-settings` will be available with the trixie release
+- https://dosbox-staging.github.io/
+- https://github.com/visualboyadvance-m/visualboyadvance-m
