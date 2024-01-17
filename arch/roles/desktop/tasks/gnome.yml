@@ -36,6 +36,7 @@
       - gnome-shell-extension-freon
       - gnome-shell-extension-no-overview
       - gnome-shell-extension-openweather
+      - gnome-shell-extension-pano
       - gnome-shell-extension-systemd-manager
     state: present
 
