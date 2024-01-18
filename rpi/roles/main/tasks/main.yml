@@ -64,6 +64,9 @@
     name: systemd-resolved.service
     state: started
 
+- name: Flushing handlers
+  ansible.builtin.meta: flush_handlers
+
 - name: Installing openssh
   ansible.builtin.apt:
     name: openssh-server
