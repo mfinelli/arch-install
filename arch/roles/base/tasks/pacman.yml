@@ -1,4 +1,31 @@
 ---
+- name: Creating pacman hooks directory
+  become: true
+  ansible.builtin.file:
+    group: root
+    mode: "0755"
+    owner: root
+    path: /etc/pacman.d/hooks
+    state: directory
+
+- name: Installing pacman hook to update systemd-boot bootloader
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/pacman.d/hooks/95-systemd-boot.hook
+    group: root
+    mode: "0644"
+    owner: root
+    src: systemd-boot.hook
+
+- name: Installing pacman hook to update initramfs on microcode update
+  become: true
+  ansible.builtin.template:
+    dest: /etc/pacman.d/hooks/90-ucode.hook
+    group: root
+    mode: "0644"
+    owner: root
+    src: ucode.hook.j2
+
 - name: Copying makepkg configuration
   become: true
   ansible.builtin.template:

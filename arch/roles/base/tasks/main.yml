@@ -45,8 +45,6 @@
     name:
       - base
       - base-devel
-      - dracut
-      - dracut-hook-uefi
       - linux
       - linux-firmware
       - posix
@@ -74,7 +72,7 @@
       - plymouth
       # - plymouth-theme-...
   notify:
-    - Run dracut
+    - Run mkinitcpio
 
 - name: Copying plymouth configuration
   become: true
@@ -85,18 +83,18 @@
     owner: root
     src: plymouthd.conf
   notify:
-    - Run dracut
+    - Run mkinitcpio
 
-- name: Copying dracut kernel commandline configuration
+- name: Copying kernel commandline configuration
   become: true
   ansible.builtin.template:
-    dest: /etc/dracut.conf.d/cmdline.conf
+    dest: /etc/kernel/cmdline
     group: root
     mode: "0644"
     owner: root
-    src: cmdline.conf.j2
+    src: cmdline.j2
   notify:
-    - Run dracut
+    - Run mkinitcpio
 
 - name: Installing imagemagick # for bootsplash conversion
   become: true
@@ -112,16 +110,16 @@
   args:
     creates: /etc/finelli/bootsplash.bmp
 
-- name: Copying custom dracut configuration
+- name: Copying custom mkinitcpio configuration
   become: true
   ansible.builtin.copy:
-    dest: /etc/dracut.conf.d/custom.conf
+    dest: /etc/mkinitcpio.conf.d/hooks.conf
     group: root
     mode: "0644"
     owner: root
-    src: dracut.conf
+    src: hooks.conf
   notify:
-    - Run dracut
+    - Run mkinitcpio
 
 - name: Copying "/etc/locale.gen"
   become: true
@@ -190,12 +188,6 @@
   community.general.pacman:
     name: amd-ucode
     state: present
-
-- name: Enabling the systemd-boot updater
-  when: mmode != 'setup'
-  ansible.builtin.systemd:
-    enabled: true
-    name: systemd-boot-update.service
 
 - name: Creating "sudo" group
   become: true
@@ -350,3 +342,6 @@
 
 - name: Configuring a simple firewall
   ansible.builtin.include_tasks: firewall.yml
+
+- name: Flushing handlers
+  ansible.builtin.meta: flush_handlers

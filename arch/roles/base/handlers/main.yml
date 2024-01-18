@@ -1,11 +1,10 @@
 ---
-- name: Run dracut
+- name: Run mkinitcpio
   become: true
-  ansible.builtin.command: >-
-    dracut --uefi --force --kver {{ base_installed_kernel }}
-  register: ran_dracut
-  changed_when: ran_dracut.rc == 0
-  failed_when: ran_dracut.rc != 0
+  ansible.builtin.command: mkinitcpio -P
+  register: ran_mkinitcpio
+  changed_when: ran_mkinitcpio.rc == 0
+  failed_when: ran_mkinitcpio.rc != 0
 
 - name: Restart systemd-resolved
   become: true

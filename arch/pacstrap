@@ -138,7 +138,7 @@ pstart=$SECONDS
 
 while :; do
   # do the needful
-  if pacstrap -i /mnt base base-devel dracut linux linux-firmware posix; then
+  if pacstrap -i /mnt base base-devel linux linux-firmware posix; then
     break
   else
     echo -e "${BOLDRED}Pacstrap failed!${ENDCOLOR}"
