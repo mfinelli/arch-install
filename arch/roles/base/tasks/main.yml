@@ -121,6 +121,17 @@
   notify:
     - Run mkinitcpio
 
+- name: Copying custom mkinitcpio preset configuration
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/mkinitcpio.d/linux.preset
+    group: root
+    mode: "0644"
+    owner: root
+    src: linux.preset
+  notify:
+    - Run mkinitcpio
+
 - name: Copying "/etc/locale.gen"
   become: true
   ansible.builtin.copy:

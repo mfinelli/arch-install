@@ -10,7 +10,7 @@ PRESETS=('default' 'fallback')
 #default_config="/etc/mkinitcpio.conf"
 #default_image="/boot/initramfs-linux.img"
 default_uki="/efi/EFI/Linux/arch-linux.efi"
-default_options="--splash=/etc/finelli/bootsplash.bmp"
+default_options="--splash /etc/finelli/bootsplash.bmp"
 
 #fallback_config="/etc/mkinitcpio.conf"
 #fallback_image="/boot/initramfs-linux-fallback.img"

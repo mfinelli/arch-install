@@ -9,6 +9,9 @@ cd "$wdir"
 git clone https://github.com/mfinelli/arch-install.git
 cd arch-install/arch
 
+# clear out old initramfs images -- we'll be creating a UKI
+sudo rm -rf /boot/initramfs-linux*
+
 ./run.bash setup
 
 cd "$sdir"

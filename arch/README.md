@@ -79,15 +79,28 @@ Automation for Arch Linux installations.
    usermod -a -G sudo mario
    ```
 
-9. Switch user and run ansible
+9. The `KEYMAP` variable must be set in `/etc/vconsole.conf` for the
+   `sd-vconsole` mkinitcpio hook. Use what you set in step 2:
 
    ```shell
-   su mario -
-   cd
-   bash -c "$(curl -fsSL https://mfgo.link/arch-setup)"
+   echo KEYMAP=it > /etc/vconsole.conf
    ```
 
-10. Reboot
+   Or, if you use the default (us) keymap:
+
+   ```shell
+   echo KEYMAP=us > /etc/vconsole.conf
+   ```
+
+10. Switch user and run ansible
+
+    ```shell
+    su mario -
+    cd
+    bash -c "$(curl -fsSL https://mfgo.link/arch-setup)"
+    ```
+
+11. Reboot
 
     ```shell
     exit
@@ -97,14 +110,14 @@ Automation for Arch Linux installations.
     systemctl reboot
     ```
 
-11. If necessary, make the keymap change permanent
+12. If necessary, make the keymap change permanent
 
     ```shell
     sudo loadkeys it
     sudo localectl set-keymap --no-convert it
     ```
 
-12. Reconnect to the internet. In a virtual machine you should already be
+13. Reconnect to the internet. In a virtual machine you should already be
     connected. Otherwise connect using the `nmcli`:
 
     ```shell
@@ -114,7 +127,7 @@ Automation for Arch Linux installations.
     sudo nmcli --ask dev wifi connect SSID(network name)
     ```
 
-13. Set any `finellictl` configurations
+14. Set any `finellictl` configurations
 
     ```shell
     finellictl language en_US # default
@@ -122,21 +135,21 @@ Automation for Arch Linux installations.
     finellictl wregdom US # default
     ```
 
-14. Run the post-first reboot portion of the setup
+15. Run the post-first reboot portion of the setup
 
     ```shell
     bash -c "$(curl -fsSL https://mfgo.link/arch-install)"
     ```
 
-15. Reboot
+16. Reboot
 
     ```shell
     sudo reboot
     ```
 
-16. Install [dotfiles](https://github.com/mfinelli/dotfiles)
+17. Install [dotfiles](https://github.com/mfinelli/dotfiles)
 
-17. Set default shell to zsh
+18. Set default shell to zsh
 
     ```shell
     chsh -s /bin/zsh
