@@ -65,7 +65,6 @@
   become: true
   community.general.pacman:
     name:
-      - asp
       - aurpublish
       - devtools
       - expac
