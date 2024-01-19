@@ -26,6 +26,24 @@
     owner: root
     src: ucode.hook.j2
 
+- name: Installing pacman hook to copy UEFI shell into ESP
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/pacman.d/hooks/80-uefi-shell.hook
+    group: root
+    mode: "0644"
+    owner: root
+    src: uefi-shell.hook
+
+- name: Installing pacman hook to copy memtest86+ into ESP
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/pacman.d/hooks/80-memtest86+.hook
+    group: root
+    mode: "0644"
+    owner: root
+    src: memtest.hook
+
 - name: Copying makepkg configuration
   become: true
   ansible.builtin.template:

@@ -217,6 +217,34 @@
 - name: Configuring makepkg and pacman
   ansible.builtin.include_tasks: pacman.yml
 
+- name: Creating EFI tools directory
+  become: true
+  ansible.builtin.file:
+    group: root
+    mode: "0755"
+    owner: root
+    path: /efi/EFI/tools
+    state: directory
+
+- name: Installing extra UEFI applications
+  become: true
+  community.general.pacman:
+    name:
+      - edk2-shell
+      - efitools
+      - memtest86+-efi
+      - refind
+    state: present
+
+- name: Copying memtest86+ boot entry
+  become: true
+  ansible.builtin.copy:
+    dest: /efi/loader/entries/memtest.conf
+    group: root
+    mode: "0755"
+    owner: root
+    src: memtest86+.conf
+
 - name: Installing ansible-gpg-key (from supermario repo)
   become: true
   community.general.pacman:

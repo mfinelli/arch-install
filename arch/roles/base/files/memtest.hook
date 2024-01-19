@@ -1,0 +1,11 @@
+# Ansible managed
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = memtest86+-efi
+
+[Action]
+Description = Copying memtest86+ to ESP...
+When = PostTransaction
+Exec = /usr/bin/cp /boot/memtest86+/memtest.efi /efi/EFI/tools

@@ -1,0 +1,11 @@
+# Ansible managed
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = edk2-shell
+
+[Action]
+Description = Copying UEFI shell to ESP...
+When = PostTransaction
+Exec = /usr/bin/cp /usr/share/edk2-shell/x64/Shell.efi /efi/shellx64.efi

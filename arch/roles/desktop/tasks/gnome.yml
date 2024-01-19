@@ -55,6 +55,7 @@
     name:
       - dmidecode
       - fwupd
+      - fwupd-efi
       - gnome-firmware
     state: present
 
