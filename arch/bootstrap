@@ -115,28 +115,9 @@ done
 
 ptime=$((SECONDS - pstart))
 echo -e "${CYAN}Done installing boot packages. (in $ptime seconds)${ENDCOLOR}"
-echo -e "${BOLDGREEN}Configuring kernel commandline...${ENDCOLOR}"
-read -rp "Press enter to continue..." _
-
-# construct the kernel parameters required for booting with lvm on luks
-# https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS
-# https://wiki.archlinux.org/title/Dm-crypt/System_configuration#Kernel_parameters
-LUKSDEVICE="$(blkid -s UUID -o value /dev/disk/by-partlabel/CRYPTROOT)"
-echo -n 'kernel_cmdline="rd.luks.name=' > /etc/dracut.conf.d/cmdline.conf
-echo -n "${LUKSDEVICE}=crypt rd.lvm.lv=crypt/root rd.lvm.lv=crypt/swap " \
-  >> /etc/dracut.conf.d/cmdline.conf
-echo 'root=/dev/mapper/crypt-root rootfstype=btrfs rootflags=rw"' \
-  >> /etc/dracut.conf.d/cmdline.conf
-
-echo -e "${CYAN}Configured kernel commandline.${ENDCOLOR}"
 echo -e "${BOLDGREEN}Installing systemd-boot...${ENDCOLOR}"
 read -rp "Press enter to continue..." _
 
-# we need to pass an explicit kernel version because the installed kernel may
-# be different than the kernel that we booted with using the install medium
-# dracut --uefi --kver "$(ls /usr/lib/modules/ | head -n1)"
-kver="$(find /usr/lib/modules/* -prune -print | head -n 1)"
-dracut --uefi --kver "$(basename "$kver")"
 bootctl install
 
 echo -e "${CYAN}Installed bootloader.${ENDCOLOR}"
