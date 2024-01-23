@@ -12,6 +12,8 @@
       when: mtype != 'server'
     - role: dropbox
       when: mtype == 'gaming'
+    - role: firefox
+      when: mtype != 'server'
     - role: gaming
       when: mtype == 'gaming'
     - role: media

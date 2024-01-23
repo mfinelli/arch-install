@@ -1,0 +1,27 @@
+---
+- name: Adding the Firefox signing key
+  ansible.builtin.apt_key:
+    keyring: /usr/share/keyrings/mozilla-archive-keyring.gpg
+    state: present
+    url: https://packages.mozilla.org/apt/repo-signing-key.gpg
+
+- name: Adding Firefox pin for official Mozilla repository
+  ansible.builtin.copy:
+    dest: /etc/apt/preferences.d/mozilla
+    group: root
+    mode: "0644"
+    owner: root
+    src: firefox-pin
+
+- name: Adding the Firefox repository
+  ansible.builtin.apt_repository:
+    filename: mozilla
+    repo: >
+      deb [signed-by=/usr/share/keyrings/mozilla-archive-keyring.gpg]
+      https://packages.mozilla.org/apt mozilla main
+    update_cache: true
+
+- name: Installing Firefox
+  ansible.builtin.apt:
+    name: firefox
+    state: present

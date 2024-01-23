@@ -8,6 +8,7 @@
     - role: base
     - role: chrome
     - role: desktop
+    - role: firefox
     - role: gaming
     - role: media
     - role: mega
