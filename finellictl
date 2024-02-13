@@ -20,7 +20,8 @@ if [[ $# -eq 0 || $1 == -h || $1 == --help ]]; then
   echo
   echo "    $(basename "$0") timezone # set timezone interactively"
   echo "    $(basename "$0") timezone America/New_York # set given timezone"
-  echo "                              # common options: Europe/Rome"
+  echo "                              # common options: America/Los_Angeles"
+  echo "                              #                 Europe/Rome"
   echo "                              #                 Europe/London"
   echo
   echo "    $(basename "$0") wregdom US # set wireless regulatory country"
