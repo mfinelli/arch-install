@@ -10,6 +10,12 @@ hn="$(cat /etc/hostname)"
 declare -a fde_enabled_hosts=(homepi raipi testpi)
 declare -a tailscale_exit_nodes=(parkpi raipi)
 
+declare -A wregdom_hosts
+wregdom_hosts[homepi]=IT
+wregdom_hosts[parkpi]=US
+wregdom_hosts[raipi]=IT
+wregdom_hosts[testpi]=US
+
 # https://unix.stackexchange.com/a/177589
 declare -A fde_enabled_host
 for host in "${fde_enabled_hosts[@]}"; do fde_enabled_host[$host]=1; done
@@ -32,6 +38,7 @@ ansible-playbook --inventory ../localhost \
   --extra-vars fde=$fde \
   --extra-vars tailscale_exit_node=$tailscale_exit_node \
   --extra-vars whoami="$(whoami)" \
+  --extra-vars wregdom_country="${wregdom_hosts[$hn]}" \
   rpi.yml
 
 exit 0
