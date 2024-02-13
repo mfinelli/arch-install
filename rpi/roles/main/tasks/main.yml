@@ -97,6 +97,7 @@
       - lm-sensors
       - neofetch
       - nnn
+      - pastebinit
       - pcscd
       - ripgrep
       - scdaemon
