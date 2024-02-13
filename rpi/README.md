@@ -19,7 +19,14 @@ network VPN.
 3. Let the initial, internal bootstrap process finish and then login with the
    new user.
 
-4. Apply any available updates:
+4. If desired, change the default sources to https before doing anything else:
+
+   ```shell
+   sudo sed -i 's|http://|https://|g' /etc/apt/sources.list
+   sudo sed -i 's|http://|https://|g' /etc/apt/sources.list.d/*.list
+   ```
+
+5. Apply any available updates:
 
    ```shell
    sudo apt update
@@ -27,7 +34,7 @@ network VPN.
    sudo apt autoremove --purge
    ```
 
-5. Update the hostname so that the role picker works as expected
+6. Update the hostname so that the role picker works as expected
 
    ```shell
    sudo raspi-config
@@ -35,35 +42,35 @@ network VPN.
 
    System Options > Hostname
 
-6. Reboot
+7. Reboot
 
-7. Open a terminal and run:
+8. Open a terminal and run:
 
    ```shell
    bash -c "$(curl -LfSs https://mfgo.link/rpi)"
    ```
 
-8. If you want to enable full disk encryption ensure the hostname is enabled
-   in `run.bash`. After the reboot, follow the instructions in the
+9. If you want to enable full disk encryption ensure the hostname is enabled
+   in `run.bash`. Reboot then follow the instructions in the
    [readme](https://github.com/mfinelli/arch-install/blob/master/rpi/roles/fde/README.md)
    for the `fde` role.
 
-9. If you have installed the case fan you can adjust it so that it only turns
-   on if it reaches a certain temperature (default 80 degrees Celsius). This
-   is not necessary if you add the host to the `fan_enabled_hosts` variable in
-   the `main` role:
+10. If you have installed the case fan you can adjust it so that it only turns
+    on if it reaches a certain temperature (default 80 degrees Celsius). This
+    is not necessary if you add the host to the `fan_enabled_hosts` variable in
+    the `main` role:
 
-   ```shell
-   sudo raspi-config
-   ```
+    ```shell
+    sudo raspi-config
+    ```
 
-   Performance Options > Fan > Enable Fan Temperature Control > (Fan is
-   connected to GPIO control `14`) > At what temperature should the fan turn
-   on: `70`
+    Performance Options > Fan > Enable Fan Temperature Control > (Fan is
+    connected to GPIO control `14`) > At what temperature should the fan turn
+    on: `70`
 
-   **N.B.** you should update which hosts have the case fan in
-   `roles/main/vars/main.yml`.
+    **N.B.** you should update which hosts have the case fan in
+    `roles/main/vars/main.yml`.
 
-10. Install [dotfiles](https://github.com/mfinelli/dotfiles) (which should be
+11. Install [dotfiles](https://github.com/mfinelli/dotfiles) (which should be
     done after connecting via SSH as the dotfiles repository uses the forwarded
     keys to setup SSH)
