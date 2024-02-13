@@ -21,6 +21,15 @@
 
 - name: Copying kernel boot configuration
   ansible.builtin.template:
+    dest: /boot/config.txt
+    group: root
+    mode: "0644"
+    owner: root
+    src: config.txt.j2
+  tags: fde
+
+- name: Copying kernel boot configuration to boot partition
+  ansible.builtin.template:
     dest: /boot/firmware/config.txt
     group: root
     mode: "0755" # all boot partition files are 755
@@ -29,6 +38,15 @@
   tags: fde
 
 - name: Copying kernel command line configuration
+  ansible.builtin.template:
+    dest: /boot/cmdline.txt
+    group: root
+    mode: "0644"
+    owner: root
+    src: cmdline.txt.j2
+  tags: fde
+
+- name: Copying kernel command line configuration to boot partition
   ansible.builtin.template:
     dest: /boot/firmware/cmdline.txt
     group: root
