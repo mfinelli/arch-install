@@ -60,8 +60,8 @@
   become: true
   community.general.pacman:
     name:
+      - k9s
       - kubectx
-      - lens
     state: present
 
 - name: Installing helm plugins
