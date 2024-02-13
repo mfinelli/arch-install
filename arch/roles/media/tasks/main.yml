@@ -31,7 +31,9 @@
     state: present
 
 - name: Installing Wine-based music applications
-  when: mtype == 'personal' or mtype == 'media'
+  when:
+    - multilib == 'true'
+    - mtype == 'personal' or mtype == 'media'
   kewlfft.aur.aur:
     name:
       - exact-audio-copy
@@ -98,4 +100,14 @@
     name:
       - cksfv
       - deluge
+    state: present
+
+# TODO: this lives here because it depends on wine, but it (and wine) should
+#       go someplace else
+- name: Installing winbox
+  when:
+    - multilib == 'true'
+    - mtype == 'personal'
+  kewlfft.aur.aur:
+    name: winbox
     state: present
