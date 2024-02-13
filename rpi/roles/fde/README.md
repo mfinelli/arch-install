@@ -80,7 +80,7 @@ Enables full-disk encryption.
    resize2fs -f /dev/mapper/crypt
    ```
 
-9. Remove the USB drive and then reboot
+9. Remove the USB drive and then reboot (`reboot -f`)
 
 10. After the reboot from the initramfs shell mount the luks volume to
     continue booting
@@ -94,8 +94,7 @@ Enables full-disk encryption.
     boot time:
 
     ```shell
-    sudo CRYPTSETUP=y mkinitramfs -o /tmp/initramfs.gz
-    sudo mv /tmp/initramfs.gz /boot/initramfs.gz
+    sudo update-initramfs -u
     ```
 
 12. If you're going to enable a keyfile follow the directions below, otherwise
@@ -181,8 +180,7 @@ you can additionally follow these instructions.
    included.
 
    ```shell
-   sudo CRYPTSETUP=y mkinitramfs -o /tmp/initramfs.gz
-   sudo mv /tmp/initramfs.gz /boot/initramfs.gz
+   sudo update-initramfs -u
    ```
 
 6. Reboot
