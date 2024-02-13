@@ -23,7 +23,7 @@
   ansible.builtin.template:
     dest: /boot/config.txt
     group: root
-    mode: "0755" # all rpi files in /boot are +x
+    mode: "0644"
     owner: root
     src: config.txt.j2
   tags: fde
@@ -32,7 +32,7 @@
   ansible.builtin.template:
     dest: /boot/cmdline.txt
     group: root
-    mode: "0755" # all rpi files in /boot are +x
+    mode: "0644"
     owner: root
     src: cmdline.txt.j2
   tags: fde
