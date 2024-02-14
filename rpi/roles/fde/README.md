@@ -80,7 +80,8 @@ Enables full-disk encryption.
    resize2fs -f /dev/mapper/crypt
    ```
 
-9. Remove the USB drive and then reboot (`reboot -f`)
+9. Remove the USB drive and then reboot (`cryptsetup luksClose
+   /dev/mapper/crypt`, `reboot -f`)
 
 10. After the reboot from the initramfs shell mount the luks volume to
     continue booting
