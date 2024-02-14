@@ -91,6 +91,7 @@
       - cui
       - hugo
       - jpegoptim
+      - openbsd-netcat
       - optipng
       - prettier
       - shellcheck
