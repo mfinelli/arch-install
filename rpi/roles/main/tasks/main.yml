@@ -96,6 +96,7 @@
       - libarchive-tools
       - lm-sensors
       - neofetch
+      - netcat-openbsd
       - nnn
       - pastebinit
       - pcscd
