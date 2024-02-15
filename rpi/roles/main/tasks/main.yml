@@ -40,13 +40,16 @@
     state: present
     update_cache: "{{ main_sources_list.changed or main_rpi_list.changed }}"
 
-- name: Creating systemd-resolved configuration directory
+- name: Creating systemd configuration override directories
   ansible.builtin.file:
     group: root
     mode: "0755"
     owner: root
-    path: /etc/systemd/resolved.conf.d
+    path: /etc/systemd/{{ item }}.d
     state: directory
+  loop:
+    - resolved.conf
+    - timesyncd.conf
 
 - name: Copying custom systemd-resolved configuration
   ansible.builtin.copy:
@@ -66,6 +69,16 @@
 
 - name: Flushing handlers
   ansible.builtin.meta: flush_handlers
+
+- name: Copying custom systemd-timesyncd configuration
+  ansible.builtin.copy:
+    dest: /etc/systemd/timesyncd.conf.d/time.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: timesyncd.conf
+  notify:
+    - Restart systemd-timesyncd
 
 - name: Installing openssh
   ansible.builtin.apt:

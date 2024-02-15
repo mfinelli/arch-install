@@ -9,6 +9,11 @@
     name: systemd-resolved.service
     state: restarted
 
+- name: Restart systemd-timesyncd
+  ansible.builtin.systemd:
+    name: systemd-timesyncd.service
+    state: restarted
+
 - name: Regenerate locales
   ansible.builtin.command: locale-gen
   register: main_localegen
