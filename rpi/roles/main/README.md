@@ -9,6 +9,14 @@ This role also writes out entries into the `fstab` and `crypttab` for any
 attached storage (For now we're assuming that all attached storage is a
 LUKS-encrypted, single partition device, with an `ext4` filesystem inside).
 
+This role only changes the `fstab` and `crypttab` for the attached storage
+devices if both the device is attached and the keyfile for it exists. If
+ansible runs while either of those two criteria are not true then the entry
+will be _removed_ from the `*tab` files even if it was previously present.
+This also means that it is safe to run ansible with this role and the usual
+storage configured even if the devices are not present (e.g., during initial
+provisioning of the Pi itself).
+
 ### preparing the device
 
 In the following steps we assume the new device is located at `/dev/sdc` while
@@ -64,3 +72,32 @@ we prepare it.
    ```shell
    sudo cryptsetup luksClose tmpusb
    ```
+
+### before running ansible again
+
+Once the device has been attached before running ansible again to add the
+correct entries to the `fstab` and `crypttab` it's necessary to generate a new
+keyfile for the device.
+
+1. If necessary, update the current passphrase (if you used a simple one
+   during the preparation step above)
+
+   ```shell
+   sudo cryptsetup luksChangeKey /dev/disk/by-partlabel/[LABEL]
+   ```
+
+2. Create the new keyfile
+
+   ```shell
+   sudo dd if=/dev/random of=/root/[KEYFILE] bs=1024 count=4
+   sudo chmod 0400 /root/[KEYFILE]
+   ```
+
+3. Add the keyfile to the LUKS header
+
+   ```shell
+   sudo cryptsetup luksAddKey /dev/disk/by-partlabel/[LABEL] /root/[KEYFILE]
+   ```
+
+Now you can run ansible again to update the `fstab` and `crypttab` as
+necessary.
