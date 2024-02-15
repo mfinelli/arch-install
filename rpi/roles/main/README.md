@@ -5,31 +5,62 @@ want to install.
 
 ## attached storage
 
-If necessary, unmount first
+This role also writes out entries into the `fstab` and `crypttab` for any
+attached storage (For now we're assuming that all attached storage is a
+LUKS-encrypted, single partition device, with an `ext4` filesystem inside).
 
-sudo umount /dev/sdc1
+### preparing the device
 
-Partition the disk
+In the following steps we assume the new device is located at `/dev/sdc` while
+we prepare it.
 
-sudo fdisk /dev/sdc
+1. Unmount the device if necessary (if it was auto-mounted when attached)
 
-Create a new partition table: `g`
-Create a new partition: `n`, accept all defaults (partition number 1, first sector, last sector [consume the entire disk]
-Default filesystem type "Linux filesystem" is ok
-Enter expert mode with `x`
-Change a partition name: `n` and give it a name that we'll reference in vars.yaml
-Return to the main menu: `r`
-Print the partition table: `p` to inspect everything is OK
-Write the new partition table and exit: `w`
+   ```shell
+   sudo umount /dev/sdc1
+   ```
 
-Encrypt the disk:
-sudo cryptsetup --type luks2 --ciper xchacha20,aes-adiantum-plain64 --hash sha256 --iter-time 5000 --key-size 256 --pbkdf argon2id luksFormat /dev/sdc1
+2. Partition the disk using `fdisk`
 
-Open the luks container:
-sudo cryptsetup luksOpen /dev/sdc1 tmpusb
+   ```shell
+   sudo fdisk /dev/sdc
+   ```
 
-Create a new filesystem:
-sudo mkfs.ext4 -v /dev/mapper/tmpusb
+   - Create a new partition table: `g`
+   - Create a new partition: `n`; accept all of the defaults (partition number
+     1, first sector, and last sector) to let a single partition consume the
+     entire disk
+   - The default filesystem type "Linux filesystem" is okay
+   - Enter "expert mode": `x`
+   - Change the partition name `n`; this corresponds to the `label` key in
+     the `main_attached_storage` variable
+   - Return to the main menu: `r`
+   - Print the partition table: `p`; inspect that everything looks good
+   - Write the new partition table and exit: `w`
 
-Done, close the luks container
-sudo cryptsetup luksClose tmpusb
+3. Encrypt the disk
+
+   ```shell
+   sudo cryptsetup --type luks2 --ciper xchacha20,aes-adiantum-plain64 \
+     --hash sha256 --iter-time 5000 --key-size 256 --pbkdf argon2id \
+     luksFormat /dev/sdc1
+   ```
+
+4. Open the new LUKS container
+
+   ```shell
+   sudo cryptsetup luksOpen /dev/sdc1 tmpusb
+   ```
+
+5. Create the new filesystem
+
+   ```shell
+   sudo mkfs.ext4 -v /dev/mapper/tmpusb
+   ```
+
+6. Done, close the container and then attach it to the main Pi (if preparation
+   was done on a different computer)
+
+   ```shell
+   sudo cryptsetup luksClose tmpusb
+   ```
