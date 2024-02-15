@@ -120,3 +120,6 @@
 
 - name: Configuring basic firewall
   ansible.builtin.include_tasks: firewall.yml
+
+- name: Configuring attached disks
+  ansible.builtin.include_tasks: disks.yml
