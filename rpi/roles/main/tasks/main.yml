@@ -111,6 +111,7 @@
 - name: Installing backup applications
   ansible.builtin.apt:
     name:
+      - age
       - borgbackup
       - rclone
     state: present

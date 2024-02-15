@@ -1,4 +1,7 @@
 ---
+- name: Gathering information about attached storage
+  ansible.builtin.include_tasks: disks.yml
+
 # there might be a better way but this works pretty well
 # https://serverfault.com/q/881908
 - name: Checking if this host uses a keyfile
