@@ -1,4 +1,14 @@
 ---
+- name: Creating mount directories
+  when: ansible_hostname in main_attached_storage
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item.mountpoint }}"
+    owner: root
+    group: root
+    mode: "0755"
+  loop: "{{ main_attached_storage[ansible_hostname] }}"
+
 - name: Checking if devices exist
   when: ansible_hostname in main_attached_storage
   ansible.builtin.stat:

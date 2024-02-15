@@ -6,6 +6,15 @@ proc            /proc           proc    defaults          0       0
 {% else %}
 /dev/mmcblk0p2  /               ext4    defaults,noatime  0       1
 {% endif %}
-# a swapfile is not a swap partition, no line here
-#   use  dphys-swapfile swap[on|off]  for that
+
+{% if ansible_hostname in main_attached_storage %}
+{% for disk in main_attached_storage[ansible_hostname] %}
+{% if main_attached_storage_lookups[disk.name]["device"] %}
+{% if main_attached_storage_lookups[disk.name]["keyfile"] %}
+/dev/mapper/{{ disk.name }} {{ disk.mountpoint }} ext4 defaults,noatime 0 2
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
 # vim: ft=fstab.jinja2

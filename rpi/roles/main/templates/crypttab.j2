@@ -5,3 +5,13 @@ crypt	/dev/mmcblk0p2	/dev/disk/by-label/CRYPTKEY:/key:{{ main_cryptkey_timeout_s
 {% else %}
 crypt	/dev/mmcblk0p2	none	luks
 {% endif %}
+
+{% if ansible_hostname in main_attached_storage %}
+{% for disk in main_attached_storage[ansible_hostname] %}
+{% if main_attached_storage_lookups[disk.name]["device"] %}
+{% if main_attached_storage_lookups[disk.name]["keyfile"] %}
+{{ disk.name }}	/dev/disk/by-partlabel/{{ disk.label }}	{{ disk.keyfile }}	luks
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
