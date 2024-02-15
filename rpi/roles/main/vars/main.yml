@@ -8,3 +8,10 @@ main_fan_enabled_hosts:
 main_fan_enable_at_degrees_celsius: 70
 
 main_cryptkey_timeout_seconds: 20
+
+main_attached_storage:
+  homepi:
+    - label: HOMEPIDATA
+      name: homepidata
+      mountpoint: /mnt/data
+      keyfile: /root/datakey
