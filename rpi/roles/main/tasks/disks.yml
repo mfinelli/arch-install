@@ -26,6 +26,12 @@
 - name: Building lookups variable
   when: ansible_hostname in main_attached_storage
   ansible.builtin.set_fact:
-    main_attached_storage_lookups: >
-      {{ main_attached_storage_lookups | combine({"{{ item.name }}": {"device": "{{ (main_attached_storage_device_lookup.results | selectattr('item.name', '==', item.name) | map(attribute='stat') | first).exists }}", "keyfile": "{{ (main_attached_storage_keyfile_lookup.results | selectattr('item.name', '==', item.name) | map(attribute='stat') | first).exists }}"}}, recursive=True) }}
+    main_attached_storage_lookups: '{{ main_attached_storage_lookups |
+      combine({item.name: {"device":
+      (main_attached_storage_device_lookup.results |
+      selectattr(''item.name'', ''=='', item.name) | map(attribute=''stat'') |
+      first).exists, "keyfile":
+      (main_attached_storage_keyfile_lookup.results |
+      selectattr(''item.name'', ''=='', item.name) | map(attribute=''stat'') |
+      first).exists}}, recursive=True) }}'
   loop: "{{ main_attached_storage[ansible_hostname] }}"
