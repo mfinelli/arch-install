@@ -48,11 +48,6 @@
       - python3-apt
     state: present
 
-- name: Uninstalling apt-transport-https
-  ansible.builtin.apt:
-    name: apt-transport-https
-    state: absent
-
 - name: Adding "supermario" PPA
   ansible.builtin.template:
     dest: /etc/apt/sources.list.d/supermario.list
