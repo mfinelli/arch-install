@@ -29,3 +29,7 @@
   ansible.builtin.git:
     dest: /home/{{ whoami }}/src/mfinelli/arch-install
     repo: https://github.com/mfinelli/arch-install.git
+
+- name: Creating github actions access user
+  when: ansible_hostname in user_github_actions_access_hosts
+  ansible.builtin.include_tasks: github.yml

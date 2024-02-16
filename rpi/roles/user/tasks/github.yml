@@ -1,0 +1,17 @@
+---
+- name: Creating github user
+  ansible.builtin.user:
+    groups:
+      - sudo
+    name: github
+    shell: /bin/bash
+    state: present
+
+- name: Adding github user SSH authorized key
+  ansible.posix.authorized_key:
+    exclusive: true
+    # yamllint disable rule:line-length
+    key: |
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOW98OpO+aRahllamV5LWgArTBE0NejH16NJK2Nz6rVo
+    # yamllint enable rule:line-length
+    user: github
