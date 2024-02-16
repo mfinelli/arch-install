@@ -1,11 +1,14 @@
 ---
-- name: Creating systemd-resolved configuration directory
+- name: Creating systemd configuration directories
   ansible.builtin.file:
     group: root
     mode: "0755"
     owner: root
-    path: /etc/systemd/resolved.conf.d
+    path: /etc/systemd/{{ item }}.conf.d
     state: directory
+  loop:
+    - resolved
+    - timesyncd
 
 - name: Copying custom systemd-resolved configuration
   ansible.builtin.copy:
@@ -16,6 +19,19 @@
     src: resolved.conf
   notify:
     - Restart systemd-resolved
+
+- name: Flushing handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Copying custom systemd-timesyncd configuration
+  ansible.builtin.copy:
+    dest: /etc/systemd/timesyncd.conf.d/time.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: timesyncd.conf
+  notify:
+    - Restart systemd-timesyncd
 
 - name: Installing manually installed packages
   ansible.builtin.apt:

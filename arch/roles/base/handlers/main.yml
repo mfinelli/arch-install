@@ -10,5 +10,12 @@
   become: true
   when: mmode != 'setup'
   ansible.builtin.systemd:
-    name: systemd-resolved.server
+    name: systemd-resolved.service
+    state: restarted
+
+- name: Restart systemd-timesyncd
+  become: true
+  when: mmode != 'setup'
+  ansible.builtin.systemd:
+    name: systemd-timesyncd.service
     state: restarted

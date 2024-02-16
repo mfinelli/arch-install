@@ -1,4 +1,24 @@
 ---
+- name: Creating systemd-timesyncd configuration directory
+  become: true
+  ansible.builtin.file:
+    group: root
+    mode: "0755"
+    owner: root
+    path: /etc/systemd/timesyncd.conf.d
+    state: directory
+
+- name: Copying systemd-timesyncd configuration
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/systemd/timesyncd.conf.d/90-finelli.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: timesyncd.conf
+  notify:
+    - Restart systemd-timesyncd
+
 - name: Enabling systemd-timesyncd service
   become: true
   ansible.builtin.systemd:
