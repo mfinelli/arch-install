@@ -1,4 +1,12 @@
 ---
+- name: Copying sudoers file
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/020_sudo
+    owner: root
+    group: root
+    mode: "0440"
+    src: sudoer
+
 - name: Adding SSH authorized keys for mario
   ansible.posix.authorized_key:
     exclusive: true
