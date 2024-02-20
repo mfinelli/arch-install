@@ -1,7 +1,9 @@
 ---
 - name: Run tailscale up
   when: tailscale_oauth_secret_file.stat.exists
-  ansible.builtin.command: /usr/bin/tailscale up {{ tailscale_arguments["content"] | b64decode | trim }}
+  ansible.builtin.command: >-
+    /usr/bin/tailscale up
+    {{ tailscale_arguments["content"] | b64decode | trim }}
   register: tailscale_up
   changed_when: tailscale_up.rc == 0
   failed_when: tailscale_up.rc != 0
