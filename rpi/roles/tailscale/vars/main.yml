@@ -1,6 +1,13 @@
 ---
-tailscale_ssh: []
+tailscale_ssh:
+  - homepi
+  - parkpi
+  - raipi
 
 tailscale_tags:
+  homepi:
+    - tag:homeassistant
+  parkpi:
+    - tag:vpn
   raipi:
     - tag:vpn
