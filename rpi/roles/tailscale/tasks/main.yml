@@ -53,3 +53,6 @@
     port: "3478"
     proto: udp
     rule: allow
+
+- name: Connecting to tailnet
+  ansible.builtin.include_tasks: up.yml

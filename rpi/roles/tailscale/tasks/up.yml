@@ -1,0 +1,28 @@
+---
+- name: Checking if tailscale key has been set
+  ansible.builtin.stat:
+    path: /root/tailscale-oauth-secret.txt
+  register: tailscale_oauth_secret_file
+
+- name: Fetching tailscale auth key
+  ansible.builtin.slurp:
+    src: /root/tailscale-oauth-secret.txt
+  when: tailscale_oauth_secret_file.stat.exists
+  register: tailscale_oauth_secret
+
+- name: Copying tailscale up arguments
+  when: tailscale_oauth_secret_file.stat.exists
+  ansible.builtin.template:
+    dest: /root/tailscale-arguments.txt
+    group: root
+    mode: "0400"
+    owner: root
+    src: arguments.txt.j2
+  notify:
+    - Run tailscale up
+
+- name: Fetching tailscale up arguments
+  ansible.builtin.slurp:
+    src: /root/tailscale-arguments.txt
+  when: tailscale_oauth_secret_file.stat.exists
+  register: tailscale_arguments

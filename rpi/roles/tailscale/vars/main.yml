@@ -1,0 +1,6 @@
+---
+tailscale_ssh: []
+
+tailscale_tags:
+  raipi:
+    - tag:vpn
