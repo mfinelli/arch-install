@@ -72,6 +72,25 @@ logs:
                 instance: "{{ ansible_hostname }}"
                 __path__: /var/log/{syslog,messages,*.log}
                 job: integrations/node_exporter
+        - job_name: integrations/agent
+          journal:
+            max_age: 24h
+            labels:
+              job: integrations/agent
+          pipeline_stages:
+            - match:
+                selector: '{unit!="grafana-agent.service"}'
+                action: drop
+                drop_counter_reason: only_keep_grafana_agent_logs
+            - regex:
+                expression: "(level=(?P<log_level>[\\s]*debug|warn|info|error))"
+            - labels:
+                level: log_level
+          relabel_configs:
+            - source_labels: ['__journal__systemd_unit']
+              target_label: 'unit'
+            - source_labels: ['__journal__hostname']
+              target_label: 'instance'
 metrics:
   configs:
     - name: integrations
