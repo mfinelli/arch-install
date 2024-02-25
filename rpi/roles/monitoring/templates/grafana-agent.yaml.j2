@@ -23,6 +23,19 @@ integrations:
           - __name__
   # Add here any snippet that belongs to the `integrations` section.
   # For a correct indentation, paste snippets copied from Grafana Cloud at the beginning of the line.
+  node_exporter:
+    enabled: true
+    metric_relabel_configs:
+    # drop extensive scrape statistics
+      - action: drop
+        regex: node_scrape_collector_.+
+        source_labels: [__name__]
+    relabel_configs:
+      - replacement: "{{ ansible_hostname }}"
+        target_label: instance
+      # - replacement: integrations/raspberrypi-node
+      #   target_label: job
+
 logs:
   configs:
     - clients:
@@ -36,6 +49,29 @@ logs:
       scrape_configs:
         # Add here any snippet that belongs to the `logs.configs.scrape_configs` section.
         # For a correct indentation, paste snippets copied from Grafana Cloud at the beginning of the line.
+        - job_name: integrations/node_exporter_journal_scrape
+          journal:
+            max_age: 24h
+            labels:
+              instance: "{{ ansible_hostname }}"
+              job: integrations/node_exporter
+          relabel_configs:
+            - source_labels: ['__journal__systemd_unit']
+              target_label: 'unit'
+            - source_labels: ['__journal__boot_id']
+              target_label: 'boot_id'
+            - source_labels: ['__journal__transport']
+              target_label: 'transport'
+            - source_labels: ['__journal_priority_keyword']
+              target_label: 'level'
+        - job_name: integrations/node_exporter_direct_scrape
+          static_configs:
+            - targets:
+                - localhost
+              labels:
+                instance: "{{ ansible_hostname }}"
+                __path__: /var/log/{syslog,messages,*.log}
+                job: integrations/node_exporter
 metrics:
   configs:
     - name: integrations
