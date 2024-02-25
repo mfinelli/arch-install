@@ -59,10 +59,10 @@
 - name: Ensuring correct permissions for grafana secret files
   when:
     - monitoring_grafana_api_key_file.stat.exists
-    - monitoring_grafana_logs_id.stat.exists
-    - monitoring_grafana_logs_url.stat.exists
-    - monitoring_grafana_metrics_id.stat.exists
-    - monitoring_grafana_metrics_url.stat.exists
+    - monitoring_grafana_logs_id_file.stat.exists
+    - monitoring_grafana_logs_url_file.stat.exists
+    - monitoring_grafana_metrics_id_file.stat.exists
+    - monitoring_grafana_metrics_url_file.stat.exists
   ansible.builtin.file:
     group: root
     mode: "0400"
@@ -79,10 +79,10 @@
 - name: Adding the Grafana APT signing key
   when:
     - monitoring_grafana_api_key_file.stat.exists
-    - monitoring_grafana_logs_id.stat.exists
-    - monitoring_grafana_logs_url.stat.exists
-    - monitoring_grafana_metrics_id.stat.exists
-    - monitoring_grafana_metrics_url.stat.exists
+    - monitoring_grafana_logs_id_file.stat.exists
+    - monitoring_grafana_logs_url_file.stat.exists
+    - monitoring_grafana_metrics_id_file.stat.exists
+    - monitoring_grafana_metrics_url_file.stat.exists
   ansible.builtin.apt_key:
     keyring: /usr/share/keyrings/grafana-archive-keyring.gpg
     url: https://apt.grafana.com/gpg.key
@@ -90,10 +90,10 @@
 - name: Adding the Grafana repository
   when:
     - monitoring_grafana_api_key_file.stat.exists
-    - monitoring_grafana_logs_id.stat.exists
-    - monitoring_grafana_logs_url.stat.exists
-    - monitoring_grafana_metrics_id.stat.exists
-    - monitoring_grafana_metrics_url.stat.exists
+    - monitoring_grafana_logs_id_file.stat.exists
+    - monitoring_grafana_logs_url_file.stat.exists
+    - monitoring_grafana_metrics_id_file.stat.exists
+    - monitoring_grafana_metrics_url_file.stat.exists
   ansible.builtin.apt_repository:
     filename: grafana
     repo: >-
@@ -104,10 +104,10 @@
 - name: Installing grafana-agent
   when:
     - monitoring_grafana_api_key_file.stat.exists
-    - monitoring_grafana_logs_id.stat.exists
-    - monitoring_grafana_logs_url.stat.exists
-    - monitoring_grafana_metrics_id.stat.exists
-    - monitoring_grafana_metrics_url.stat.exists
+    - monitoring_grafana_logs_id_file.stat.exists
+    - monitoring_grafana_logs_url_file.stat.exists
+    - monitoring_grafana_metrics_id_file.stat.exists
+    - monitoring_grafana_metrics_url_file.stat.exists
   ansible.builtin.apt:
     name: grafana-agent
     state: present
@@ -115,10 +115,10 @@
 - name: Copying grafana-agent configuration
   when:
     - monitoring_grafana_api_key_file.stat.exists
-    - monitoring_grafana_logs_id.stat.exists
-    - monitoring_grafana_logs_url.stat.exists
-    - monitoring_grafana_metrics_id.stat.exists
-    - monitoring_grafana_metrics_url.stat.exists
+    - monitoring_grafana_logs_id_file.stat.exists
+    - monitoring_grafana_logs_url_file.stat.exists
+    - monitoring_grafana_metrics_id_file.stat.exists
+    - monitoring_grafana_metrics_url_file.stat.exists
   ansible.builtin.template:
     dest: /etc/grafana-agent.yaml
     owner: grafana-agent
@@ -131,10 +131,10 @@
 - name: Starting and enabling grafana-agent
   when:
     - monitoring_grafana_api_key_file.stat.exists
-    - monitoring_grafana_logs_id.stat.exists
-    - monitoring_grafana_logs_url.stat.exists
-    - monitoring_grafana_metrics_id.stat.exists
-    - monitoring_grafana_metrics_url.stat.exists
+    - monitoring_grafana_logs_id_file.stat.exists
+    - monitoring_grafana_logs_url_file.stat.exists
+    - monitoring_grafana_metrics_id_file.stat.exists
+    - monitoring_grafana_metrics_url_file.stat.exists
   ansible.builtin.systemd:
     enabled: true
     name: grafana-agent.service
