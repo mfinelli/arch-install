@@ -9,7 +9,7 @@
     - name: Fetching the grafana api key contents
       ansible.builtin.slurp:
         src: /root/grafana-api-key.txt
-      when: monitoring_grafana_api_key_file
+      when: monitoring_grafana_api_key_file.stat.exists
       register: monitoring_grafana_api_key
 
     - name: Checking if the grafana logs id has been set
@@ -20,7 +20,7 @@
     - name: Fetching the grafana logs id contents
       ansible.builtin.slurp:
         src: /root/grafana-logs-id.txt
-      when: monitoring_grafana_logs_id_file
+      when: monitoring_grafana_logs_id_file.stat.exists
       register: monitoring_grafana_logs_id
 
     - name: Checking if the grafana logs url has been set
@@ -31,7 +31,7 @@
     - name: Fetching the grafana logs url contents
       ansible.builtin.slurp:
         src: /root/grafana-logs-url.txt
-      when: monitoring_grafana_logs_url_file
+      when: monitoring_grafana_logs_url_file.stat.exists
       register: monitoring_grafana_logs_url
 
     - name: Checking if the grafana metrics id has been set
@@ -42,7 +42,7 @@
     - name: Fetching the grafana metrics id contents
       ansible.builtin.slurp:
         src: /root/grafana-metrics-id.txt
-      when: monitoring_grafana_metrics_id_file
+      when: monitoring_grafana_metrics_id_file.stat.exists
       register: monitoring_grafana_metrics_id
 
     - name: Checking if the grafana metrics url has been set
@@ -53,7 +53,7 @@
     - name: Fetching the grafana metrics url contents
       ansible.builtin.slurp:
         src: /root/grafana-metrics-url.txt
-      when: monitoring_grafana_metrics_url_file
+      when: monitoring_grafana_metrics_url_file.stat.exists
       register: monitoring_grafana_metrics_url
 
 - name: Ensuring correct permissions for grafana secret files
