@@ -1,3 +1,6 @@
 ---
+- name: Configuring grafana-agent
+  ansible.builtin.include_tasks: grafana.yml
+
 - name: Configuring healthchecks.io
   ansible.builtin.include_tasks: healthchecks.yml
