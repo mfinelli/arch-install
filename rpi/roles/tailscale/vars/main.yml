@@ -3,6 +3,8 @@ tailscale_ssh:
   - homepi
   - parkpi
   - raipi
+  - tvpi
+  - workpi
 
 tailscale_tags:
   homepi:
@@ -11,3 +13,7 @@ tailscale_tags:
     - tag:vpn
   raipi:
     - tag:vpn
+  tvpi:
+    - tag:service
+  workpi:
+    - tag:service
