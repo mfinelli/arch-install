@@ -4,6 +4,8 @@ main_fan_enabled_hosts:
   - homepi
   - parkpi
   - raipi
+  - tvpi
+  - workpi
 
 main_fan_enable_at_degrees_celsius: 70
 
