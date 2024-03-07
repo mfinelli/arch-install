@@ -10,6 +10,15 @@
   when: tailscale_oauth_secret_file.stat.exists
   register: tailscale_oauth_secret
 
+- name: Ensuring correct permissions for tailscale secret
+  when: tailscale_oauth_secret_file.stat.exists
+  ansible.builtin.file:
+    group: root
+    mode: "0400"
+    owner: root
+    path: /root/tailscale-oauth-secret.txt
+    state: file
+
 - name: Copying tailscale up arguments
   when: tailscale_oauth_secret_file.stat.exists
   ansible.builtin.template:

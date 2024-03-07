@@ -10,6 +10,15 @@
   when: monitoring_hcping_uuid_file.stat.exists
   register: monitoring_hcping_uuid
 
+- name: Ensuring correct permissions for healthchecks secret
+  when: monitoring_hcping_uuid_file.stat.exists
+  ansible.builtin.file:
+    group: root
+    mode: "0400"
+    owner: root
+    path: /root/hc-ping-uuid.txt
+    state: file
+
 - name: Copying hc-ping service unit
   when: monitoring_hcping_uuid_file.stat.exists
   ansible.builtin.template:
