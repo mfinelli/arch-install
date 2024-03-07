@@ -17,3 +17,8 @@ main_attached_storage:
       name: homepidata
       mountpoint: /mnt/data
       keyfile: /root/datakey
+  tvpi:
+    - label: TVPIDATA
+      name: tvpidata
+      mountpoint: /mnt/data
+      keyfile: /root/datakey
