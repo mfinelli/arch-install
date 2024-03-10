@@ -1,4 +1,13 @@
 ---
+- name: Adding APT pin for backports packages
+  ansible.builtin.template:
+    dest: /etc/apt/preferences.d/media
+    group: root
+    mode: "0644"
+    owner: root
+    src: media.j2
+  register: media_apt_pin
+
 - name: Installing media packages
   ansible.builtin.apt:
     name:
@@ -11,3 +20,4 @@
       - vlc
       - yt-dlp
     state: present
+    update_cache: "{{ media_apt_pin.changed }}"

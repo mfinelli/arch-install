@@ -1,4 +1,13 @@
 ---
+- name: Adding APT pin for backports packages
+  ansible.builtin.template:
+    dest: /etc/apt/preferences.d/media
+    group: root
+    mode: "0644"
+    owner: root
+    src: media.j2
+  register: media_apt_pin
+
 - name: Installing media packages
   ansible.builtin.apt:
     name:
@@ -12,6 +21,7 @@
       - youtube-dl
       - yt-dlp
     state: present
+    update_cache: "{{ media_apt_pin.changed }}"
 
 # https://blogs.gnome.org/thaller/2016/08/26/mac-address-spoofing-in-networkmanager-1-4-0/
 - name: Enabling random MAC addresses
