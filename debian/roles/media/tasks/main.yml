@@ -6,18 +6,22 @@
     mode: "0644"
     owner: root
     src: media.j2
-  register: media_apt_pin
 
 - name: Installing media packages
   ansible.builtin.apt:
     name:
       - cksfv
-      - gallery-dl
       - keepassxc
       - sabnzbdplus
       - torbrowser-launcher
       - transmission
       - vlc
+    state: present
+
+- name: Installing media packages from backports
+  ansible.builtin.apt:
+    default_release: "{{ ansible_distribution_release }}-backports"
+    name:
+      - gallery-dl
       - yt-dlp
     state: present
-    update_cache: "{{ media_apt_pin.changed }}"
