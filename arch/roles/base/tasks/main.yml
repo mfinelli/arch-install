@@ -279,6 +279,7 @@
       - networkmanager
       - networkmanager-openvpn
       - wireless-regdb
+      - wireless_tools
       - wpa_supplicant
     state: present
 
