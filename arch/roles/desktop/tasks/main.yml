@@ -27,6 +27,15 @@
     name: keymapperd.service
     state: started
 
+- name: Disable keymapper tray icon
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/xdg/autostart/keymapper.desktop
+    group: root
+    mode: "0644"
+    owner: root
+    src: keymapper.desktop
+
 - name: Installing bluetooth packages
   become: true
   community.general.pacman:

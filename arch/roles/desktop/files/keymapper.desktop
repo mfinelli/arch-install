@@ -1,0 +1,7 @@
+# Ansible managed
+[Desktop Entry]
+Type=Application
+Name=Keymapper
+Exec=keymapper --no-tray -u
+Icon=input-keyboard
+NoDisplay=true
