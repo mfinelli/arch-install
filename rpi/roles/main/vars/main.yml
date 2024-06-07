@@ -17,6 +17,10 @@ main_attached_storage:
       name: homepidata
       mountpoint: /mnt/data
       keyfile: /root/datakey
+    - label: MUSICDATA
+      name: musicdata
+      mountpoint: /mnt/music
+      keyfile: /root/musickey
   tvpi:
     - label: TVPIDATA
       name: tvpidata
