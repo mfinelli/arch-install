@@ -15,10 +15,12 @@
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-arc-menu
       - gnome-shell-extension-arch-update
+      - gnome-shell-extension-blur-my-shell
       - gnome-shell-extension-dash-to-dock
       - gnome-shell-extension-espresso
       - gnome-shell-extension-nightthemeswitcher
       - gnome-shell-extension-no-overview
+      - gnome-shell-extension-openweatherrefined
       - gnome-shell-extension-pano
       - gnome-shell-extension-randomwallpaper
       - gnome-shell-extension-systemd-manager
@@ -37,8 +39,6 @@
     name:
       - gnome-shell-extension-bluetooth-quick-connect
       - gnome-shell-extension-emoji-selector-git
-      - gnome-shell-extension-freon
-      - gnome-shell-extension-openweather
     state: present
 
 - name: Copying systemd policy for the systemd GNOME extension
