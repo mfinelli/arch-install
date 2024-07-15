@@ -33,6 +33,7 @@
     name:
       - bat
       - bind
+      - bpftop
       - broot
       - ctags
       - fd
