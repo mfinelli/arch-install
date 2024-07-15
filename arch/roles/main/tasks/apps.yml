@@ -84,6 +84,16 @@
       - xsane-gimp
     state: present
 
+- name: Installing photography tools
+  when: mtype != 'media'
+  become: true
+  community.general.pacman:
+    name:
+      - darktable
+      - dcraw
+      - dnglab
+      - rawtherapee
+
 - name: Installing hexchat
   when: mtype != 'media'
   become: true
