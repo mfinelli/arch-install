@@ -65,7 +65,6 @@
     name:
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-arc-menu
-      - gnome-shell-extension-bluetooth-quick-connect
       - gnome-shell-extension-dashtodock
       - gnome-shell-extension-debian-updates-indicator
       - gnome-shell-extension-espresso

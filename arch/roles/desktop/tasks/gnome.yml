@@ -35,13 +35,6 @@
       - xdg-desktop-portal-gnome
     state: present
 
-- name: Installing GNOME extras from the AUR
-  kewlfft.aur.aur:
-    name:
-      - gnome-shell-extension-bluetooth-quick-connect
-      - gnome-shell-extension-emoji-selector-git
-    state: present
-
 - name: Copying systemd policy for the systemd GNOME extension
   become: true
   ansible.builtin.copy:
