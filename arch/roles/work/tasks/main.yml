@@ -24,9 +24,7 @@
       - colordiff
       - direnv
       - git-crypt
-      - kustomize
       - mariadb-clients
-      - nodejs-lhci-cli
       - openldap
       - python-kubernetes
       - terraform-docs
