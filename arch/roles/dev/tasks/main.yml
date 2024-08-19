@@ -104,6 +104,7 @@
   become: true
   community.general.pacman:
     name:
+      - dasel
       - iprange
     state: present
 
