@@ -74,6 +74,13 @@
       - mythes-it
     state: present
 
+- name: Installing Scribus
+  when: mtype != 'media'
+  become: true
+  community.general.pacman:
+    name: scribus
+    state: present
+
 - name: Installing the GIMP
   when: mtype != 'media'
   become: true
