@@ -31,6 +31,7 @@
       - dive
       - docker
       - docker-compose
+      - lazydocker
     state: present
 
 - name: Installing Virtualbox
