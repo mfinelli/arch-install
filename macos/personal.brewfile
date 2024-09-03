@@ -1,5 +1,4 @@
 tap "homebrew/bundle"
-tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/services"
@@ -42,11 +41,12 @@ brew "hugo"
 brew "imagemagick"
 brew "jpegoptim"
 brew "jq"
-brew "kubectx"
 brew "just"
 brew "kubernetes-cli"
+brew "kubectx"
 brew "lazydocker"
 brew "less"
+brew "lesspipe"
 brew "libarchive"
 brew "libpq"
 brew "libsodium"
@@ -60,11 +60,13 @@ brew "neovim"
 brew "nginx"
 brew "nnn"
 brew "node"
+brew "opentofu"
 brew "optipng"
 brew "osc"
-brew "p7zip"
+brew "pandoc"
 brew "pinentry-mac"
 brew "postgresql@15"
+brew "potrace"
 brew "powerlevel10k"
 brew "prettier"
 brew "pwgen"
@@ -76,24 +78,29 @@ brew "ruby"
 brew "ruby-install"
 brew "rust"
 brew "rustfmt"
+brew "sevenzip"
 brew "shellcheck"
 brew "shfmt"
 brew "sops"
 brew "sqlc"
 brew "staticcheck"
+brew "svgo"
 brew "telnet"
 brew "terraform"
 brew "the_silver_searcher"
 brew "thefuck"
 brew "tmux"
 brew "tree"
+brew "typst"
 brew "universal-ctags"
 brew "unzip"
 brew "urlwatch"
 brew "vim"
 brew "vivid"
 brew "wget"
-brew "youtube-dl"
+brew "yamllint"
+brew "yapf"
+brew "yarn"
 brew "yq"
 brew "yt-dlp"
 brew "zoxide"
@@ -134,6 +141,7 @@ mas "Affinity Designer 2", id: 1616831348
 mas "Affinity Photo 2", id: 1616822987
 mas "Affinity Publisher 2", id: 1606941598
 mas "GarageBand", id: 682658836
+mas "Home Assistant", id: 1099568401
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
 mas "Microsoft Remote Desktop", id: 1295203466
@@ -141,6 +149,7 @@ mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Tailscale", id: 1475387142
 mas "Textual IRC Client", id: 1262957439
+mas "UTM", id: 1538878817
 mas "Xcode", id: 497799835
 
 # vim: ft=brewfile
