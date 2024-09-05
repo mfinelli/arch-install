@@ -88,8 +88,9 @@
       - age
       - awscli
       - borgbackup
-      - p7zip-full
-      - p7zip-rar
+      - 7zip
+      - 7zip-rar
+      - 7zip-standalone
       - pass
       - pass-otp
       - rclone
