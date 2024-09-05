@@ -75,6 +75,7 @@
       - ncdu
       - nmap
       - pv
+      - sd
       - urlwatch
     state: present
 

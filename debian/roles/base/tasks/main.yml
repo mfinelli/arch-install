@@ -50,6 +50,7 @@
   ansible.builtin.apt:
     name:
       - nvme-cli
+      - sd
     state: present
 
 - name: Enabling simple, stateful firewall
