@@ -36,12 +36,12 @@
       - bpftop
       - broot
       - ctags
+      - fastfetch
       - fd
       - fzf
       - go-yq
       - htop
       - jq
-      - neofetch
       - net-tools
       - nnn
       - nvtop

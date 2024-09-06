@@ -24,6 +24,7 @@
   ansible.builtin.apt:
     name:
       - bat
+      - fastfetch
       - fd-find
       - fq
       - fzf
@@ -32,7 +33,6 @@
       - libarchive-tools
       - miller
       - moreutils
-      - neofetch
       - nvtop
       - pv
       - pwgen

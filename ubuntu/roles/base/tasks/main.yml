@@ -71,6 +71,7 @@
   ansible.builtin.apt:
     name:
       - bat
+      # - fastfetch # TODO: ubuntu 26.04
       - fd-find
       - fzf
       - htop
@@ -78,7 +79,7 @@
       - libarchive-tools
       - miller
       - moreutils
-      - neofetch
+      - neofetch # TODO: remove in ubuntu 26.04
       - nnn
       - pv
       - pwgen
