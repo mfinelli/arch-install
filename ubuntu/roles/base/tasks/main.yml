@@ -71,6 +71,7 @@
   ansible.builtin.apt:
     name:
       - bat
+      - exfatprogs
       # - fastfetch # TODO: ubuntu 26.04
       - fd-find
       - fzf
