@@ -26,3 +26,8 @@ main_attached_storage:
       name: tvpidata
       mountpoint: /mnt/data
       keyfile: /root/datakey
+  workpi:
+    - label: ZNCDATA
+      name: zncdata
+      mountpoint: /var/lib/znc
+      keyfile: /root/znckey
