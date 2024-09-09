@@ -107,3 +107,10 @@
   community.general.pacman:
     name: tailscale
     state: present
+
+- name: Installing irssi
+  when: mtype != 'media'
+  become: true
+  community.general.pacman:
+    name: irssi
+    state: present
