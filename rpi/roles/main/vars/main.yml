@@ -31,3 +31,7 @@ main_attached_storage:
       name: zncdata
       mountpoint: /var/lib/znc
       keyfile: /root/znckey
+      # N.B. owner/group must be set _after_ znc has been installed
+      #      during system bootstrap they should be "root"
+      owner: _znc
+      group: _znc

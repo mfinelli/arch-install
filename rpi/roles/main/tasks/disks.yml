@@ -4,8 +4,8 @@
   ansible.builtin.file:
     state: directory
     path: "{{ item.mountpoint }}"
-    owner: root
-    group: root
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
     mode: "0755"
   loop: "{{ main_attached_storage[ansible_hostname] }}"
 
