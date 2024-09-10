@@ -24,7 +24,7 @@
         # curl -sI \
         #   'https://discord.com/api/download?platform=linux&format=deb' | \
         # grep -i location
-        deb: https://dl.discordapp.net/apps/linux/0.0.44/discord-0.0.44.deb
+        deb: https://dl.discordapp.net/apps/linux/0.0.68/discord-0.0.68.deb
 
     - name: Installing OpenRGB
       ansible.builtin.apt:
