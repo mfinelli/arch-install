@@ -4,12 +4,12 @@
   community.general.pacman:
     name:
       - gnu-free-fonts
-      - libertinus-font
       - noto-fonts
       - noto-fonts-emoji
       - noto-fonts-extra
       - otf-fira-mono
       - otf-fira-sans
+      - otf-libertinus
       - ttf-bitstream-vera
       - ttf-caladea
       - ttf-carlito
