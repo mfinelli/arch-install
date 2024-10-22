@@ -65,6 +65,7 @@
     name:
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-arc-menu
+      - gnome-shell-extension-blur-my-shell
       - gnome-shell-extension-dashtodock
       - gnome-shell-extension-debian-updates-indicator
       - gnome-shell-extension-espresso
@@ -72,7 +73,8 @@
       - gnome-shell-extension-gamemode
       - gnome-shell-extension-nightthemeswitcher
       - gnome-shell-extension-pano
-      - gnome-shell-extension-weather
+      - gnome-shell-extension-randomwallpaper
+      - gnome-shell-extension-weather # TODO: openweatherrefined
       - gnome-shell-extensions-extra
 
 - name: Installing yubikey dependencies
