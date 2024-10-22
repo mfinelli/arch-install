@@ -45,3 +45,30 @@
       - mangohud
       - vkbasalt
     state: present
+
+- name: Installing OBS Studio
+  ansible.builtin.apt:
+    name:
+      - obs-studio
+      - obs-cli
+      - obs-3d-effect
+      - obs-advanced-scene-switcher
+      - obs-ashmanix-blur-filter
+      - obs-ashmanix-countdown
+      - obs-color-monitor
+      - obs-command-source
+      - obs-gradient-source
+      - obs-move-transition
+      - obs-pipewire-audio-capture
+      - obs-plugin-looking-glass
+      - obs-plugins
+      - obs-scene-as-transition
+      - obs-scene-collection-manager
+      - obs-scene-notes-dock
+      - obs-scene-tree-view
+      - obs-source-clone
+      - obs-source-copy
+      - obs-time-source
+      - obs-transition-table
+      - obs-vintage-filter
+    state: present
