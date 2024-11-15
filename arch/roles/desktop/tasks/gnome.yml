@@ -25,6 +25,7 @@
       - gnome-shell-extension-pano
       - gnome-shell-extension-randomwallpaper
       - gnome-shell-extension-systemd-manager
+      - gtranslator
       - hddtemp # for freon extension
       - network-manager-applet
       - power-profiles-daemon
