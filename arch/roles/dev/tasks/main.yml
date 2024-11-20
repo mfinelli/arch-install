@@ -107,6 +107,7 @@
     name:
       - dasel
       - iprange
+      - hyperfine
     state: present
 
 - name: Installing go
