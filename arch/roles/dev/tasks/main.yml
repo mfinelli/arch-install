@@ -110,6 +110,27 @@
       - hyperfine
     state: present
 
+- name: Installing visidata and dependencies
+  when: mtype != 'media'
+  become: true
+  community.general.pacman:
+    name:
+      - visidata
+      - python-boto3 # rds support
+      - python-dnslib # pcap support
+      - python-faker # fake data support
+      - python-fonttools # otf/ttf support
+      - python-matplotlib # svg support
+      - python-mysqlclient # mysql support
+      - python-odfpy # odf support
+      - python-openpyxl # xlsx support
+      - python-pdfminer # pdf support
+      - python-psutil # procmgr support
+      - python-pyaml # yaml support
+      - python-pypng # png support
+      - python-requests # http support
+      - python-sh # ping support
+
 - name: Installing go
   when: mtype != 'media'
   become: true
