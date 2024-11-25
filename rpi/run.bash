@@ -6,8 +6,7 @@ if [[ $# -ne 0 ]]; then
 fi
 
 hn="$(cat /etc/hostname)"
-# declare -a fde_enabled_hosts=(homepi parkpi raipi testpi)
-declare -a fde_enabled_hosts=(homepi raipi testpi tvpi workpi)
+declare -a fde_enabled_hosts=(homepi parkpi raipi testpi tvpi workpi)
 declare -a tailscale_exit_nodes=(parkpi raipi)
 
 declare -A wregdom_hosts
