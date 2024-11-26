@@ -31,6 +31,7 @@
       - htop
       - jq
       - libarchive-tools
+      - lsd
       - miller
       - moreutils
       - nvtop

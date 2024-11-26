@@ -42,6 +42,7 @@
       - go-yq
       - htop
       - jq
+      - lsd
       - net-tools
       - nnn
       - nvtop
