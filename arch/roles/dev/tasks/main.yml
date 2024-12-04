@@ -153,11 +153,11 @@
       - rust-analyzer
     state: present
 
-- name: Installing redis
+- name: Installing valkey
   when: mtype == 'personal'
   become: true
   community.general.pacman:
-    name: redis
+    name: valkey
     state: present
 
 - name: Installing PostgreSQL
