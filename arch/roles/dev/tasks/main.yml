@@ -174,13 +174,6 @@
     name: postfix
     state: present
 
-- name: Installing neovim
-  when: mtype != 'media'
-  become: true
-  community.general.pacman:
-    name: neovim
-    state: present
-
 - name: Installing language servers
   when: type != 'media'
   become: true
