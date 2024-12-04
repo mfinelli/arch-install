@@ -205,6 +205,14 @@
       - sqlc
     state: present
 
+- name: Installing vinovoto dependencies
+  when: mtype == 'personal'
+  become: true
+  community.general.pacman:
+    name:
+      - templ
+      - wgo
+
 - name: Installing nodejs and tools
   ansible.builtin.include_tasks: nodejs.yml
 
