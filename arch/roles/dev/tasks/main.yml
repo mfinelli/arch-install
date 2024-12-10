@@ -106,8 +106,9 @@
   community.general.pacman:
     name:
       - dasel
-      - iprange
       - hyperfine
+      - iprange
+      - tokei
     state: present
 
 - name: Installing visidata and dependencies
