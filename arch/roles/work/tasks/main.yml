@@ -1,28 +1,12 @@
 ---
-- name: Installing VPN client
-  when: mtype == 'work'
-  become: true
-  community.general.pacman:
-    name: networkmanager-fortisslvpn
-    state: present
-
-- name: Installing zenity
-  when: mtype == 'work'
-  become: true
-  community.general.pacman:
-    name: zenity
-    state: present
-
 - name: Installing required software
   when: mtype == 'work'
   become: true
   community.general.pacman:
     name:
       - apachedirectorystudio
-      - asdf-vm
       - cmctl # cert-manager cli
       - colordiff
-      - direnv
       - git-crypt
       - mariadb-clients
       - openldap
