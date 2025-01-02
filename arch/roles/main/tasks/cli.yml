@@ -31,6 +31,7 @@
   become: true
   community.general.pacman:
     name:
+      - 7zip
       - bat
       - bind
       - bpftop
@@ -46,7 +47,6 @@
       - net-tools
       - nnn
       - nvtop
-      - p7zip
       - pwgen
       - ripgrep
       - screen
