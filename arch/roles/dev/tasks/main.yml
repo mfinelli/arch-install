@@ -6,6 +6,13 @@
     name: firefox-developer-edition
     state: present
 
+- name: Installing ghostty
+  when: mtype != 'media'
+  become: true
+  community.general.pacman:
+    name: ghostty
+    state: present
+
 - name: Installing geckodriver
   when: mtype == 'personal'
   become: true
