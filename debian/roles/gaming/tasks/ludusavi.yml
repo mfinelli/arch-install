@@ -1,0 +1,21 @@
+---
+- name: Getting current ludusavi version
+  ansible.builtin.shell:
+    cmd: >-
+      set -e -o pipefail;
+      [ -e /usr/local/bin/ludusavi ] && /usr/local/bin/ludusavi -V || echo ''
+  register: gaming_ludusavi
+  changed_when: false
+  failed_when: gaming_ludusavi.rc != 0
+
+- name: Downloading and installing ludusavi
+  when: gaming_ludusavi.stdout != "ludusavi " + gaming_ludusavi_version
+  ansible.builtin.unarchive:
+    dest: /usr/local/bin
+    group: root
+    mode: "0755"
+    owner: root
+    remote_src: true
+    src: "https://github.com/mtkennerly/ludusavi/releases/download/\
+      v{{ gaming_ludusavi_version }}/ludusavi-v{{ gaming_ludusavi_version }}\
+      -linux.tar.gz"

@@ -25,6 +25,9 @@
 - name: Installing Lutris
   ansible.builtin.include_tasks: lutris.yml
 
+- name: Installing ludusavi
+  ansible.builtin.include_tasks: ludusavi.yml
+
 - name: Installing Virtualbox
   ansible.builtin.apt:
     name:

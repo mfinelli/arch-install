@@ -2,6 +2,11 @@
 
 Installs packages for gaming on linux.
 
+## ludusavi
+
+There's not currently an apt repository available, so for now we're resorting
+to downloading the precompiled binaries.
+
 ## steam
 
 We prefer the upstream release to what is packaged in the debian/ubuntu
