@@ -5,6 +5,7 @@
       - caffeine
       - fonts-firacode
       - fonts-powerline
+      - gnome-shell-extension-espresso
       - gnome-shell-extensions
       - podman
       - podman-docker
