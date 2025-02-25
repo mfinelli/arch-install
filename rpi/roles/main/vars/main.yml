@@ -35,3 +35,7 @@ main_attached_storage:
       #      during system bootstrap they should be "root"
       owner: _znc
       group: _znc
+    - label: URLWATCHDATA
+      name: urlwatchdata
+      mountpoint: /opt/urlwatch
+      keyfile: /root/urlwatchkey
