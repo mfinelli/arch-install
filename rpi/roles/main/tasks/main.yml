@@ -24,6 +24,27 @@
     src: raspi.list.j2
   register: main_rpi_list
 
+- name: Adding supermario repository
+  block:
+    - name: Computing repository base url
+      ansible.builtin.set_fact:
+        base_supermario_repo_full_host: "{{ base_supermario_repo_host }}\
+          Debian_{{ ansible_distribution_major_version }}"
+
+    - name: Adding supermario repository signing key
+      ansible.builtin.apt_key:
+        keyring: /usr/share/keyrings/supermario-archive-keyring.gpg
+        state: present
+        url: "{{ base_supermario_repo_full_host }}/Release.key"
+
+    - name: Adding supermario repository
+      ansible.builtin.apt_repository:
+        filename: supermario
+        repo: >
+          deb [signed-by=/usr/share/keyrings/supermario-archive-keyring.gpg]
+          {{ base_supermario_repo_full_host }}/ /
+        update_cache: true
+
 - name: Copying locale.gen
   ansible.builtin.copy:
     dest: /etc/locale.gen
