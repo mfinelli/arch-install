@@ -11,6 +11,9 @@ main_fan_enable_at_degrees_celsius: 70
 
 main_cryptkey_timeout_seconds: 20
 
+main_supermario_repo_host: "https://download.opensuse.org/repositories/home:/\
+  mfinelli:/supermario/"
+
 main_attached_storage:
   homepi:
     - label: HOMEPIDATA
