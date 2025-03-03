@@ -106,4 +106,4 @@ necessary.
 
 If you've set a custom owner/group for the mount point then you'll need to run
 ansible again to set them correctly after ensuring that the requested user and
-group actually exist --  otherwise root will own the mount point.
+group actually exist -- otherwise root will own the mount point.
