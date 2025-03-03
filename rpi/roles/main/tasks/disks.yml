@@ -1,11 +1,20 @@
 ---
+- name: Setting getent facts
+  ansible.builtin.getent:
+    database: "{{ item }}"
+  loop:
+    - group
+    - passwd
+
 - name: Creating mount directories
   when: ansible_hostname in main_attached_storage
   ansible.builtin.file:
     state: directory
     path: "{{ item.mountpoint }}"
-    owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
+    owner: "{{ item.owner if item.owner is defined and item.owner in
+      ansible_facts.get('getent_passwd', {}) else 'root' }}"
+    group: "{{ item.group if item.group is defined and item.group in
+      ansible_facts.get('getent_group', {}) else 'root' }}"
     mode: "0755"
   loop: "{{ main_attached_storage[ansible_hostname] }}"
 
