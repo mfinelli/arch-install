@@ -39,3 +39,7 @@ main_attached_storage:
       name: urlwatchdata
       mountpoint: /var/lib/urlwatch
       keyfile: /root/urlwatchkey
+      # N.B. owner/group must be set _after_ creating the urlwatch user
+      #      during system bootstrap they should be "root"
+      owner: urlwatch
+      group: urlwatch
