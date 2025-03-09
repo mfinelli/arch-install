@@ -139,6 +139,7 @@
       - scdaemon
       - screen
       - sysstat
+      - tree
       - universal-ctags
       - vim
     state: present
