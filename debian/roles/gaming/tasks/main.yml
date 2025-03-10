@@ -43,6 +43,7 @@
 - name: Installing other gaming stuff
   ansible.builtin.apt:
     name:
+      - ckb-next
       - gamemode
       - gamescope
       - mangohud

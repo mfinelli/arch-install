@@ -51,12 +51,6 @@
     enabled: true
     name: bluetooth.service
 
-- name: Installing openrgb
-  become: true
-  community.general.pacman:
-    name: openrgb
-    state: present
-
 - name: Installing baseline desktop packages
   become: true
   community.general.pacman:
@@ -69,10 +63,13 @@
       - openssh
     state: present
 
-- name: Installing piper
+- name: Installing peripherals configuration utilities
   become: true
   community.general.pacman:
-    name: piper
+    name:
+      - ckb-next
+      - openrgb
+      - piper
     state: present
 
 - name: Installing GNOME desktop environment
