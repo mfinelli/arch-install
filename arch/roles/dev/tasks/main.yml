@@ -103,13 +103,13 @@
   become: true
   community.general.pacman:
     name:
-      - cui
+      - atac
+      - glow
       - hugo
       - jpegoptim
       - just
       - openbsd-netcat
       - optipng
-      - prettier
       - shellcheck
       - shfmt
     state: present

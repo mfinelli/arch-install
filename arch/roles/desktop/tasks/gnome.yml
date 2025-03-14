@@ -29,6 +29,7 @@
       - hddtemp # for freon extension
       - network-manager-applet
       - power-profiles-daemon
+      - rhythmbox
       - seahorse
       - system-config-printer
       - wl-clipboard
