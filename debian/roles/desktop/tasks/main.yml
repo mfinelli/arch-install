@@ -66,9 +66,9 @@
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-arc-menu
       - gnome-shell-extension-blur-my-shell
+      - gnome-shell-extension-caffeine
       - gnome-shell-extension-dashtodock
       - gnome-shell-extension-debian-updates-indicator
-      - gnome-shell-extension-espresso
       - gnome-shell-extension-freon
       - gnome-shell-extension-gamemode
       - gnome-shell-extension-nightthemeswitcher

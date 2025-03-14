@@ -16,9 +16,9 @@
       - gnome-shell-extension-arc-menu
       - gnome-shell-extension-arch-update
       - gnome-shell-extension-blur-my-shell
+      - gnome-shell-extension-caffeine
       - gnome-shell-extension-dash-to-dock
       - gnome-shell-extension-emoji-copy
-      - gnome-shell-extension-espresso
       - gnome-shell-extension-nightthemeswitcher
       - gnome-shell-extension-no-overview
       - gnome-shell-extension-openweatherrefined
