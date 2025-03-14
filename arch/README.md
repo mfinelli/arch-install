@@ -77,6 +77,7 @@ Automation for Arch Linux installations.
    chfn mario
    passwd mario
    usermod -a -G sudo mario
+   usermod -a -G wheel mario
    ```
 
 9. The `KEYMAP` variable must be set in `/etc/vconsole.conf` for the
@@ -153,4 +154,10 @@ Automation for Arch Linux installations.
 
     ```shell
     chsh -s /bin/zsh
+    ```
+
+19. Disable the root account
+
+    ```shell
+    sudo passwd -l root
     ```
