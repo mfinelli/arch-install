@@ -53,6 +53,7 @@
 - name: Installing desktop CLI software
   ansible.builtin.apt:
     name:
+      - du-dust
       - podman
       - podman-docker
       - tmux
@@ -75,7 +76,7 @@
       - gnome-shell-extension-nightthemeswitcher
       - gnome-shell-extension-pano
       - gnome-shell-extension-randomwallpaper
-      - gnome-shell-extension-weather # TODO: openweatherrefined
+      - gnome-shell-extension-weather
       - gnome-shell-extensions-extra
 
 - name: Installing yubikey dependencies

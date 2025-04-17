@@ -120,9 +120,11 @@
   community.general.pacman:
     name:
       - dasel
+      - dust
       - hyperfine
       - iprange
       - tokei
+      - ugrep
     state: present
 
 - name: Installing visidata and dependencies
@@ -226,7 +228,10 @@
   become: true
   community.general.pacman:
     name:
+      - mdq
       - templ
+      - ttf-iosevka
+      - typst
       - wgo
 
 - name: Installing nodejs and tools

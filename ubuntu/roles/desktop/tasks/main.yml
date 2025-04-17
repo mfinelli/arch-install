@@ -5,7 +5,6 @@
       - caffeine
       - fonts-firacode
       - fonts-powerline
-      - gnome-shell-extension-espresso
       - gnome-shell-extensions
       - podman
       - podman-docker
@@ -38,6 +37,8 @@
   ansible.builtin.apt:
     name:
       - fonts-ubuntu-mono-nerd-font
+      - gnome-shell-extension-espresso
+      - houmain-keymapper
     state: present
 
 - name: Configuring GDM greeter

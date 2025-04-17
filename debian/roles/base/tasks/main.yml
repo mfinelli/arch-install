@@ -28,6 +28,7 @@
       - fd-find
       - fq
       - fzf
+      # - glow # TODO trixie
       - htop
       - jq
       - libarchive-tools
