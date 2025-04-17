@@ -86,3 +86,9 @@
 
 - name: Installing fonts
   ansible.builtin.include_tasks: fonts.yml
+
+- name: Installing trash-cli
+  become: true
+  community.general.pacman:
+    name: trash-cli
+    state: present
