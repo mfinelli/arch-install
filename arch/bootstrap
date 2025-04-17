@@ -138,7 +138,7 @@ pstart=$SECONDS
 
 while :; do
   # the rest of the system gets installed/configured using ansible
-  if pacman -S ansible git pyalpm ansible-gpg-key-git vim; then
+  if pacman -S ansible git pyalpm ansible-gpg-key-git gvim; then
     break
   else
     echo -e "${BOLDRED}Installing ansible packages failed!${ENDCOLOR}"

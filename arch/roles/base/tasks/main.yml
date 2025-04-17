@@ -348,7 +348,7 @@
     name:
       - lynx
       - rsync
-      - vim
+      - gvim
       - vim-spell-en
       - vim-spell-es
       - vim-spell-fr
