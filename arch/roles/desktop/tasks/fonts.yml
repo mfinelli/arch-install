@@ -12,7 +12,6 @@
       - otf-libertinus
       - ttf-bitstream-vera
       - ttf-caladea
-      - ttf-carlito
       - ttf-dejavu
       - ttf-liberation
       - ttf-ubuntu-font-family
@@ -21,6 +20,5 @@
 - name: Installing fonts from the AUR
   kewlfft.aur.aur:
     name:
-      # - ttf-google-fonts-git
-      - ttf-symbola
+      - ttf-google-fonts-git
     state: present
