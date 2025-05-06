@@ -45,7 +45,7 @@
   when: mtype == 'personal' or mtype == 'media'
   become: true
   community.general.pacman:
-    name: tor-browser
+    name: tor-browser-bin
     state: present
 
 - name: Installing Google Chrome
@@ -58,7 +58,6 @@
   become: true
   community.general.pacman:
     name:
-      - youtube-dl
       - yt-dlp
     state: present
 

@@ -16,21 +16,13 @@
     name: google-cloud-cli
     state: present
 
-- name: Installing cloud commandline tools from AUR
-  when: mtype == 'personal'
-  kewlfft.aur.aur:
-    name:
-      - flyctl
-    state: present
-
 - name: Installing main devops tools
   when: mtype == 'personal'
   become: true
   community.general.pacman:
     name:
-      - newrelic-cli
       - sops
-      - terraform
+      - opentofu
     state: present
 
 - name: Installing kubectl
@@ -47,10 +39,8 @@
     name:
       - helm
       - helm-diff
-      - helm-gcs
       - helm-s3
       - helm-secrets
-      - helmfile
       - pluto
       - popeye
     state: present
@@ -70,7 +60,6 @@
     plugin_path: /usr/lib/helm/plugins/{{ item }}
   loop:
     - diff
-    - gcs
     - s3
     - secrets
 

@@ -13,13 +13,6 @@
     name: ghostty
     state: present
 
-- name: Installing geckodriver
-  when: mtype == 'personal'
-  become: true
-  community.general.pacman:
-    name: geckodriver
-    state: present
-
 - name: Installing LaTeX packages
   when: mtype == 'personal'
   become: true
@@ -58,46 +51,6 @@
       - virtualbox-host-modules-arch
     state: present
 
-- name: Installing virt-manager
-  when: mtype != 'media'
-  become: true
-  community.general.pacman:
-    name:
-      - dnsmasq
-      - edk2-ovmf
-      - libvirt
-      - qemu-desktop
-      - swtpm
-      - virt-manager
-    state: present
-
-- name: Adding mario to libvirt group
-  become: true
-  ansible.builtin.user:
-    append: true
-    groups: libvirt
-    user: "{{ whoami }}"
-
-- name: Copying libvirtd configuration
-  when: mtype != 'media'
-  become: true
-  ansible.builtin.copy:
-    dest: /etc/libvirt/libvirtd.conf
-    group: root
-    mode: "0644"
-    owner: root
-    src: libvirtd.conf
-
-- name: Copying libvirtd QEMU configuration
-  when: mtype != 'media'
-  become: true
-  ansible.builtin.template:
-    dest: /etc/libvirt/qemu.conf
-    group: root
-    mode: "0644"
-    owner: root
-    src: qemu.conf.j2
-
 - name: Installing main commandline utilities
   when: mtype != 'media'
   become: true
@@ -126,27 +79,6 @@
       - tokei
       - ugrep
     state: present
-
-- name: Installing visidata and dependencies
-  when: mtype != 'media'
-  become: true
-  community.general.pacman:
-    name:
-      - visidata
-      - python-boto3 # rds support
-      - python-dnslib # pcap support
-      - python-faker # fake data support
-      - python-fonttools # otf/ttf support
-      - python-matplotlib # svg support
-      - python-mysqlclient # mysql support
-      - python-odfpy # odf support
-      - python-openpyxl # xlsx support
-      - python-pdfminer # pdf support
-      - python-psutil # procmgr support
-      - python-pyaml # yaml support
-      - python-pypng # png support
-      - python-requests # http support
-      - python-sh # ping support
 
 - name: Installing go
   when: mtype != 'media'
@@ -197,7 +129,6 @@
   become: true
   community.general.pacman:
     name:
-      - ansible-language-server
       - bash-language-server
     state: present
 
@@ -234,8 +165,14 @@
       - typst
       - wgo
 
-- name: Installing nodejs and tools
-  ansible.builtin.include_tasks: nodejs.yml
+- name: Installing nodejs
+  when: mtype == 'personal'
+  become: true
+  community.general.pacman:
+    name:
+      - nodejs
+      - npm
+    state: present
 
 - name: Installing ruby and tools
   ansible.builtin.include_tasks: ruby.yml

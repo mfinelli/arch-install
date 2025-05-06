@@ -101,13 +101,6 @@
       - dnglab
       - rawtherapee
 
-- name: Installing hexchat
-  when: mtype != 'media'
-  become: true
-  community.general.pacman:
-    name: hexchat
-    state: present
-
 - name: Installing Thunderbird
   when: mtype == 'personal'
   become: true

@@ -5,12 +5,15 @@
   community.general.pacman:
     name:
       - apachedirectorystudio
+      - cloud-sql-proxy
       - cmctl # cert-manager cli
       - colordiff
       - git-crypt
       - mariadb-clients
       - openldap
+      - python-google-cloud-compute
       - python-kubernetes
+      - python-onepasswordconnectsdk
       - terraform-docs
       - tidy
       - yj
@@ -21,7 +24,5 @@
   kewlfft.aur.aur:
     name:
       - google-cloud-cli-gke-gcloud-auth-plugin
-      - python-google-cloud-compute
-      - python-onepasswordconnectsdk
       - slack-desktop # slack-wayland doesn't work very well...
     state: present
