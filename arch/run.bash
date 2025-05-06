@@ -34,7 +34,7 @@ array_contains() {
 # shellcheck disable=SC2034
 PERSONAL_MACHINES=(stig)
 # shellcheck disable=SC2034
-WORK_MACHINES=(easy CLIFMI706)
+WORK_MACHINES=(CLIFMI1371 CLIFMI706 easy)
 # shellcheck disable=SC2034
 MEDIA_MACHINES=()
 
