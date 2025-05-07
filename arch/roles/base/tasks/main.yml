@@ -70,7 +70,7 @@
   community.general.pacman:
     name:
       - plymouth
-      # - plymouth-theme-...
+      - plymouth-theme-arch-logo-symbol
   notify:
     - Run mkinitcpio
 
