@@ -124,7 +124,8 @@ read -rp "Press enter to continue..." _
 swapon /dev/crypt/swap
 mount -o compress=zstd /dev/crypt/root /mnt
 mkdir /mnt/{efi,home}
-mount -o nodev,noexec,nosuid /dev/disk/by-partlabel/EFISYSTEM /mnt/efi
+mount -o nodev,noexec,nosuid,fmask=0077,dmask=0077 \
+  /dev/disk/by-partlabel/EFISYSTEM /mnt/efi
 mount -o compress=zstd /dev/crypt/home /mnt/home
 
 echo -e "${CYAN}Mounted filesystems.${ENDCOLOR}"
