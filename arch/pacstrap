@@ -27,6 +27,11 @@ read -rp "Press enter to continue..." _
 lsblk
 read -rp "Which disk to install? /dev/" INSTALL_DISK
 
+read -rp "EFI partition size (default: 512M)? " EFIPSIZE
+if [[ -z $EFIPSIZE ]]; then
+  EFIPSIZE=512M
+fi
+
 pstart=$SECONDS
 
 # https://superuser.com/a/984637
@@ -36,7 +41,7 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk "/dev/$INSTALL_DISK"
     n # create new partition (efi boot partition)
       # default (partition number 1)
       # default (start at beginning of disk)
-    512M # 512M efi boot partition
+    $EFIPSIZE # 512M efi boot partition
     ef00 # (EFI system type)
     n # create new partition (luks container)
       # default (partition number 2)
