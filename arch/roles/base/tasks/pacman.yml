@@ -47,7 +47,7 @@
 - name: Copying makepkg configuration
   become: true
   ansible.builtin.template:
-    dest: /etc/makepkg.conf
+    dest: /etc/makepkg.conf.d/makeflags.conf
     group: root
     mode: "0644"
     owner: root
