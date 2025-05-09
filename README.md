@@ -11,3 +11,12 @@ not feasible or reasonable.
 
 Refer to the README in the specific operating system directories for specific
 instructions for a given system.
+
+## preparing USB installation medium
+
+Other options available in the Arch wiki, but I find the following the simplest
+option (as root):
+
+```shell
+dd bs=4M if=/path/to.iso of=/dev/sda conv=fsync oflag=direct status=progress
+```
