@@ -132,3 +132,9 @@
   community.general.pacman:
     name: rpi-imager
     state: present
+
+- name: Installing winbox
+  when: mtype == 'personal'
+  kewlfft.aur.aur:
+    name: winbox
+    state: present

@@ -5,6 +5,7 @@
   community.general.pacman:
     name:
       - apachedirectorystudio
+      - azure-cli
       - cloud-sql-proxy
       - cmctl # cert-manager cli
       - colordiff
