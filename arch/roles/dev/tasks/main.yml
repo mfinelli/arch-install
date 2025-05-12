@@ -125,7 +125,7 @@
     state: present
 
 - name: Installing language servers
-  when: type != 'media'
+  when: mtype != 'media'
   become: true
   community.general.pacman:
     name:
