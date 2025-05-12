@@ -40,7 +40,6 @@
       - fastfetch
       - fd
       - fzf
-      - go-yq
       - htop
       - jq
       - lsd

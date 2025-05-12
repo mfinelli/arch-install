@@ -1,4 +1,11 @@
 ---
+- name: Installing finellictl dependencies
+  become: true
+  community.general.pacman:
+    name:
+      - go-yq
+    state: present
+
 - name: Installing finellictl
   become: true
   ansible.builtin.copy:
