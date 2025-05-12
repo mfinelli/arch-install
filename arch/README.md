@@ -145,7 +145,7 @@ Automation for Arch Linux installations.
 16. Reboot
 
     ```shell
-    sudo reboot
+    sudo systemctl reboot
     ```
 
 17. Install [dotfiles](https://github.com/mfinelli/dotfiles)
