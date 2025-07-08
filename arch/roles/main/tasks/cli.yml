@@ -67,6 +67,7 @@
       - cloc
       - difftastic
       - dos2unix
+      - lstr
       - fq
       - github-cli
       - glab
