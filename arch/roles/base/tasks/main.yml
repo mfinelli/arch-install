@@ -164,6 +164,7 @@
   community.general.pacman:
     name:
       - btrfs-progs
+      - compsize
       - cryptsetup
       - dosfstools
       - e2fsprogs
@@ -325,6 +326,7 @@
     name:
       - ansible
       - git
+      - git-zsh-completion
       - pyalpm
     state: present
 

@@ -44,6 +44,7 @@
     name:
       - gscan2pdf
       - paperwork
+      - pdftk
       - tesseract
       - tesseract-data-eng
       - tesseract-data-fra
