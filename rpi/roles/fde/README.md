@@ -117,7 +117,6 @@ you can additionally follow these instructions.
 
    You may also want to wipe the data from the drive before using it, which
    can be accomplished like so:
-
    1. First note the optimal sector size and the total number of sectors
       (assuming `/dev/sda`):
 

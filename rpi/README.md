@@ -8,7 +8,6 @@ network VPN.
 1. Provision the
    [Raspberry PI Operating System](https://www.raspberrypi.com/software/)
    onto the desired microSD card and boot the Pi.
-
    - Select Raspberry Pi OS Lite (64-bit)
    - Set the Wi-Fi network, password, and country
    - Set the timezone and keyboard layout
