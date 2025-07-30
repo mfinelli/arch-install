@@ -21,7 +21,7 @@
     mode: "0664"
     owner: root
     src: fasttrack.list.j2
-  register: fasttrack_sources
+  register: base_fasttrack_sources
 
 - name: Adding supermario repository
   block:
