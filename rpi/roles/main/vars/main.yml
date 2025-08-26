@@ -44,5 +44,5 @@ main_attached_storage:
       group: urlwatch
     - label: WARCDATA
       name: warcdata
-      mountpount: /mnt/warcdata
+      mountpoint: /mnt/warcdata
       keyfile: /root/warckey
