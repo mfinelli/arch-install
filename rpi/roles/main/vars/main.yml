@@ -42,3 +42,7 @@ main_attached_storage:
       keyfile: /root/urlwatchkey
       owner: urlwatch
       group: urlwatch
+    - label: WARCDATA
+      name: warcdata
+      mountpount: /mnt/warcdata
+      keyfile: /root/warckey
