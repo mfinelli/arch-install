@@ -30,6 +30,10 @@ main_attached_storage:
       mountpoint: /mnt/data
       keyfile: /root/datakey
   workpi:
+    - label: GITDATA
+      name: gitdata
+      mountpoint: /mnt/gitdata
+      keyfile: /root/gitkey
     - label: ZNCDATA
       name: zncdata
       mountpoint: /var/lib/znc
