@@ -11,6 +11,7 @@
   ansible.builtin.apt:
     name:
       - cksfv
+      - magic-wormhole
       - keepassxc
       - sabnzbdplus
       - torbrowser-launcher

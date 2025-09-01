@@ -86,6 +86,7 @@
   community.general.pacman:
     name:
       - cdrtools
+      - magic-wormhole
       - nvme-cli
       - potrace
       - unrar
