@@ -1,0 +1,7 @@
+---
+- name: Configure macOS
+  hosts: localhost
+  tasks:
+    - name: Not doing anything
+      debug:
+        msg: We don't have anything to do yet!
