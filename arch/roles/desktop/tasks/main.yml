@@ -83,3 +83,9 @@
   community.general.pacman:
     name: trash-cli
     state: present
+
+- name: Installing headsetcontrol
+  become: true
+  community.general.pacman:
+    name: headsetcontrol
+    state: present

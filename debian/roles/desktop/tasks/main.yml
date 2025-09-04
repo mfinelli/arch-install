@@ -45,6 +45,7 @@
       - fonts-ubuntu
       - gnome-shell-extension-manager
       - gnome-shell-extensions
+      - headsetcontrol
       - houmain-keymapper
       - piper
       - thunderbird
