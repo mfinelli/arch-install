@@ -1,6 +1,7 @@
 tap "homebrew/bundle"
 brew "age"
 brew "ansible"
+brew "atuin"
 brew "awscli"
 brew "bash"
 brew "bat"
