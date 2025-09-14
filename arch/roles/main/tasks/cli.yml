@@ -116,3 +116,9 @@
   community.general.pacman:
     name: irssi
     state: present
+
+- name: Installing atuin
+  become: true
+  community.general.pacman:
+    name: atuin
+    state: present
