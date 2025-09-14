@@ -34,6 +34,10 @@ main_attached_storage:
       name: gitdata
       mountpoint: /mnt/gitdata
       keyfile: /root/gitkey
+    - label: SHDATA
+      name: shdata
+      mountpoint: /mnt/shdata
+      keyfile: /root/shkey
     - label: ZNCDATA
       name: zncdata
       mountpoint: /var/lib/znc
