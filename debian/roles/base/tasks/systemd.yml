@@ -39,14 +39,6 @@
     path: /etc/systemd/timesyncd.conf.d
     state: directory
 
-- name: Creating systemd-timesyncd configuration directory
-  ansible.builtin.file:
-    group: root
-    mode: "0755"
-    owner: root
-    path: /etc/systemd/timesyncd.conf.d
-    state: directory
-
 - name: Copying custom systemd-timesyncd configuration
   ansible.builtin.copy:
     dest: /etc/systemd/timesyncd.conf.d/time.conf

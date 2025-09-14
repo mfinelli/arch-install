@@ -28,7 +28,7 @@
       - fd-find
       - fq
       - fzf
-      # - glow # TODO trixie
+      - glow
       - htop
       - jq
       - libarchive-tools
@@ -53,6 +53,11 @@
     name:
       - nvme-cli
       - sd
+    state: present
+
+- name: Installing atuin
+  ansible.builtin.apt:
+    name: atuin
     state: present
 
 - name: Enabling simple, stateful firewall
