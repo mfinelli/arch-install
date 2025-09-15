@@ -24,10 +24,10 @@ export HOMEBREW_NO_ANALYTICS=1
 # prompt for sudo password right away
 sudo echo -n
 
-if [[ $(uname -m) == arm64 ]]; then
-  # install rosetta _before_ homebrew because some installers need it
-  sudo /usr/sbin/softwareupdate --install-rosetta --agree-to-license
-fi
+# if [[ $(uname -m) == arm64 ]]; then
+#   # install rosetta _before_ homebrew because some installers need it
+#   sudo /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+# fi
 
 # i'm really not a fan of this pattern but I don't have a better idea right now
 hburl=https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
