@@ -10,6 +10,7 @@
       - otf-fira-mono
       - otf-fira-sans
       - otf-libertinus
+      - otf-unifont # used for emo.pl irssi script
       - ttf-bitstream-vera
       - ttf-caladea
       - ttf-carlito

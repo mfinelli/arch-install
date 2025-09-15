@@ -26,3 +26,10 @@
       - gallery-dl
       - yt-dlp
     state: present
+
+- name: Installing irssi
+  ansible.builtin.apt:
+    name:
+      - irssi
+      - irssi-plugin-otr
+      - fonts-unifont
