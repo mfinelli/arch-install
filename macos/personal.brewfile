@@ -38,6 +38,7 @@ brew "glab"
 brew "glow"
 brew "gnu-sed"
 brew "gnu-tar"
+brew "gnupg"
 brew "go"
 brew "gofumpt"
 brew "goose"
@@ -151,7 +152,6 @@ cask "ghostty"
 cask "gimp"
 cask "gnucash"
 cask "google-chrome"
-cask "gpg-suite"
 cask "iterm2"
 cask "jumpcut"
 cask "keepassxc"
@@ -160,7 +160,6 @@ cask "libreoffice"
 cask "little-snitch"
 cask "mactex"
 cask "megasync"
-cask "micro-snitch"
 cask "mullvad-vpn"
 cask "nvidia-geforce-now"
 cask "raspberry-pi-imager"
@@ -175,10 +174,10 @@ mas "GarageBand", id: 682658836
 mas "Home Assistant", id: 1099568401
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
+mas "Micro Snitch", id: 972028355
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Tailscale", id: 1475387142
-mas "Textual 7", id: 1262957439
 mas "UTM", id: 1538878817
 mas "Xcode", id: 497799835
 

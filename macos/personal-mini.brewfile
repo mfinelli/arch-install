@@ -16,6 +16,7 @@ brew "git"
 brew "glow"
 brew "gnu-sed"
 brew "gnu-tar"
+brew "gnupg"
 brew "grep"
 brew "htop"
 brew "imagemagick"
@@ -66,14 +67,12 @@ cask "font-meslo-for-powerlevel10k"
 cask "ghostty"
 cask "gimp"
 cask "google-chrome"
-cask "gpg-suite"
 cask "jumpcut"
 cask "keepassxc"
 cask "keepingyouawake"
 cask "libreoffice"
 cask "little-snitch"
 cask "megasync"
-cask "micro-snitch"
 cask "mullvad-vpn"
 cask "thunderbird"
 cask "viscosity"
@@ -82,6 +81,7 @@ cask "winbox"
 mas "Affinity Designer 2", id: 1616831348
 mas "Affinity Photo 2", id: 1616822987
 mas "Affinity Publisher 2", id: 1606941598
+mas "Micro Snitch", id: 972028355
 mas "Tailscale", id: 1475387142
 
 # vim: ft=brewfile
