@@ -30,8 +30,6 @@ packages, so updates need to be performed manually in `debian.yml` directly.
 
 ## todo
 
-- `opensnitch` will need to wait for trixie because `opensnitch-ebpf-modules`
-  didn't make bookworm.
 - consider `clamav`
 - test drive: https://github.com/albertlauncher/albert
 - `gdm-settings` will be available with the trixie release

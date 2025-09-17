@@ -100,3 +100,10 @@
       - pass-otp
       - rclone
     state: present
+
+- name: Installing opensnitch
+  ansible.builtin.apt:
+    name:
+      - opensnitch
+      - opensnitch-ebpf-modules
+      - python3-opensnitch-ui
