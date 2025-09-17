@@ -89,3 +89,15 @@
   community.general.pacman:
     name: headsetcontrol
     state: present
+
+- name: Installing opensnitch
+  become: true
+  community.general.pacman:
+    name: opensnitch
+    state: present
+
+- name: Enabling opensnitch
+  become: true
+  ansible.builtin.systemd:
+    enabled: true
+    name: opensnitchd.service
