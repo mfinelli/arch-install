@@ -173,6 +173,7 @@
     name:
       - nodejs
       - npm
+      - pnpm
     state: present
 
 - name: Installing ruby and tools
