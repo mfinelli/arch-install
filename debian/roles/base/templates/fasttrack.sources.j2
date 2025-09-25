@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+Types: deb
+URIs: https://fasttrack.debian.net/debian-fasttrack/
+Suites: {{ ansible_distribution_release }}-fasttrack
+Components: main contrib non-free
+Signed-By: /usr/share/keyrings/fasttrack-archive-keyring.gpg
+
+Types: deb
+URIs: https://fasttrack.debian.net/debian-fasttrack/
+Suites: {{ ansible_distribution_release }}-backports-staging
+Components: main contrib non-free
+Signed-By: /usr/share/keyrings/fasttrack-archive-keyring.gpg
+
+# vim: ft=debsources.jinja2
