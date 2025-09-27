@@ -21,9 +21,9 @@
       - gnome-shell-extension-emoji-copy
       - gnome-shell-extension-nightthemeswitcher
       - gnome-shell-extension-no-overview
-      - gnome-shell-extension-openweatherrefined
       - gnome-shell-extension-pano
       - gnome-shell-extension-randomwallpaper
+      - gnome-shell-extension-simpleweather
       - gnome-shell-extension-systemd-manager
       - gtranslator
       - hddtemp # for freon extension
