@@ -1,21 +1,37 @@
 ---
-- name: Adding the MEGA repository signing key
-  ansible.builtin.apt_key:
-    keyring: /usr/share/keyrings/meganz-archive-keyring.gpg
-    state: present
-    # url: https://mega.nz/keys/MEGA_signing.key
+- name: Downloading the MEGA repository signing key
+  ansible.builtin.get_url:
+    dest: /etc/apt/keyrings/meganz-archive-keyring.asc
+    group: root
+    mode: "0644"
+    owner: root
     url: "{{ mega_repo_host }}\
       Debian_{{ ansible_distribution_major_version }}/Release.key"
+  register: mega_repository_key
+
+- name: Adding the MEGA repository signing key
+  ansible.builtin.command:
+    cmd: >-
+      gpg --dearmor -o /usr/share/keyrings/meganz-archive-keyring.gpg
+      /etc/apt/keyrings/meganz-archive-keyring.asc
+    creates: "{{ mega_repository_key.changed | ternary('',
+      '/usr/share/keyrings/meganz-archive-keyring.gpg') | default(omit,
+      true) }}"
 
 - name: Adding the MEGA repository
-  ansible.builtin.apt_repository:
-    filename: megasync
-    repo: >
-      deb [signed-by=/usr/share/keyrings/meganz-archive-keyring.gpg]
-      {{ mega_repo_host }}Debian_{{ ansible_distribution_major_version }}/ ./
-    update_cache: true
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/meganz.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: mega.sources.j2
+  register: mega_repository
 
 - name: Installing MEGASync
   ansible.builtin.apt:
-    name: megasync
+    name:
+      - megacmd
+      - megasync
+      - nautilus-megasync
     state: present
+    update_cache: "{{ mega_repository.changed }}"

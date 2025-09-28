@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+Types: deb
+URIs: {{ mega_repo_host }}Debian_{{ ansible_distribution_major_version }}/
+Suites: ./
+Components:
+Signed-By: /usr/share/keyrings/meganz-archive-keyring.gpg
+
+# vim: ft=debsources.jinja2
