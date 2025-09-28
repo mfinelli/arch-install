@@ -77,7 +77,7 @@
       - gnome-shell-extension-nightthemeswitcher
       - gnome-shell-extension-pano
       - gnome-shell-extension-randomwallpaper
-      - gnome-shell-extension-weather
+      - gnome-shell-extension-simpleweather
       - gnome-shell-extensions-extra
 
 - name: Installing yubikey dependencies
