@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+
+Types: deb
+URIs: https://dl.winehq.org/wine-builds/debian
+Suites: {{ ansible_distribution_release }}
+Components: main
+Architectures: amd64 i386
+Signed-By: /usr/share/keyrings/winehq-archive-keyring.gpg
+
+# vim: ft=debsources.jinja2

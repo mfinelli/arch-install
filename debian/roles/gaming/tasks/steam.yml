@@ -1,25 +1,20 @@
 ---
 - name: Adding the Steam repository key
-  ansible.builtin.apt_key:
-    keyring: /usr/share/keyrings/steam.gpg
-    state: present
+  ansible.builtin.get_url:
+    dest: /usr/share/keyrings/steam-archive-keyring.gpg
+    group: root
+    mode: "0644"
+    owner: root
     url: https://repo.steampowered.com/steam/archive/stable/steam.gpg
 
 - name: Adding the Steam repository
-  ansible.builtin.apt_repository:
-    filename: steam-stable
-    repo: >
-      deb [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg]
-      https://repo.steampowered.com/steam/ stable steam
-    update_cache: true
-
-- name: Adding the Steam (source) repository
-  ansible.builtin.apt_repository:
-    filename: steam-stable
-    repo: >
-      deb-src [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg]
-      https://repo.steampowered.com/steam/ stable steam
-    update_cache: true
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/steam.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: steam.sources.j2
+  register: gaming_steam_repository
 
 - name: Installing Steam
   ansible.builtin.apt:
@@ -30,3 +25,4 @@
       - libgl1-mesa-glx:i386
       - steam-launcher
     state: present
+    update_cache: "{{ gaming_steam_repository.changed }}"

@@ -1,19 +1,30 @@
 ---
-- name: Adding the WineHQ signing key
-  ansible.builtin.apt_key:
-    keyring: /usr/share/keyrings/winehq-archive-keyring.gpg
-    state: present
+- name: Downloading the WineHQ signing key
+  ansible.builtin.get_url:
+    dest: /etc/apt/keyrings/winehq-archive-keyring.asc
+    group: root
+    mode: "0644"
+    owner: root
     url: https://dl.winehq.org/wine-builds/winehq.key
+  register: gaming_winehq_repository_key
+
+- name: Adding the WineHQ signing key
+  ansible.builtin.command:
+    cmd: >-
+      gpg --dearmor -o /usr/share/keyrings/winehq-archive-keyring.gpg
+      /etc/apt/keyrings/winehq-archive-keyring.asc
+    creates: "{{ gaming_winehq_repository_key.changed | ternary('',
+      '/usr/share/keyrings/winehq-archive-keyring.gpg') | default(omit,
+      true) }}"
 
 - name: Adding the WineHQ repository
-  ansible.builtin.apt_repository:
-    filename: winehq
-    repo: >
-      deb [arch=amd64,i386
-      signed-by=/usr/share/keyrings/winehq-archive-keyring.gpg]
-      https://dl.winehq.org/wine-builds/debian
-      {{ ansible_distribution_release }} main
-    update_cache: true
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/winehq.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: wine.sources.j2
+  register: gaming_winehq_repository
 
 - name: Installing wine
   ansible.builtin.apt:
@@ -23,3 +34,4 @@
       # - winehq-stable
       - winehq-staging
     state: present
+    update_cache: "{{ gaming_winehq_repository.changed }}"
