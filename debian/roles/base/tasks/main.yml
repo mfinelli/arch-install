@@ -60,5 +60,27 @@
     name: atuin
     state: present
 
+- name: Adding APT pin for backports kernel
+  when: base_use_backports_kernel
+  ansible.builtin.template:
+    dest: /etc/apt/preferences.d/kernel
+    group: root
+    mode: "0644"
+    owner: root
+    src: kernel.j2
+
+- name: Removing APT pin for backports kernel
+  when: not base_use_backports_kernel
+  ansible.builtin.file:
+    path: /etc/apt/preferences.d/kernel
+    state: absent
+
+- name: Installing backports kernel
+  when: base_use_backports_kernel
+  ansible.builtin.apt:
+    default_release: "{{ ansible_distribution_release }}-backports"
+    name: linux-image-{{ base_architectures[ansible_architecture] }}
+    state: present
+
 - name: Enabling simple, stateful firewall
   ansible.builtin.include_tasks: firewall.yml
