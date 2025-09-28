@@ -23,6 +23,7 @@
   ansible.builtin.command:
     cmd: >-
       gpg --dearmor -o /usr/share/keyrings/google-archive-keyring.gpg
+      /etc/apt/keyrings/google-archive-keyring.asc
     creates: "{{ chrome_repository_key.changed | ternary('',
       '/usr/share/keyrings/google-archive-keyring.gpg') | default(omit,
       true) }}"
