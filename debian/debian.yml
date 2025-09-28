@@ -7,7 +7,7 @@
   roles:
     - role: base
     - role: chrome
-    - role: cloudflarewarp
+    # - role: cloudflarewarp
     - role: desktop
     - role: firefox
     - role: gaming
