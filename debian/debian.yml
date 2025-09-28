@@ -9,6 +9,7 @@
     - role: chrome
     # - role: cloudflarewarp
     - role: desktop
+    - role: dropbox
     - role: firefox
     - role: gaming
     - role: media

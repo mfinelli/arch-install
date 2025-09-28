@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+
+Types: deb
+URIs: https://linux.dropbox.com/debian
+Suites: {{ ansible_distribution_release }}
+Components: main
+Architectures: amd64
+Signed-By: /usr/share/keyrings/dropbox-archive-keyring.gpg
+
+# vim: ft=debsources.jinja2

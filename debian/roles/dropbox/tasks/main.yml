@@ -1,0 +1,32 @@
+---
+# The `postinst` script seems to skip creating the repository if this file
+# exists
+- name: Add Dropbox defaults file
+  ansible.builtin.file:
+    group: root
+    mode: "0644"
+    owner: root
+    path: /etc/default/dropbox-repo
+    state: touch
+
+- name: Adding Dropbox signing key
+  ansible.builtin.command:
+    cmd: >-
+      gpg --dearmor -o /usr/share/keyrings/dropbox-archive.keyring.gpg
+      {{ playbook_dir }}/roles/dropbox/files/dropbox.asc
+    creates: /usr/share/keyrings/dropbox-archive-keyring.gpg
+
+- name: Adding Dropbox repository
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/dropbox.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: dropbox.sources.j2
+  register: dropbox_repository
+
+- name: Installing Dropbox
+  ansible.builtin.apt:
+    name: dropbox
+    state: present
+    update_cache: "{{ dropbox_repository.changed }}"
