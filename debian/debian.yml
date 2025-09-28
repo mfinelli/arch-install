@@ -24,8 +24,9 @@
         # curl -sI \
         #   'https://discord.com/api/download?platform=linux&format=deb' | \
         # grep -i location
-        deb: https://dl.discordapp.net/apps/linux/0.0.85/discord-0.0.85.deb
+        deb: https://dl.discordapp.net/apps/linux/0.0.111/discord-0.0.111.deb
 
+    # TODO: this will be in forky
     - name: Installing OpenRGB
       ansible.builtin.apt:
         # https://gitlab.com/CalcProgrammer1/OpenRGB/-/releases
