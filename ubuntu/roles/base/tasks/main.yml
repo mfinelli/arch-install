@@ -57,7 +57,7 @@
 
 - name: Adding "supermario" PPA
   ansible.builtin.template:
-    dest: /etc/apt/sources.list.d/supermario.sources.j2
+    dest: /etc/apt/sources.list.d/supermario.sources
     group: root
     mode: "0644"
     owner: root
