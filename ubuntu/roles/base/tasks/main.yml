@@ -60,11 +60,11 @@
 - name: Copying HTTPS-enabled sources.list
   when: mtype != 'server'
   ansible.builtin.template:
-    dest: /etc/apt/sources.list
+    dest: /etc/apt/sources.list.d/ubuntu.sources
     group: root
     mode: "0664"
     owner: root
-    src: sources.list.j2
+    src: ubuntu.sources.j2
   register: base_sources
 
 - name: Installing base packages

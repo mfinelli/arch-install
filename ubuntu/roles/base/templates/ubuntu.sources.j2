@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+Types: deb
+URIs: https://mirror.enzu.com/ubuntu/
+Suites: {{ ansible_distribution_release }} {{ ansible_distribution_release }}-updates {{ ansible_distribution_release }}-backports {{ ansible_distribution_release }}-security
+Components: main restricted universe multiverse
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+# vim: ft=debsources.jinja2
