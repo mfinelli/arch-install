@@ -48,13 +48,20 @@
       - python3-apt
     state: present
 
+- name: Adding "supermario" PPA signing key
+  ansible.builtin.apt_key:
+    keyring: /usr/share/keyrings/supermario-archive-keyring.gpg
+    state: present
+    url: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=\
+      0x0f6e5a38709dbd497ceb4eccc80124bb8ab9cff9"
+
 - name: Adding "supermario" PPA
   ansible.builtin.template:
-    dest: /etc/apt/sources.list.d/supermario.list
+    dest: /etc/apt/sources.list.d/supermario.sources.j2
     group: root
     mode: "0644"
     owner: root
-    src: supermario.list.j2
+    src: supermario.sources.j2
   register: base_supermario_ppa
 
 - name: Copying HTTPS-enabled sources.list
