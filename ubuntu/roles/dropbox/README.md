@@ -1,7 +1,5 @@
 # dropbox
 
-Installs the dropbox client for linux. We don't use the provided
-
 Installs the dropbox client for linux. We don't use the provided `.deb`
 package from upstream because part of the post install steps attempt to add
 the upstream repository, but they haven't provided a distribution since before
