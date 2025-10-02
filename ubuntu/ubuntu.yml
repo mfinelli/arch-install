@@ -27,6 +27,8 @@
     - role: server
       when: mtype == 'server'
     - role: tailscale
+    - role: waydroid
+      when: mtype != 'server'
 
   tasks:
     # discord doesn't have an apt repository (and doesn't seem to be on the

@@ -1,0 +1,21 @@
+---
+- name: Adding waydroid repository signing key
+  ansible.builtin.apt_key:
+    keyring: /usr/share/keyrings/waydroid-archive-keyring.gpg
+    state: present
+    url: https://repo.waydro.id/waydroid.gpg
+
+- name: Adding the waydroid repository
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/waydroid.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: waydroid.sources.j2
+  register: waydroid_repository
+
+- name: Installing waydroid
+  ansible.builtin.apt:
+    name: waydroid
+    state: present
+    update_cache: "{{ waydroid_repository.changed }}"
