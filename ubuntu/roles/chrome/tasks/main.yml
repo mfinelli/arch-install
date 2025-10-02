@@ -1,17 +1,37 @@
 ---
+# The chrome download page says you can disable the chrome repo if this file
+# exists, but reading through the `postinst` script I'm not convinced... but
+# we'll try it anyway
+- name: Adding Google Chrome defaults file
+  ansible.builtin.file:
+    group: root
+    mode: "0644"
+    owner: root
+    path: /etc/default/google-chrome
+    state: touch
+
 - name: Adding Google Chrome signing key
   ansible.builtin.apt_key:
+    keyring: /usr/share/keyrings/google-archive-keyring.gpg
     state: present
     url: https://dl.google.com/linux/linux_signing_key.pub
 
 - name: Adding Google Chrome repository
-  ansible.builtin.apt_repository:
-    filename: google-chrome
-    repo: deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main
-    state: present
-    update_cache: true
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/google-chrome.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: google-chrome.sources.j2
+  register: chrome_repository
 
 - name: Installing Google Chrome
   ansible.builtin.apt:
     name: google-chrome-stable
     state: present
+    update_cache: "{{ chrome_repository.changed }}"
+
+- name: Removing automatic Google Chrome sources list
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/google-chrome.list
+    state: absent
