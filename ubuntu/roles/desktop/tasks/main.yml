@@ -23,7 +23,7 @@
   ansible.builtin.apt:
     name:
       - age
-      - awscli
+      # - awscli # TODO: removed from noble add back for 26.04
       - borgbackup
       - 7zip
       - 7zip-rar
