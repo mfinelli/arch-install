@@ -71,6 +71,7 @@
       - fq
       - github-cli
       - glab
+      - glim
       - miller
       - moreutils
       - ncdu
