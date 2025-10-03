@@ -10,11 +10,23 @@
     path: /etc/default/google-chrome
     state: touch
 
-- name: Adding Google Chrome signing key
-  ansible.builtin.apt_key:
-    keyring: /usr/share/keyrings/google-archive-keyring.gpg
-    state: present
+- name: Downloading Google Chrome signing key
+  ansible.builtin.get_url:
+    dest: /etc/apt/keyrings/google-archive-keyring.asc
+    group: root
+    mode: "0644"
+    owner: root
     url: https://dl.google.com/linux/linux_signing_key.pub
+  register: chrome_repository_key
+
+- name: Adding Google Chrome signing key
+  ansible.builtin.command:
+    cmd: >-
+      gpg --dearmor -o /usr/share/keyrings/google-archive-keyring.gpg
+      /etc/apt/keyrings/google-archive-keyring.asc
+    creates: "{{ chrome_repository_key.changed | ternary('',
+      '/usr/share/keyrings/google-archive-keyring.gpg') | default(omit,
+      true) }}"
 
 - name: Adding Google Chrome repository
   ansible.builtin.template:
