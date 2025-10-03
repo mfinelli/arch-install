@@ -7,21 +7,35 @@
     owner: root
     src: firefox-no-snap
 
-- name: Adding the Firefox signing key
-  ansible.builtin.apt_key:
-    keyring: /usr/share/keyrings/mozilla-archive-keyring.gpg
-    state: present
+- name: Downloading the Firefox signing key
+  ansible.builtin.get_url:
+    dest: /etc/apt/keyrings/mozilla-archive-keyring.asc
+    group: root
+    mode: "0644"
+    owner: root
     url: https://packages.mozilla.org/apt/repo-signing-key.gpg
+  register: firefox_repository_key
+
+- name: Adding Firefox signing key
+  ansible.builtin.command:
+    cmd: >-
+      gpg --dearmor -o /usr/share/keyrings/mozilla-archive-keyring.gpg
+      /etc/apt/keyrings/mozilla-archive-keyring.asc
+    creates: "{{ firefox_repository_key.changed | ternary('',
+      '/usr/share/keyrings/mozilla-archive-keyring.gpg') | default(omit,
+      true) }}"
 
 - name: Adding the Firefox repository
-  ansible.builtin.apt_repository:
-    filename: mozilla
-    repo: >
-      deb [signed-by=/usr/share/keyrings/mozilla-archive-keyring.gpg]
-      https://packages.mozilla.org/apt mozilla main
-    update_cache: true
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/mozilla.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: mozilla.sources.j2
+  register: firefox_repository
 
 - name: Installing Firefox
   ansible.builtin.apt:
     name: firefox
     state: present
+    update_cache: "{{ firefox_repository.changed }}"
