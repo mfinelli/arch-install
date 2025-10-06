@@ -100,3 +100,10 @@
       - cksfv
       - deluge
     state: present
+
+- name: Installing makemkv
+  when: mtype == 'personal' or mtype == 'media'
+  kewlfft.aur.aur:
+    name:
+      - makemkv
+    state: present
