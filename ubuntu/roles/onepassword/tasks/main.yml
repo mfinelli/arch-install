@@ -1,18 +1,30 @@
 ---
-- name: Adding the 1Password signing key
-  ansible.builtin.apt_key:
-    keyring: /usr/share/keyrings/1password-archive-keyring.gpg
-    state: present
+- name: Downloading the 1Password signing key
+  ansible.builtin.get_url:
+    dest: /etc/apt/keyrings/1password-archive-keyring.asc
+    group: root
+    mode: "0644"
+    owner: root
     url: https://downloads.1password.com/linux/keys/1password.asc
+  register: onepassword_repository_key
+
+- name: Adding the 1Password signing key
+  ansible.builtin.command:
+    cmd: >-
+      gpg --dearmor -o /usr/share/keyrings/1password-archive-keyring.gpg
+      /etc/apt/keyrings/1password-archive-keyring.asc
+    creates: "{{ onepassword_repository_key.changed | ternary('',
+      '/usr/share/keyrings/1password-archive-keyring.gpg') | default(omit,
+      true) }}"
 
 - name: Adding the 1Password repository
-  ansible.builtin.apt_repository:
-    filename: 1password
-    repo: >
-      deb [arch=amd64
-      signed-by=/usr/share/keyrings/1password-archive-keyring.gpg]
-      https://downloads.1password.com/linux/debian/amd64 stable main
-    update_cache: true
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/1password.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: 1password.sources.j2
+  register: onepassword_repository
 
 - name: Creating the debsig-verify directories
   ansible.builtin.file:
@@ -45,3 +57,4 @@
   ansible.builtin.apt:
     name: 1password
     state: present
+    update_cache: "{{ onepassword_repository.changed }}"

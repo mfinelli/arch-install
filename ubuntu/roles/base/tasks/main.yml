@@ -48,12 +48,24 @@
       - python3-apt
     state: present
 
-- name: Adding "supermario" PPA signing key
-  ansible.builtin.apt_key:
-    keyring: /usr/share/keyrings/supermario-archive-keyring.gpg
-    state: present
+- name: Downloading "supermario" PPA signing key
+  ansible.builtin.get_url:
+    dest: /etc/apt/keyrings/supermario-archive-keyring.asc
+    group: root
+    mode: "0644"
+    owner: root
     url: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=\
       0x0f6e5a38709dbd497ceb4eccc80124bb8ab9cff9"
+  register: base_supermario_key
+
+- name: Adding "supermario" PPA signing key
+  ansible.builtin.command:
+    cmd: >-
+      gpg --dearmor -o /usr/share/keyrings/supermario-archive-keyring.gpg
+      /etc/apt/keyrings/supermario-archive-keyring.asc
+    creates: "{{ base_supermario_key.changed | ternary('',
+      '/usr/share/keyrings/google-archive-keyring.gpg') | default(omit,
+      true) }}"
 
 - name: Adding "supermario" PPA
   ansible.builtin.template:

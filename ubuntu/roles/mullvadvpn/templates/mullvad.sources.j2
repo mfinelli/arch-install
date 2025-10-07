@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+
+Types: deb
+URIs: https://repository.mullvad.net/deb/stable
+Suites: {{ ansible_distribution_release }}
+Components: main
+Architectures: amd64
+Signed-By: /usr/share/keyrings/mullvad-archive-keyring.gpg
+
+# vim: ft=debsources.jinja2
