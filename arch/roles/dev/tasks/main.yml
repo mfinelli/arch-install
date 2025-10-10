@@ -131,7 +131,7 @@
   become: true
   community.general.pacman:
     name:
-      - bash-language-server
+      - python-lsp-server
     state: present
 
 - name: Installing asciinema

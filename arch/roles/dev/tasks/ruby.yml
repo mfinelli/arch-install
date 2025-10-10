@@ -7,13 +7,3 @@
       - ruby
       - ruby-bundler
     state: present
-
-- name: Installing ruby packages
-  when: mtype == 'personal'
-  become: true
-  community.general.pacman:
-    name:
-      - chruby
-      - ruby-install
-      - ruby-pry
-    state: present

@@ -87,7 +87,6 @@
   community.general.pacman:
     name:
       - gimp
-      - gimp-extras
     state: present
 
 - name: Installing photography tools
