@@ -28,6 +28,13 @@ Automation for Arch Linux installations.
    iwctl # start interactive prompt
    ```
 
+   If you have multiple devices you can find out which is which using
+   `networkctl`:
+
+   ```
+   networkctl status wlan1
+   ```
+
    Presuming our device is called `wlan0`:
 
    ```
@@ -46,7 +53,7 @@ Automation for Arch Linux installations.
 5. Prepare the installation disk by overwriting it with random data:
 
    ```shell
-   dd if=/dev/urandom of=/dev/sdX bs=4096
+   dd if=/dev/urandom of=/dev/sdX bs=4096 status=progress
    ```
 
 6. Install the baseline Arch Linux installation:
