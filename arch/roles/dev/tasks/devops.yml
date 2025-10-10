@@ -38,9 +38,6 @@
   community.general.pacman:
     name:
       - helm
-      - helm-diff
-      - helm-s3
-      - helm-secrets
       - pluto
       - popeye
     state: present
@@ -53,15 +50,6 @@
       - k9s
       - kubectx
     state: present
-
-- name: Installing helm plugins
-  when: mtype == 'personal'
-  kubernetes.core.helm_plugin:
-    plugin_path: /usr/lib/helm/plugins/{{ item }}
-  loop:
-    - diff
-    - s3
-    - secrets
 
 - name: Installing Remmina
   when: mtype == 'personal' or mtype == 'work'
