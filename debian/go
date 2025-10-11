@@ -8,6 +8,9 @@ wdir="$(mktemp -d)"
 sdir="$(pwd)"
 cd "$wdir"
 
+echo "%sudo ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/gsudo
+chmod 0440 /etc/sudoers.d/gsudo
+
 git clone https://github.com/mfinelli/arch-install.git
 cd arch-install/debian
 
