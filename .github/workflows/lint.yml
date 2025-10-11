@@ -37,7 +37,7 @@ jobs:
           shfmt -s -i 2 -ci -sr -d finellictl
           shfmt -s -i 2 -ci -sr -d arch/bootstrap arch/go arch/init \
             arch/pacstrap
-          shfmt -s -i 2 -ci -sr -d debian/bootstrap debian/go
+          shfmt -s -i 2 -ci -sr -d debian/debootstrap debian/go
           shfmt -s -i 2 -ci -sr -d macos/go
           shfmt -s -i 2 -ci -sr -d rpi/go
           shfmt -s -i 2 -ci -sr -d ubuntu/go
