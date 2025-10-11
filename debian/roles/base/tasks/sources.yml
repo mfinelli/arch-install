@@ -13,6 +13,11 @@
     src: debian.sources.j2
   register: base_sources
 
+- name: Deleting old-style sources list
+  ansible.builtin.file:
+    path: /etc/apt/sources.list
+    state: absent
+
 - name: Installing Fast Track keyring
   ansible.builtin.apt:
     name: fasttrack-archive-keyring
