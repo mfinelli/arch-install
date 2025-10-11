@@ -119,7 +119,7 @@
       - gnucash
       - gnucash-docs
       - perl-date-manip
-      - perl-finance-quote
+      # - perl-finance-quote # TODO: dropped from repos, decide what to do
       - perl-libwww
       - perl-lwp-protocol-https
     state: present
