@@ -84,7 +84,6 @@ echo -e "${CYAN}Disk encryption complete. (in $ptime seconds)${ENDCOLOR}"
 echo -e "${BOLDGREEN}Beginning LVM setup...${ENDCOLOR}"
 read -rp "Press enter to continue..." _
 
-
 # get some much needed info
 read -rp "How many swap G? " SWAPG
 read -rp "How many root G? " ROOTG
