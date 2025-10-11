@@ -154,12 +154,19 @@ echo -e "${CYAN}Debootstrap done. (in $ptime seconds)${ENDCOLOR}"
 echo -e "${BOLDGREEN}Generating fstab...${ENDCOLOR}"
 read -rp "Press enter to continue..." _
 
-genfstab -U -p /mnt >> /mnt/etc/fstab
+gdir="$(mktemp -d)"
+curl -fsSLo "$gdir/genfstab" \
+  https://raw.githubusercontent.com/glacion/genfstab/refs/heads/master/genfstab
+chmod +x /tmp/genfstab
+
+"/tmp/$gdir/genfstab" -U -p /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
 
 if [[ "no" == $(prompt_yesno "Confirm fstab?") ]]; then
   exit 1
 fi
+
+rm -rf "$gdir"
 
 echo -e "${BOLDMAGENTA}ARCH-INSTALL/DEBOOTSTRAP COMPLETE${ENDCOLOR}"
 echo "Total time: $((SECONDS - scriptstart)) seconds"
