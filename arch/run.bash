@@ -32,7 +32,7 @@ array_contains() {
 # actually referenced as variables in the conditional below, but they _are_
 # used
 # shellcheck disable=SC2034
-PERSONAL_MACHINES=(stig)
+PERSONAL_MACHINES=(nyx stig)
 # shellcheck disable=SC2034
 WORK_MACHINES=(CLIFMI1371 CLIFMI706 easy)
 # shellcheck disable=SC2034
