@@ -1,0 +1,168 @@
+#!/bin/bash
+
+set -e
+
+scriptstart=$SECONDS
+
+# https://dev.to/ifenna__/adding-colors-to-bash-scripts-48g4
+ENDCOLOR="\e[0m"
+CYAN="\e[36m"
+BOLDGREEN="\e[1;32m"
+BOLDMAGENTA="\e[1;35m"
+BOLDRED="\e[1;31m"
+
+# https://stackoverflow.com/a/17695543
+function prompt_yesno() {
+  read -rp "$1 "
+  case $(echo "$REPLY" | tr '[:upper:]' '[:lower:]') in
+    y | yes) echo "yes" ;;
+    *) echo "no" ;;
+  esac
+}
+
+echo -e "${BOLDMAGENTA}ARCH-INSTALL/DEBOOTSTRAP STARTING${ENDCOLOR}"
+echo -e "${BOLDGREEN}Beginning disk partitioning...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+
+lsblk
+read -rp "Which disk to install? /dev/" INSTALL_DISK
+
+read -rp "EFI partition size (default: 512M)? " EFIPSIZE
+if [[ -z $EFIPSIZE ]]; then
+  EFIPSIZE=512M
+fi
+
+pstart=$SECONDS
+
+# https://superuser.com/a/984637
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | gdisk "/dev/$INSTALL_DISK"
+    o # create a new, empty GPT partition table with protected MBR
+    Y # confirm above
+    n # create new partition (efi boot partition)
+      # default (partition number 1)
+      # default (start at beginning of disk)
+    $EFIPSIZE # 512M efi boot partition
+    ef00 # (EFI system type)
+    n # create new partition (luks container)
+      # default (partition number 2)
+      # default (start immediately after preceding partition)
+      # default (extend partition to end of disk)
+    8e00 # (Linux LVM)
+    c # change partition label
+    1 # first partition
+    EFISYSTEM #
+    c # change partition label
+    2 # second partition
+    CRYPTROOT #
+    p # print the in-memory partition table
+    w # write the partition table
+    Y # confirm and we're done
+EOF
+
+ptime=$((SECONDS - pstart))
+
+# let's check one more time that the disks are partitioned as expected
+gdisk -l "/dev/$INSTALL_DISK"
+
+if [[ no == $(prompt_yesno "Confirm partition table?") ]]; then
+  exit 1
+fi
+
+echo -e "${CYAN}Disk partitioning complete. (in $ptime seconds)${ENDCOLOR}"
+echo -e "${BOLDGREEN}Beginning disk encryption...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+pstart=$SECONDS
+
+# encrypt the main partition: AES256 (e.g. /dev/sda2)
+cryptsetup --type luks2 --cipher aes-xts-plain64 --key-size 512 --hash sha512 \
+  --pbkdf argon2id --iter-time 5000 --sector-size 4096 \
+  --integrity hmac-sha256 --use-random --verify-passphrase \
+  luksFormat /dev/disk/by-partlabel/CRYPTROOT
+
+ptime=$((SECONDS - pstart))
+echo -e "${CYAN}Disk encryption complete. (in $ptime seconds)${ENDCOLOR}"
+echo -e "${BOLDGREEN}Beginning LVM setup...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+
+
+# get some much needed info
+read -rp "How many swap G? " SWAPG
+read -rp "How many root G? " ROOTG
+pstart=$SECONDS
+
+# do the LVM boogie
+cryptsetup luksOpen /dev/disk/by-partlabel/CRYPTROOT lvm
+pvcreate /dev/mapper/lvm
+vgcreate crypt /dev/mapper/lvm
+lvcreate -L "${SWAPG}G" crypt -n swap
+lvcreate -L "${ROOTG}G" crypt -n root
+lvcreate -l 100%FREE crypt -n home
+
+ptime=$((SECONDS - pstart))
+echo -e "${CYAN}LVM setup complete. (in $ptime seconds)${ENDCOLOR}"
+echo -e "${BOLDGREEN}Making filesystems...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+
+# make some filesystems
+mkfs.vfat -F32 /dev/disk/by-partlabel/EFISYSTEM
+echo -e "${CYAN}Made FAT32 on /dev/disk/by-partlabel/EFISYSTEM.${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+mkfs.btrfs /dev/mapper/crypt-root
+echo -e "${CYAN}Made BTRFS on /root.${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+mkfs.btrfs /dev/mapper/crypt-home
+echo -e "${CYAN}Made BTRFS on /home.${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+mkswap /dev/mapper/crypt-swap
+echo -e "${CYAN}Made swap.${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+
+echo -e "${CYAN}Finished making filesystems.${ENDCOLOR}"
+echo -e "${BOLDGREEN}Mounting filesystems for debootstrap...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+
+# get everything ready
+swapon /dev/crypt/swap
+mount -o compress=zstd /dev/crypt/root /mnt
+mkdir /mnt/{efi,home}
+mount -o nodev,noexec,nosuid,fmask=0077,dmask=0077 \
+  /dev/disk/by-partlabel/EFISYSTEM /mnt/efi
+mount -o compress=zstd /dev/crypt/home /mnt/home
+
+echo -e "${CYAN}Mounted filesystems.${ENDCOLOR}"
+echo -e "${BOLDGREEN}Debootstrapping system...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+pstart=$SECONDS
+
+# packages to install other than the base system
+extra_packages=curl,dbus,locales,tzdata
+
+while :; do
+  # do the needful
+  if debootstrap --arch amd64 --components=main,non-free-firmware \
+    --include=$extra_packages trixie /mnt https://deb.debian.org/debian; then
+    break
+  else
+    echo -e "${BOLDRED}Debootstrapfailed!${ENDCOLOR}"
+    if [[ "no" == $(prompt_yesno "Retry?") ]]; then
+      exit 1
+    fi
+  fi
+done
+
+ptime=$((SECONDS - pstart))
+echo -e "${CYAN}Debootstrap done. (in $ptime seconds)${ENDCOLOR}"
+echo -e "${BOLDGREEN}Generating fstab...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+
+genfstab -U -p /mnt >> /mnt/etc/fstab
+cat /mnt/etc/fstab
+
+if [[ "no" == $(prompt_yesno "Confirm fstab?") ]]; then
+  exit 1
+fi
+
+echo -e "${BOLDMAGENTA}ARCH-INSTALL/DEBOOTSTRAP COMPLETE${ENDCOLOR}"
+echo "Total time: $((SECONDS - scriptstart)) seconds"
+
+exit 0
