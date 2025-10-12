@@ -4,6 +4,9 @@ Automation for debian gaming installation. Using the `netinst` ISO, select:
 
 - Disabled root account (leave root password blank when prompted)
 - Guided; use entire disk and setup encrypted LVM (all files in one partition)
+  - Before confirming the choices you can change the filesystem types to
+    `btrfs` and enable the `relatime`, `compress`, `ssd` options. (Obviously,
+    `ssd` only if it's relevant).
 - Don't participate in the package survey
 - Debian desktop environment: GNOME
 - no web server, no SSH server
@@ -19,6 +22,18 @@ sudo apt update && sudo apt upgrade
 ```shell
 sudo apt install curl
 ```
+
+Before proceeding with the next step, if you switched the filesystems to
+`btrfs`, then you may want to change the compression algorithm to `zstd`:
+
+```shell
+sudo apt install vim
+```
+
+Then edit the `/etc/fstab` and change the `compress` option to
+`compress=zstd:3`. Then reboot. (Note: this won't affect existing files which
+will remain compressed with the older algorithm -- only newly created, and
+updates to existing files will use the new compression.)
 
 ```shell
 bash -c "$(curl -fsSL https://mfgo.link/debian)"
