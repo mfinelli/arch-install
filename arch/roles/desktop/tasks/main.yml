@@ -3,6 +3,7 @@
   become: true
   community.general.pacman:
     name:
+      - alsa-firmware
       - alsa-plugins
       - alsa-utils
       - easyeffects
