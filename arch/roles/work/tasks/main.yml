@@ -13,6 +13,7 @@
       - mariadb-clients
       - openldap
       - python-google-cloud-compute
+      - python-hcl2
       - python-kubernetes
       - python-onepasswordconnectsdk
       - terraform-docs
