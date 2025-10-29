@@ -10,6 +10,7 @@
       - wine-gecko
       - wine-mono
       - winetricks
+      - zenity
     state: present
 
 - name: Installing lib32 libraries for Wine
