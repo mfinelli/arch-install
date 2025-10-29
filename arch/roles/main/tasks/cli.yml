@@ -111,6 +111,13 @@
     name: tailscale
     state: present
 
+- name: Enabling Tailscale
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  ansible.builtin.systemd:
+    enabled: true
+    name: tailscaled.service
+
 - name: Installing irssi
   when: mtype != 'media'
   become: true
