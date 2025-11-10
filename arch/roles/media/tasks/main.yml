@@ -24,11 +24,13 @@
       - lib32-libpulse
     state: present
 
-- name: Installing picard
+- name: Installing music tagging programs
   when: mtype == 'personal' or mtype == 'media'
   become: true
   community.general.pacman:
-    name: picard
+    name:
+      - beets
+      - picard
     state: present
 
 - name: Installing Wine-based music applications
