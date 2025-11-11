@@ -37,6 +37,7 @@
       - ccid
       - hopenpgp-tools
       - pcsclite
+      - yubico-authenticator
       - yubikey-manager
       - yubikey-personalization
       - yubikey-personalization-gui
