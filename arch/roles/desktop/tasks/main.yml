@@ -91,6 +91,12 @@
     name: headsetcontrol
     state: present
 
+- name: Installing yubikey PAM module
+  become: true
+  community.general.pacman:
+    name: pam-u2f
+    state: present
+
 - name: Installing opensnitch
   become: true
   community.general.pacman:

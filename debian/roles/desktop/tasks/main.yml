@@ -101,6 +101,13 @@
       - rclone
     state: present
 
+- name: Installing yubkey PAM module
+  ansible.builtin.apt:
+    name:
+      - libpam-u2f
+      - pamu2fcfg
+    state: present
+
 - name: Installing opensnitch
   ansible.builtin.apt:
     name:
