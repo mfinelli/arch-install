@@ -62,6 +62,7 @@
   community.general.pacman:
     name:
       - yt-dlp
+      - yt-dlp-ejs
     state: present
 
 - name: Installing yt-dlp optional dependencies
