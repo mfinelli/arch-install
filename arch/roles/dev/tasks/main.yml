@@ -61,6 +61,7 @@
       - hugo
       - jpegoptim
       - just
+      - mergiraf
       - openbsd-netcat
       - optipng
       - shellcheck
