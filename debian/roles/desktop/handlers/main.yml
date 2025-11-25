@@ -1,13 +1,13 @@
 ---
 - name: Run update-grub2
   ansible.builtin.command: update-grub2
-  register: ran_updategrub
-  changed_when: ran_updategrub.rc == 0
-  failed_when: ran_updategrub.rc != 0
+  register: desktop_ran_updategrub
+  changed_when: desktop_ran_updategrub.rc == 0
+  failed_when: desktop_ran_updategrub.rc != 0
 
 # taken from: /usr/sbin/plymouth-set-default-theme
 - name: Rebuild initramfs with plymouth
   ansible.builtin.command: /usr/libexec/plymouth/plymouth-update-initrd
-  register: rebuilt_initramfs
-  changed_when: rebuilt_initramfs.rc == 0
-  failed_when: rebuilt_initramfs.rc != 0
+  register: desktop_rebuilt_initramfs
+  changed_when: desktop_rebuilt_initramfs.rc == 0
+  failed_when: desktop_rebuilt_initramfs.rc != 0
