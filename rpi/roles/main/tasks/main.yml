@@ -8,20 +8,20 @@
 
 - name: Copying https-enabled sources list
   ansible.builtin.template:
-    dest: /etc/apt/sources.list
+    dest: /etc/apt/sources.list.d/debian.sources
     group: root
     mode: "0644"
     owner: root
-    src: sources.list.j2
+    src: debian.sources.j2
   register: main_sources_list
 
 - name: Copying https-enabled raspi sources list
   ansible.builtin.template:
-    dest: /etc/apt/sources.list.d/raspi.list
+    dest: /etc/apt/sources.list.d/raspi.sources
     group: root
     mode: "0644"
     owner: root
-    src: raspi.list.j2
+    src: raspi.sources.j2
   register: main_rpi_list
 
 - name: Adding supermario repository
