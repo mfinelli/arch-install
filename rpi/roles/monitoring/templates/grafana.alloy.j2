@@ -1,0 +1,202 @@
+// {{ ansible_managed }}
+
+prometheus.remote_write "metrics_integrations" {
+	endpoint {
+		name = "integrations-224071"
+		url  = "{{ monitoring_grafana_metrics_url['content'] | b64decode | trim }}"
+
+		basic_auth {
+			username = "{{ monitoring_grafana_metrics_id['content'] | b64decode | trim }}"
+			password = "{{ monitoring_grafana_api_key['content'] | b64decode | trim }}"
+		}
+
+		queue_config { }
+
+		metadata_config { }
+	}
+}
+
+discovery.relabel "logs_integrations_integrations_node_exporter_journal_scrape" {
+	targets = []
+
+	rule {
+		source_labels = ["__journal__systemd_unit"]
+		target_label  = "unit"
+	}
+
+	rule {
+		source_labels = ["__journal__boot_id"]
+		target_label  = "boot_id"
+	}
+
+	rule {
+		source_labels = ["__journal__transport"]
+		target_label  = "transport"
+	}
+
+	rule {
+		source_labels = ["__journal_priority_keyword"]
+		target_label  = "level"
+	}
+}
+
+loki.source.journal "logs_integrations_integrations_node_exporter_journal_scrape" {
+	max_age       = "24h0m0s"
+	relabel_rules = discovery.relabel.logs_integrations_integrations_node_exporter_journal_scrape.rules
+	forward_to    = [loki.write.logs_integrations.receiver]
+	labels        = {
+		instance = "{{ ansible_hostname }}",
+		job      = "integrations/node_exporter",
+	}
+}
+
+local.file_match "logs_integrations_integrations_node_exporter_direct_scrape" {
+	path_targets = [{
+		__address__ = "localhost",
+		__path__    = "/var/log/{syslog,messages,*.log}",
+		instance    = "{{ ansible_hostname }}",
+		job         = "integrations/node_exporter",
+	}]
+}
+
+loki.source.file "logs_integrations_integrations_node_exporter_direct_scrape" {
+	targets               = local.file_match.logs_integrations_integrations_node_exporter_direct_scrape.targets
+	forward_to            = [loki.write.logs_integrations.receiver]
+	legacy_positions_file = "/tmp/positions.yaml"
+}
+
+loki.process "logs_integrations_integrations_agent" {
+	forward_to = [loki.write.logs_integrations.receiver]
+
+	stage.match {
+		selector            = "{unit!=\"grafana-agent.service\"}"
+		action              = "drop"
+		drop_counter_reason = "only_keep_grafana_agent_logs"
+	}
+
+	stage.regex {
+		expression = "(level=(?P<log_level>[\\s]*debug|warn|info|error))"
+	}
+
+	stage.labels {
+		values = {
+			level = "log_level",
+		}
+	}
+}
+
+discovery.relabel "logs_integrations_integrations_agent" {
+	targets = []
+
+	rule {
+		source_labels = ["__journal__systemd_unit"]
+		target_label  = "unit"
+	}
+
+	rule {
+		source_labels = ["__journal__hostname"]
+		target_label  = "instance"
+	}
+}
+
+loki.source.journal "logs_integrations_integrations_agent" {
+	max_age       = "24h0m0s"
+	relabel_rules = discovery.relabel.logs_integrations_integrations_agent.rules
+	forward_to    = [loki.process.logs_integrations_integrations_agent.receiver]
+	labels        = {
+		job = "integrations/agent",
+	}
+}
+
+loki.write "logs_integrations" {
+	endpoint {
+		url = "{{ monitoring_grafana_logs_url['content'] | b64decode | trim }}"
+
+		basic_auth {
+			username = "{{ monitoring_grafana_logs_id['content'] | b64decode | trim }}"
+			password = "{{ monitoring_grafana_api_key['content'] | b64decode | trim }}"
+		}
+	}
+	external_labels = {}
+}
+
+prometheus.exporter.self "integrations_agent" { }
+
+discovery.relabel "integrations_agent" {
+	targets = prometheus.exporter.self.integrations_agent.targets
+
+	rule {
+		source_labels = ["agent_hostname"]
+		target_label  = "instance"
+	}
+
+	rule {
+		target_label = "job"
+		replacement  = "integrations/agent-check"
+	}
+}
+
+prometheus.scrape "integrations_agent" {
+	targets    = discovery.relabel.integrations_agent.output
+	forward_to = [prometheus.relabel.integrations_agent.receiver]
+	job_name   = "integrations/agent"
+}
+
+prometheus.relabel "integrations_agent" {
+	forward_to = [prometheus.remote_write.integrations.receiver]
+
+	rule {
+		source_labels = ["__name__"]
+		regex         = "(prometheus_target_sync_length_seconds_sum|prometheus_target_scrapes_.*|prometheus_target_interval.*|prometheus_sd_discovered_targets|agent_build.*|agent_wal_samples_appended_total|process_start_time_seconds)"
+		action        = "keep"
+	}
+}
+
+prometheus.remote_write "integrations" {
+	endpoint {
+		url = "{{ monitoring_grafana_metrics_url['content'] | b64decode | trim }}"
+
+		basic_auth {
+			username = "{{ monitoring_grafana_metrics_id['content'] | b64decode | trim }}"
+			password = "{{ monitoring_grafana_api_key['content'] | b64decode | trim }}"
+		}
+
+		queue_config { }
+
+		metadata_config { }
+	}
+}
+
+prometheus.exporter.unix "integrations_node_exporter" { }
+
+discovery.relabel "integrations_node_exporter" {
+	targets = prometheus.exporter.unix.integrations_node_exporter.targets
+
+	rule {
+		target_label = "instance"
+		replacement  = "{{ ansible_hostname }}"
+	}
+
+	rule {
+		target_label = "job"
+		replacement  = "integrations/node_exporter"
+	}
+}
+
+prometheus.scrape "integrations_node_exporter" {
+	targets    = discovery.relabel.integrations_node_exporter.output
+	forward_to = [prometheus.relabel.integrations_node_exporter.receiver]
+	job_name   = "integrations/node_exporter"
+}
+
+prometheus.relabel "integrations_node_exporter" {
+	forward_to = [prometheus.remote_write.integrations.receiver]
+
+	rule {
+		source_labels = ["__name__"]
+		regex         = "node_scrape_collector_.+"
+		action        = "drop"
+	}
+}
+
+// vim: ft=hcl.jinja2

@@ -101,7 +101,7 @@
       https://apt.grafana.com stable main
     update_cache: true
 
-- name: Installing grafana-agent
+- name: Installing grafana alloy
   when:
     - monitoring_grafana_api_key_file.stat.exists
     - monitoring_grafana_logs_id_file.stat.exists
@@ -109,10 +109,10 @@
     - monitoring_grafana_metrics_id_file.stat.exists
     - monitoring_grafana_metrics_url_file.stat.exists
   ansible.builtin.apt:
-    name: grafana-agent
+    name: alloy
     state: present
 
-- name: Copying grafana-agent configuration
+- name: Copying alloy configuration
   when:
     - monitoring_grafana_api_key_file.stat.exists
     - monitoring_grafana_logs_id_file.stat.exists
@@ -120,15 +120,15 @@
     - monitoring_grafana_metrics_id_file.stat.exists
     - monitoring_grafana_metrics_url_file.stat.exists
   ansible.builtin.template:
-    dest: /etc/grafana-agent.yaml
-    owner: grafana-agent
-    mode: "0400"
-    group: grafana-agent
-    src: grafana-agent.yaml.j2
+    dest: /etc/alloy/config.alloy
+    owner: root
+    mode: "0644"
+    group: root
+    src: grafana.alloy.j2
   notify:
-    - Restart grafana-agent
+    - Restart alloy
 
-- name: Starting and enabling grafana-agent
+- name: Starting and enabling grafana alloy
   when:
     - monitoring_grafana_api_key_file.stat.exists
     - monitoring_grafana_logs_id_file.stat.exists
@@ -137,5 +137,5 @@
     - monitoring_grafana_metrics_url_file.stat.exists
   ansible.builtin.systemd:
     enabled: true
-    name: grafana-agent.service
+    name: alloy.service
     state: started

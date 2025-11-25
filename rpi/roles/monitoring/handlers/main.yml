@@ -1,5 +1,5 @@
 ---
-- name: Restart grafana-agent
+- name: Restart alloy
   ansible.builtin.systemd:
-    name: grafana-agent.service
+    name: alloy.service
     state: restarted
