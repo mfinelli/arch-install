@@ -126,11 +126,10 @@
 - name: Installing main applications
   ansible.builtin.apt:
     name:
-      # - fastfetch # TODO: enable in trixie
+      - fastfetch
       - htop
       - libarchive-tools
       - lm-sensors
-      - neofetch # TODO: remove in trixie
       - netcat-openbsd
       - nnn
       - pastebinit
