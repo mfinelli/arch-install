@@ -21,8 +21,7 @@ network VPN.
 4. If desired, change the default sources to https before doing anything else:
 
    ```shell
-   sudo sed -i 's|http://|https://|g' /etc/apt/sources.list
-   sudo sed -i 's|http://|https://|g' /etc/apt/sources.list.d/*.list
+   sudo sed -i 's|http://|https://|g' /etc/apt/sources.list.d/*.sources
    ```
 
 5. Apply any available updates:
