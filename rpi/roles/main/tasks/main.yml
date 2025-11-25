@@ -31,19 +31,37 @@
         main_supermario_repo_full_host: "{{ main_supermario_repo_host }}\
           Debian_{{ ansible_distribution_major_version }}"
 
-    - name: Adding supermario repository signing key
-      ansible.builtin.apt_key:
-        keyring: /usr/share/keyrings/supermario-archive-keyring.gpg
-        state: present
+    - name: Downloading supermario repository signing key
+      ansible.builtin.get_url:
+        dest: /etc/apt/keyrings/supermario-archive-keyring.asc
+        group: root
+        mode: "0644"
+        owner: root
         url: "{{ main_supermario_repo_full_host }}/Release.key"
+      register: main_supermario_key
+
+    - name: Adding supermario repository signing key
+      ansible.builtin.command:
+        cmd: >-
+          gpg --dearmor -o /usr/share/keyrings/supermario-archive-keyring.gpg
+          /etc/apt/keyrings/supermario-archive-keyring.asc
+        creates: "{{ main_supermario_key.changed | ternary('',
+          '/usr/share/keyrings/supermario-archive-keyring.gpg') | default(omit,
+          true) }}"
 
     - name: Adding supermario repository
-      ansible.builtin.apt_repository:
-        filename: supermario
-        repo: >
-          deb [signed-by=/usr/share/keyrings/supermario-archive-keyring.gpg]
-          {{ main_supermario_repo_full_host }}/ /
+      ansible.builtin.template:
+        dest: /etc/apt/sources.list.d/supermario.sources
+        group: root
+        mode: "0644"
+        owner: root
+        src: supermario.sources.j2
+      register: main_supermario_repository
+
+    - name: Updating apt cache for new repository
+      ansible.builtin.apt:
         update_cache: true
+      when: main_supermario_repository.changed # noqa no-handler
 
 - name: Copying locale.gen
   ansible.builtin.copy:

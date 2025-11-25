@@ -1,23 +1,27 @@
 ---
 - name: Adding the tailscale APT signing key
-  ansible.builtin.apt_key:
-    keyring: /usr/share/keyrings/tailscale-archive-keyring.gpg
+  ansible.builtin.get_url:
+    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+    group: root
+    mode: "0644"
+    owner: root
     url: "https://pkgs.tailscale.com/stable/raspbian/\
-      {{ ansible_distribution_release }}.asc"
+      {{ ansible_distribution_release }}.noarmor.gpg"
 
-- name: Adding the tailscale repository
-  ansible.builtin.apt_repository:
-    filename: tailscale
-    repo: >
-      deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg]
-      https://pkgs.tailscale.com/stable/raspbian
-      {{ ansible_distribution_release }} main
-    update_cache: true
+- name: Adding the Tailscale repository
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/tailscale.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: tailscale.sources.j2
+  register: tailscale_repository
 
 - name: Installing tailscale
   ansible.builtin.apt:
     name: tailscale
     state: present
+    update_cache: "{{ tailscale_repository.changed }}"
 
 - name: Starting and enabling tailscale service
   ansible.builtin.systemd:

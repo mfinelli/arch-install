@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+Types: deb
+URIs: https://pkgs.tailscale.com/stable/raspbian
+Suites: {{ ansible_distribution_release }}
+Components: main
+Signed-By: /usr/share/keyrings/tailscale-archive-keyring.gpg
+
+# vim: ft=debsources.jinja2

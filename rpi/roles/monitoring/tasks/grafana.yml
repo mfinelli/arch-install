@@ -76,16 +76,29 @@
     - /root/grafana-metrics-id.txt
     - /root/grafana-metrics-url.txt
 
-- name: Adding the Grafana APT signing key
+- name: Downloading the Grafana APT signing key
   when:
     - monitoring_grafana_api_key_file.stat.exists
     - monitoring_grafana_logs_id_file.stat.exists
     - monitoring_grafana_logs_url_file.stat.exists
     - monitoring_grafana_metrics_id_file.stat.exists
     - monitoring_grafana_metrics_url_file.stat.exists
-  ansible.builtin.apt_key:
-    keyring: /usr/share/keyrings/grafana-archive-keyring.gpg
+  ansible.builtin.get_url:
+    dest: /etc/apt/keyrings/grafana-archive-keyring.asc
+    group: root
+    mode: "0644"
+    owner: root
     url: https://apt.grafana.com/gpg.key
+  register: monitoring_grafana_key
+
+- name: Adding the Grafana repository signing key
+  ansible.builtin.command:
+    cmd: >-
+      gpg --dearmor -o /usr/share/keyrings/grafana-archive-keyring.gpg
+      /etc/apt/keyrings/grafana-archive-keyring.asc
+    creates: "{{ monitoring_grafana_key.changed | ternary('',
+      '/usr/share/keyrings/grafana-archive-keyring.gpg') | default(omit,
+      true) }}"
 
 - name: Adding the Grafana repository
   when:
@@ -94,12 +107,13 @@
     - monitoring_grafana_logs_url_file.stat.exists
     - monitoring_grafana_metrics_id_file.stat.exists
     - monitoring_grafana_metrics_url_file.stat.exists
-  ansible.builtin.apt_repository:
-    filename: grafana
-    repo: >-
-      deb [signed-by=/usr/share/keyrings/grafana-archive-keyring.gpg]
-      https://apt.grafana.com stable main
-    update_cache: true
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/grafana.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: grafana.sources.j2
+  register: monitoring_grafana_repository
 
 - name: Installing grafana alloy
   when:
@@ -111,6 +125,7 @@
   ansible.builtin.apt:
     name: alloy
     state: present
+    update_cache: "{{ monitoring_grafana_repository.changed }}"
 
 - name: Copying alloy configuration
   when:
