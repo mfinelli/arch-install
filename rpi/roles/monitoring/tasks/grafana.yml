@@ -92,6 +92,12 @@
   register: monitoring_grafana_key
 
 - name: Adding the Grafana repository signing key
+  when:
+    - monitoring_grafana_api_key_file.stat.exists
+    - monitoring_grafana_logs_id_file.stat.exists
+    - monitoring_grafana_logs_url_file.stat.exists
+    - monitoring_grafana_metrics_id_file.stat.exists
+    - monitoring_grafana_metrics_url_file.stat.exists
   ansible.builtin.command:
     cmd: >-
       gpg --dearmor -o /usr/share/keyrings/grafana-archive-keyring.gpg
