@@ -16,6 +16,16 @@
       - initramfs-tools
     state: present
 
+- name: Copying initramfs tools configuration
+  ansible.builtin.copy:
+    dest: /etc/initramfs-tools/initramfs.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: initramfs.conf
+  notify:
+    - Rebuild initramfs
+
 - name: Copying initramfs luks hooks script
   ansible.builtin.copy:
     dest: /etc/initramfs-tools/hooks/luks
