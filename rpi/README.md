@@ -11,20 +11,24 @@ network VPN.
    - Select Raspberry Pi OS Lite (64-bit)
    - Set the hostname
    - Set the timezone and keyboard layout
-   - Create initial user and password
+   - Don't create an initial user and password as it doesn't work and the
+     first-boot asks you to create it anyway
    - Set the Wi-Fi network, password, and country
    - Don't enable SSH (or Connect) as we handle that with ansible
 
-2. Let the initial, internal bootstrap process finish and then login with the
+2. After booting, follow the normal setup steps. Create a user `mario` when
+   prompted with a desired password.
+
+3. Let the initial, internal bootstrap process finish and then login with the
    new user.
 
-3. If desired, change the default sources to https before doing anything else:
+4. If desired, change the default sources to https before doing anything else:
 
    ```shell
    sudo sed -i 's|http://|https://|g' /etc/apt/sources.list.d/*.sources
    ```
 
-4. Apply any available updates:
+5. Apply any available updates:
 
    ```shell
    sudo apt update
@@ -32,20 +36,20 @@ network VPN.
    sudo apt autoremove --purge
    ```
 
-5. Reboot
+6. Reboot
 
-6. Open a terminal and run:
+7. Open a terminal and run:
 
    ```shell
    bash -c "$(curl -LfSs https://mfgo.link/rpi)"
    ```
 
-7. If you want to enable full disk encryption ensure the hostname is enabled
+8. If you want to enable full disk encryption ensure the hostname is enabled
    in `run.bash`. Reboot then follow the instructions in the
    [readme](https://github.com/mfinelli/arch-install/blob/master/rpi/roles/fde/README.md)
    for the `fde` role.
 
-8. If you have installed the case fan you can adjust it so that it only turns
+9. If you have installed the case fan you can adjust it so that it only turns
    on if it reaches a certain temperature (default 80 degrees Celsius). This
    is not necessary if you add the host to the `fan_enabled_hosts` variable in
    the `main` role:
@@ -61,6 +65,6 @@ network VPN.
    **N.B.** you should update which hosts have the case fan in
    `roles/main/vars/main.yml`.
 
-9. Install [dotfiles](https://github.com/mfinelli/dotfiles) (which should be
-   done after connecting via SSH as the dotfiles repository uses the forwarded
-   keys to setup SSH)
+10. Install [dotfiles](https://github.com/mfinelli/dotfiles) (which should be
+    done after connecting via SSH as the dotfiles repository uses the forwarded
+    keys to setup SSH)
