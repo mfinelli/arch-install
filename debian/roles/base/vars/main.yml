@@ -1,5 +1,6 @@
 ---
-base_use_backports_kernel: true # TODO: can probably switch off with forky
+base_use_backports_kernel:
+  - bowser # TODO: can probably switch off with forky
 
 base_supermario_repo_host: "https://download.opensuse.org/repositories/home:/\
   mfinelli:/supermario/"

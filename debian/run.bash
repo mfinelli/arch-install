@@ -7,7 +7,17 @@ if [[ $# -ne 0 ]]; then
   exit 1
 fi
 
+hn="$(cat /etc/hostname)"
+if [[ $hn == atlas ]] || [[ $hn == iris ]]; then
+  mtype=server
+else
+  mtype=personal
+fi
+
 sudo echo -n
-ansible-playbook --inventory ../localhost debian.yml
+ansible-playbook --inventory ../localhost \
+  --extra-vars mtype=$mtype \
+  --extra-vars whoami="$(whoami)" \
+  debian.yml
 
 exit 0

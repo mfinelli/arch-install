@@ -7,20 +7,32 @@
   roles:
     - role: base
     - role: chrome
+      when: mtype != 'server'
     # - role: cloudflarewarp
+    #   when: mtype != 'server'
     - role: desktop
+      when: mtype != 'server'
     # - role: dropbox
+    #   when: mtype != 'server'
     - role: firefox
+      when: mtype != 'server'
     - role: gaming
+      when: mtype != 'server'
     - role: media
+      when: mtype != 'server'
     - role: mega
+      when: mtype != 'server'
     - role: mullvadvpn
+      when: mtype != 'server'
     - role: onepassword
+      when: mtype != 'server'
     - role: tailscale
     - role: waydroid
+      when: mtype != 'server'
 
   tasks:
     - name: Installing Discord
+      when: mtype != 'server'
       ansible.builtin.apt:
         # curl -sI \
         #   'https://discord.com/api/download?platform=linux&format=deb' | \
@@ -29,6 +41,7 @@
 
     # TODO: this will be in forky
     - name: Installing OpenRGB
+      when: mtype != 'server'
       ansible.builtin.apt:
         # https://codeberg.org/OpenRGB/OpenRGB/releases
         deb: "https://codeberg.org/OpenRGB/OpenRGB/releases/download/\

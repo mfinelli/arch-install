@@ -1,0 +1,10 @@
+---
+tailscale_ssh:
+  - atlas
+  - iris
+
+tailscale_tags:
+  atlas:
+    - tag:service
+  iris:
+    - tag:service

@@ -61,7 +61,7 @@
     state: present
 
 - name: Adding APT pin for backports kernel
-  when: base_use_backports_kernel
+  when: ansible_hostname in base_use_backports_kernel
   ansible.builtin.template:
     dest: /etc/apt/preferences.d/kernel
     group: root
@@ -70,13 +70,13 @@
     src: kernel.j2
 
 - name: Removing APT pin for backports kernel
-  when: not base_use_backports_kernel
+  when: ansible_hostname not in base_use_backports_kernel
   ansible.builtin.file:
     path: /etc/apt/preferences.d/kernel
     state: absent
 
 - name: Installing backports kernel
-  when: base_use_backports_kernel
+  when: ansible_hostname in base_use_backports_kernel
   ansible.builtin.apt:
     default_release: "{{ ansible_distribution_release }}-backports"
     name: linux-image-{{ base_architectures[ansible_architecture] }}
