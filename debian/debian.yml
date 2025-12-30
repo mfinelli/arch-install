@@ -30,6 +30,6 @@
     # TODO: this will be in forky
     - name: Installing OpenRGB
       ansible.builtin.apt:
-        # https://gitlab.com/CalcProgrammer1/OpenRGB/-/releases
-        deb: "https://openrgb.org/releases/\
-          release_0.9/openrgb_0.9_amd64_bookworm_b5f46e3.deb"
+        # https://codeberg.org/OpenRGB/OpenRGB/releases
+        deb: "https://codeberg.org/OpenRGB/OpenRGB/releases/download/\
+          release_candidate_1.0rc2/openrgb_1.0rc2_amd64_trixie_0fca93e.deb"
