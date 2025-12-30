@@ -1,0 +1,31 @@
+---
+- name: Copying sudoers file
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/020_sudo
+    owner: root
+    group: root
+    mode: "0440"
+    src: sudoer
+    validate: visudo -cf %s
+
+- name: Installing openssh
+  ansible.builtin.apt:
+    name: openssh-server
+    state: present
+
+- name: Enabling sshd service
+  ansible.builtin.systemd:
+    enabled: true
+    name: ssh.service
+    state: started
+
+- name: Copying sshd configuration
+  ansible.builtin.copy:
+    dest: /etc/ssh/sshd_config
+    group: root
+    mode: "0644"
+    owner: root
+    src: sshd_config
+    validate: /usr/sbin/sshd -tf %s
+  notify:
+    - Restart sshd

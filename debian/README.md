@@ -1,6 +1,8 @@
 # debian
 
-Automation for debian gaming installation. Using the `netinst` ISO, select:
+Automation for debian installations. Using the `netinst` ISO, select:
+
+### gaming (desktop)
 
 - Disabled root account (leave root password blank when prompted)
 - Guided; use entire disk and setup encrypted LVM (all files in one partition)
@@ -11,6 +13,15 @@ Automation for debian gaming installation. Using the `netinst` ISO, select:
 - Debian desktop environment: GNOME
 - no web server, no SSH server
 - standard system utilities
+- Install the GRUB bootloader to the primary drive
+
+### server
+
+- Disabled root account (leave root password blank when prompted)
+- Guided; use entire disk and setup encrypted LVM (all files in one partition)
+- Don't participate in the package survey
+- no desktop environment, no web server
+- SSH server, standard system utilities
 - Install the GRUB bootloader to the primary drive
 
 ## post-install instructions
