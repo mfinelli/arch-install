@@ -6,6 +6,7 @@
     group: root
     mode: "0440"
     src: sudoer
+    validate: visudo -cf %s
 
 - name: Adding SSH authorized keys for mario
   ansible.posix.authorized_key:

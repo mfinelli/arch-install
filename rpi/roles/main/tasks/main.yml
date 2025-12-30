@@ -169,6 +169,11 @@
       - rclone
     state: present
 
+- name: Installing atuin
+  ansible.builtin.apt:
+    name: atuin
+    state: present
+
 - name: Configuring FDE and boot
   ansible.builtin.include_tasks: boot.yml
 

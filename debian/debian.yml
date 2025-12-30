@@ -26,6 +26,8 @@
       when: mtype != 'server'
     - role: onepassword
       when: mtype != 'server'
+    - role: server
+      when: mtype == 'server'
     - role: tailscale
     - role: waydroid
       when: mtype != 'server'
