@@ -11,6 +11,7 @@
       - ansible
       - curl
       - git
+      - gnupg
     state: present
     update_cache: true
 
