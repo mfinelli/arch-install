@@ -29,3 +29,13 @@
     validate: /usr/sbin/sshd -tf %s
   notify:
     - Restart sshd
+
+- name: Installing auto-unlock tools
+  ansible.builtin.apt:
+    name:
+      - clevis
+      - clevis-luks
+      - clevis-tpm2
+      - clevis-initramfs
+      - tpm2-tools
+    state: present
