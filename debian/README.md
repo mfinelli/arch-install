@@ -31,7 +31,7 @@ sudo apt update && sudo apt upgrade
 ```
 
 ```shell
-sudo apt install curl
+sudo apt install curl gnupg
 ```
 
 Before proceeding with the next step, if you switched the filesystems to
