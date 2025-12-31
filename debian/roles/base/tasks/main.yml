@@ -60,6 +60,11 @@
     name: atuin
     state: present
 
+- name: Installing magic-wormhole
+  ansible.builtin.apt:
+    name: magic-wormhole
+    state: present
+
 - name: Adding APT pin for backports kernel
   when: ansible_hostname in base_use_backports_kernel
   ansible.builtin.template:
