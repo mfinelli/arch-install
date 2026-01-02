@@ -54,6 +54,12 @@
         url: "{{ base_supermario_repo_full_host }}/Release.key"
       register: base_supermario_key
 
+    - name: Deleting existing keyring file
+      ansible.builtin.file:
+        path: /usr/share/keyrings/supermario-archive-keyring.gpg
+        state: absent
+      when: base_supermario_key.changed # noqa no-handler
+
     - name: Adding supermario repository signing key
       ansible.builtin.command:
         cmd: >-
