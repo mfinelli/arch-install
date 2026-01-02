@@ -39,3 +39,8 @@
       - clevis-initramfs
       - tpm2-tools
     state: present
+
+- name: Installing cifs-utils
+  ansible.builtin.apt:
+    name: cifs-utils
+    state: present
