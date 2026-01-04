@@ -122,7 +122,7 @@
   delay: 2
 
 - name: Writing new iwd configuration
-  when: main_netplan_files.matched == 1
+  when: main_wifi_ssid != ""
   ansible.builtin.template:
     dest: /var/lib/iwd/{{ main_wifi_ssid }}.psk
     owner: root
