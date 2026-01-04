@@ -2,7 +2,7 @@
 - name: Finding netplan configuration file
   ansible.builtin.find:
     paths: /etc/netplan
-    patterns: "*.ya?ml"
+    patterns: "*.yaml"
     file_type: file
   register: main_netplan_files
 
