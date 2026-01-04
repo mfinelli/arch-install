@@ -13,15 +13,15 @@
   register: main_netplan_raw
 
 - name: Starting with empty list
-  ansible.builtin.fact:
+  ansible.builtin.set_fact:
     main_netplan_parsed: []
 
 - name: Decoding and parsing netplan YAML
   ansible.builtin.set_fact:
     main_netplan_parsed: >-
       {{
-        main_netplan_parsed + [item |
-          combine({'parsed': (item.content | b64encode | from_yaml)})
+        main_netplan_parsed + [ item |
+          combine({'parsed': (item.content | b64decode | from_yaml)})
         ]
       }}
   loop: "{{ main_netplan_raw.results }}"
