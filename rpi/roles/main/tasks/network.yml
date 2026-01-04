@@ -12,20 +12,17 @@
   loop: "{{ main_netplan_files.files }}"
   register: main_netplan_raw
 
+- name: Starting with empty list
+  ansible.builtin.fact:
+    main_netplan_parsed: []
+
 - name: Decoding and parsing netplan YAML
   ansible.builtin.set_fact:
     main_netplan_parsed: >-
       {{
-        main_netplan_raw.results
-        | map(
-            'combine',
-            {
-              'content': (
-                item.content | b64decode | from_yaml
-              )
-            }
-          )
-        | list
+        main_netplan_parsed + [item |
+          combine({'parsed': (item.content | b64encode | from_yaml)})
+        ]
       }}
   loop: "{{ main_netplan_raw.results }}"
   loop_control:
@@ -36,34 +33,29 @@
     main_wifi_netplan_files: >-
       {{
         main_netplan_parsed
-        | selectattr('content.network.wifis', 'defined')
+        | selectattr('parsed.network.wifis', 'defined')
         | list
       }}
 
 - name: Bootstrapping Wi-Fi credentials from netplan
-  when: main_wifi_netplan_files.matched == 1
+  when: main_wifi_netplan_files | length == 1
   block:
-    - name: Storing netplan file path
-      ansible.builtin.set_fact:
-        main_netplan_path: "{{ main_wifi_netplan_files.files[0].source }}"
-
     - name: Extracting SSID
       ansible.builtin.set_fact:
         main_wifi_ssid: >-
           {{
-            main_wifi_netplan_files[0].content.network.wifis[
+            (main_wifi_netplan_files[0].parsed.network.wifis[
               ansible_default_ipv4.interface
             ]['access-points']
             | dict2items
-            | first
-            | attr('key')
+            | first)['key']
           }}
 
     - name: Extracting Wi-Fi password
       ansible.builtin.set_fact:
         main_wifi_password: >-
           {{
-            main_wifi_netplan_files[0].content.network.wifis[
+            main_wifi_netplan_files[0].parsed.network.wifis[
               ansible_default_ipv4.interface
             ]['access-points'][main_wifi_ssid].auth.password
           }}
