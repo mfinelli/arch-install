@@ -6,27 +6,54 @@
     file_type: file
   register: main_netplan_files
 
+- name: Reading all netplan configuration files
+  ansible.builtin.slurp:
+    src: "{{ item.path }}"
+  loop: "{{ main_netplan_files.files }}"
+  register: main_netplan_raw
+
+- name: Decoding and parsing netplan YAML
+  ansible.builtin.set_fact:
+    main_netplan_parsed: >-
+      {{
+        main_netplan_raw.results
+        | map(
+            'combine',
+            {
+              'content': (
+                item.content | b64decode | from_yaml
+              )
+            }
+          )
+        | list
+      }}
+  loop: "{{ main_netplan_raw.results }}"
+  loop_control:
+    label: "{{ item.source }}"
+
+- name: Selecting netplan file with Wi-Fi config
+  ansible.builtin.set_fact:
+    main_wifi_netplan_files: >-
+      {{
+        main_netplan_parsed
+        | selectattr('content.network.wifis', 'defined')
+        | list
+      }}
+
 - name: Bootstrapping Wi-Fi credentials from netplan
-  when: main_netplan_files.matched == 1
+  when: main_wifi_netplan_files.matched == 1
   block:
     - name: Storing netplan file path
       ansible.builtin.set_fact:
-        main_netplan_path: "{{ main_netplan_files.files[0].path }}"
-
-    - name: Reading netplan YAML
-      ansible.builtin.slurp:
-        src: "{{ main_netplan_path }}"
-      register: main_network_yaml
-
-    - name: Parsing netplan YAML
-      ansible.builtin.set_fact:
-        main_netplan: "{{ main_network_yaml.content | b64decode | from_yaml }}"
+        main_netplan_path: "{{ main_wifi_netplan_files.files[0].source }}"
 
     - name: Extracting SSID
       ansible.builtin.set_fact:
         main_wifi_ssid: >-
           {{
-            main_netplan.network.wifis[ansible_default_ipv4.interface]['access-points']
+            main_wifi_netplan_files[0].content.network.wifis[
+              ansible_default_ipv4.interface
+            ]['access-points']
             | dict2items
             | first
             | attr('key')
@@ -36,7 +63,9 @@
       ansible.builtin.set_fact:
         main_wifi_password: >-
           {{
-            network_cfg.network.wifis[ansible_default_ipv4.interface]['access-points'][wifi_ssid].auth.password
+            main_wifi_netplan_files[0].content.network.wifis[
+              ansible_default_ipv4.interface
+            ]['access-points'][main_wifi_ssid].auth.password
           }}
       no_log: true
 
@@ -66,6 +95,7 @@
 - name: Removing old networking packages
   ansible.builtin.apt:
     name:
+      - dhcpcd-base
       - ifupdown
       - netplan.io
       - network-manager
