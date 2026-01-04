@@ -179,6 +179,11 @@
     name: magic-wormhole
     state: present
 
+- name: Installing cifs-utils
+  ansible.builtin.apt:
+    name: cifs-utils
+    state: present
+
 - name: Configuring FDE and boot
   ansible.builtin.include_tasks: boot.yml
 
