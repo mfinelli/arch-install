@@ -3,6 +3,14 @@
 This role installs other software available in the main repositories that we
 want to install.
 
+## networking
+
+Replaces the `netplan`/`NetworkManager` configuration in favor of a
+`systemd-networkd` setup. See https://manski.net/articles/linux/network-config
+for more information and rationale as well as the script found here:
+https://github.com/skrysm/systemd-networkd-init which inspired some of the
+tasks in `network.yml`.
+
 ## attached storage
 
 This role also writes out entries into the `fstab` and `crypttab` for any

@@ -1,0 +1,115 @@
+---
+- name: Finding netplan configuration file
+  ansible.builtin.find:
+    paths: /etc/netplan
+    patterns: "*.ya?ml"
+    file_type: file
+  register: main_netplan_files
+
+- name: Bootstrapping Wi-Fi credentials from netplan
+  when: main_netplan_files.matched == 1
+  block:
+    - name: Storing netplan file path
+      ansible.builtin.set_fact:
+        main_netplan_path: "{{ main_netplan_files.files[0].path }}"
+
+    - name: Reading netplan YAML
+      ansible.builtin.slurp:
+        src: "{{ main_netplan_path }}"
+      register: main_network_yaml
+
+    - name: Parsing netplan YAML
+      ansible.builtin.set_fact:
+        main_netplan: "{{ main_network_yaml.content | b64decode | from_yaml }}"
+
+    - name: Extracting SSID
+      ansible.builtin.set_fact:
+        main_wifi_ssid: >-
+          {{
+            main_netplan.network.wifis[ansible_default_ipv4.interface]['access-points']
+            | dict2items
+            | first
+            | attr('key')
+          }}
+
+    - name: Extracting Wi-Fi password
+      ansible.builtin.set_fact:
+        main_wifi_password: >-
+          {{
+            network_cfg.network.wifis[ansible_default_ipv4.interface]['access-points'][wifi_ssid].auth.password
+          }}
+      no_log: true
+
+- name: Installing required iw and iwd
+  ansible.builtin.apt:
+    name:
+      - iw
+      - iwd
+    state: present
+
+- name: Creating systemd-networkd DHCP configuration
+  ansible.builtin.copy:
+    dest: /etc/systemd/network/10-all-interfaces-dhcp.network
+    group: root
+    mode: "0644"
+    owner: root
+    src: dhcp.network
+  notify:
+    - Restart systemd-networkd
+
+- name: Starting and enabling systemd-networkd
+  ansible.builtin.systemd:
+    enabled: true
+    name: systemd-networkd.service
+    state: started
+
+- name: Removing old networking packages
+  ansible.builtin.apt:
+    name:
+      - ifupdown
+      - netplan.io
+      - network-manager
+      - resolvconf
+      - wpasupplicant
+    purge: true
+    state: absent
+
+- name: Removing old networking configuration
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/NetworkManager
+    - /etc/netplan
+    - /etc/wpa_supplicant
+
+- name: Starting and enabling iwd
+  ansible.builtin.systemd:
+    enabled: true
+    name: iwd.service
+    state: started
+
+- name: Waiting until iwctl sees the Wi-Fi device
+  ansible.builtin.command:
+    cmd: iwctl device {{ ansible_default_ipv4["interface"] }} show
+  register: main_iwctl_check
+  changed_when: false
+  failed_when: false
+  until: main_iwctl_check.rc == 0
+  retries: 60
+  delay: 2
+
+- name: Writing new iwd configuration
+  when: main_netplan_files.matched == 1
+  ansible.builtin.template:
+    dest: /var/lib/iwd/{{ main_wifi_ssid }}.psk
+    owner: root
+    mode: "0600"
+    group: root
+    src: wifi.psk.j2
+  notify:
+    - Restart iwd
+    - Wait for Wi-Fi
+
+- name: Flushing handlers
+  ansible.builtin.meta: flush_handlers

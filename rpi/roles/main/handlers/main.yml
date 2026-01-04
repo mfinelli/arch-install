@@ -1,7 +1,17 @@
 ---
+- name: Restart iwd
+  ansible.builtin.systemd:
+    name: iwdssh.service
+    state: restarted
+
 - name: Restart sshd
   ansible.builtin.systemd:
     name: ssh.service
+    state: restarted
+
+- name: Restart systemd-networkd
+  ansible.builtin.systemd:
+    name: systemd-networkd.service
     state: restarted
 
 - name: Restart systemd-resolved
@@ -19,3 +29,13 @@
   register: main_localegen
   changed_when: main_localegen.rc == 0
   failed_when: main_localegen.rc != 0
+
+- name: Wait for Wi-Fi
+  ansible.builtin.command:
+    cmd: iwctl device {{ ansible_default_ipv4["interface"] }} show
+  register: main_iwctl_check_handler
+  changed_when: false
+  failed_when: false
+  until: main_iwctl_check_handler.rc == 0
+  retries: 60
+  delay: 2

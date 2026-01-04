@@ -109,6 +109,9 @@
 - name: Flushing handlers
   ansible.builtin.meta: flush_handlers
 
+- name: Replacing netplan/networkmanager with systemd-networkd
+  ansible.builtin.include_tasks: network.yml
+
 - name: Copying custom systemd-timesyncd configuration
   ansible.builtin.copy:
     dest: /etc/systemd/timesyncd.conf.d/time.conf

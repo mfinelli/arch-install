@@ -1,0 +1,16 @@
+# Ansible managed
+
+[Match]
+Type=ether
+Type=wlan
+
+[Network]
+DHCP=yes
+
+[DHCPv4]
+UseDNS=no
+
+[DHCPv6]
+UseDNS=no
+
+# vim: ft=systemd
