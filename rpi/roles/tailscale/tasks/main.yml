@@ -32,10 +32,14 @@
 - name: Enabling ip_forward in ufw sysctl.conf to allow tailscale exit node
   ansible.builtin.lineinfile:
     path: /etc/ufw/sysctl.conf
-    regexp: '^\s*#\s*net/ipv4/ip_forward\s*=\s*1\s*$'
-    line: 'net/ipv4/ip_forward=1'
+    regexp: '^\s*#\s*{{ item }}\s*=\s*1\s*$'
+    line: '{{ item.key }}=1'
     backrefs: false
     create: false
+  loop:
+    - net/ipv4/ip_forward
+    - net/ipv6/conf/default/forwarding
+    - net/ipv6/conf/all/forwarding
 
 - name: Enabling IP forwarding to allow tailscale exit node status
   when: tailscale_exit_node == "true"
