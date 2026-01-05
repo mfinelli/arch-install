@@ -75,6 +75,7 @@
     name:
       - dasel
       - dust
+      - go-snitch
       - hurl
       - hyperfine
       - iprange
