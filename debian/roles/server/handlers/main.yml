@@ -1,4 +1,9 @@
 ---
+- name: Restart iwd
+  ansible.builtin.systemd:
+    name: iwd.service
+    state: restarted
+
 - name: Restart sshd
   ansible.builtin.systemd:
     name: ssh.service
@@ -8,3 +13,13 @@
   ansible.builtin.systemd:
     name: systemd-networkd.service
     state: restarted
+
+- name: Wait for Wi-Fi
+  ansible.builtin.command:
+    cmd: iwctl device {{ ansible_default_ipv4["interface"] }} show
+  register: main_iwctl_check_handler
+  changed_when: false
+  failed_when: false
+  until: main_iwctl_check_handler.rc == 0
+  retries: 60
+  delay: 2

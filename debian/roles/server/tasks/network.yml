@@ -18,13 +18,25 @@
           {{
             (server_interfaces_raw.content | b64decode)
             | regex_findall('wpa-ssid\s+(.*)', '\\1')
+            | first
           }}
         server_wifi_password: >-
           {{
             (server_interfaces_raw.content | b64decode)
             | regex_findall('wpa-psk\s+(.*)', '\\1')
+            | first
           }}
       no_log: true
+
+    - name: Generating pre-shared PSK
+      ansible.builtin.shell:
+        cmd: >-
+          set -o pipefail && wpa_passphrase {{ server_wifi_ssid }}
+          {{ server_wifi_password }} | grep -v '#psk' | grep psk= | awk -F=
+          '{print $2}'
+      register: server_wifi_psk
+      failed_when: server_wifi_psk.rc != 0
+      changed_when: false
 
 - name: Installing iw and iwd
   ansible.builtin.apt:
@@ -66,6 +78,7 @@
     path: "{{ item }}"
     state: absent
   loop:
+    - /etc/network/interfaces
     - /etc/wpa_supplicant
 
 - name: Starting and enabling iwd
@@ -84,12 +97,17 @@
   retries: 60
   delay: 2
 
-- name: Re-connecting to Wi-Fi
+- name: Writing new iwd configuration
   when: server_wifi_ssid is defined
-  ansible.builtin.command:
-    cmd: >-
-      iwctl --passphrase {{ server_wifi_password }} station
-      {{ ansible_default_ipv4["interface"] }} connect {{ server_wifi_ssid }}
-  register: server_iwctl_connect
-  changed_when: server_iwctl_connect.rc == 0
-  failed_when: server_iwctl_connect.rc != 0
+  ansible.builtin.template:
+    dest: /var/lib/iwd/{{ main_wifi_ssid }}.psk
+    owner: root
+    mode: "0600"
+    group: root
+    src: wifi.psk.j2
+  notify:
+    - Restart iwd
+    - Wait for Wi-Fi
+
+- name: Flushing handlers
+  ansible.builtin.meta: flush_handlers
