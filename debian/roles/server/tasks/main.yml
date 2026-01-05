@@ -44,3 +44,6 @@
   ansible.builtin.apt:
     name: cifs-utils
     state: present
+
+- name: Switching to systemd-networkd
+  ansible.builtin.include_tasks: network.yml

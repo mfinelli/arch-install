@@ -1,0 +1,95 @@
+---
+- name: Checking if old network configuration exists
+  ansible.builtin.stat:
+    path: /etc/network/interfaces
+  register: server_old_interfaces
+
+- name: Extracting Wi-Fi credentials from old interfaces file
+  when: server_old_interfaces.stat.exists
+  block:
+    - name: Reading interfaces file
+      ansible.builtin.slurp:
+        src: /etc/network/interfaces
+      register: server_interfaces_raw
+
+    - name: Parsing SSID and PSK
+      ansible.builtin.set_fact:
+        server_wifi_ssid: >-
+          {{
+            (server_interfaces_raw.content | b64decode)
+            | regex_findall('wpa-ssid\s+(.*)', '\\1')
+          }}
+        server_wifi_password: >-
+          {{
+            (server_interfaces_raw.content | b64decode)
+            | regex_findall('wpa-psk\s+(.*)', '\\1')
+          }}
+      no_log: true
+
+- name: Installing iw and iwd
+  ansible.builtin.apt:
+    name:
+      - iw
+      - iwd
+    state: present
+
+- name: Creating systemd-networkd DHCP configuration
+  ansible.builtin.copy:
+    dest: /etc/systemd/network/10-all-interfaces-dhcp.network
+    group: root
+    mode: "0644"
+    owner: root
+    src: dhcp.network
+  notify:
+    - Restart systemd-networkd
+
+- name: Starting and enabling systemd-networkd
+  ansible.builtin.systemd:
+    enabled: true
+    name: systemd-networkd.service
+    state: started
+
+- name: Removing old networking packages
+  ansible.builtin.apt:
+    name:
+      - dhcpcd-base
+      - ifupdown
+      - netplan.io
+      - network-manager
+      - resolvconf
+      - wpasupplicant
+    purge: true
+    state: absent
+
+- name: Removing old networking configuration
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/wpa_supplicant
+
+- name: Starting and enabling iwd
+  ansible.builtin.systemd:
+    enabled: true
+    name: iwd.service
+    state: started
+
+- name: Waiting until iwctl sees the Wi-Fi device
+  ansible.builtin.command:
+    cmd: iwctl device {{ ansible_default_ipv4["interface"] }} show
+  register: main_iwctl_check
+  changed_when: false
+  failed_when: false
+  until: main_iwctl_check.rc == 0
+  retries: 60
+  delay: 2
+
+- name: Re-connecting to Wi-Fi
+  when: server_wifi_ssid is defined
+  ansible.builtin.command:
+    cmd: >-
+      iwctl --passphrase {{ server_wifi_password }} station
+      {{ ansible_default_ipv4["interface"] }} connect {{ server_wifi_ssid }}
+  register: server_iwctl_connect
+  changed_when: server_iwctl_connect.rc == 0
+  failed_when: server_iwctl_connect.rc != 0
