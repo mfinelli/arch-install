@@ -11,6 +11,13 @@ for more information and rationale as well as the script found here:
 https://github.com/skrysm/systemd-networkd-init which inspired some of the
 tasks in `network.yml`.
 
+### details
+
+Like in the Debian configuration we run this setup one-time only -- that is on
+the first run of this script we pull the Wi-Fi credentials out of the netplan
+configuration that Raspberry Pi OS writes and then reconfigure Wi-Fi to use
+`iwd`. On subsequent runs we skip these steps.
+
 ## attached storage
 
 This role also writes out entries into the `fstab` and `crypttab` for any
