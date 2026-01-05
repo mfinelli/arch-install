@@ -33,7 +33,7 @@
   ansible.builtin.lineinfile:
     path: /etc/ufw/sysctl.conf
     regexp: '^\s*#\s*{{ item }}\s*=\s*1\s*$'
-    line: '{{ item.key }}=1'
+    line: '{{ item }}=1'
     backrefs: false
     create: false
   loop:
