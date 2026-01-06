@@ -90,17 +90,17 @@
 - name: Waiting until iwctl sees the Wi-Fi device
   ansible.builtin.command:
     cmd: iwctl device {{ ansible_default_ipv4["interface"] }} show
-  register: main_iwctl_check
+  register: server_iwctl_check
   changed_when: false
   failed_when: false
-  until: main_iwctl_check.rc == 0
+  until: server_iwctl_check.rc == 0
   retries: 60
   delay: 2
 
 - name: Writing new iwd configuration
   when: server_wifi_ssid is defined
   ansible.builtin.template:
-    dest: /var/lib/iwd/{{ main_wifi_ssid }}.psk
+    dest: /var/lib/iwd/{{ server_wifi_ssid }}.psk
     owner: root
     mode: "0600"
     group: root
