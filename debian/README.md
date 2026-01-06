@@ -22,7 +22,6 @@ Automation for debian installations. Using the `netinst` ISO, select:
 - Don't participate in the package survey
 - no desktop environment, no web server
 - SSH server, standard system utilities
-- Install the GRUB bootloader to the primary drive
 
 ## post-install instructions
 
@@ -31,7 +30,7 @@ sudo apt update && sudo apt upgrade
 ```
 
 ```shell
-sudo apt install curl gnupg
+sudo apt install curl
 ```
 
 Before proceeding with the next step, if you switched the filesystems to

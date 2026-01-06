@@ -2,7 +2,7 @@
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y ansible git
+sudo apt install -y ansible git gnupg
 
 wdir="$(mktemp -d)"
 sdir="$(pwd)"
