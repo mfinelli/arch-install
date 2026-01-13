@@ -168,6 +168,12 @@
       - ttf-iosevka
       - typst
       - wgo
+      - sqlit
+
+      # these aren't necessary for vinovoto but make sqlit better for other
+      # projects too
+      - python-psycopg2
+      - python-requests
 
 - name: Installing nodejs
   when: mtype == 'personal'
