@@ -1,5 +1,6 @@
 ---
 - name: Setting getent facts
+  become: true
   ansible.builtin.getent:
     database: "{{ item }}"
   loop:
@@ -7,6 +8,7 @@
     - passwd
 
 - name: Creating mount directories
+  become: true
   when: ansible_hostname in base_attached_storage
   ansible.builtin.file:
     state: directory
@@ -19,6 +21,7 @@
   loop: "{{ base_attached_storage[ansible_hostname] }}"
 
 - name: Checking if devices exist
+  become: true
   when: ansible_hostname in base_attached_storage
   ansible.builtin.stat:
     path: /dev/disk/bu-partlabel/{{ item.label }}
@@ -29,6 +32,7 @@
   register: base_attached_storage_device_lookup
 
 - name: Checking if keyfiles exist
+  become: true
   when: ansible_hostname in base_attached_storage
   ansible.builtin.stat:
     path: "{{ item.keyfile }}"
@@ -56,6 +60,7 @@
   loop: "{{ base_attached_storage[ansible_hostname] }}"
 
 - name: Copying updated crypttab
+  become: true
   ansible.builtin.template:
     dest: /etc/crypttab
     group: root
@@ -64,6 +69,7 @@
     src: crypttab.j2
 
 - name: Updating fstab for attached storage
+  become: true
   ansible.posix.mount:
     path: "{{ item.mountpoint }}"
     src: /dev/mapper/{{ item.name }}

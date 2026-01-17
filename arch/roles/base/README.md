@@ -58,7 +58,7 @@ This mostly follows the guide in the `rpi` role but slightly expanded.
 4. Make new filesystem
 
    ```shell
-   mkfs.btrfs /dev/mapper/tmpmnt
+   sudo mkfs.btrfs /dev/mapper/tmpmnt
    ```
 
 5. Generate a new keyfile to automatically unlock the disk on boot
