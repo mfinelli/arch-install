@@ -1,0 +1,9 @@
+---
+base_attached_storage:
+  nyx:
+    - group: mario
+      keyfile: /root/datadiskkey
+      label: DATADISK
+      mountpoint: /mnt/data
+      name: datadisk
+      owner: mario

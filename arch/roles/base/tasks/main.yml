@@ -387,3 +387,6 @@
 
 - name: Flushing handlers
   ansible.builtin.meta: flush_handlers
+
+- name: Handling attached storage
+  ansible.builtin.include_tasks: disks.yml

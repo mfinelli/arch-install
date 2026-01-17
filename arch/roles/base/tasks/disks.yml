@@ -1,0 +1,79 @@
+---
+- name: Setting getent facts
+  ansible.builtin.getent:
+    database: "{{ item }}"
+  loop:
+    - group
+    - passwd
+
+- name: Creating mount directories
+  when: ansible_hostname in base_attached_storage
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item.mountpoint }}"
+    owner: "{{ item.owner if item.owner is defined and item.owner in
+      ansible_facts.get('getent_passwd', {}) else 'root' }}"
+    group: "{{ item.group if item.group is defined and item.group in
+      ansible_facts.get('getent_group', {}) else 'root' }}"
+    mode: "0755"
+  loop: "{{ base_attached_storage[ansible_hostname] }}"
+
+- name: Checking if devices exist
+  when: ansible_hostname in base_attached_storage
+  ansible.builtin.stat:
+    path: /dev/disk/bu-partlabel/{{ item.label }}
+    get_mime: false
+    get_attributes: false
+    get_checksum: false
+  loop: "{{ base_attached_storage[ansible_hostname] }}"
+  register: base_attached_storage_device_lookup
+
+- name: Checking if keyfiles exist
+  when: ansible_hostname in base_attached_storage
+  ansible.builtin.stat:
+    path: "{{ item.keyfile }}"
+    get_mime: false
+    get_attributes: false
+    get_checksum: false
+  loop: "{{ base_attached_storage[ansible_hostname] }}"
+  register: base_attached_storage_keyfile_lookup
+
+- name: Setting fact for easier lookup
+  ansible.builtin.set_fact:
+    base_attached_storage_lookups: {}
+
+- name: Building lookups variable
+  when: ansible_hostname in base_attached_storage
+  ansible.builtin.set_fact:
+    base_attached_storage_lookups: '{{ base_attached_storage_lookups |
+      combine({item.name: {"device":
+      (base_attached_storage_device_lookup.results |
+      selectattr(''item.name'', ''=='', item.name) | map(attribute=''stat'') |
+      first).exists, "keyfile":
+      (base_attached_storage_keyfile_lookup.results |
+      selectattr(''item.name'', ''=='', item.name) | map(attribute=''stat'') |
+      first).exists}}, recursive=True) }}'
+  loop: "{{ base_attached_storage[ansible_hostname] }}"
+
+- name: Copying updated crypttab
+  ansible.builtin.template:
+    dest: /etc/crypttab
+    group: root
+    mode: "0600"
+    owner: root
+    src: crypttab.j2
+
+- name: Updating fstab for attached storage
+  ansible.posix.mount:
+    path: "{{ item.mountpoint }}"
+    src: /dev/mapper/{{ item.name }}
+    fstype: btrfs
+    opts: rw,relatime,compress=zstd:3,space_cache=v2,subvol=/
+    dump: 0
+    passno: 0
+    state: present
+  loop: "{{ base_attached_storage[ansible_hostname] }}"
+  when:
+    - ansible_hostname in base_attached_storage
+    - base_attached_storage_lookups.get(item.name, {}).get('device')
+    - base_attached_storage_lookups.get(item.name, {}).get('keyfile')
