@@ -118,6 +118,12 @@
     enabled: true
     name: tailscaled.service
 
+- name: Setting Tailscale operator
+  when: mtype == 'personal' or mtype == 'media'
+  become: true
+  ansible.builtin.command:
+    cmd: tailscale set --operator={{ whoami }}
+
 - name: Installing irssi
   when: mtype != 'media'
   become: true
