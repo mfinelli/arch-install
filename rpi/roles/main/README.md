@@ -46,7 +46,7 @@ we prepare it.
 2. Partition the disk using `fdisk`
 
    ```shell
-   sudo fdisk /dev/sdc
+   sudo fdisk -n /dev/sdc
    ```
 
    - Create a new partition table: `g`
