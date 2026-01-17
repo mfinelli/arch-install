@@ -24,7 +24,7 @@
   become: true
   when: ansible_hostname in base_attached_storage
   ansible.builtin.stat:
-    path: /dev/disk/bu-partlabel/{{ item.label }}
+    path: /dev/disk/by-partlabel/{{ item.label }}
     get_mime: false
     get_attributes: false
     get_checksum: false
