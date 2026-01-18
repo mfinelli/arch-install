@@ -40,6 +40,14 @@
       - tpm2-tools
     state: present
 
+- name: Installing backup applications
+  ansible.builtin.apt:
+    name:
+      - age
+      - borgbackup
+      - rclone
+    state: present
+
 - name: Installing cifs-utils
   ansible.builtin.apt:
     name: cifs-utils
