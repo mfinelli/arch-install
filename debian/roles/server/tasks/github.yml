@@ -1,0 +1,16 @@
+---
+- name: Creating GitHub user
+  ansible.builtin.user:
+    groups:
+      - sudo
+    name: github
+    shell: /bin/bash
+    state: present
+
+- name: Adding GitHub user SSH key
+  ansible.posix.authorized_key:
+    exclusive: true
+    key: >-
+      ssh-ed25519
+      AAAAC3NzaC1lZDI1NTE5AAAAIOW98OpO+aRahllamV5LWgArTBE0NejH16NJK2Nz6rVo
+    user: github

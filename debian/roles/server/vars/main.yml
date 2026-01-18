@@ -1,0 +1,4 @@
+---
+server_github_actions_access_hosts:
+  - atlas
+  - iris

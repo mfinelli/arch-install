@@ -45,5 +45,9 @@
     name: cifs-utils
     state: present
 
+- name: Creating GitHub Actions user
+  when: ansible_hostname in server_github_actions_access_hosts
+  ansible.builtin.include_tasks: github.yml
+
 - name: Switching to systemd-networkd
   ansible.builtin.include_tasks: network.yml
