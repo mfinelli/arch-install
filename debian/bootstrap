@@ -1,0 +1,126 @@
+#!/bin/bash
+
+set -e
+
+scriptstart=$SECONDS
+
+# https://dev.to/ifenna__/adding-colors-to-bash-scripts-48g4
+ENDCOLOR="\e[0m"
+CYAN="\e[36m"
+BOLDGREEN="\e[1;32m"
+BOLDMAGENTA="\e[1;35m"
+BOLDRED="\e[1;31m"
+
+# https://stackoverflow.com/a/17695543
+function prompt_yesno() {
+  read -rp "$1 "
+  case $(echo "$REPLY" | tr '[:upper:]' '[:lower:]') in
+    y | yes) echo "yes" ;;
+    *) echo "no" ;;
+  esac
+}
+
+echo -e "${BOLDMAGENTA}ARCH-INSTALL/BOOTSTRAP STARTING${ENDCOLOR}"
+echo -e "${BOLDGREEN}Setting hardware clock to UTC...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+
+# default timezone to UTC
+hwclock --systohc --utc
+# timedatectl set-timezone UTC
+
+echo -e "${CYAN}Set hardware clock.${ENDCOLOR}"
+echo -e "${BOLDGREEN}Setting default language to en_US...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+
+# Set default language to US english
+sed -i "/# en_US.UTF-8 UTF-8/cen_US.UTF-8 UTF-8" /etc/locale.gen
+locale-gen
+echo "LANG=\"en_US.UTF-8\"" > /etc/locale.conf
+echo "LANGUAGE=\"en_US:en\"" > /etc/locale.conf
+
+apt-get update -y
+apt-get upgrade -y
+
+# can't have a baby without a name
+read -rp "What's the new hostname? " NEW_HOSTNAME
+echo "$NEW_HOSTNAME" > /etc/hostname
+echo -e "${CYAN}Set hostname: ${NEW_HOSTNAME}.${ENDCOLOR}"
+
+AMD=AuthenticAMD
+INTEL=GenuineIntel
+if [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == "$INTEL" ]]; then
+  microcode=intel-microcode
+elif [[ $(lscpu | grep -m1 Vendor\ ID | awk '{print $3}') == "$AMD" ]]; then
+  microcode=amd64-microcode
+else
+  microcode=""
+fi
+
+echo -e "${BOLDGREEN}Installing bootstrap packages...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+pstart=$SECONDS
+
+while :; do
+  if apt-get install -y btrfs-progs cryptsetup dosfstools dracut e2fsprogs \
+    efibootmgr elfutils exfatprogs f2fs-tools firmware-linux \
+    linux-image-amd64 lvm2 mdadm ntfs-3g plymouth sudo systemd-boot
+    systemd-ukify usbutils $microcode; then
+    break
+  else
+    echo -e "${BOLDRED}Installing boot packages failed!${ENDCOLOR}"
+    if [[ "no" == $(prompt_yesno "Retry?") ]]; then
+      exit 1
+    fi
+  fi
+done
+
+ptime=$((SECONDS - pstart))
+echo -e "${CYAN}Done installing boot packages. (in $ptime seconds)${ENDCOLOR}"
+echo -e "${BOLDGREEN}Installing systemd-boot...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+
+bootctl install
+
+cat <<EOF >> /etc/kernel/install.conf
+layout=uki
+initrd_generator=dracut
+uki_generator=ukify
+EOF
+
+cat <<EOF >> /etc/kernel/uki.conf
+[UKI]
+Cmdline=@/etc/kernel/cmdline
+EOF
+
+dpkg-reconfigure "linux-image-$(uname -r)"
+
+echo -e "${CYAN}Installed bootloader.${ENDCOLOR}"
+echo -e "${BOLDGREEN}Configuring sudo...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+
+echo "%sudo ALL=(ALL:ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/gsudo
+chmod 0440 /etc/sudoers.d/gsudo
+
+echo -e "${CYAN}Configured sudo.${ENDCOLOR}"
+echo -e "${BOLDGREEN}Installing ansible and dependencies...${ENDCOLOR}"
+read -rp "Press enter to continue..." _
+pstart=$SECONDS
+
+while :; do
+  # the rest of the system gets installed/configured using ansible
+  if apt-get install -y ansible git vim; then
+    break
+  else
+    echo -e "${BOLDRED}Installing ansible packages failed!${ENDCOLOR}"
+    if [[ "no" == $(prompt_yesno "Retry?") ]]; then
+      exit 1
+    fi
+  fi
+done
+
+ptime=$((SECONDS - pstart))
+echo -e "${CYAN}Installing ansible done. (in $ptime seconds)${ENDCOLOR}"
+echo -e "${BOLDMAGENTA}ARCH-INSTALL/BOOTSTRAP COMPLETE${ENDCOLOR}"
+echo "Total time: $((SECONDS - scriptstart)) seconds"
+
+exit 0
