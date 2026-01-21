@@ -20,6 +20,9 @@ if command -v snap > /dev/null 2>&1; then
 fi
 
 sudo echo -n
-ansible-playbook --inventory ../localhost --extra-vars mtype=$mtype ubuntu.yml
+ansible-playbook --inventory ../localhost \
+  --extra-vars mtype=$mtype \
+  --extra-vars israspi=false \
+  ubuntu.yml
 
 exit 0

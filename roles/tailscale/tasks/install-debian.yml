@@ -1,0 +1,49 @@
+---
+- name: Adding the Tailscale APT signing key
+  when:
+    - ansible_facts["distribution"] == "Debian"
+    - israspi == "true"
+  ansible.builtin.get_url:
+    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+    group: root
+    mode: "0644"
+    owner: root
+    url: "https://pkgs.tailscale.com/stable/raspbian/\
+      {{ ansible_distribution_release }}.noarmor.gpg"
+
+- name: Adding the Tailscale APT signing key
+  when:
+    - ansible_facts["distribution"] == "Debian"
+    - israspi == "false"
+  ansible.builtin.get_url:
+    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+    group: root
+    mode: "0644"
+    owner: root
+    url: "https://pkgs.tailscale.com/stable/debian/\
+      {{ ansible_distribution_release }}.noarmor.gpg"
+
+- name: Adding the Tailscale APT signing key
+  when: ansible_facts["distribution"] == "Ubuntu"
+  ansible.builtin.get_url:
+    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+    group: root
+    mode: "0644"
+    owner: root
+    url: "https://pkgs.tailscale.com/stable/ubuntu/\
+      {{ ansible_distribution_release }}.noarmor.gpg"
+
+- name: Adding the Tailscale repository
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/tailscale.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: tailscale.sources.j2
+  register: tailscale_repository
+
+- name: Installing Tailscale
+  ansible.builtin.apt:
+    name: tailscale
+    state: present
+    update_cache: "{{ tailscale_repository.changed }}"

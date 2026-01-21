@@ -1,0 +1,29 @@
+---
+tailscale_exit_node_hosts:
+  - parkpi
+  - raipi
+
+tailscale_host_tags:
+  atlas:
+    - tag:service
+  homepi:
+    - tag:homeassistant
+  iris:
+    - tag:service
+  parkpi:
+    - tag:vpn
+  raipi:
+    - tag:vpn
+  tvpi:
+    - tag:service
+  workpi:
+    - tag:service
+
+tailscale_ssh_hosts:
+  - atlas
+  - homepi
+  - iris
+  - parkpi
+  - raipi
+  - tvpi
+  - workpi

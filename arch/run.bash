@@ -99,6 +99,7 @@ ansible-playbook --inventory ../localhost \
   --extra-vars timezone="$timezone" \
   --extra-vars whoami="$(whoami)" \
   --extra-vars wireless_regdom="$wirelessregdom" \
+  --extra-vars israspi=false \
   arch.yml $tags
 
 exit 0

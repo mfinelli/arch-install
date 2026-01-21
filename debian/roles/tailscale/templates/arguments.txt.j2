@@ -1,1 +1,0 @@
---auth-key={{ tailscale_oauth_secret['content'] | b64decode | trim }}?ephemeral=false&preauthorized=true --accept-dns=false{%if ansible_hostname in tailscale_tags %} --advertise-tags={{ tailscale_tags[ansible_hostname] | join(",") }}{% endif %}{% if ansible_hostname in tailscale_ssh %} --ssh{% endif %}

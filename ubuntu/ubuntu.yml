@@ -26,7 +26,7 @@
       when: mtype != 'server'
     - role: server
       when: mtype == 'server'
-    - role: tailscale
+    - role: ../roles/tailscale
     - role: waydroid
       when: mtype != 'server'
 

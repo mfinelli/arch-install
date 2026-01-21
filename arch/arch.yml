@@ -15,6 +15,9 @@
       tags: [all]
     - role: media
       tags: [all]
+    - role: ../roles/tailscale
+      tags: [all]
+      when: mtype == 'personal' or mtype == 'media'
     - role: work
       tags: [all]
       when: mtype == 'work'

@@ -18,6 +18,7 @@ sudo echo -n
 ansible-playbook --inventory ../localhost \
   --extra-vars mtype=$mtype \
   --extra-vars whoami="$(whoami)" \
+  --extra-vars israspi=false \
   debian.yml
 
 exit 0

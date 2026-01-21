@@ -1,0 +1,48 @@
+---
+- name: Installing Tailscale on Archlinux
+  when: ansible_facts["os_family"] == "Archlinux"
+  ansible.builtin.include_tasks: install-arch.yml
+
+- name: Installing Tailscale on Debian-based systems
+  when: ansible_facts["os_family"] == "Debian"
+  ansible.builtin.include_tasks: install-debian.yml
+
+- name: Starting and enabling Tailscale service
+  become: true
+  ansible.builtin.systemd:
+    enabled: true
+    name: tailscaled.service
+    state: started
+
+- name: Setting up Tailscale exit node
+  when: ansible_facts["hostname"] in tailscale_exit_node_hosts
+  ansible.builtin.include_tasks: setup-exitnode.yml
+
+- name: Adding ufw rule to allow incoming traffic to the Tailscale interface
+  become: true
+  community.general.ufw:
+    direction: in
+    interface: tailscale0
+    rule: allow
+
+- name: Adding ufw rule to allow traffic on port 41641
+  become: true
+  community.general.ufw:
+    port: "41641"
+    proto: udp
+    rule: allow
+
+- name: Adding ufw rule to allow traffic on port 3478
+  become: true
+  community.general.ufw:
+    port: "3478"
+    proto: udp
+    rule: allow
+
+- name: Giving current user Tailscale permissions
+  when: mtype == "personal" or mtype == "media"
+  ansible.builtin.include_tasks: setup-user.yml
+
+- name: Connecting to tailnet
+  when: mtype == "server"
+  ansible.builtin.include_tasks: setup-server.yml

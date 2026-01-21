@@ -1,0 +1,33 @@
+---
+- name: Checking if Tailscale operator has been set
+  become: true
+  ansible.builtin.stat:
+    path: /root/tailscale-operator.txt
+  register: tailscale_operator_file
+
+- name: Fetching existing Tailscale operator
+  become: true
+  ansible.builtin.slurp:
+    src: /root/tailscale-operator.txt
+  when: tailscale_operator_file.stat.exists
+  register: tailscale_operator
+
+- name: Removing existing Tailscale operator
+  become: true
+  when:
+    - tailscale_operator_file.stat.exists
+    - (tailscale_operator["content"] | b64decode | trim) != whoami
+  ansible.builtin.file:
+    path: /root/tailscale-operator.txt
+    state: absent
+
+- name: Setting Tailscale operator
+  become: true
+  ansible.builtin.shell:
+    cmd: >-
+      set -e -o pipefail;
+      tailscale set --operator={{ whoami }} &&
+      echo {{ whoami }} > /root/tailscale-operator.txt
+    creates: /root/tailscale-operator.txt
+  register: tailscale_set_operator
+  failed_when: tailscale_set_operator.rc != 0

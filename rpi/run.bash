@@ -40,6 +40,7 @@ ansible-playbook --inventory ../localhost \
   --extra-vars tailscale_exit_node=$tailscale_exit_node \
   --extra-vars whoami="$(whoami)" \
   --extra-vars wregdom_country="${wregdom_hosts[$hn]}" \
+  --extra-vars israspi=true \
   rpi.yml
 
 exit 0

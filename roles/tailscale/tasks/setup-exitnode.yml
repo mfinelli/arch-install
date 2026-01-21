@@ -1,0 +1,23 @@
+---
+- name: Enabling ip_forward in ufw sysctl.conf to allow Tailscale exit node
+  when: ansible_facts["os_family"] == "Debian"
+  ansible.builtin.lineinfile:
+    path: /etc/ufw/sysctl.conf
+    regexp: '^\s*#\s*{{ item }}\s*=\s*1\s*$'
+    line: "{{ item }}=1"
+    backrefs: false
+    create: false
+  loop:
+    - net/ipv4/ip_forward
+    - net/ipv6/conf/default/forwarding
+    - net/ipv6/conf/all/forwarding
+
+- name: Enabling IP forwarding to allow Tailscale exit node status
+  ansible.posix.sysctl:
+    name: "{{ item }}"
+    reload: true
+    sysctl_set: true
+    value: "1"
+  loop:
+    - net.ipv4.ip_forward
+    - net.ipv6.conf.all.forwarding

@@ -8,5 +8,5 @@
     - role: fde
     - role: main
     - role: monitoring
-    - role: tailscale
+    - role: ../roles/tailscale
     - role: user
