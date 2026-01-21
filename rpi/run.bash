@@ -41,6 +41,7 @@ ansible-playbook --inventory ../localhost \
   --extra-vars whoami="$(whoami)" \
   --extra-vars wregdom_country="${wregdom_hosts[$hn]}" \
   --extra-vars israspi=true \
+  --extra-vars mtype=server \
   rpi.yml
 
 exit 0
