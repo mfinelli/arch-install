@@ -2,9 +2,11 @@
 
 Types: deb
 {% if ansible_facts["distribution"] == "Debian" %}
-URIs: https://pkgs.tailscale.com/stable/debian
 {% if israspi == "true" %}
 URIs: https://pkgs.tailscale.com/stable/raspbian
+{% else %}
+URIs: https://pkgs.tailscale.com/stable/debian
+{% endif %}
 {% else %}
 URIs: https://pkgs.tailscale.com/stable/ubuntu
 {% endif %}
