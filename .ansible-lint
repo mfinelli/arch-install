@@ -1,6 +1,7 @@
 ---
 skip_list:
   - git-latest
+  - role-name[path]
 
 warn_list:
   - no-handler
