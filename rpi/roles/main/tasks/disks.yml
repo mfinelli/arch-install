@@ -1,4 +1,9 @@
 ---
+- name: Installing systemd-cryptsetup
+  ansible.builtin.apt:
+    name: systemd-cryptsetup
+    state: present
+
 - name: Setting getent facts
   ansible.builtin.getent:
     database: "{{ item }}"
