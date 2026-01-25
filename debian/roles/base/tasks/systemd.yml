@@ -48,3 +48,8 @@
     src: timesyncd.conf
   notify:
     - Restart systemd-timesyncd
+
+- name: Installing systemd-cryptsetup
+  ansible.builtin.apt:
+    name: systemd-cryptsetup
+    state: present
