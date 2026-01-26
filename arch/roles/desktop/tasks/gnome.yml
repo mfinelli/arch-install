@@ -17,11 +17,11 @@
       - gnome-shell-extension-arch-update
       - gnome-shell-extension-blur-my-shell
       - gnome-shell-extension-caffeine
+      - gnome-shell-extension-copyous
       - gnome-shell-extension-dash-to-dock
       - gnome-shell-extension-emoji-copy
       - gnome-shell-extension-nightthemeswitcher
       - gnome-shell-extension-no-overview
-      - gnome-shell-extension-pano
       - gnome-shell-extension-randomwallpaper
       - gnome-shell-extension-simpleweather
       - gnome-shell-extension-systemd-manager
@@ -36,6 +36,13 @@
       - xdg-desktop-portal
       - xdg-desktop-portal-gnome
     state: present
+
+- name: Uninstalling old GNOME extensions
+  become: true
+  community.general.pacman:
+    name:
+      - gnome-shell-extension-pano
+    state: absent
 
 - name: Copying systemd policy for the systemd GNOME extension
   become: true
