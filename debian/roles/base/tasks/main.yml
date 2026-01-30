@@ -89,5 +89,27 @@
     name: linux-image-{{ base_architectures[ansible_architecture] }}
     state: present
 
+- name: Adding APT pin for backports firmware
+  when: ansible_hostname in base_use_backports_firmware
+  ansible.builtin.template:
+    dest: /etc/apt/preferences.d/firmware
+    group: root
+    mode: "0644"
+    owner: root
+    src: firmware.j2
+
+- name: Removing APT pin for backports firmware
+  when: ansible_hostname not in base_use_backports_firmware
+  ansible.builtin.file:
+    path: /etc/apt/preferences.d/firmware
+    state: absent
+
+- name: Installing backports firmware
+  when: ansible_hostname in base_use_backports_firmware
+  ansible.builtin.apt:
+    default_release: "{{ ansible_distribution_release }}-backports"
+    name: firmware-linux
+    state: present
+
 - name: Enabling simple, stateful firewall
   ansible.builtin.include_tasks: firewall.yml
