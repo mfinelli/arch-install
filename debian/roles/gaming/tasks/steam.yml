@@ -26,3 +26,10 @@
       - steam-launcher
     state: present
     update_cache: "{{ gaming_steam_repository.changed }}"
+
+# https://github.com/ValveSoftware/steam-for-linux/issues/9383#issuecomment-1584898530
+- name: Fixing steam desktop entry
+  ansible.builtin.replace:
+    path: /usr/share/applications/steam.desktop
+    regexp: '^PrefersNonDefaultGPU=true\s*$'
+    replace: 'PrefersNonDefaultGPU=false'
