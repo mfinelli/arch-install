@@ -33,3 +33,8 @@
     path: /usr/share/applications/steam.desktop
     regexp: '^PrefersNonDefaultGPU=true\s*$'
     replace: 'PrefersNonDefaultGPU=false'
+
+- name: Installing steamtinkerlaunch
+  ansible.builtin.apt:
+    name: steamtinkerlaunch
+    state: present

@@ -47,6 +47,7 @@
       - gamemode
       - gamescope
       - mangohud
+      - protontricks
       - vkbasalt
     state: present
 
