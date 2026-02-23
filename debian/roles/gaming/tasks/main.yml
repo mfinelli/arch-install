@@ -77,3 +77,20 @@
       - obs-transition-table
       - obs-vintage-filter
     state: present
+
+- name: Adding APT pin for 0AD
+  ansible.builtin.template:
+    dest: /etc/apt/preferences.d/0ad
+    group: root
+    mode: "0644"
+    owner: root
+    src: 0ad.j2
+
+- name: Installing 0AD game
+  ansible.builtin-apt:
+    default_release: "{{ ansible_distribution_release }}-backports"
+    name:
+      - 0ad
+      - 0ad-data
+      - 0ad-data-common
+    state: present

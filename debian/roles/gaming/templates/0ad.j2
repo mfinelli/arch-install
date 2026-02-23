@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+
+Package: 0ad
+Pin: release a={{ ansible_distribution_release }}-backports
+Pin-Priority: 500
+
+Package: 0ad-data
+Pin: release a={{ ansible_distribution_release }}-backports
+Pin-Priority: 500
+
+Package: 0ad-data-common
+Pin: release a={{ ansible_distribution_release }}-backports
+Pin-Priority: 500
