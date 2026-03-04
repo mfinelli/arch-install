@@ -63,6 +63,7 @@
     name:
       - yt-dlp
       - yt-dlp-ejs
+      - python-curl_cffi
     state: present
 
 - name: Installing yt-dlp optional dependencies
