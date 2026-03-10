@@ -92,6 +92,7 @@
       - go
       - go-critic
       - go-tools
+      - go-licenses
       - gopls
       - staticcheck
     state: present
