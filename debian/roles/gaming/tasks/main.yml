@@ -28,6 +28,9 @@
 - name: Installing ludusavi
   ansible.builtin.include_tasks: ludusavi.yml
 
+- name: Installing modctl
+  ansible.builtin.include_tasks: modctl.yml
+
 - name: Installing Virtualbox
   ansible.builtin.apt:
     name:

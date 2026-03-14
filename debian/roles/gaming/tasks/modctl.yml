@@ -1,0 +1,25 @@
+---
+- name: Downloading the modctl APT signing key
+  ansible.builtin.get_url:
+    dest: /usr/share/keyrings/modctl-archive-keyring.gpg
+    group: root
+    mode: "0644"
+    owner: root
+    url: https://pkg.modctl.org/pubkey.gpg
+  register: gaming_modctl_repository_key
+
+- name: Adding the modctl APT repository
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/modctl.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: modctl.sources
+  register: gaming_modctl_repository
+
+- name: Installing modctl
+  ansible.builtin.apt:
+    name: modctl
+    state: present
+    update_cache: "{{ gaming_modctl_repository_key.changed or
+      gaming_modctl_repository.changed }}"
