@@ -175,6 +175,15 @@
       # projects too
       - python-psycopg2
       - python-requests
+    state: present
+
+- name: Installing modctl dependencies
+  when: mtype == 'personal'
+  become: true
+  community.generale.pacman:
+    name:
+      - scdoc
+    state: present
 
 - name: Installing nodejs
   when: mtype == 'personal'
