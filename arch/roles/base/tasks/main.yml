@@ -51,13 +51,6 @@
       - sof-firmware
     state: present
 
-# iptables is a dependency of systemd (part of base)
-- name: Replacing "iptables" with "iptables-nft"
-  become: true
-  community.general.pacman:
-    name: iptables-nft
-    state: present
-
 - name: Installing tpm tools
   become: true
   when: hastpm == 'true'
