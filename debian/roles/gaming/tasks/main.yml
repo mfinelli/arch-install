@@ -90,10 +90,24 @@
     src: 0ad.j2
 
 - name: Installing 0AD game
-  ansible.builtin-apt:
+  ansible.builtin.apt:
     default_release: "{{ ansible_distribution_release }}-backports"
     name:
       - 0ad
       - 0ad-data
       - 0ad-data-common
+    state: present
+
+- name: Add APT pin for wesnoth
+  ansible.builtin.template:
+    dest: /etc/apt/preferences.d/wesnoth
+    group: root
+    mode: "0644"
+    owner: root
+    src: wesnoth.j2
+
+- name: Installing wesnoth
+  ansible.builtin.apt:
+    default_release: "{{ ansible_distribution_release }}-backports"
+    name: wesnoth
     state: present
