@@ -38,12 +38,12 @@ main_attached_storage:
       name: shdata
       mountpoint: /mnt/shdata
       keyfile: /root/shkey
-    - label: ZNCDATA
-      name: zncdata
-      mountpoint: /var/lib/znc
-      keyfile: /root/znckey
-      owner: _znc
-      group: _znc
+    # - label: ZNCDATA
+    #   name: zncdata
+    #   mountpoint: /var/lib/znc
+    #   keyfile: /root/znckey
+    #   owner: _znc
+    #   group: _znc
     - label: URLWATCHDATA
       name: urlwatchdata
       mountpoint: /var/lib/urlwatch
