@@ -180,7 +180,7 @@
 - name: Installing modctl dependencies
   when: mtype == 'personal'
   become: true
-  community.generale.pacman:
+  community.general.pacman:
     name:
       - scdoc
     state: present
