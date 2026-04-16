@@ -10,6 +10,8 @@ tailscale_host_tags:
     - tag:homeassistant
   iris:
     - tag:service
+  kleio:
+    - tag:service
   parkpi:
     - tag:vpn
   raipi:
@@ -23,6 +25,7 @@ tailscale_ssh_hosts:
   - atlas
   - homepi
   - iris
+  - kleio
   - parkpi
   - raipi
   - tvpi
