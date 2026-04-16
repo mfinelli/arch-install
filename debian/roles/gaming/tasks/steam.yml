@@ -32,7 +32,7 @@
   ansible.builtin.replace:
     path: /usr/share/applications/steam.desktop
     regexp: '^PrefersNonDefaultGPU=true\s*$'
-    replace: 'PrefersNonDefaultGPU=false'
+    replace: "PrefersNonDefaultGPU=false"
 
 - name: Installing steamtinkerlaunch
   ansible.builtin.apt:
