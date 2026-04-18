@@ -94,7 +94,9 @@
       - handbrake
       - libaacs
       - libdvdcss
+      - libmpeg2
       - vlc
+      - vlc-plugin-ffmpeg
     state: present
 
 - name: Installing a torrent client
@@ -111,4 +113,5 @@
   kewlfft.aur.aur:
     name:
       - makemkv
+      - mkvtoolnix-gui
     state: present
