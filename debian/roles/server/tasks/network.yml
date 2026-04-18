@@ -83,7 +83,7 @@
 
 - name: Starting and enabling iwd
   ansible.builtin.systemd:
-    enabled: "{{ ansible_hostname in server_ethernet_hosts }}"
+    enabled: "{{ ansible_hostname not in server_ethernet_hosts }}"
     name: iwd.service
     state: "{% if ansible_hostname in
       server_ethernet_hosts %}stopped{% else %}started{% endif %}"
