@@ -12,7 +12,7 @@
     - passwd
 
 - name: Creating mount directories
-  when: ansible_hostname in main_attached_storage
+  when: ansible_hostname in base_attached_storage
   ansible.builtin.file:
     state: directory
     path: "{{ item.mountpoint }}"
@@ -21,44 +21,44 @@
     group: "{{ item.group if item.group is defined and item.group in
       ansible_facts.get('getent_group', {}) else 'root' }}"
     mode: "0755"
-  loop: "{{ main_attached_storage[ansible_hostname] }}"
+  loop: "{{ base_attached_storage[ansible_hostname] }}"
 
 - name: Checking if devices exist
-  when: ansible_hostname in main_attached_storage
+  when: ansible_hostname in base_attached_storage
   ansible.builtin.stat:
     path: /dev/disk/by-partlabel/{{ item.label }}
     get_mime: false
     get_attributes: false
     get_checksum: false
-  loop: "{{ main_attached_storage[ansible_hostname] }}"
-  register: main_attached_storage_device_lookup
+  loop: "{{ base_attached_storage[ansible_hostname] }}"
+  register: base_attached_storage_device_lookup
 
 - name: Checking if keyfiles exist
-  when: ansible_hostname in main_attached_storage
+  when: ansible_hostname in base_attached_storage
   ansible.builtin.stat:
     path: "{{ item.keyfile }}"
     get_mime: false
     get_attributes: false
     get_checksum: false
-  loop: "{{ main_attached_storage[ansible_hostname] }}"
-  register: main_attached_storage_keyfile_lookup
+  loop: "{{ base_attached_storage[ansible_hostname] }}"
+  register: base_attached_storage_keyfile_lookup
 
 - name: Setting fact for easier lookup
   ansible.builtin.set_fact:
-    main_attached_storage_lookups: {}
+    base_attached_storage_lookups: {}
 
 - name: Building lookups variable
-  when: ansible_hostname in main_attached_storage
+  when: ansible_hostname in base_attached_storage
   ansible.builtin.set_fact:
-    main_attached_storage_lookups: '{{ main_attached_storage_lookups |
+    base_attached_storage_lookups: '{{ base_attached_storage_lookups |
       combine({item.name: {"device":
-      (main_attached_storage_device_lookup.results |
+      (base_attached_storage_device_lookup.results |
       selectattr(''item.name'', ''=='', item.name) | map(attribute=''stat'') |
       first).exists, "keyfile":
-      (main_attached_storage_keyfile_lookup.results |
+      (base_attached_storage_keyfile_lookup.results |
       selectattr(''item.name'', ''=='', item.name) | map(attribute=''stat'') |
       first).exists}}, recursive=True) }}'
-  loop: "{{ main_attached_storage[ansible_hostname] }}"
+  loop: "{{ base_attached_storage[ansible_hostname] }}"
 
 - name: Copying updated crypttab
   become: true
