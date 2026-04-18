@@ -1,4 +1,6 @@
 # {{ ansible_managed }}
+{{ base_root_dm_name }} UUID={{ base_root_luks_uuid }} none luks,discard,x-initrd.attach
+
 {% if ansible_hostname in base_attached_storage %}
 {% for disk in base_attached_storage[ansible_hostname] %}
 {% if base_attached_storage_lookups[disk.name]["device"] %}

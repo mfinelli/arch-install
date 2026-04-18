@@ -11,6 +11,28 @@
     - group
     - passwd
 
+- name: Get LUKS device-mapper name for root disk
+  ansible.builtin.command:
+    cmd: dmsetup ls --target crypt
+  register: base_dmsetup_output
+  changed_when: false
+
+- name: Set dm_name fact
+  ansible.builtin.set_fact:
+    base_root_dm_name: "{{ base_dmsetup_output.stdout.split()[0] }}"
+
+- name: Get LUKS partition UUID for root volume
+  ansible.builtin.command:
+    cmd: >-
+      blkid -s UUID -o value
+      /dev/{{ base_root_dm_name | regex_replace('_crypt$', '') }}
+  register: base_blkid_output
+  changed_when: false
+
+- name: Set luks_uuid fact
+  ansible.builtin.set_fact:
+    base_root_luks_uuid: "{{ base_blkid_output.stdout }}"
+
 - name: Creating mount directories
   when: ansible_hostname in base_attached_storage
   ansible.builtin.file:
