@@ -3,3 +3,7 @@ server_github_actions_access_hosts:
   - atlas
   - iris
   - kleio
+
+server_ethernet_hosts:
+  - atlas
+  - kleio

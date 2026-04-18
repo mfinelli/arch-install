@@ -83,9 +83,10 @@
 
 - name: Starting and enabling iwd
   ansible.builtin.systemd:
-    enabled: true
+    enabled: "{{ ansible_hostname in server_ethernet_hosts }}"
     name: iwd.service
-    state: started
+    state: "{% if ansible_hostname in
+      server_ethernet_hosts %}stopped{% else %}started{% endif %}"
 
 - name: Waiting until iwctl sees the Wi-Fi device
   ansible.builtin.command:
