@@ -113,3 +113,6 @@
 
 - name: Enabling simple, stateful firewall
   ansible.builtin.include_tasks: firewall.yml
+
+- name: Handling attached storage
+  ansible.builtin.include_tasks: disks.yml
