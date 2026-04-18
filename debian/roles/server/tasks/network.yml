@@ -89,6 +89,7 @@
       server_ethernet_hosts %}stopped{% else %}started{% endif %}"
 
 - name: Waiting until iwctl sees the Wi-Fi device
+  when: ansible_hostname not in server_ethernet_hosts
   ansible.builtin.command:
     cmd: iwctl device {{ ansible_default_ipv4["interface"] }} show
   register: server_iwctl_check

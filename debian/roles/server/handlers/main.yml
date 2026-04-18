@@ -15,6 +15,7 @@
     state: restarted
 
 - name: Wait for Wi-Fi
+  when: ansible_hostname not in server_ethernet_hosts
   ansible.builtin.command:
     cmd: iwctl device {{ ansible_default_ipv4["interface"] }} show
   register: server_iwctl_check_handler
