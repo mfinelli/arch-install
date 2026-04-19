@@ -1,8 +1,8 @@
 # Ansible managed
 
 [Match]
-Type=ether
-Type=wlan
+Name=wlan*
+Name=enp*
 
 [Network]
 DHCP=yes
