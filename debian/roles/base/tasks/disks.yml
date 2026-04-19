@@ -12,14 +12,19 @@
     - passwd
 
 - name: Get LUKS device-mapper name for root disk
-  ansible.builtin.command:
-    cmd: dmsetup ls --target crypt
+  ansible.builtin.shell:
+    cmd: |
+      set -e -o pipefail
+      ROOT_LV=$(findmnt -n -o SOURCE /)
+      VG=$(lvs --noheadings -o vg_name "$ROOT_LV" | tr -d ' ')
+      PV=$(pvs --noheadings -o pv_name -S "vg_name=$VG" | tr -d ' ')
+      lsblk -ln -o NAME,TYPE "$PV" | awk '$2 == "crypt" {print $1}'
   register: base_dmsetup_output
   changed_when: false
 
 - name: Set dm_name fact
   ansible.builtin.set_fact:
-    base_root_dm_name: "{{ base_dmsetup_output.stdout.split()[0] }}"
+    base_root_dm_name: "{{ base_dmsetup_output.stdout }}"
 
 - name: Get LUKS partition UUID for root volume
   ansible.builtin.command:
