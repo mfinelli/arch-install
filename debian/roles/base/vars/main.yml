@@ -27,10 +27,12 @@ base_attached_storage:
   kleio:
     - label: GITDATA
       name: gitdata
+      fstype: ext4
       mountpoint: /mnt/gitdata
       keyfile: /root/gitkey
     - label: URLWATCHDATA
       name: urlwatchdata
+      fstype: ext4
       mountpoint: /var/lib/urlwatch
       keyfile: /root/urlwatchkey
       owner: urlwatch
@@ -42,6 +44,7 @@ base_attached_storage:
       keyfile: /root/shkey
     - label: WARCDATA
       name: warcdata
+      fstype: ext4
       mountpoint: /mnt/warcdata
       keyfile: /root/warckey
 
