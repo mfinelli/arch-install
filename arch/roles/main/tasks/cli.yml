@@ -68,6 +68,7 @@
       - difftastic
       - dos2unix
       - lstr
+      - forgejo-cli
       - fq
       - github-cli
       - glab
