@@ -4,8 +4,8 @@ main_fan_enabled_hosts:
   - homepi
   - parkpi
   - raipi
+  - talos
   - tvpi
-  - workpi
 
 main_fan_enable_at_degrees_celsius: 70
 
@@ -29,28 +29,3 @@ main_attached_storage:
       name: tvpidata
       mountpoint: /mnt/data
       keyfile: /root/datakey
-  workpi:
-    - label: GITDATA
-      name: gitdata
-      mountpoint: /mnt/gitdata
-      keyfile: /root/gitkey
-    - label: SHDATA
-      name: shdata
-      mountpoint: /mnt/shdata
-      keyfile: /root/shkey
-    # - label: ZNCDATA
-    #   name: zncdata
-    #   mountpoint: /var/lib/znc
-    #   keyfile: /root/znckey
-    #   owner: _znc
-    #   group: _znc
-    - label: URLWATCHDATA
-      name: urlwatchdata
-      mountpoint: /var/lib/urlwatch
-      keyfile: /root/urlwatchkey
-      owner: urlwatch
-      group: urlwatch
-    - label: WARCDATA
-      name: warcdata
-      mountpoint: /mnt/warcdata
-      keyfile: /root/warckey

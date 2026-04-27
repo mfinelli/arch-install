@@ -6,7 +6,7 @@ if [[ $# -ne 0 ]]; then
 fi
 
 hn="$(cat /etc/hostname)"
-declare -a fde_enabled_hosts=(homepi parkpi raipi testpi tvpi workpi)
+declare -a fde_enabled_hosts=(homepi parkpi raipi testpi talos tvpi)
 declare -a tailscale_exit_nodes=(parkpi raipi)
 
 declare -A wregdom_hosts
@@ -14,8 +14,8 @@ wregdom_hosts[homepi]=IT
 wregdom_hosts[parkpi]=US
 wregdom_hosts[raipi]=IT
 wregdom_hosts[testpi]=US
+wregdom_hosts[talos]=IT
 wregdom_hosts[tvpi]=IT
-wregdom_hosts[workpi]=IT
 
 # https://unix.stackexchange.com/a/177589
 declare -A fde_enabled_host
