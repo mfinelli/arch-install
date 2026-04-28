@@ -16,9 +16,9 @@ tailscale_host_tags:
     - tag:vpn
   raipi:
     - tag:vpn
-  tvpi:
+  talos:
     - tag:service
-  workpi:
+  tvpi:
     - tag:service
 
 tailscale_ssh_hosts:
@@ -28,5 +28,5 @@ tailscale_ssh_hosts:
   - kleio
   - parkpi
   - raipi
+  - talos
   - tvpi
-  - workpi
