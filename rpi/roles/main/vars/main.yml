@@ -28,7 +28,7 @@ main_attached_storage:
     - label: CHATDATA
       name: chatdata
       mountpoint: /mnt/chatdata
-      keyfile: /root/chatdata
+      keyfile: /root/chatkey
   tvpi:
     - label: TVPIDATA
       name: tvpidata
