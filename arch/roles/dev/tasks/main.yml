@@ -168,6 +168,7 @@
       - templ
       - ttf-iosevka
       - typst
+      - typstyle
       - wgo
       - sqlit
 
