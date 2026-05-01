@@ -24,6 +24,11 @@ main_attached_storage:
       name: musicdata
       mountpoint: /mnt/music
       keyfile: /root/musickey
+  talos:
+    - label: CHATDATA
+      name: chatdata
+      mountpoint: /mnt/chatdata
+      keyfile: /root/chatdata
   tvpi:
     - label: TVPIDATA
       name: tvpidata
