@@ -167,6 +167,7 @@
       - mdq
       - templ
       - ttf-iosevka
+      - ttf-fira-code
       - typst
       - typstyle
       - wgo
