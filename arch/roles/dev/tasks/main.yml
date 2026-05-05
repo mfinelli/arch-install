@@ -166,13 +166,14 @@
     name:
       - frizbee
       - mdq
+      - sqlit
       - templ
       - ttf-fira-code
       - ttf-iosevka
       - typst
       - typstyle
       - wgo
-      - sqlit
+      - zizmor
 
       # these aren't necessary for vinovoto but make sqlit better for other
       # projects too
