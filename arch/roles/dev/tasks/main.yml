@@ -164,10 +164,11 @@
   become: true
   community.general.pacman:
     name:
+      - frizbee
       - mdq
       - templ
-      - ttf-iosevka
       - ttf-fira-code
+      - ttf-iosevka
       - typst
       - typstyle
       - wgo
