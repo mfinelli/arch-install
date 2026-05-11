@@ -111,3 +111,20 @@
     default_release: "{{ ansible_distribution_release }}-backports"
     name: wesnoth
     state: present
+
+- name: Add APT pin for OpenRCT2
+  ansible.builtin.template:
+    dest: /etc/apt/preferences.d/openrct2
+    group: root
+    mode: "0644"
+    owner: root
+    src: openrct2.j2
+
+- name: Installing OpenRCT2
+  ansible.builtin.apt:
+    default_release: "{{ ansible_distribution_release }}-backports"
+    name:
+      - openrct2
+      - openrct2-openmsx
+      - openrct2-opensfx
+    state: present
