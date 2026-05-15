@@ -56,7 +56,7 @@
       - hunspell-es_any
       - hunspell-es_es
       - hunspell-es_mx
-      - hunspell-fr
+      # - hunspell-fr
       - hunspell-it
       - hyphen
       - hyphen-en
