@@ -43,6 +43,11 @@
     name: dolphin-emu
     state: present
 
+- name: Installing DOSBox
+  ansible.builtin.apt:
+    name: dosbox-x
+    state: present
+
 - name: Installing other gaming stuff
   ansible.builtin.apt:
     name:
