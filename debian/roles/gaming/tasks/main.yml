@@ -133,3 +133,10 @@
       - openrct2-openmsx
       - openrct2-opensfx
     state: present
+
+- name: Installing Warzone2100
+  ansible.builtin.apt:
+    name:
+      - warzone2100
+      - warzone2100-music
+    state: present
