@@ -9,7 +9,6 @@
       - cloud-sql-proxy
       - cmctl # cert-manager cli
       - colordiff
-      - gemini-cli
       - git-crypt
       - mariadb-clients
       - openldap
