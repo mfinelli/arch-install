@@ -4,6 +4,18 @@
     name: systemd-cryptsetup
     state: present
 
+- name: Installing kernel headers (for zfs)
+  ansible.builtin.apt:
+    name: raspberrypi-kernel-headers
+    state: present
+
+- name: Installing zfs packages
+  ansible.builtin.apt:
+    name:
+      - zfs-dkms
+      - zfsutils-linux
+    state: present
+
 - name: Setting getent facts
   ansible.builtin.getent:
     database: "{{ item }}"
