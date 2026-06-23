@@ -6,7 +6,7 @@
 
 - name: Installing kernel headers (for zfs)
   ansible.builtin.apt:
-    name: raspberrypi-kernel-headers
+    name: linux-headers-rpi-v8
     state: present
 
 - name: Installing zfs packages
