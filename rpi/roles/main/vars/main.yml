@@ -14,6 +14,9 @@ main_cryptkey_timeout_seconds: 20
 main_supermario_repo_host: "https://download.opensuse.org/repositories/home:/\
   mfinelli:/supermario/"
 
+main_zfs_hosts:
+  - orpheus
+
 main_attached_storage:
   homepi:
     - label: HOMEPIDATA

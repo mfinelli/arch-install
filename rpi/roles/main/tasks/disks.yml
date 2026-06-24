@@ -5,11 +5,13 @@
     state: present
 
 - name: Installing kernel headers (for zfs)
+  when: ansible_hostname in main_zfs_hosts
   ansible.builtin.apt:
     name: linux-headers-rpi-v8
     state: present
 
 - name: Installing zfs packages
+  when: ansible_hostname in main_zfs_hosts
   ansible.builtin.apt:
     name:
       - zfs-dkms
