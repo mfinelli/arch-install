@@ -30,6 +30,7 @@
   community.general.pacman:
     name:
       - beets
+      - musicrename
       - picard
     state: present
 
