@@ -14,8 +14,14 @@ else
   mtype=personal
 fi
 
+hasups=false
+if [[ $hn == bowser ]]; then
+  hasups=true
+fi
+
 sudo echo -n
 ansible-playbook --inventory ../localhost \
+  --extra-vars hasups=$hasups \
   --extra-vars mtype=$mtype \
   --extra-vars whoami="$(whoami)" \
   --extra-vars israspi=false \

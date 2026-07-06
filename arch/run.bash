@@ -55,6 +55,11 @@ if [[ -f /etc/finelli/arch-install.yml ]]; then
   fi
 fi
 
+hasups=false
+if [[ $hn == nyx ]]; then
+  hasups=true
+fi
+
 if [[ -z $syslang ]]; then
   syslang=en_US
 fi
@@ -92,6 +97,7 @@ fi
 # shellcheck disable=SC2086
 ansible-playbook --inventory ../localhost \
   --extra-vars hastpm=$hastpm \
+  --extra-vars hasups=$hasups \
   --extra-vars mmode=$mmode \
   --extra-vars mtype=$mtype \
   --extra-vars multilib=true \

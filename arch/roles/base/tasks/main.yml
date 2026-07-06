@@ -375,6 +375,13 @@
       - purple-plugin-pack
     state: absent
 
+- name: Installing network ups tools
+  become: true
+  when: hasups == 'true'
+  community.general.pacman:
+    name: nut
+    state: present
+
 - name: Configuring a simple firewall
   ansible.builtin.include_tasks: firewall.yml
 

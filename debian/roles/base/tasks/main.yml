@@ -111,6 +111,12 @@
     name: firmware-linux
     state: present
 
+- name: Installing network ups tools
+  when: has_ups == 'true'
+  ansible.builtin.apt:
+    name: nut
+    state: present
+
 - name: Enabling simple, stateful firewall
   ansible.builtin.include_tasks: firewall.yml
 
