@@ -43,6 +43,7 @@
       - rsync
       - screen
       - silversearcher-ag
+      - smartmontools
       - thefuck
       - universal-ctags
       - urlwatch

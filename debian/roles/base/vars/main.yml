@@ -15,6 +15,13 @@ base_architectures:
   x86_64: amd64
   i386: i386
 
+base_zfs_hosts:
+  - kleio
+
+base_zfs_pools:
+  kleio:
+    - tank
+
 base_attached_storage:
   bowser:
     - group: mario

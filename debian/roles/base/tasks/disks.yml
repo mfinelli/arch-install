@@ -4,6 +4,31 @@
     name: systemd-cryptsetup
     state: present
 
+- name: Installing zfs
+  when: ansible_hostname in base_zfs_hosts
+  ansible.builtin.apt:
+    name:
+      - linux-headers-amd64
+      - zfs-dkms
+      - zfs-utils
+      - zfs-zed
+    state: present
+
+- name: Add zfs unlock unit
+  when: ansible_hostname in base_zfs_hosts
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/zfs-unlock@.service
+    owner: root
+    group: root
+    mode: "0644"
+    src: zfs-unlock.service
+
+- name: Enable zfs unlock services
+  when: ansible_hostname in base_zfs_hosts
+  ansible.builtin.systemd:
+    name: zfs-unlock@{{ item }}.service
+    enabled: true
+
 - name: Setting getent facts
   ansible.builtin.getent:
     database: "{{ item }}"
