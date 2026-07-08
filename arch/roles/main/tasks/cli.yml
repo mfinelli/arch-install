@@ -50,6 +50,7 @@
       - pwgen
       - ripgrep
       - screen
+      - smartmontools
       - the_silver_searcher
       - thefuck
       - tldr
