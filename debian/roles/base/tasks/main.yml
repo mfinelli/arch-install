@@ -113,7 +113,7 @@
     state: present
 
 - name: Installing network ups tools
-  when: has_ups == 'true'
+  when: hasups == 'true'
   ansible.builtin.apt:
     name: nut
     state: present
