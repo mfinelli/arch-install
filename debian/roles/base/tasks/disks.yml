@@ -10,8 +10,8 @@
     name:
       - linux-headers-amd64
       - zfs-dkms
-      - zfs-utils
       - zfs-zed
+      - zfsutils-linux
     state: present
 
 - name: Add zfs unlock unit
