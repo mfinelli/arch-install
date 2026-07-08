@@ -31,29 +31,29 @@ base_attached_storage:
       mountpoint: /mnt/data
       name: datadisk
       owner: mario
-  kleio:
-    - label: GITDATA
-      name: gitdata
-      fstype: ext4
-      mountpoint: /mnt/gitdata
-      keyfile: /root/gitkey
-    - label: URLWATCHDATA
-      name: urlwatchdata
-      fstype: ext4
-      mountpoint: /var/lib/urlwatch
-      keyfile: /root/urlwatchkey
-      owner: urlwatch
-      group: urlwatch
-    - label: SHDATA
-      name: shdata
-      fstype: ext4
-      mountpoint: /mnt/shdata
-      keyfile: /root/shkey
-    - label: WARCDATA
-      name: warcdata
-      fstype: ext4
-      mountpoint: /mnt/warcdata
-      keyfile: /root/warckey
+  kleio: []
+    # - label: GITDATA
+    #   name: gitdata
+    #   fstype: ext4
+    #   mountpoint: /mnt/gitdata
+    #   keyfile: /root/gitkey
+    # - label: URLWATCHDATA
+    #   name: urlwatchdata
+    #   fstype: ext4
+    #   mountpoint: /var/lib/urlwatch
+    #   keyfile: /root/urlwatchkey
+    #   owner: urlwatch
+    #   group: urlwatch
+    # - label: SHDATA
+    #   name: shdata
+    #   fstype: ext4
+    #   mountpoint: /mnt/shdata
+    #   keyfile: /root/shkey
+    # - label: WARCDATA
+    #   name: warcdata
+    #   fstype: ext4
+    #   mountpoint: /mnt/warcdata
+    #   keyfile: /root/warckey
 
 base_attached_storage_options:
   btrfs: rw,relatime,compress=zstd:3,space_cache=v2,subvol=/
