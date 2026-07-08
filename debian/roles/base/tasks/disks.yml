@@ -28,6 +28,7 @@
   ansible.builtin.systemd:
     name: zfs-unlock@{{ item }}.service
     enabled: true
+  loop: "{{ base_zfs_pools[ansible_hostname] }}"
 
 - name: Setting getent facts
   ansible.builtin.getent:
