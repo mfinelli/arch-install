@@ -2,13 +2,14 @@
 Description=Load ZFS encryption key for %I
 DefaultDependencies=no
 After=zfs-import.target
+Requires=zfs-import.target
 Before=zfs-mount.service
 Conflicts=shutdown.target
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/sbin/zfs load-key -L file:///root/%I.key %I
+ExecStart=/usr/sbin/zfs load-key -L file:///root/%i.key %I
 ExecStop=/usr/sbin/zfs unload-key %I
 
 [Install]

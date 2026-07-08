@@ -19,8 +19,8 @@ base_zfs_hosts:
   - kleio
 
 base_zfs_pools:
-  kleio:
-    - tank
+  kleio: []
+    # - tank
 
 base_attached_storage:
   bowser:
