@@ -26,14 +26,6 @@ sudo cryptsetup luksDump /dev/device
 
 ## networking
 
-The default Debian install uses classic ifupdown for networking. Following the
-information found in https://manski.net/articles/linux/network-config we switch
-to `systemd-networkd` and `iwd`. Some of the steps taken from the linked
-script: https://github.com/skrysm/systemd-networkd-init.
-
-### details
-
-We re-configure the Wi-Fi connection using `iwctl` one-time only -- that is if
-we still have the original `/etc/network/interfaces` from the original install
-then we read the SSID and password from it and configure `iwd`. Otherwise we
-assume that we've already done that and skip those steps.
+All Debian servers now run on an ethernet connection and so we no longer do
+any Wi-Fi switch dance. We just simply install `systemd-networkd` which is
+enough.
