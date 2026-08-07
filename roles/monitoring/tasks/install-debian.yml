@@ -1,0 +1,39 @@
+---
+- name: Downloading Datadog APT signing key
+  ansible.builtin.get_url:
+    dest: /etc/apt/keyrings/datadog-archive-keyring.asc
+    group: root
+    mode: "0644"
+    owner: root
+    url: https://keys.datadoghq.com/DATADOG_APT_KEY_CURRENT.public
+  register: monitoring_datadog_key
+
+- name: Deleting existing keyring file
+  ansible.builtin.file:
+    path: /usr/share/keyrings/datadog-archive-keyring.gpg
+    state: absent
+  when: monitoring_datadog_key.changed # noqa no-handler
+
+- name: Adding Datadog APT signing key
+  ansible.builtin.command:
+    cmd: >-
+      gpg --dearmor -o /usr/share/keyrings/datadog-archive-keyring.gpg
+      /etc/apt/keyrings/datadog-archive-keyring.asc
+    creates: "{{ monitoring_datadog_key.changed | ternary('',
+      '/usr/share/keyrings/datadog-archive-keyring.gpg') | default(omit,
+      true) }}"
+
+- name: Adding the vector repository
+  ansible.builtin.template:
+    dest: /etc/apt/sources.list.d/vector.sources
+    group: root
+    mode: "0644"
+    owner: root
+    src: vector.sources.j2
+  register: monitoring_vector_repository
+
+- name: Installing vector
+  ansible.builtin.apt:
+    name: vector
+    state: present
+    update_cache: "{{ monitoring_vector_repository.changed }}"

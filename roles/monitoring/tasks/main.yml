@@ -1,0 +1,35 @@
+---
+- name: Creating systemd unit drop-in folder
+  become: true
+  ansible.builtin.file:
+    group: root
+    mode: "0755"
+    owner: root
+    path: /etc/systemd/system/vector.service.d
+    state: directory
+
+- name: Installing hardening drop-in
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/vector.service.d/hardening.conf
+    owner: root
+    group: root
+    mode: "0644"
+    src: vector.service
+  notify:
+    - Restart vector
+
+- name: Installing vector on Archlinux
+  when: ansible_facts["os_family"] == "Archlinux"
+  ansible.builtin.include_tasks: install-arch.yml
+
+- name: Installing vector on Debian-based systems
+  when: ansible_facts["os_family"] == "Debian"
+  ansible.builtin.include_tasks: install-debian.yml
+
+- name: Starting and enabling vector
+  become: true
+  ansible.builtin.systemd:
+    enabled: true
+    name: vector.service
+    state: started

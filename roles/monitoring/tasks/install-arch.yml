@@ -1,0 +1,6 @@
+---
+- name: Installing vector
+  become: true
+  community.general.pacman:
+    name: vector
+    state: present

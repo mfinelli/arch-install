@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+Types: deb
+URIs: https://apt.vector.dev
+Suites: stable
+Components: vector-{{ monitoring_vector_major_version }}
+Signed-By: /usr/share/keyrings/datadog-archive-keyring.gpg
+
+# vim: ft=debsources.jinja2
