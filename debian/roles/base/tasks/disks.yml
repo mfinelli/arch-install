@@ -30,6 +30,25 @@
     enabled: true
   loop: "{{ base_zfs_pools[ansible_hostname] }}"
 
+- name: Adding zfs scrub service and timer units
+  when: ansible_hostname in base_zfs_hosts
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/zfs-scrub@.{{ item }}
+    owner: root
+    group: root
+    mode: "0644"
+    src: zfs-scrub.{{ item }}
+  loop:
+    - service
+    - timer
+
+- name: Enable zfs scrub timer
+  when: ansible_hostname in base_zfs_hosts
+  ansible.builtin.systemd:
+    name: zfs-scrub@{{ item }}.timer
+    enabled: true
+  loop: "{{ base_zfs_pools[ansible_hostname] }}"
+
 - name: Setting getent facts
   ansible.builtin.getent:
     database: "{{ item }}"

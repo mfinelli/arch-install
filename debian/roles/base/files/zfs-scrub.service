@@ -1,0 +1,8 @@
+[Unit]
+Description=ZFS scrub on %I
+After=zfs-unlock@%i.service zfs-mount.service
+Requires=zfs-unlock@%i.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/zpool scrub %I
