@@ -4,6 +4,8 @@ tailscale_exit_node_hosts:
   - raipi
 
 tailscale_host_tags:
+  argus:
+    - tag:monitoring
   atlas:
     - tag:service
   homepi:
@@ -22,6 +24,7 @@ tailscale_host_tags:
     - tag:service
 
 tailscale_ssh_hosts:
+  - argus
   - atlas
   - homepi
   - iris
