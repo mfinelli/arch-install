@@ -27,6 +27,17 @@ sources:
   metrics_internal:
     type: internal_metrics
 
+  journald_raw:
+    type: journald
+
+transforms:
+  logs_journald:
+    type: remap
+    inputs:
+      - journald_raw
+    source: |
+      .message = strip_ansi_escape_codes(string!(.message))
+
 sinks:
   victoriametrics:
     type: prometheus_remote_write
@@ -39,5 +50,22 @@ sinks:
       enabled: false
     inputs:
       - metrics_*
+
+  victorialogs:
+    type: elasticsearch
+    auth:
+      strategy: basic
+      user: vector
+      password: {{ monitoring_vector_secret['content'] | b64decode | trim | quote }}
+    endpoints:
+      - https://vl.mario.casa/insert/elasticsearch/
+    api_version: v8
+    mode: bulk
+    query:
+      _msg_field: message
+      _time_field: timestamp
+      _stream_fields: host,container_name
+    inputs:
+      - logs_*
 
 # vim: ft=yaml.jinja2
