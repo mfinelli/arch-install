@@ -17,6 +17,8 @@ sinks:
       user: vector
       password: {{ monitoring_vector_secret | quote }}
     endpoint: https://vm.mario.casa/api/v1/write
+    healthcheck:
+      enabled: false
     inputs:
       - host_metrics
       - internal_metrics
