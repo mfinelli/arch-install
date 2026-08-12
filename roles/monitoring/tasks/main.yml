@@ -47,6 +47,17 @@
     state: file
   when: monitoring_vector_secret_file.stat.exists
 
+- name: Copying main Vector configuration
+  become: true
+  ansible.builtin.template:
+    dest: /etc/vector/config.yaml
+    owner: vector
+    group: vector
+    mode: "0400"
+    src: vector.yml.j2
+  notify:
+    - Restart vector
+
 - name: Starting and enabling vector
   become: true
   ansible.builtin.systemd:
@@ -54,14 +65,3 @@
     name: vector.service
     state: "{{ 'started' if monitoring_vector_secret_file.stat.exists
       else 'stopped' }}"
-
-- name: Copying main Vector configuration
-  become: true
-  ansible.builtin.template:
-    dest: /etc/vector/config.yml
-    owner: vector
-    group: vector
-    mode: "0400"
-    src: vector.yml.j2
-  notify:
-    - Restart vector
