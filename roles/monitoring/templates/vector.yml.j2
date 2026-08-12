@@ -5,6 +5,24 @@ acknowledgements:
 sources:
   host_metrics:
     type: host_metrics
+    filesystem:
+      filesystems:
+        excludes:
+          - nsfs
+          - overlay
+          - autofs
+          - binfmt_misc
+          - bpf
+          - cgroup2
+          - debugfs
+          - devpts
+          - devtmpfs
+          - mqueue
+          - proc
+          - pstore
+          - securityfs
+          - sysfs
+          - tracefs
 
   internal_metrics:
     type: internal_metrics
