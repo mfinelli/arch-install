@@ -3,7 +3,7 @@ acknowledgements:
   enabled: true
 
 sources:
-  host_metrics:
+  metrics_host:
     type: host_metrics
     filesystem:
       filesystems:
@@ -24,7 +24,7 @@ sources:
           - sysfs
           - tracefs
 
-  internal_metrics:
+  metrics_internal:
     type: internal_metrics
 
 sinks:
@@ -38,7 +38,6 @@ sinks:
     healthcheck:
       enabled: false
     inputs:
-      - host_metrics
-      - internal_metrics
+      - metrics_*
 
 # vim: ft=yaml.jinja2
