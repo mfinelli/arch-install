@@ -27,9 +27,41 @@
   when: ansible_facts["os_family"] == "Debian"
   ansible.builtin.include_tasks: install-debian.yml
 
+- name: Checking if the Vector secret has been set
+  ansible.builtin.stat:
+    path: /root/vector-secret.txt
+  register: monitoring_vector_secret_file
+
+- name: Fetching the Vector secret
+  ansible.builtin.slurp:
+    path: /root/vector-secret.txt
+  when: monitoring_vector_secret_file.stat.exists
+  register: monitoring_vector_secret
+
+- name: Setting permissions for Vector secret
+  ansible.builtin.file:
+    group: root
+    mode: "0400"
+    owner: root
+    path: /root/vector-secret.txt
+    state: file
+  when: monitoring_vector_secret_file.stat.exists
+
 - name: Starting and enabling vector
   become: true
   ansible.builtin.systemd:
-    enabled: true
+    enabled: "{{ monitoring_vector_secret_file.stat.exists }}"
     name: vector.service
-    state: started
+    state: "{{ 'started' if monitoring_vector_secret_file.stat.exists
+      else 'stopped' }}"
+
+- name: Copying main Vector configuration
+  become: true
+  ansible.builtin.template:
+    dest: /etc/vector/config.yml
+    owner: vector
+    group: vector
+    mode: "0400"
+    src: vector.yml.j2
+  notify:
+    - Restart vector

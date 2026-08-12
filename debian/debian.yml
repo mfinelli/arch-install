@@ -22,6 +22,7 @@
       when: mtype != 'server'
     - role: mega
       when: mtype != 'server'
+    - role: ../roles/monitoring
     - role: mullvadvpn
       when: mtype != 'server'
     - role: onepassword
