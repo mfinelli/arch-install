@@ -15,7 +15,7 @@ sinks:
     auth:
       strategy: basic
       user: vector
-      password: {{ monitoring_vector_secret | quote }}
+      password: {{ monitoring_vector_secret['content'] | b64decode | trim | quote }}
     endpoint: https://vm.mario.casa/api/v1/write
     healthcheck:
       enabled: false
