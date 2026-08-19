@@ -38,6 +38,11 @@ transforms:
     source: |
       .message = strip_ansi_escape_codes(string!(.message))
 
+      logfmt_fields, err = parse_logfmt(.message)
+      if err == null {
+        . = merge(., object!(logfmt_fields))
+      }
+
 sinks:
   victoriametrics:
     type: prometheus_remote_write
