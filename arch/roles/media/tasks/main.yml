@@ -32,6 +32,7 @@
       - beets
       - musicrename
       - picard
+      - rsgain
     state: present
 
 - name: Installing Wine-based music applications
