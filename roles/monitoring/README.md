@@ -11,3 +11,9 @@ Note that we add the systemd hardening options based on the
 `hardened-vector.service` unit that ships with the Arch Linux package. We apply
 it unconditionally to avoid needing to call either "hardened-vector.service"
 or "vector.service" depending on the system: we can just always use "vector.service".
+
+## healthchecks.io
+
+Sets up a simple uptime check to [healthchecks.io](https://healthchecks.io).
+
+Create a file in `/root/hc-ping-uuid.txt` with the UUID for the desired check.
