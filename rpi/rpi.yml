@@ -7,6 +7,6 @@
   roles:
     - role: fde
     - role: main
-    - role: monitoring
+    - role: ../roles/monitoring
     - role: ../roles/tailscale
     - role: user

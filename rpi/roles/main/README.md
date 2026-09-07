@@ -11,6 +11,10 @@ for more information and rationale as well as the script found here:
 https://github.com/skrysm/systemd-networkd-init which inspired some of the
 tasks in `network.yml`.
 
+**UPDATE:** We need to redo the automatic iwd ansible switch, but for hosts
+connected by ethernet cable add them to `main_ethernet_hosts` and we will
+switch automatically to `systemd-networkd`.
+
 ### details
 
 Like in the Debian configuration we run this setup one-time only -- that is on

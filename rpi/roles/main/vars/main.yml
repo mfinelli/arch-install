@@ -14,19 +14,12 @@ main_cryptkey_timeout_seconds: 20
 main_supermario_repo_host: "https://download.opensuse.org/repositories/home:/\
   mfinelli:/supermario/"
 
-main_zfs_hosts:
-  - orpheus
+main_zfs_hosts: []
+
+main_ethernet_hosts:
+  - homepi
 
 main_attached_storage:
-  homepi:
-    - label: HOMEPIDATA
-      name: homepidata
-      mountpoint: /mnt/data
-      keyfile: /root/datakey
-    - label: MUSICDATA
-      name: musicdata
-      mountpoint: /mnt/music
-      keyfile: /root/musickey
   talos:
     - label: CHATDATA
       name: chatdata
