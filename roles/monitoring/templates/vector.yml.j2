@@ -40,7 +40,7 @@ transforms:
 
       logfmt_fields, err = parse_logfmt(.message)
       if err == null {
-        . = merge(., object!(logfmt_fields))
+        . = merge(., object(logfmt_fields))
       }
 
 sinks:
