@@ -65,3 +65,6 @@
     name: vector.service
     state: "{{ 'started' if monitoring_vector_secret_file.stat.exists
       else 'stopped' }}"
+
+- name: Configuring healthchecks.io
+  ansible.builtin.include_tasks: healthchecks.yml
