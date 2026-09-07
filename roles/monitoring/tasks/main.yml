@@ -49,6 +49,7 @@
 
 - name: Copying main Vector configuration
   become: true
+  when: monitoring_vector_secret_file.stat.exists
   ansible.builtin.template:
     dest: /etc/vector/config.yaml
     owner: vector
