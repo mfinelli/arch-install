@@ -38,10 +38,14 @@ transforms:
     source: |
       .message = strip_ansi_escape_codes(string!(.message))
 
+      original_timestamp = .timestamp
+
       logfmt_fields, err = parse_logfmt(.message)
       if err == null {
         . = merge(., object(logfmt_fields))
       }
+
+      .timestamp = original_timestamp
 
 sinks:
   victoriametrics:
