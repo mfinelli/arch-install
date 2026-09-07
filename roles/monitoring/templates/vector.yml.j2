@@ -23,6 +23,9 @@ sources:
           - securityfs
           - sysfs
           - tracefs
+      mountpoints:
+        excludes:
+          - /run/user/*
 
   metrics_internal:
     type: internal_metrics
