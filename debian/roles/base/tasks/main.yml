@@ -54,6 +54,7 @@
 - name: Installing secondary packages
   ansible.builtin.apt:
     name:
+      - lm-sensors
       - nvme-cli
       - sd
     state: present
