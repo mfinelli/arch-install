@@ -69,17 +69,18 @@
       - cloc
       - difftastic
       - dos2unix
-      - lstr
       - forgejo-cli
       - fq
       - github-cli
       - glab
       - glim
+      - lstr
       - miller
       - moreutils
       - ncdu
       - nmap
       - pv
+      - recueil
       - sd
       - urlwatch
     state: present
