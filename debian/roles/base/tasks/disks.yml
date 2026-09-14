@@ -50,7 +50,9 @@
   loop: "{{ base_zfs_pools[ansible_hostname] }}"
 
 - name: Setting ZED email address
-  when: ansible_hostname in base_zfs_hosts
+  when:
+    - ansible_hostname in base_zfs_hosts
+    - base_smtp_addr_file.stat.exists
   ansible.builtin.lineinfile:
     path: /etc/zfs/zed.d/zed.conf
     regexp: '^ZED_EMAIL_ADDR='
