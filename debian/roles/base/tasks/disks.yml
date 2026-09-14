@@ -54,7 +54,7 @@
   ansible.builtin.lineinfile:
     path: /etc/zfs/zed.d/zed.conf
     regexp: '^ZED_EMAIL_ADDR='
-    line: 'ZED_EMAIL_ADDR="{{ "bQo=" | b64decode | trim }}@{{ base_smtp_addr['content'] | b64decode | trim }}"'
+    line: 'ZED_EMAIL_ADDR="{{ "bQo=" | b64decode | trim }}@{{ base_smtp_addr[''content''] | b64decode | trim }}"'
   notify:
     - Restart zfs-zed
 
