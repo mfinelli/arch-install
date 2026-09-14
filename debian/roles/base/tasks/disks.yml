@@ -42,12 +42,27 @@
     - service
     - timer
 
-- name: Enable zfs scrub timer
+- name: Enabling zfs scrub timer
   when: ansible_hostname in base_zfs_hosts
   ansible.builtin.systemd:
     name: zfs-scrub@{{ item }}.timer
     enabled: true
   loop: "{{ base_zfs_pools[ansible_hostname] }}"
+
+- name: Setting ZED email address
+  when: ansible_hostname in base_zfs_hosts
+  ansible.builtin.lineinfile:
+    path: /etc/zfs/zed.d/zed.conf
+    regexp: '^ZED_EMAIL_ADDR='
+    line: 'ZED_EMAIL_ADDR="{{ "bQo=" | b64decode | trim }}@{{ base_smtp_addr['content'] | b64decode | trim }}"'
+  notify:
+    - Restart zfs-zed
+
+- name: Enabling zfs ZED
+  when: ansible_hostname in base_zfs_hosts
+  ansible.builtin.systemd:
+    name: zfs-zed.service
+    enabled: true
 
 - name: Setting getent facts
   ansible.builtin.getent:

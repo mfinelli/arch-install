@@ -65,3 +65,17 @@ A brief guide to setting up a zfs mirrored pair.
    ```sh
    zfs create tank/myservice/data
    ```
+
+### mounting to a new machine
+
+If possible, run `sudo zpool export <name>` (e.g., `tank` for `<name>`) on the
+previous host otherwise you may need to pass `-f` when importing to a new host.
+
+After running ansible it's necessary to manually import the pool. After the
+initial ansible run (which creates and enables but does not start the unlock
+and scrub jobs) add the unlock key (e.g., `/root/tank.key`) and then run:
+
+```sh
+sudo zpool import # see what's available
+sudo zpool import tank # `sudo zpool import -f tank` if necessary
+```

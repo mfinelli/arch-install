@@ -122,5 +122,8 @@
 - name: Enabling simple, stateful firewall
   ansible.builtin.include_tasks: firewall.yml
 
+- name: Installing mail tools
+  ansible.builtin.include_tasks: email.yml
+
 - name: Handling attached storage
   ansible.builtin.include_tasks: disks.yml

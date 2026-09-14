@@ -10,3 +10,9 @@
     name: systemd-timesyncd.service
     state: restarted
     daemon_reload: true
+
+- name: Restart zfs-zed
+  ansible.builtin.systemd:
+    name: zfs-zed.service
+    state: restarted
+    daemon_reload: true

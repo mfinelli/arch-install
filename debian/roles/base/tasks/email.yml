@@ -1,0 +1,101 @@
+---
+- name: Installing mail packages
+  ansible.builtin.apt:
+    name:
+      - mailutils
+      - msmtp
+      - msmtp-mta
+    state: present
+
+- name: Checking if the smtp host has been set
+  ansible.builtin.stat:
+    path: /root/smtp-host.txt
+  register: base_smtp_host_file
+
+- name: Ensuring permissions on smtp host
+  ansible.builtin.file:
+    group: root
+    mode: "0400"
+    owner: root
+    path: /root/smtp-host.txt
+    state: file
+  when: base_smtp_host_file.stat.exists
+
+- name: Fetching smtp host value
+  ansible.builtin.slurp:
+    src: /root/smtp-host.txt
+  when: base_smtp_host_file.stat.exists
+  register: base_smtp_host
+
+- name: Checking if the smtp user has been set
+  ansible.builtin.stat:
+    path: /root/smtp-user.txt
+  register: base_smtp_user_file
+
+- name: Ensuring permissions on smtp user
+  ansible.builtin.file:
+    group: root
+    mode: "0400"
+    owner: root
+    path: /root/smtp-user.txt
+    state: file
+  when: base_smtp_user_file.stat.exists
+
+- name: Fetching smtp user value
+  ansible.builtin.slurp:
+    src: /root/smtp-user.txt
+  when: base_smtp_user_file.stat.exists
+  register: base_smtp_user
+
+- name: Checking if the smtp password has been set
+  ansible.builtin.stat:
+    path: /root/smtp-pass.txt
+  register: base_smtp_pass_file
+
+- name: Ensuring permissions on smtp password
+  ansible.builtin.file:
+    group: root
+    mode: "0400"
+    owner: root
+    path: /root/smtp-pass.txt
+    state: file
+  when: base_smtp_pass_file.stat.exists
+
+- name: Fetching smtp pass value
+  ansible.builtin.slurp:
+    src: /root/smtp-pass.txt
+  when: base_smtp_pass_file.stat.exists
+  register: base_smtp_pass
+
+- name: Checking if the smtp address has been set
+  ansible.builtin.stat:
+    path: /root/smtp-addr.txt
+  register: base_smtp_addr_file
+
+- name: Ensuring permissions on smtp address
+  ansible.builtin.file:
+    group: root
+    mode: "0400"
+    owner: root
+    path: /root/smtp-addr.txt
+    state: file
+  when: base_smtp_addr_file.stat.exists
+
+- name: Fetching smtp address value
+  ansible.builtin.slurp:
+    src: /root/smtp-pass.txt
+  when: base_smtp_addr_file.stat.exists
+  register: base_smtp_addr
+
+- name: Installing msmtp configuration file
+  ansible.builtin.template:
+    dest: /etc/msmtprc
+    group: msmtp
+    owner: root
+    mode: "0640"
+    src: msmtprc.j2
+  when:
+    - base_smtp_host_file.stat.exists
+    - base_smtp_user_file.stat.exists
+    - base_smtp_pass_file.stat.exists
+    - base_smtp_addr_file.stat.exists

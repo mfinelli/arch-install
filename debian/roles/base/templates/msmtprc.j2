@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+defaults
+auth           on
+tls            on
+tls_starttls   off
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile        /var/log/msmtp.log
+
+account        default
+host           {{ base_smtp_host['content'] | b64decode | trim }}
+port           465
+from           {{ "ego=" | b64decode | trim }}@{{ base_smtp_addr['content'] | b64decode | trim }}
+user           {{ base_smtp_user['content'] | b64decode | trim }}
+password       {{ base_smtp_pass['content'] | b64decode | trim }}
+
+# vim: ft=msmtp.jinja2
