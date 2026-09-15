@@ -83,7 +83,7 @@
 
 - name: Fetching smtp address value
   ansible.builtin.slurp:
-    src: /root/smtp-pass.txt
+    src: /root/smtp-addr.txt
   when: base_smtp_addr_file.stat.exists
   register: base_smtp_addr
 
