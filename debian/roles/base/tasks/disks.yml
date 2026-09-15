@@ -23,6 +23,16 @@
     mode: "0644"
     src: zfs-unlock.service
 
+- name: Ensuring permissions for keys
+  when: ansible_hostname in base_zfs_hosts
+  ansible.builtin.file:
+    group: root
+    mode: "0400"
+    owner: root
+    path: /root/{{ item }}.key
+    state: file
+  loop: "{{ base_zfs_pools[ansible_hostname] }}"
+
 - name: Enable zfs unlock services
   when: ansible_hostname in base_zfs_hosts
   ansible.builtin.systemd:
