@@ -79,6 +79,8 @@
       - hurl
       - hyperfine
       - iprange
+      - ipsort
+      - onefetch
       - tokei
       - ugrep
     state: present
