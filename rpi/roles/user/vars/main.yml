@@ -1,5 +1,6 @@
 ---
 user_github_actions_access_hosts:
+  - hermes
+  - calliope
   - homepi
   - talos
-  - tvpi
