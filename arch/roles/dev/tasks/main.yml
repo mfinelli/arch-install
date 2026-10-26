@@ -46,9 +46,10 @@
   become: true
   community.general.pacman:
     name:
+      - linux-headers
       - virtualbox
       - virtualbox-guest-iso
-      - virtualbox-host-modules-arch
+      - virtualbox-host-dkms
     state: present
 
 - name: Installing main commandline utilities
