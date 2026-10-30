@@ -52,6 +52,15 @@
       - virtualbox-host-dkms
     state: present
 
+- name: Installing remote VM management tools
+  when: mtype != 'media'
+  become: true
+  community.general.pacman:
+    name:
+      - virt-install
+      - virt-viewer
+    state: present
+
 - name: Installing main commandline utilities
   when: mtype != 'media'
   become: true
