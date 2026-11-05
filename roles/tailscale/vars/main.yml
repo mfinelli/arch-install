@@ -8,6 +8,10 @@ tailscale_host_tags:
     - tag:monitoring
   atlas:
     - tag:service
+  calliope:
+    - tag:service
+  hermes:
+    - tag:service
   homepi:
     - tag:homeassistant
   iris:
@@ -26,6 +30,8 @@ tailscale_host_tags:
 tailscale_ssh_hosts:
   - argus
   - atlas
+  - calliope
+  - hermes
   - homepi
   - iris
   - kleio
