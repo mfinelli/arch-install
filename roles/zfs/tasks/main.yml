@@ -1,9 +1,16 @@
 ---
+# this role only supports Debian and its derivatives (Debian, Raspberry Pi OS)
 - name: Installing zfs packages
   when:
     - ansible_facts["os_family"] == "Debian"
     - ansible_hostname in zfs_pools
   ansible.builtin.include_tasks: install-debian.yml
+
+- name: Configuring outgoing mail
+  when:
+    - ansible_facts["os_family"] == "Debian"
+    - ansible_hostname in zfs_pools
+  ansible.builtin.include_tasks: email.yml
 
 - name: Configuring pool unlocking and scrubbing
   when:

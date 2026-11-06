@@ -1,0 +1,71 @@
+---
+- name: Installing mail packages
+  ansible.builtin.apt:
+    name:
+      - mailutils
+      - msmtp
+      - msmtp-mta
+    state: present
+
+# the sender is not configurable, so only these four files are read
+- name: Setting smtp configuration files
+  ansible.builtin.set_fact:
+    zfs_smtp_files:
+      host: /root/smtp-host.txt
+      user: /root/smtp-user.txt
+      pass: /root/smtp-pass.txt
+      addr: /root/smtp-addr.txt
+
+- name: Checking for smtp configuration files
+  ansible.builtin.stat:
+    get_attributes: false
+    get_checksum: false
+    get_mime: false
+    path: "{{ item.value }}"
+  loop: "{{ zfs_smtp_files | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  register: zfs_smtp_file_lookup
+
+# a list of {key, value} for the files that actually exist
+- name: Setting list of configured smtp files
+  ansible.builtin.set_fact:
+    zfs_smtp_present: "{{ zfs_smtp_file_lookup.results |
+      selectattr('stat.exists') | map(attribute='item') | list }}"
+
+- name: Ensuring permissions on smtp configuration files
+  ansible.builtin.file:
+    group: root
+    mode: "0400"
+    owner: root
+    path: "{{ item.value }}"
+    state: file
+  loop: "{{ zfs_smtp_present }}"
+  loop_control:
+    label: "{{ item.key }}"
+
+- name: Fetching smtp configuration values
+  ansible.builtin.slurp:
+    src: "{{ item.value }}"
+  loop: "{{ zfs_smtp_present }}"
+  loop_control:
+    label: "{{ item.key }}"
+  register: zfs_smtp_file_contents
+
+- name: Building smtp configuration facts
+  ansible.builtin.set_fact:
+    zfs_smtp: "{{ zfs_smtp | default({}) | combine({item.item.key:
+      item.content | b64decode | trim}) }}"
+    zfs_smtp_from: "{{ 'ego=' | b64decode | trim }}"
+  loop: "{{ zfs_smtp_file_contents.results }}"
+  loop_control:
+    label: "{{ item.item.key }}"
+
+- name: Installing msmtp configuration file
+  when: zfs_smtp | default({}) | length == zfs_smtp_files | length
+  ansible.builtin.template:
+    dest: /etc/msmtprc
+    group: msmtp
+    mode: "0640"
+    owner: root
+    src: msmtprc.j2

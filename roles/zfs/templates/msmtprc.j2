@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+defaults
+auth           on
+tls            on
+tls_starttls   off
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile        /var/log/msmtp.log
+
+account        default
+host           {{ zfs_smtp.host }}
+port           465
+from           {{ zfs_smtp_from }}@{{ zfs_smtp.addr }}
+user           {{ zfs_smtp.user }}
+password       {{ zfs_smtp.pass }}
+
+# vim: ft=msmtp.jinja2

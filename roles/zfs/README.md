@@ -3,7 +3,7 @@
 Installs and configures [OpenZFS](https://openzfs.github.io/openzfs-docs/) on
 Debian-based systems (Debian and Raspberry Pi OS). Hosts are enabled by adding
 them to `zfs_pools` in `vars/main.yml`; a host with an empty list only gets
-`zfs-dkms` and `zfsutils-linux`.
+`zfs-dkms`, `zfsutils-linux`, and outgoing mail via `msmtp`.
 
 For every host with at least one pool the role additionally:
 
@@ -13,6 +13,20 @@ For every host with at least one pool the role additionally:
 - installs and enables a monthly `zfs-scrub@.timer` per pool
 - points ZED email at the address from `/root/smtp-addr.txt` (only if that file
   exists)
+
+## email
+
+ZED sends mail through `msmtp`, so the role configures it for every host in
+`zfs_pools`. Values are read from root-only files and are optional; the
+`msmtprc` is only written when all four exist (an unconfigured host simply gets
+the packages):
+
+| file                  | value                        |
+| --------------------- | ---------------------------- |
+| `/root/smtp-host.txt` | submission host (port `465`) |
+| `/root/smtp-user.txt` | username                     |
+| `/root/smtp-pass.txt` | password                     |
+| `/root/smtp-addr.txt` | domain used for sender       |
 
 ## usage
 
