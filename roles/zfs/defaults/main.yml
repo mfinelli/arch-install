@@ -1,0 +1,9 @@
+---
+# Raspberry Pi OS uses its own kernel headers package; regular Debian uses
+# per-architecture metapackages.
+zfs_kernel_headers_architectures:
+  aarch64: linux-headers-arm64
+  x86_64: linux-headers-amd64
+
+zfs_kernel_headers: "{{ 'linux-headers-rpi-v8' if israspi == 'true'
+  else zfs_kernel_headers_architectures[ansible_facts['architecture']] }}"

@@ -1,0 +1,20 @@
+---
+- name: Installing zfs packages
+  when:
+    - ansible_facts["os_family"] == "Debian"
+    - ansible_hostname in zfs_pools
+  ansible.builtin.include_tasks: install-debian.yml
+
+- name: Configuring pool unlocking and scrubbing
+  when:
+    - ansible_facts["os_family"] == "Debian"
+    - ansible_hostname in zfs_pools
+    - zfs_pools[ansible_hostname] | length > 0
+  ansible.builtin.include_tasks: unlock.yml
+
+- name: Configuring zfs event daemon
+  when:
+    - ansible_facts["os_family"] == "Debian"
+    - ansible_hostname in zfs_pools
+    - zfs_pools[ansible_hostname] | length > 0
+  ansible.builtin.include_tasks: zed.yml

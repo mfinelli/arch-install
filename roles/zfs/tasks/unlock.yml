@@ -1,0 +1,40 @@
+---
+- name: Adding zfs unlock unit
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/zfs-unlock@.service
+    group: root
+    mode: "0644"
+    owner: root
+    src: zfs-unlock.service
+
+- name: Ensuring permissions for keys
+  ansible.builtin.file:
+    group: root
+    mode: "0400"
+    owner: root
+    path: /root/{{ item }}.key
+    state: file
+  loop: "{{ zfs_pools[ansible_hostname] }}"
+
+- name: Enabling zfs unlock services
+  ansible.builtin.systemd:
+    enabled: true
+    name: zfs-unlock@{{ item }}.service
+  loop: "{{ zfs_pools[ansible_hostname] }}"
+
+- name: Adding zfs scrub service and timer units
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/zfs-scrub@.{{ item }}
+    group: root
+    mode: "0644"
+    owner: root
+    src: zfs-scrub.{{ item }}
+  loop:
+    - service
+    - timer
+
+- name: Enabling zfs scrub timer
+  ansible.builtin.systemd:
+    enabled: true
+    name: zfs-scrub@{{ item }}.timer
+  loop: "{{ zfs_pools[ansible_hostname] }}"

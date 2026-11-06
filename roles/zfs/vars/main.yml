@@ -1,0 +1,8 @@
+---
+# Hosts that get zfs installed. Each host maps to the (possibly empty) list of
+# pools that carry an encryption key at /root/<pool>.key
+zfs_pools:
+  calliope: []
+  hermes: []
+  kleio:
+    - tank

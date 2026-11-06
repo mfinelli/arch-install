@@ -9,4 +9,5 @@
     - role: main
     - role: ../roles/monitoring
     - role: ../roles/tailscale
+    - role: ../roles/zfs
     - role: user
