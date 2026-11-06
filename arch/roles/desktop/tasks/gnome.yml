@@ -39,13 +39,6 @@
       - xdg-desktop-portal-gnome
     state: present
 
-- name: Uninstalling old GNOME extensions
-  become: true
-  community.general.pacman:
-    name:
-      - gnome-shell-extension-pano
-    state: absent
-
 - name: Copying systemd policy for the systemd GNOME extension
   become: true
   ansible.builtin.copy:
