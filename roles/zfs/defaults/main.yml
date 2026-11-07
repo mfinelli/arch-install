@@ -48,3 +48,17 @@ zfs_replication_roles:
     - mount
     - receive
     - rollback
+
+# sanoid snapshot retention, only applied to the datasets listed per host in
+# zfs_sanoid (vars/main.yml). snapshots are named autosnap_<date>_<type>, which
+# is the schema a TrueNAS pull task expects.
+zfs_sanoid_retention:
+  daily: 14
+  weekly: 4
+  monthly: 3
+
+# recursive = zfs takes one atomic snapshot across the dataset and all of its
+# children. TrueNAS requires this when pulling a recursive set: it looks for a
+# common snapshot name in the parent and every child, which per-dataset
+# snapshots never satisfy (children get different timestamps).
+zfs_sanoid_recursive: zfs

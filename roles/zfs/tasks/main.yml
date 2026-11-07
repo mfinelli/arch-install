@@ -31,6 +31,12 @@
     - ansible_hostname in zfs_replication
   ansible.builtin.include_tasks: replication.yml
 
+- name: Configuring zfs snapshots
+  when:
+    - ansible_facts["os_family"] == "Debian"
+    - ansible_hostname in zfs_sanoid
+  ansible.builtin.include_tasks: sanoid.yml
+
 - name: Configuring zfs event daemon
   when:
     - ansible_facts["os_family"] == "Debian"

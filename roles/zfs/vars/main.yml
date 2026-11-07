@@ -18,4 +18,10 @@ zfs_arc_max:
 zfs_replication:
   kleio:
     datasets: [tank]
-    direction: both
+    direction: pull
+
+# Datasets sanoid snapshots on each host; this is an explicit include list,
+# so nothing outside these subtrees is ever snapshotted. Each entry recursively
+# snapshots its whole subtree, so entries must be siblings and can't be nested.
+zfs_sanoid:
+  kleio: [tank]

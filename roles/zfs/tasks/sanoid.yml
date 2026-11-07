@@ -1,0 +1,58 @@
+---
+- name: Installing sanoid
+  ansible.builtin.apt:
+    name: sanoid
+    state: present
+
+- name: Creating sanoid configuration directory
+  ansible.builtin.file:
+    group: root
+    mode: "0755"
+    owner: root
+    path: /etc/sanoid
+    state: directory
+
+- name: Listing existing datasets
+  ansible.builtin.command:
+    cmd: zfs list -H -o name
+  changed_when: false
+  register: zfs_sanoid_existing
+
+# like the replication delegation, only datasets that already exist are added
+# so that the first run does not fail; sanoid takes snapshots of every dataset
+# listed here, so this list is the explicit include list
+- name: Selecting datasets to snapshot
+  ansible.builtin.set_fact:
+    zfs_sanoid_datasets: "{{ zfs_sanoid[ansible_hostname] |
+      select('in', zfs_sanoid_existing.stdout_lines) | list }}"
+
+# with recursive = zfs sanoid warns "ignored autosnap configuration for X
+# because it's part of a zfs recursion" and silently skips the nested dataset,
+# so refuse to render a config that would do that
+- name: Checking for nested datasets
+  ansible.builtin.assert:
+    that:
+      - zfs_sanoid_datasets | reject('match', zfs_sanoid_nested_regex) | list |
+        length == zfs_sanoid_datasets | length
+    fail_msg: >-
+      zfs_sanoid for {{ ansible_hostname }} lists nested datasets
+      ({{ zfs_sanoid_datasets | join(', ') }}); with recursive = zfs only the
+      top-most dataset of each subtree may be listed.
+    quiet: true
+  vars:
+    zfs_sanoid_nested_regex: "^({{ zfs_sanoid_datasets | map('regex_escape') |
+      join('|') }})/"
+
+- name: Installing sanoid configuration
+  ansible.builtin.template:
+    dest: /etc/sanoid/sanoid.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: sanoid.conf.j2
+
+- name: Enabling sanoid timer
+  ansible.builtin.systemd:
+    enabled: true
+    name: sanoid.timer
+    state: started

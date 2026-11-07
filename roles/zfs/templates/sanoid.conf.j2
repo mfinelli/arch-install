@@ -1,0 +1,22 @@
+# {{ ansible_managed }}
+
+[template_default]
+autoprune = yes
+autosnap = yes
+frequently = 0
+hourly = 0
+daily = {{ zfs_sanoid_retention.daily }}
+weekly = {{ zfs_sanoid_retention.weekly }}
+monthly = {{ zfs_sanoid_retention.monthly }}
+yearly = 0
+
+# only the datasets listed in zfs_sanoid are snapshotted; sanoid ignores
+# snapshots that it did not create (anything not named autosnap_*), so pushes
+# from TrueNAS aren't pruned by this policy
+{% for dataset in zfs_sanoid_datasets %}
+[{{ dataset }}]
+use_template = default
+recursive = {{ zfs_sanoid_recursive }}
+{% endfor %}
+
+# vim: ft=conf.jinja2
