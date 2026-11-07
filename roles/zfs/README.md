@@ -50,8 +50,8 @@ A brief guide to setting up a zfs mirrored pair.
    **ONLY** key, there's no backup password option:
 
    ```sh
-   sudo dd if=/dev/random of=/root/tank.key bs=1024 count=4
-   chmod 0400 /root/tank.key
+   sudo dd if=/dev/urandom of=/root/tank.key bs=32 count=1
+   sudo chmod 0400 /root/tank.key
    ```
 
 4. Create the pool:
