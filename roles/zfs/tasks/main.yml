@@ -25,6 +25,12 @@
     - zfs_pools[ansible_hostname] | length > 0
   ansible.builtin.include_tasks: unlock.yml
 
+- name: Configuring zfs replication account
+  when:
+    - ansible_facts["os_family"] == "Debian"
+    - ansible_hostname in zfs_replication
+  ansible.builtin.include_tasks: replication.yml
+
 - name: Configuring zfs event daemon
   when:
     - ansible_facts["os_family"] == "Debian"

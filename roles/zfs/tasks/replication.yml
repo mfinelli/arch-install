@@ -1,0 +1,38 @@
+---
+- name: Creating zfs replication group
+  ansible.builtin.group:
+    name: "{{ zfs_replication_user }}"
+    state: present
+    system: true
+
+- name: Creating zfs replication user
+  ansible.builtin.user:
+    create_home: true
+    group: "{{ zfs_replication_user }}"
+    home: "{{ zfs_replication_home }}"
+    name: "{{ zfs_replication_user }}"
+    shell: /bin/sh
+    state: present
+    system: true
+
+- name: Installing zfs replication authorized keys
+  ansible.posix.authorized_key:
+    exclusive: true
+    key: "{{ zfs_replication_ssh_keys | join('\n') }}"
+    user: "{{ zfs_replication_user }}"
+
+- name: Listing existing datasets
+  ansible.builtin.command:
+    cmd: zfs list -H -o name
+  changed_when: false
+  register: zfs_replication_datasets
+
+- name: Delegating zfs replication permissions
+  when: item in zfs_replication_datasets.stdout_lines
+  community.general.zfs_delegate_admin:
+    name: "{{ item }}"
+    permissions: >-
+      {{ zfs_replication_roles[zfs_replication[ansible_hostname].direction] }}
+    users:
+      - "{{ zfs_replication_user }}"
+  loop: "{{ zfs_replication[ansible_hostname].datasets }}"

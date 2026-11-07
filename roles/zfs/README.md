@@ -32,6 +32,35 @@ currently in use):
 sudo modprobe -r zfs && sudo modprobe zfs
 ```
 
+## replication
+
+Hosts that take part in a TrueNAS replication task get a local `zfsrepl`
+account (name configurable via `zfs_replication_user`) with ZFS permissions
+delegated through `zfs allow`, so neither side needs root over SSH.
+
+Add the host to `zfs_replication` in `vars/main.yml` with the datasets the
+account should manage and the direction of the task:
+
+```yaml
+zfs_replication:
+  kleio:
+    datasets:
+      - tank/backup
+    direction: both
+```
+
+| direction | delegation (see `zfs_replication_roles`) | use when                     |
+| --------- | ---------------------------------------- | ---------------------------- |
+| `push`    | receive, create, destroy, rollback, ...  | TrueNAS replicates **to** us |
+| `pull`    | send, snapshot, hold, destroy, ...       | we are the **source**        |
+| `both`    | the union of the two                     | this host is on both ends    |
+
+Permissions are applied to each dataset in the list (recursively into its
+descendants); datasets that do not exist yet are skipped so the first run does
+not fail. `mount` cannot actually be delegated on Linux -- `create`,
+`destroy`, `receive` and `snapshot` all require it -- so it is listed for
+completeness but has no effect.
+
 ## email
 
 ZED sends mail through `msmtp`, so the role configures it for every host in

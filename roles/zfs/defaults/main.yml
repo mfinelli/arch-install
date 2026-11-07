@@ -7,3 +7,44 @@ zfs_kernel_headers_architectures:
 
 zfs_kernel_headers: "{{ 'linux-headers-rpi-v8' if israspi == 'true'
   else zfs_kernel_headers_architectures[ansible_facts['architecture']] }}"
+
+# replication account, only created on hosts listed in zfs_replication
+zfs_replication_user: zfsrepl
+zfs_replication_home: /var/lib/zfsrepl
+zfs_replication_ssh_keys:
+  - >-
+    ssh-ed25519
+    AAAAC3NzaC1lZDI1NTE5AAAAILnEGWT4cGTs/f3vKE8F+Pujf0gRsh9JX/LgKv+6Obvd
+
+# zfs allow permission sets per replication direction, keyed by the direction
+# configured per host in vars/main.yml:
+#   push - TrueNAS pushes to this host, so we must be able to receive
+#   pull - TrueNAS pulls from this host, so we must be able to send
+#   both - this host is on both ends of a replication task
+#
+# mount cannot be delegated on Linux, but create/destroy/receive/snapshot all
+# require it, so it is listed anyway for the pools that are mounted by root
+# (the delegation simply has no effect for those operations)
+zfs_replication_roles:
+  both:
+    - create
+    - destroy
+    - hold
+    - mount
+    - receive
+    - rollback
+    - send
+    - snapshot
+  pull:
+    - destroy
+    - hold
+    - mount
+    - send
+    - snapshot
+  push:
+    - create
+    - destroy
+    - hold
+    - mount
+    - receive
+    - rollback
