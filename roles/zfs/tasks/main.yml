@@ -6,6 +6,12 @@
     - ansible_hostname in zfs_pools
   ansible.builtin.include_tasks: install-debian.yml
 
+- name: Configuring zfs arc cache
+  when:
+    - ansible_facts["os_family"] == "Debian"
+    - ansible_hostname in zfs_pools
+  ansible.builtin.include_tasks: arc.yml
+
 - name: Configuring outgoing mail
   when:
     - ansible_facts["os_family"] == "Debian"

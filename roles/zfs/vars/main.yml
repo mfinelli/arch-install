@@ -6,3 +6,7 @@ zfs_pools:
   hermes: []
   kleio:
     - tank
+
+# per-host ARC cache limit; omit a host to use the OpenZFS default
+zfs_arc_max:
+  calliope: 2G

@@ -1,0 +1,15 @@
+---
+- name: Installing zfs arc limit
+  when: ansible_hostname in zfs_arc_max
+  ansible.builtin.template:
+    dest: /etc/modprobe.d/zfs-arc.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: zfs-arc.conf.j2
+
+- name: Removing zfs arc limit
+  when: ansible_hostname not in zfs_arc_max
+  ansible.builtin.file:
+    path: /etc/modprobe.d/zfs-arc.conf
+    state: absent

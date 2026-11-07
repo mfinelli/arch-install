@@ -14,6 +14,24 @@ For every host with at least one pool the role additionally:
 - points ZED email at the address from `/root/smtp-addr.txt` (only if that file
   exists)
 
+## arc cache
+
+The ARC cache is unlimited by default (the OpenZFS default). To cap it on a
+specific host add an entry to `zfs_arc_max` in `vars/main.yml`:
+
+```yaml
+zfs_arc_max:
+  calliope: 2G
+```
+
+The limit applies when the `zfs` module loads, so it takes effect after a
+reboot. To apply it without rebooting (this only works if the module is not
+currently in use):
+
+```sh
+sudo modprobe -r zfs && sudo modprobe zfs
+```
+
 ## email
 
 ZED sends mail through `msmtp`, so the role configures it for every host in

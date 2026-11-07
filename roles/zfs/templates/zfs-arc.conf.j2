@@ -1,0 +1,5 @@
+# {{ ansible_managed }}
+#
+# zfs_arc_max is in bytes; this limits the ARC to
+# {{ zfs_arc_max[ansible_hostname] }} ({{ zfs_arc_max[ansible_hostname] | human_to_bytes }} bytes)
+options zfs zfs_arc_max={{ zfs_arc_max[ansible_hostname] | human_to_bytes }}
