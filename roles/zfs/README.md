@@ -64,7 +64,7 @@ A brief guide to setting up a zfs mirrored pair.
      -O keylocation=file:///root/tank.key \
      -O compression=zstd \
      -O atime=off \
-     -O autotrim=on \ # only for SSD
+     -o autotrim=on \ # only for SSD
      -O acltype=posixacl \
      -O xattr=sa \
      -o autoexpand=on \
