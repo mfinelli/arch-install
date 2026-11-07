@@ -54,7 +54,14 @@ A brief guide to setting up a zfs mirrored pair.
    sudo chmod 0400 /root/tank.key
    ```
 
-4. Create the pool:
+4. Wipe any existing filesystems:
+
+   ```sh
+   sudo wipefs -a /dev/disk/by-id/usb-DISK1...
+   sudo wipefs -a /dev/disk/by-id/usb-DISK2...
+   ```
+
+5. Create the pool:
 
    ```sh
    sudo zpool create \
@@ -71,17 +78,17 @@ A brief guide to setting up a zfs mirrored pair.
      tank mirror /dev/disk/by-id/usb-DISK1... /dev/disk/by-id/usb-DISK2...
    ```
 
-5. Create dataset for a given service (the mountpoint is optional and otherwise
+6. Create dataset for a given service (the mountpoint is optional and otherwise
    mounts at `/tank/myservice`; custom mountpoint options must be passed to
    child datasets as well):
 
    ```sh
-   zfs create -o mountpoint=/mnt/tank/myservice tank/myservice
+   sudo zfs create -o mountpoint=/mnt/tank/myservice tank/myservice
    ```
 
-6. Create any child datasets:
+7. Create any child datasets:
    ```sh
-   zfs create tank/myservice/data
+   sudo zfs create tank/myservice/data
    ```
 
 ### mounting to a new machine
