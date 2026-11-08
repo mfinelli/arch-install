@@ -220,12 +220,12 @@ unlock the dataset convert the key to hex:
 xxd -p -c 64 tank.key
 ```
 
-And then create a JSON file at the dataset's path(s) to use when unlocking
-by providing a keyfile:
+And then create a JSON file at the dataset's path(s) to use when unlocking by
+providing a keyfile:
 
 ```json
 {
-  "main/homelab/server/service":"6b36dc537e727464d81c671321584f2836eef5bf44780f41bffc56230edd8845",
-  "main/homelab/server/service/postgresql":"6b36dc537e727464d81c671321584f2836eef5bf44780f41bffc56230edd8845"
+  "main/homelab/server/service": "6b36dc537e727464d81c671321584f2836eef5bf44780f41bffc56230edd8845",
+  "main/homelab/server/service/postgresql": "6b36dc537e727464d81c671321584f2836eef5bf44780f41bffc56230edd8845"
 }
 ```
