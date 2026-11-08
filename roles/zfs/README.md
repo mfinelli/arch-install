@@ -209,3 +209,23 @@ scrub jobs) add the unlock key (e.g., `/root/tank.key`) and then run:
 sudo zpool import # see what's available
 sudo zpool import tank # `sudo zpool import -f tank` if necessary
 ```
+
+### unlocking on truenas
+
+Snapshots that are replicated to the NAS can be left either encrypted and
+unreadable from the NAS or they can be unlocked and available. In order to
+unlock the dataset convert the key to hex:
+
+```sh
+xxd -p -c 64 tank.key
+```
+
+And then create a JSON file at the dataset's path(s) to use when unlocking
+by providing a keyfile:
+
+```json
+{
+  "main/homelab/server/service":"6b36dc537e727464d81c671321584f2836eef5bf44780f41bffc56230edd8845",
+  "main/homelab/server/service/postgresql":"6b36dc537e727464d81c671321584f2836eef5bf44780f41bffc56230edd8845"
+}
+```
