@@ -2,5 +2,6 @@
 server_github_actions_access_hosts:
   - argus
   - atlas
+  - calliope
   - iris
   - kleio
