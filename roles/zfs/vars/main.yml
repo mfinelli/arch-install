@@ -9,7 +9,7 @@ zfs_pools:
 
 # per-host ARC cache limit; omit a host to use the OpenZFS default
 zfs_arc_max:
-  # calliope: 2G
+  calliope: 4G
 
 # Hosts that accept (or originate) TrueNAS replication, mapping to the
 # datasets the replication user is delegated on and the direction of the
