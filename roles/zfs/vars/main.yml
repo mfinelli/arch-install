@@ -2,11 +2,9 @@
 # Hosts that get zfs installed. Each host maps to the (possibly empty) list of
 # pools that carry an encryption key at /root/<pool>.key
 zfs_pools:
-  calliope:
-    - tank
+  calliope: [tank]
   hermes: []
-  kleio:
-    - tank
+  kleio: [tank]
 
 # per-host ARC cache limit; omit a host to use the OpenZFS default
 zfs_arc_max:
@@ -16,6 +14,9 @@ zfs_arc_max:
 # datasets the replication user is delegated on and the direction of the
 # task: push (TrueNAS replicates to us), pull (we are the source), or both.
 zfs_replication:
+  calliope:
+    datasets: [tank]
+    direction: both
   kleio:
     datasets: [tank]
     direction: pull
@@ -24,4 +25,7 @@ zfs_replication:
 # so nothing outside these subtrees is ever snapshotted. Each entry recursively
 # snapshots its whole subtree, so entries must be siblings and can't be nested.
 zfs_sanoid:
+  calliope:
+    - tank/bookdata
+    - tank/songdata
   kleio: [tank]
