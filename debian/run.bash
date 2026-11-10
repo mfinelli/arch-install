@@ -8,8 +8,8 @@ if [[ $# -ne 0 ]]; then
 fi
 
 hn="$(cat /etc/hostname)"
-if [[ $hn == argus ]] || [[ $hn == atlas ]] || [[ $hn == iris ]] ||
-  [[ $hn == kleio ]]; then
+if [[ $hn == calliope ]] || [[ $hn == argus ]] || [[ $hn == atlas ]] ||
+  [[ $hn == iris ]] || [[ $hn == kleio ]]; then
   mtype=server
 else
   mtype=personal
