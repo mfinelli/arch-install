@@ -2,15 +2,14 @@
 # Hosts that get zfs installed. Each host maps to the (possibly empty) list of
 # pools that carry an encryption key at /root/<pool>.key
 zfs_pools:
-  calliope:
-    - tank
+  calliope: []
   hermes: []
   kleio:
     - tank
 
 # per-host ARC cache limit; omit a host to use the OpenZFS default
 zfs_arc_max:
-  calliope: 2G
+  # calliope: 2G
 
 # Hosts that accept (or originate) TrueNAS replication, mapping to the
 # datasets the replication user is delegated on and the direction of the

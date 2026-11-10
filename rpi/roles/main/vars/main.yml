@@ -1,7 +1,6 @@
 ---
 # TODO: we should detect if the case fan is installed
 main_fan_enabled_hosts:
-  - calliope
   - hermes
   - homepi
   - parkpi
@@ -16,7 +15,6 @@ main_supermario_repo_host: "https://download.opensuse.org/repositories/home:/\
   mfinelli:/supermario/"
 
 main_ethernet_hosts:
-  - calliope
   - hermes
   - homepi
 
