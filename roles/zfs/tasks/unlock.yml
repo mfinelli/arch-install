@@ -37,7 +37,6 @@
     name: zfs-unlock@{{ item | replace('/', '-') }}.service
   loop: "{{ zfs_unlock_datasets[ansible_hostname] | default([]) }}"
 
-
 - name: Adding zfs scrub service and timer units
   ansible.builtin.copy:
     dest: /etc/systemd/system/zfs-scrub@.{{ item }}
