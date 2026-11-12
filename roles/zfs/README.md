@@ -70,6 +70,9 @@ Set it manually (preferably before mounting):
 sudo zfs set mountpoint=/mnt/library tank/library
 ```
 
+You'll also need to exclude `mountpoint` from the replicated properties or the
+replication will fail.
+
 You also need to supply the encryption key. If the dataset is replicated from
 TrueNAS then it's probably already in hex format (verify with `zfs get
 keyformat,keylocation,keystatus tank/library`):
