@@ -10,3 +10,8 @@
       - zfs-dkms
       - zfsutils-linux
     state: present
+
+- name: Installing xxd
+  ansible.builtin.apt:
+    name: xxd
+    state: present

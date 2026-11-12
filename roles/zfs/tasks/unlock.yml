@@ -22,6 +22,22 @@
     name: zfs-unlock@{{ item }}.service
   loop: "{{ zfs_pools[ansible_hostname] }}"
 
+- name: Ensuring permissions for dataset keys
+  ansible.builtin.file:
+    group: root
+    mode: "0400"
+    owner: root
+    path: /root/{{ item | replace('/', '-') }}.key
+    state: file
+  loop: "{{ zfs_unlock_datasets[ansible_hostname] | default([]) }}"
+
+- name: Enabling zfs unlock services for datasets
+  ansible.builtin.systemd:
+    enabled: true
+    name: zfs-unlock@{{ item | replace('/', '-') }}.service
+  loop: "{{ zfs_unlock_datasets[ansible_hostname] | default([]) }}"
+
+
 - name: Adding zfs scrub service and timer units
   ansible.builtin.copy:
     dest: /etc/systemd/system/zfs-scrub@.{{ item }}

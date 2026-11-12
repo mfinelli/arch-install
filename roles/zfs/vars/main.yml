@@ -6,6 +6,12 @@ zfs_pools:
   hermes: []
   kleio: [tank]
 
+# Extra encryption roots inside a pool that have their own key. The key lives
+# at /root/<dataset with "/" replaced by "-">.key, e.g. /root/tank-library.key.
+# Only unlocking is configured; scrubbing is per-pool.
+zfs_unlock_datasets:
+  calliope: [tank/library]
+
 # per-host ARC cache limit; omit a host to use the OpenZFS default
 zfs_arc_max:
   calliope: 4G

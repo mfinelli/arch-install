@@ -61,6 +61,23 @@ not fail. `mount` cannot actually be delegated on Linux -- `create`, `destroy`,
 `receive` and `snapshot` all require it -- so it is listed for completeness but
 has no effect.
 
+### post-push replication
+
+The dataset will have a mountpoint under `/tank` which may not be desirable.
+Set it manually (preferably before mounting):
+
+```sh
+sudo zfs set mountpoint=/mnt/library tank/library
+```
+
+You also need to supply the encryption key. If the dataset is replicated from
+TrueNAS then it's probably already in hex format (verify with `zfs get
+keyformat,keylocation,keystatus tank/library`):
+
+```sh
+echo -n "<hex key>" | sudo tee /root/tank-library.key
+```
+
 ## snapshots
 
 Hosts listed in `zfs_sanoid` (in `vars/main.yml`) get
