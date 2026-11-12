@@ -68,10 +68,12 @@ Set it manually (preferably before mounting):
 
 ```sh
 sudo zfs set mountpoint=/mnt/library tank/library
+sudo zfs set readonly=on tank/library
 ```
 
-You'll also need to exclude `mountpoint` from the replicated properties or the
-replication will fail.
+You'll also need to exclude `mountpoint`, and `readonly` from the replicated
+properties or the replication will fail. Make sure to also set the readonly
+policy to IGNORE in the replication task.
 
 You also need to supply the encryption key. If the dataset is replicated from
 TrueNAS then it's probably already in hex format (verify with `zfs get
